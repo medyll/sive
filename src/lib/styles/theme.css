@@ -1,0 +1,49 @@
+:root{
+  /* Color palette */
+  --bg-left: #071028;
+  --bg-left-2: #0b1220;
+  --bg-right: #ffffff;
+  --text-light: #d6e6ff;
+  --text-muted: #94a3b8;
+  --primary: #6366f1; /* indigo */
+  --accent: #06b6d4; /* cyan */
+  --surface: #f8fafc;
+  --glass: rgba(255,255,255,0.06);
+  --border: rgba(2,6,23,0.06);
+}
+
+.theme-dark {
+  --bg: var(--bg-left);
+  --bg-2: var(--bg-left-2);
+  --text: var(--text-light);
+  --muted: var(--text-muted);
+  --card: #071833;
+}
+
+.theme-light {
+  --bg: #ffffff;
+  --bg-2: #f1f5f9;
+  --text: #0b1220;
+  --muted: #475569;
+  --card: #ffffff;
+}
+
+/* Generic utilities used by the mockup */
+body { margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+.app-theme { background: var(--bg); color: var(--text); }
+
+.btn { background: var(--primary); color: white; border: none; padding:8px 12px; border-radius:8px; cursor:pointer }
+.btn.secondary { background: var(--accent); }
+
+.editor { background: linear-gradient(180deg, rgba(7,16,40,1), rgba(6,12,28,1)); color: var(--text); }
+
+.right-panel { background: var(--bg-right); color: var(--text-dark, #0b1220); }
+
+.chat-bar { backdrop-filter: blur(6px); }
+
+.resizer { background: linear-gradient(90deg, transparent, rgba(2,6,23,0.06), transparent); }
+
+.tab { transition:background .12s,color .12s }
+.tab.active { background: var(--primary); color: #fff }
+
+.meta { color: var(--muted); }

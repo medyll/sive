@@ -1,41 +1,58 @@
 # Copilot instructions for this repository
 
+```markdown
+# Copilot instructions for this repository (sive)
+
 Summary
-- This project is an AI-assisted writing application (Svelte + LiveKit) described in `PROJECT.md`.
-- Key on-disk content model: the narrative workspace is a `mybook/` tree with `bible.yaml`, `timeline.yaml`, per-chapter folders (`chapters/chapter_01/chapter_01.md` + `chapter_01.yaml`). See `PROJECT.md` for full schemas.
+- Sive is a SvelteKit application using Svelte v5, Drizzle ORM (SQLite), and Better-Auth for authentication. Frontend routes live in `src/routes`; server helpers and DB code live under `src/lib/server`.
+ - `PROJECT.md` is the central design/spec document for this repository and should be consulted frequently during development.
 
 What to prioritize
-- Preserve YAML schemas and field semantics (`bible.yaml`, `timeline.yaml`, `chapter_XX.yaml`). Changes to keys like `chrono_index`, `story_date`, or `first_appears` must be deliberate and discussed.
-- When making suggestions that modify story data, prefer adding migration steps that update both the chapter YAML and `bible.yaml` references.
+- Preserve database schema and migrations: changes to `src/lib/server/db/schema.ts` or the Drizzle schema must be accompanied by `drizzle-kit` commands (`db:generate`, `db:push`, `db:migrate`). See `package.json` scripts.
+- Preserve authentication invariants: `src/lib/server/auth.ts` wires `better-auth` and requires `sveltekitCookies` to be the last plugin in `plugins` array. Do not reorder plugins without confirming behavior in `src/hooks.server.ts`.
+- Keep server/client separation clear: update `+page.server.ts` for server-only logic, `+page.svelte` for client UI.
 
-Architecture notes (quick)
-- Frontend: Svelte UI (editor, resizable panels, AI suggestion panel). LiveKit used for voice/TS features.
-- Intelligence routing: hybrid model strategy (local Ollama for coherence checks; cloud models like Gemini/OpenAI for long generations). Model selection is task-specific and configurable per user (see `PROJECT.md` section 4).
-- Fact-checking: on-demand web queries (DuckDuckGo / Wikipedia). No automatic background searches.
+Architecture notes (concise)
+- Frontend: `src/routes` contains Svelte pages/components and specs (`*.spec.ts`).
+- Server helpers: `src/lib/server` holds `auth.ts`, `db/` (Drizzle setup: `index.ts`, `schema.ts`), and API logic.
+- Auth flow: `auth` (Better-Auth) is initialized with `drizzleAdapter(db, { provider: 'sqlite' })` in `src/lib/server/auth.ts`. `hooks.server.ts` uses `auth.api.getSession()` and `svelteKitHandler` to attach `event.locals.session` and `event.locals.user`.
 
-Patterns & conventions the agent should follow
-- Small, targeted edits: prefer editing YAML metadata files for story state and use the MD files for narrative text. Example: to mark an object as lost, update `chapters/chapter_07/chapter_07.yaml` transitions and the `bible.yaml` object entry.
-- Use `chrono_index` and `story_date` when inserting or moving events so cross-references remain consistent.
-- When updating UI text or behaviour, reference the UX descriptions in `PROJECT.md` (split-screen ratio, focus mode behaviour, spinner semantics) and avoid changing UX defaults without justification.
+Developer workflows (commands & examples)
+- Install (preferred): use `pnpm install` (this repository includes `pnpm-lock.yaml` and `pnpm-workspace.yaml`). You may also use `npm install`.
+- Run dev server: `npm run dev` (or `pnpm dev`).
+- Build: `npm run build`.
+- Tests:
+  - Unit: `npm run test:unit` (Vitest)
+  - E2E: `npm run test:e2e` (Playwright)
+- DB tasks (Drizzle):
+  - `npm run db:generate` — generate types/migrations
+  - `npm run db:push` / `npm run db:migrate` — apply schema changes
+  - Use `npm run db:studio` to inspect DB when available
+- Auth schema helper: `npm run auth:schema` generates the Better-Auth schema from `src/lib/server/auth.ts` (useful when changing auth config)
+- Lint/format: `npm run lint`, `npm run format`.
 
-Developer workflows
-- No package.json was detected in the repo root. Confirm with the maintainer the exact build/dev commands. Common Svelte/Node commands we expect (only use if a `package.json` appears):
-  - Install: `npm install`
-  - Dev server: `npm run dev`
-  - Build: `npm run build`
-- Tests: Project currently has no discoverable test harness. If adding tests, follow minimal, focused tests per module and include npm script entries.
+Patterns & conventions (repo‑specific)
+- Auth plugin order matters: `plugins: [ ..., sveltekitCookies(getRequestEvent) ]` — ensure the cookie plugin is last.
+- DB provider: project uses SQLite via `better-sqlite3` — connection and adapter code in `src/lib/server/db`.
+- Use SvelteKit `event.locals` for request-scoped auth/session data (see `src/hooks.server.ts`).
+- Keep server-side code in `+page.server.ts` and `src/lib/server`; client-only logic belongs in `.svelte` files.
 
 Integration points to watch
-- LiveKit: voice + TTS integration — exercise caution when changing audio flow or latency assumptions.
-- Ollama / Local models: used for privacy-sensitive coherence checks — note configuration points and do not hardcode cloud-only fallbacks.
-- Web fact-checking: queries are explicit; never introduce automatic background lookups.
+- Better-Auth (`better-auth`) — credentials come from environment variables: `BETTER_AUTH_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `ORIGIN`.
+- Drizzle (`drizzle-orm`, `drizzle-kit`) — migrations and generated types must stay in sync with `schema.ts` and any changes should include a migration plan.
+- Playwright — e2e tests run with `playwright.config.ts` and tests live under `e2e/`.
 
 When you are unsure
-- If a requested change touches narrative data (YAML) and the effect on `bible.yaml` or `timeline.yaml` is unclear, leave a clear TODO in the change and request human review.
-- If build/test commands are missing (no `package.json`), ask the repo owner before assuming a workflow.
+- DB migrations: if modifying `schema.ts`, include the exact commands you ran (e.g., `npm run db:generate && npm run db:push`) in PR description.
+- Auth changes: if modifying `auth.ts` or plugin order, add a TODO and request a manual verification step (login flow + session propagation in `hooks.server.ts`).
 
-References
-- Primary design doc: [PROJECT.md](PROJECT.md)
-- Story data examples: `mybook/bible.yaml`, `mybook/timeline.yaml`, `mybook/chapters/chapter_01/chapter_01.yaml` (see `PROJECT.md` for schemas)
+Key files to reference
+- `src/lib/server/auth.ts` — auth config and env variables
+- `src/hooks.server.ts` — session attachment and request handling
+- `src/lib/server/db/schema.ts` and `src/lib/server/db/index.ts` — Drizzle schema and DB export
+- `package.json` — scripts for dev/build/test/db tasks
+- `playwright.config.ts` and `e2e/` — end-to-end tests
 
-If any section is unclear or you want examples of PR text/messages, tell me which part to expand.
+If anything is unclear or you'd like a short PR template for DB/auth changes, tell me which area to expand.
+
+```
