@@ -20,39 +20,50 @@ Architecture notes (concise)
 Developer workflows (commands & examples)
 - Install (preferred): use `pnpm install` (this repository includes `pnpm-lock.yaml` and `pnpm-workspace.yaml`). You may also use `npm install`.
 - Run dev server: `npm run dev` (or `pnpm dev`).
+# Copilot instructions for this repository (sive)
+
+This file gives concise, repo-specific guidance so AI coding agents can be immediately productive.
+
+## Summary
+- Sive is a SvelteKit app (Svelte v5) using Drizzle ORM (SQLite) and Better-Auth. Routes and UI live in `src/routes`; server helpers and DB code are under `src/lib/server`.
+
+## Top priorities
+- Preserve DB schema/migrations: editing `src/lib/server/db/schema.ts` requires running Drizzle commands and including a migration plan in PRs.
+- Preserve auth invariants: `src/lib/server/auth.ts` config + plugin ordering is sensitive — do not reorder `sveltekitCookies` (it must be last) without manual verification.
+- Maintain server/client separation: server-only logic in `+page.server.ts`; UI and client behavior in `.svelte` files.
+
+## Key workflows (commands)
+- Install: `pnpm install` (or `npm install`).
+- Dev: `npm run dev` (runs `vite dev`).
 - Build: `npm run build`.
-- Tests:
-  - Unit: `npm run test:unit` (Vitest)
-  - E2E: `npm run test:e2e` (Playwright)
-- DB tasks (Drizzle):
-  - `npm run db:generate` — generate types/migrations
-  - `npm run db:push` / `npm run db:migrate` — apply schema changes
-  - Use `npm run db:studio` to inspect DB when available
-- Auth schema helper: `npm run auth:schema` generates the Better-Auth schema from `src/lib/server/auth.ts` (useful when changing auth config)
-- Lint/format: `npm run lint`, `npm run format`.
+- Unit tests: `npm run test:unit` (Vitest).
+- E2E tests: `npm run test:e2e` (Playwright).
+- Drizzle (DB): `npm run db:generate`, `npm run db:push` / `npm run db:migrate`, `npm run db:studio`.
+- Better-Auth helper: `npm run auth:schema` (generates `src/lib/server/db/auth.schema.ts`).
+- Lint/format: `npm run lint` and `npm run format`.
 
-Patterns & conventions (repo‑specific)
-- Auth plugin order matters: `plugins: [ ..., sveltekitCookies(getRequestEvent) ]` — ensure the cookie plugin is last.
-- DB provider: project uses SQLite via `better-sqlite3` — connection and adapter code in `src/lib/server/db`.
-- Use SvelteKit `event.locals` for request-scoped auth/session data (see `src/hooks.server.ts`).
-- Keep server-side code in `+page.server.ts` and `src/lib/server`; client-only logic belongs in `.svelte` files.
+## Project-specific patterns & examples
+- Auth plugin order: see `src/lib/server/auth.ts`. Ensure `sveltekitCookies(getRequestEvent)` is last in `plugins` (hooks rely on this ordering).
+- Auth/session propagation: `src/hooks.server.ts` calls `auth.api.getSession()` and `svelteKitHandler` to attach `event.locals.session` and `event.locals.user` — server code and tests read from `event.locals`.
+- DB: code uses `better-sqlite3` + Drizzle. Keep generated types and migrations aligned with `src/lib/server/db/schema.ts`.
+- Server vs client: update `+page.server.ts` for server-only data access (DB, secrets); use `+page.svelte` for UI. See `src/routes/application/+page.server.ts` and the paired `+page.svelte` for an example.
 
-Integration points to watch
-- Better-Auth (`better-auth`) — credentials come from environment variables: `BETTER_AUTH_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `ORIGIN`.
-- Drizzle (`drizzle-orm`, `drizzle-kit`) — migrations and generated types must stay in sync with `schema.ts` and any changes should include a migration plan.
-- Playwright — e2e tests run with `playwright.config.ts` and tests live under `e2e/`.
+## Integration points to watch
+- Better-Auth: env vars include `BETTER_AUTH_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `ORIGIN`.
+- Drizzle: use the `db:*` scripts above for consistent schema changes.
+- Playwright/Vitest: tests live under `e2e/` and `src/*.spec.ts` — run with the `test` scripts.
 
-When you are unsure
-- DB migrations: if modifying `schema.ts`, include the exact commands you ran (e.g., `npm run db:generate && npm run db:push`) in PR description.
-- Auth changes: if modifying `auth.ts` or plugin order, add a TODO and request a manual verification step (login flow + session propagation in `hooks.server.ts`).
+## When to ask for human review
+- Any change to `src/lib/server/db/schema.ts` (DB migration plan + regenerated types must be included).
+- Any change to auth config (`src/lib/server/auth.ts`) or plugin order — request manual verification of login flows and `event.locals` propagation.
 
-Key files to reference
-- `src/lib/server/auth.ts` — auth config and env variables
-- `src/hooks.server.ts` — session attachment and request handling
-- `src/lib/server/db/schema.ts` and `src/lib/server/db/index.ts` — Drizzle schema and DB export
-- `package.json` — scripts for dev/build/test/db tasks
-- `playwright.config.ts` and `e2e/` — end-to-end tests
+## Key files to inspect
+- `src/lib/server/auth.ts`
+- `src/hooks.server.ts`
+- `src/lib/server/db/schema.ts`
+- `src/lib/server/db/index.ts`
+- `package.json`
 
-If anything is unclear or you'd like a short PR template for DB/auth changes, tell me which area to expand.
+If something is missing, ask for sample env values or a local DB dump and request explicit confirmation before changing DB or auth plumbing.
 
-```
+— End —

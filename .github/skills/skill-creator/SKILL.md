@@ -1,7 +1,15 @@
 ---
 name: skill-creator
-description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends VSCode capabilities with specialized knowledge, workflows, or tool integrations.
+description: Guide for creating effective skills. This skill should be used when the user writes 'skill-creator' or wants to create a new skill (or update an existing skill) that extends VSCode capabilities with specialized knowledge, workflows, or tool integrations.
 license: Complete terms in LICENSE.txt
+argument-hint: "Describe the skill to create, or request 'skill-creator' for guidance."
+compatibility:
+    - mcp_v1
+disable-model-invocation: false 
+metadata:
+    version: "1.0.0"
+    author: medyll
+user-invokable: true
 ---
 
 # Skill Creator
@@ -52,9 +60,14 @@ Every skill consists of a required SKILL.md file and optional bundled resources:
 skill-name/
 ├── SKILL.md (required)
 │   ├── YAML frontmatter metadata (required)
-│   │   ├── name: (required)
+│   │   ├── name: [skill-name] (required)
 │   │   ├── description: (required)
-│   │   └── compatibility: (optional, rarely needed)
+│   │   ├── argument-hint: (required)
+│   │   ├── compatibility: (optional, rarely needed)
+│   │   ├── disable-model-invocation: (optional, boolean)
+│   │   ├── license: (optional)
+│   │   ├── metadata: (optional - map: version, author, etc.)
+│   │   └── user-invokable: (optional, boolean)
 │   └── Markdown instructions (required)
 └── Bundled Resources (optional)
     ├── scripts/          - Executable code (Python/Bash/etc.)
@@ -66,7 +79,7 @@ skill-name/
 
 Every SKILL.md consists of:
 
-- **Frontmatter** (YAML): Contains `name` and `description` fields (required), plus optional fields like `license`, `metadata`, and `compatibility`. Only `name` and `description` are read by Claude to determine when the skill triggers, so be clear and comprehensive about what the skill is and when it should be used. The `compatibility` field is for noting environment requirements (target product, system packages, etc.) but most skills don't need it.
+- **Frontmatter** (YAML): Contains `name` and `description` fields (required), plus optional fields such as `argument-hint`, `compatibility`, `disable-model-invocation`, `license`, `metadata`, and `user-invokable`. Only `name` and `description` are read by Claude to determine when the skill triggers, so be clear and comprehensive about what the skill is and when it should be used. The `compatibility` field is for noting environment requirements (target product, system packages, etc.) but most skills don't need it.
 - **Body** (Markdown): Instructions and guidance for using the skill. Only loaded AFTER the skill triggers (if at all).
 
 #### Bundled Resources (optional)
@@ -143,7 +156,7 @@ Extract text with pdfplumber:
 - **Examples**: See [EXAMPLES.md](EXAMPLES.md) for common patterns
 ```
 
-Claude loads FORMS.md, REFERENCE.md, or EXAMPLES.md only when needed.
+skill-creator loads FORMS.md, REFERENCE.md, or EXAMPLES.md only when needed.
 
 **Pattern 2: Domain-specific organization**
 
@@ -159,7 +172,7 @@ bigquery-skill/
     └── marketing.md (campaigns, attribution)
 ```
 
-When a user asks about sales metrics, Claude only reads sales.md.
+When a user asks about sales metrics, skill-creator only reads sales.md.
 
 Similarly, for skills supporting multiple frameworks or variants, organize by variant:
 
@@ -172,7 +185,7 @@ cloud-deploy/
     └── azure.md (Azure deployment patterns)
 ```
 
-When the user chooses AWS, Claude only reads aws.md.
+When the user chooses AWS, skill-creator only reads aws.md.
 
 **Pattern 3: Conditional details**
 
@@ -193,12 +206,12 @@ For simple edits, modify the XML directly.
 **For OOXML details**: See [OOXML.md](OOXML.md)
 ```
 
-Claude reads REDLINING.md or OOXML.md only when the user needs those features.
+skill-creator reads REDLINING.md or OOXML.md only when the user needs those features.
 
 **Important guidelines:**
 
 - **Avoid deeply nested references** - Keep references one level deep from SKILL.md. All reference files should link directly from SKILL.md.
-- **Structure longer reference files** - For files longer than 100 lines, include a table of contents at the top so Claude can see the full scope when previewing.
+- **Structure longer reference files** - For files longer than 100 lines, include a table of contents at the top so skill-creator can see the full scope when previewing.
 
 ## Skill Creation Process
 
@@ -313,6 +326,17 @@ Write the YAML frontmatter with `name` and `description`:
   - Example description for a `docx` skill: "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. Use when Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"
 
 Do not include any other fields in YAML frontmatter.
+
+Optional frontmatter fields (include only when relevant):
+
+- `argument-hint`: Short hint showing the expected user argument or command format (helps invocation UIs).
+- `compatibility`: Array of compatibility identifiers (e.g., `mcp_v1`) to indicate environment/tooling requirements.
+- `disable-model-invocation`: Boolean. If `true`, tooling should avoid invoking an LLM directly from this skill.
+- `license`: License text or reference (e.g., `MIT`, `See LICENSE.txt`).
+- `metadata`: Map for arbitrary metadata such as `version`, `author`, or `tags`.
+- `user-invokable`: Boolean. If `true`, the skill may be called directly by end users (vs. only by other skills).
+
+Prefer minimal frontmatter: include only fields that are required by tooling or that materially change how the skill is discovered or invoked.
 
 ##### Body
 

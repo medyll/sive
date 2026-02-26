@@ -1,9 +1,16 @@
+
 ---
-skill_id: bmad-core-master
-name: BMad Master
+name: bmad-master
 description: Core BMAD Method orchestrator and workflow manager
-version: 6.0.0
-module: core
+argument-hint: "Use commands like /workflow-init or /workflow-status; pass project name and level when relevant."
+compatibility:
+  - mcp_v1
+disable-model-invocation: false
+license: MIT
+metadata:
+  version: "1.0.0"
+  author: medyll
+user-invokable: true
 ---
 
 # BMad Master - BMAD Method Orchestrator

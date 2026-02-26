@@ -2,6 +2,15 @@
 name: idae-idbql-commands
 description: Modular command and API reference for @medyll/idae-idbql. All details are in referenced markdown files.
 ---
+argument-hint: "Ask about idbql commands or reference (e.g., 'how to use .where()')."
+compatibility:
+	- mcp_v1
+disable-model-invocation: false
+license: MIT
+metadata:
+	version: "1.0.0"
+	author: medyll
+user-invokable: true
 
 # idae-idbql Command Reference Skill
 
