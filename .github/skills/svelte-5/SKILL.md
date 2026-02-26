@@ -1,6 +1,6 @@
 ---
 name: svelte-5
-description: Svelte 5 & SvelteKit developer guidance, runes, patterns. Use when working with Svelte 5 projects.
+description: Svelte 5 & SvelteKit developer guidance, runes, patterns. Use when working with Svelte 5 projects and file.
 compatibility:
   - mcp_v1
 disable-model-invocation: false

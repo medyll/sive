@@ -98,7 +98,7 @@ For all operations, use helpers to reduce token usage:
    ├── bmm-workflow-status.yaml
    └── stories/
 
-   .claude/commands/bmad/ (if not exists)
+   .github/commands/bmad/ (if not exists)
    ```
 
 2. Collect project information:
