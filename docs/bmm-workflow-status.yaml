@@ -1,0 +1,13 @@
+
+project: "sive"
+level: 1
+generated_at: 2026-02-26T00:00:00Z
+
+statuses:
+  prd: RECOMMENDED
+  tech_spec: REQUIRED
+  architecture: OPTIONAL
+
+notes: |
+  This file was generated from `bmad/templates/bmm-workflow-status.template.yaml` for project level 1.
+  Edit `project` and `level` if you want to regenerate statuses for a different level.

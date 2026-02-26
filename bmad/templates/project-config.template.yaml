@@ -1,0 +1,4 @@
+project_name: "{{project_name}}"
+project_type: "{{project_type}}"
+project_level: {{project_level}}
+created_at: "{{created_at}}"

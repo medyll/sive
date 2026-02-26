@@ -1,0 +1,15 @@
+phases:
+  analysis: optional
+  planning: required
+  solutioning: conditional
+  implementation: required
+
+rules:
+  prd: "required_if_level>=2_else_recommended"
+  tech_spec: "required_if_level<=1_else_optional"
+  architecture: "required_if_level>=2_else_optional"
+
+status:
+  prd: NOT_STARTED
+  tech_spec: NOT_STARTED
+  architecture: NOT_STARTED

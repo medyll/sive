@@ -1,0 +1,13 @@
+# BMAD project configuration
+# Edit these values after initializing the project
+project_name: "sive"
+project_type: web-app # options: web-app, mobile-app, api, game, library, other
+project_level: 1 # 0-4
+created_at: 2026-02-26T00:00:00Z
+notes: |
+  See `bmad/references/PROJECT.md` for the full project specification. Extracted constraints:
+  - Stack: Svelte 5 + SvelteKit, TypeScript
+  - Database: SQLite (drizzle-orm)
+  - Auth: better-auth (server-side)
+  - Testing: vitest + Playwright
+  Replace other placeholders above with any project-specific overrides.
