@@ -1,11 +1,4 @@
-<!--
-Generated Svelte scaffold from CMAD pseudo-HTML
-Tag: resize-handle
-ID: split-handle
-Attributes: {"id":"split-handle"}
-This file is a scaffold. Implement component logic and styles during development.
--->
-
+<!-- Generated scaffold for resize-handle -->
 <script lang="ts">
 export const mockup = {
   "tag": "resize-handle",
@@ -15,16 +8,10 @@ export const mockup = {
   }
 };
 </script>
-
-<style>
-/* Add component styles here */
-</style>
-
-<!-- Basic structural mapping: resize-handle → semantic section with class 'resize-handle' -->
 <section class="resize-handle">
   {#if $$slots.default}
-    <slot />
+    {@render $$slots.default()}
   {:else}
-    <!-- resize-handle placeholder -->
+    <!-- placeholder -->
   {/if}
 </section>

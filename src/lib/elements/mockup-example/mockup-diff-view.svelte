@@ -1,14 +1,12 @@
-<!-- Generated scaffold for overlay -->
+<!-- Generated scaffold for diff-view -->
 <script lang="ts">
 export const mockup = {
-  "tag": "overlay",
-  "id": "chat-bar",
-  "attrs": {
-    "id": "chat-bar"
-  }
+  "tag": "diff-view",
+  "id": null,
+  "attrs": {}
 };
 </script>
-<section class="overlay">
+<section class="diff-view">
   {#if $$slots.default}
     {@render $$slots.default()}
   {:else}

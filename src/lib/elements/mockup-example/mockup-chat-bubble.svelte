@@ -1,14 +1,12 @@
-<!-- Generated scaffold for overlay -->
+<!-- Generated scaffold for chat-bubble -->
 <script lang="ts">
 export const mockup = {
-  "tag": "overlay",
-  "id": "chat-bar",
-  "attrs": {
-    "id": "chat-bar"
-  }
+  "tag": "chat-bubble",
+  "id": null,
+  "attrs": {}
 };
 </script>
-<section class="overlay">
+<section class="chat-bubble">
   {#if $$slots.default}
     {@render $$slots.default()}
   {:else}

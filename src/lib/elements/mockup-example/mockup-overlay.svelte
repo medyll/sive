@@ -2,10 +2,8 @@
 <script lang="ts">
 export const mockup = {
   "tag": "overlay",
-  "id": "chat-bar",
-  "attrs": {
-    "id": "chat-bar"
-  }
+  "id": null,
+  "attrs": {}
 };
 </script>
 <section class="overlay">

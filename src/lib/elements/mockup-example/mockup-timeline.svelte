@@ -1,14 +1,12 @@
-<!-- Generated scaffold for overlay -->
+<!-- Generated scaffold for timeline -->
 <script lang="ts">
 export const mockup = {
-  "tag": "overlay",
-  "id": "chat-bar",
-  "attrs": {
-    "id": "chat-bar"
-  }
+  "tag": "timeline",
+  "id": null,
+  "attrs": {}
 };
 </script>
-<section class="overlay">
+<section class="timeline">
   {#if $$slots.default}
     {@render $$slots.default()}
   {:else}

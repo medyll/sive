@@ -1,14 +1,12 @@
-<!-- Generated scaffold for overlay -->
+<!-- Generated scaffold for spinner -->
 <script lang="ts">
 export const mockup = {
-  "tag": "overlay",
-  "id": "chat-bar",
-  "attrs": {
-    "id": "chat-bar"
-  }
+  "tag": "spinner",
+  "id": null,
+  "attrs": {}
 };
 </script>
-<section class="overlay">
+<section class="spinner">
   {#if $$slots.default}
     {@render $$slots.default()}
   {:else}

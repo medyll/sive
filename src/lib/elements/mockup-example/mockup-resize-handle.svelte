@@ -1,14 +1,12 @@
-<!-- Generated scaffold for overlay -->
+<!-- Generated scaffold for resize-handle -->
 <script lang="ts">
 export const mockup = {
-  "tag": "overlay",
-  "id": "chat-bar",
-  "attrs": {
-    "id": "chat-bar"
-  }
+  "tag": "resize-handle",
+  "id": null,
+  "attrs": {}
 };
 </script>
-<section class="overlay">
+<section class="resize-handle">
   {#if $$slots.default}
     {@render $$slots.default()}
   {:else}

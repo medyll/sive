@@ -12,18 +12,34 @@ node bmad/tools/convert-cmad.js path/to/mockup.cmad path/to/output/dir
 ```
 
 
+```markdown
+CMAD Master — Converter tool
+----------------------------
+
+The canonical ESM converter for this repository is now:
+
+- `src/lib/tools/convert-mockup.js`
+
+Usage
+
+```sh
+# from the repository root
+node src/lib/tools/convert-mockup.js bmad/references/mockup-master-reference.html
+```
+
 Behavior
-- The script scans the input for pseudo-tags like `<panel id="editor-panel" ...>` and generates one `.svelte` file per opening tag found.
-- Each generated `.svelte` file includes English comments describing the component role and identification information (tag, id, attributes) and an exported `mockup` object you can use while implementing.
+
+- The script scans the input for CMAD pseudo-tags and generates one `.svelte` scaffold per opening tag.
+- Generated files are written into `src/lib/elements` by default and are prefixed with `mockup-`.
 
 Notes
-- The converter is intentionally simple and uses a lightweight heuristic parser. For complex mockups or nested tag handling, improve the parser or provide sanitized input.
-- Output directory defaults to `./src/lib/elements` (project `$lib/elements`) when not provided. This matches the `bmad-master` convention where components live under `src/lib/elements`.
 
-- Generated filenames are prefixed with `mockup-` (for example `mockup-panel-editor-panel.svelte`) to indicate these are scaffolds produced from mockups.
+- This converter is a lightweight heuristic tool intended for scaffolding. For complex nested mockups, use a proper parser or sanitize input first.
 
 Example
-- Input: `bmad/references/cmad-master-reference.html` (or any file with the CMAD pseudo-HTML snippet).
-- Command: `node bmad/tools/convert-cmad.js bmad/references/cmad-master-reference.html`.
 
-After generation you can copy the generated files into `src/lib/components` and implement them as real Svelte components.
+- Input: `bmad/references/mockup-master-reference.html`.
+- Command: `node src/lib/tools/convert-mockup.js bmad/references/mockup-master-reference.html`.
+
+After generation you can refine components in `src/lib/elements` and implement full Svelte 5-compatible behavior.
+```

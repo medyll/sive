@@ -1,11 +1,4 @@
-<!--
-Generated Svelte scaffold from CMAD pseudo-HTML
-Tag: panel
-ID: ai-panel
-Attributes: {"id":"ai-panel"}
-This file is a scaffold. Implement component logic and styles during development.
--->
-
+<!-- Generated scaffold for panel -->
 <script lang="ts">
 export const mockup = {
   "tag": "panel",
@@ -15,16 +8,10 @@ export const mockup = {
   }
 };
 </script>
-
-<style>
-/* Add component styles here */
-</style>
-
-<!-- Basic structural mapping: panel → semantic section with class 'panel' -->
 <section class="panel">
   {#if $$slots.default}
-    <slot />
+    {@render $$slots.default()}
   {:else}
-    <!-- panel placeholder -->
+    <!-- placeholder -->
   {/if}
 </section>
