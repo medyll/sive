@@ -1,3 +1,15 @@
+# PRD — Placeholder
+
+Status: draft
+
+Overview
+--------
+
+This file will hold the product requirements document for the MVP.
+
+Primary feature: user authentication + content pages.
+
+Next: run `/prd` to generate a structured PRD based on repo analysis.
 # Product Requirements Document (PRD)
 
 ## Introduction

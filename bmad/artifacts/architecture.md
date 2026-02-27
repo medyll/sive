@@ -1,3 +1,14 @@
+# Architecture — Placeholder
+
+High-level architecture notes for Sive.
+
+- Frontend: SvelteKit svelte-5 + Vite
+- Backend: server routes in SvelteKit; Drizzle ORM (SQLite)
+- Auth: Better-Auth with drizzleAdapter
+
+Next actions:
+- Add data model for auth in `src/lib/server/db/schema.ts`
+- Document plugin order in `src/lib/server/auth.ts`
 # Architecture Document
 
 ## System Design
