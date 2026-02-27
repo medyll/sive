@@ -2,7 +2,7 @@
 Template: convert-mockup-template.html
 
 This Markdown file contains the HTML template used by
-`src/lib/tools/convert-mockup.js` to generate Svelte 5 component
+`src/lib/tools/mockup/convert-mockup.js` to generate Svelte 5 component
 scaffolds. The template includes placeholders that are replaced at
 generation time:
 
@@ -31,30 +31,25 @@ Placeholders:
    */
   export type {{COMPONENT_NAME}}Props = {
     children?: import('svelte').Snippet;
-    [key: string]: any; // Allow for spread attributes
+    [key: string]: any;
   };
 
   export const mockup = {{ATTRS_JSON}};
 </script>
 
 <script lang="ts">
-  // Destructuring props with Svelte 5 runes
-  // 'children' replaces the default slot
   // '...rest' captures any other attributes (id, class, etc.)
   let { children, ...rest }: {{COMPONENT_NAME}}Props = $props();
 </script>
 
-<style>
+<section class="{{TAG}}" {...rest}>
+    {@render children?.()}
+</section>
+
+<style lang="postcss">
   .{{TAG}} {
     /* Component styles */
   }
 </style>
-
-<section class="{{TAG}}" {...rest}>
-  {#if children}
-    {@render children()}
-  {:else}
-    {/if}
-</section>
 
 ```

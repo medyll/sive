@@ -10,4 +10,5 @@ notes: |
   - Database: SQLite (drizzle-orm)
   - Auth: better-auth (server-side)
   - Testing: vitest + Playwright
+  - Layout descriptor (canonical): src/interfaces/layout.html
   Replace other placeholders above with any project-specific overrides.

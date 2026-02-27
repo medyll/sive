@@ -18,13 +18,13 @@ CMAD Master — Converter tool
 
 The canonical ESM converter for this repository is now:
 
-- `src/lib/tools/convert-mockup.js`
+- `src/lib/tools/mockup/convert-mockup.js`
 
 Usage
 
 ```sh
 # from the repository root
-node src/lib/tools/convert-mockup.js bmad/references/mockup-master-reference.html
+node src/lib/tools/mockup/convert-mockup.js bmad/references/mockup-master-reference.html
 ```
 
 Behavior
@@ -39,7 +39,7 @@ Notes
 Example
 
 - Input: `bmad/references/mockup-master-reference.html`.
-- Command: `node src/lib/tools/convert-mockup.js bmad/references/mockup-master-reference.html`.
+- Command: `node src/lib/tools/mockup/convert-mockup.js bmad/references/mockup-master-reference.html`.
 
 After generation you can refine components in `src/lib/elements` and implement full Svelte 5-compatible behavior.
 ```

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
  * ESM MOCKUP -> Svelte scaffold converter (canonical)
- * Usage: node src/lib/tools/convert-mockup.js <input-file> [output-dir]
+ * Usage: node src/lib/tools/mockup/convert-mockup.js <input-file> [output-dir]
  */
 
 import fs from 'fs/promises';
@@ -40,22 +40,39 @@ function extractInner(content, tag, fromIndex) {
   return content.substring(start, end).trim();
 }
 
-function makeFilename(tag, id, fallbackIdx) {
-  // Prefer tag + id when available. If no id, use tag only (no numeric suffixes).
-  const base = id ? `${tag}-${id}` : `${tag}`;
-  const safe = base.replace(/[^a-zA-Z0-9-_]/g, '-');
-  return `mockup-${safe}.svelte`;
+function makeFilename(tag) {
+  // Only use tag for filename, e.g. badge.svelte
+  return `${tag}.svelte`;
 }
 
 async function generateSvelte(tag, id, attrs, inner) {
-  // Attempt to load template file from tools folder
-  const templatePath = path.resolve('./src/lib/tools/convert-mockup-template.html');
-  let tpl;
+  // Attempt to load template file from tools/mockup folder (markdown or html)
+  const mdTemplatePath = path.resolve('./src/lib/tools/mockup/convert-mockup-template.md');
+  const htmlTemplatePath = path.resolve('./src/lib/tools/mockup/convert-mockup-template.html');
+  let tplRaw;
   try {
-    tpl = await fs.readFile(templatePath, 'utf8');
+    // Prefer markdown template if present
+    tplRaw = await fs.readFile(mdTemplatePath, 'utf8');
+    // If it's markdown, try to extract the first ```html fenced block
+    const fenceHtml = /```html\s*([\s\S]*?)```/i.exec(tplRaw);
+    if (fenceHtml && fenceHtml[1]) {
+      tplRaw = fenceHtml[1].trim();
+    } else {
+      // If no html fence, also try generic triple-backtick block
+      const fenceAny = /```(?:html)?\s*([\s\S]*?)```/.exec(tplRaw);
+      if (fenceAny && fenceAny[1]) tplRaw = fenceAny[1].trim();
+    }
   } catch (e) {
-    // Fallback: minimal inline template
-    tpl = `<!-- Generated scaffold for {{TAG}} -->\n<script lang="ts">\nexport const mockup = {{ATTRS_JSON}};\n</script>\n<section class=\"{{TAG}}\">\n  {#if $$slots.default}\n    {@render $$slots.default()}\n  {:else}\n    <!-- placeholder -->\n  {/if}\n</section>`;
+    try {
+      tplRaw = await fs.readFile(htmlTemplatePath, 'utf8');
+    } catch (e2) {
+      tplRaw = null;
+    }
+  }
+
+  const tpl = tplRaw;
+  if (!tpl) {
+    throw new Error(`No template found for convert-mockup. Checked paths:\n - ${mdTemplatePath}\n - ${htmlTemplatePath}\nPlease create a template at one of these locations (markdown with an HTML fenced block or an HTML file).`);
   }
 
   // Helpers
@@ -82,30 +99,35 @@ function ensureDir(dir) {
 }
 
 export async function convertMockup(content, outDir = path.resolve('./src/lib/elements')) {
-  const tags = findOpeningTags(content);
-  // Only generate components for the CMAD semantic pseudo-tags
+  // Find all <!-- [...] comments and the tag immediately following
   const allowed = new Set([
     'row', 'column', 'panel', 'toolbar', 'text-zone', 'chat-bubble', 'tab-bar', 'tab', 'overlay', 'spinner', 'timeline', 'diff-view', 'badge', 'resize-handle'
   ]);
-  const filtered = tags.filter(t => allowed.has(t.tag));
+  const commentTagRe = /<!--\s*\[([\w-]+)\][^>]*-->\s*<(\w[\w-]*)/g;
+  const found = new Set();
+  let m;
   ensureDir(outDir);
-  let idx = 1;
   const written = [];
-  for (const t of filtered) {
-    const attrs = parseAttributes(t.rawAttrs);
+  while ((m = commentTagRe.exec(content))) {
+    const tag = m[2];
+    if (!allowed.has(tag) || found.has(tag)) continue;
+    found.add(tag);
+    // Find the first opening tag for this component
+    const tagRe = new RegExp(`<${tag}([^>]*)>`, 'i');
+    const tagMatch = tagRe.exec(content);
+    const rawAttrs = tagMatch ? tagMatch[1] : '';
+    const attrs = parseAttributes(rawAttrs);
     const id = attrs.id || attrs.name || null;
-    const inner = extractInner(content, t.tag, t.index);
-    const filename = makeFilename(t.tag, id, idx);
-    const svelte = await generateSvelte(t.tag, id, attrs, inner);
+    const inner = tagMatch ? extractInner(content, tag, tagMatch.index) : '';
+    const filename = makeFilename(tag);
+    const svelte = await generateSvelte(tag, id, attrs, inner);
     const outPath = path.join(outDir, filename);
     try {
-      // Always write/overwrite to ensure fresh scaffolds (folder was emptied per request)
       await fs.writeFile(outPath, svelte, 'utf8');
       written.push(outPath);
     } catch (e) {
       // continue
     }
-    idx++;
   }
   return written;
 }
@@ -113,15 +135,14 @@ export async function convertMockup(content, outDir = path.resolve('./src/lib/el
 export async function convertMockupFromFile(inputPath, outDir) {
   const input = path.resolve(inputPath);
   const content = await fs.readFile(input, 'utf8');
-  return convertMockup(content, outDir);
+  return await convertMockup(content, outDir);
 }
-
 // CLI
 if (process.argv && process.argv[1] && process.argv[1].endsWith('convert-mockup.js')) {
   (async () => {
     const argv = process.argv.slice(2);
     if (argv.length < 1) {
-      console.error('Usage: node src/lib/tools/convert-mockup.js <input-file> [output-dir]');
+      console.error('Usage: node src/lib/tools/mockup/convert-mockup.js <input-file> [output-dir]');
       process.exit(2);
     }
     try {
