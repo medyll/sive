@@ -1,3 +1,4 @@
+<!-- 1-interface-architecture.md -->
 ## 1. Interface Architecture (Layout)
 
 ### 1.1 Resizable Split-Screen

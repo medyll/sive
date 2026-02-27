@@ -2,7 +2,7 @@
 Template for AIPanel component
 -->
 <script lang="ts" module>
-  import type { TimelineEvent } from '$lib/shared/types/types';
+  import type { TimelineEvent } from '$lib/types/types';
 
   const props = () => ({
     events: [] as TimelineEvent[],

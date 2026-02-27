@@ -1,12 +1,12 @@
 // Data loader for Sive YAML project files
-// Uses types from types.ts
+// Uses types from ../types/types.ts
 import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
-import {
+import type {
   Theme, Motif, Symbol, NarrativeThread, StructureSchema, ProjectFileTree,
   CharacterSheet, ChapterSchema, TimelineSchema, CharacterEntry, LocationEntry, ObjectEntry, VehicleEntry, RelationEntry
-} from './types/types';
+} from '../types/types';
 
 // Utility to load and parse a YAML file
 export function loadYamlFile<T>(filePath: string): T {

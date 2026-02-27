@@ -63,7 +63,7 @@ function makeFilename(tag) {
  */
 async function generateSvelte(tag, id, attrs, inner) {
   const mdTemplatePath = path.resolve('./src/lib/tools/mockup/convert-mockup-template.md');
-  const htmlTemplatePath = path.resolve('./src/lib/tools/mockup/convert-mockup-template.html');
+  const htmlTemplatePath = path.resolve('./src/lib/tools/mockup/convert-component-template.md');
   let tplRaw;
   try {
     tplRaw = await fs.readFile(mdTemplatePath, 'utf8');

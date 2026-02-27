@@ -2,7 +2,7 @@
 Template for TabBar component
 -->
 <script lang="ts" module>
-  import type { Theme } from '$lib/shared/types/types';
+  import type { Theme } from '$lib/types/types';
 
   const props = () => ({
     tabs: [] as string[],

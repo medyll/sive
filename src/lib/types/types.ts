@@ -1,6 +1,6 @@
 /**
  * Theme, Motif, Symbol types for themes.yaml
- * See bmad/references/PROJECT.md > themes.yaml
+ * See bmad/references/project/5-ai-architecture-mcp-skills.md > themes.yaml
  */
 export interface Theme {
   id: string;
