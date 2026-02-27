@@ -1,49 +1,256 @@
 <!--
-Template for convert-mockup.js
-Placeholders:
-  TabBar - PascalCase component name (e.g. ChatBubble)
-  tab-bar - original mockup tag (e.g. chat-bubble)
-  null - id value or null
-  {
-  "tag": "tab-bar",
-  "id": null,
-  "attrs": {
-    "props": "id:string",
-    "component-role": "Tab bar for switching views"
-  }
-} - JSON object of attributes
+  Layout descriptor for the application's GUI.
+  Generated from bmad/references/PROJECT.md section 9 and validated against types/routes/demo/app.
+  Each component documents its props, fields, and behavior for implementation.
+  Location: bmad/references/sive-layout.html
 -->
-<script module lang="ts">
-  /**
-   * Component: TabBar
-   * Type definitions for external usage
-   */
-  export type TabBarProps = {
-    children?: import('svelte').Snippet;
-    [key: string]: any;
-  };
 
-  export const mockup = {
-  "tag": "tab-bar",
-  "id": null,
-  "attrs": {
-    "props": "id:string",
-    "component-role": "Tab bar for switching views"
-  }
-};
-</script>
+<template>
+  <text props="label:string" component-role="Display current project and chapter context" />
+  <button props="action:string;label:string" component-role="Trigger an action with a label" />
+  <panel props="id:string;default-width:string;resizable:boolean;collapsible:boolean;width:string;visible-when:string" component-role="Container for content, optionally resizable/collapsible" />
+  <row props="id:string;flex:boolean" component-role="Horizontal arrangement of child components" />
+  <column props="id:string;centered:boolean;full-height:boolean" component-role="Vertical arrangement of child components" />
+  <toolbar props="id:string;position:string" component-role="Toolbar for navigation or actions" />
+  <tab-bar props="id:string" component-role="Tab bar for switching views" />
+  <tab props="id:string;label:string;default-active:boolean" component-role="Tab for selecting a view" />
+  <spinner props="id:string;position:string;visible-when:string" component-role="Indicates processing state" />
+  <text-zone props="id:string;multiline:boolean;spellcheck:boolean;autosave:boolean;type:string;placeholder:string;inline:boolean;readonly:boolean" component-role="Editable or read-only text area" />
+  <resize-handle props="id:string;axis:string" component-role="Allows resizing between panels" />
+  <diff-view props="id:string;left:string;right:string;visible-when:string" component-role="Visual diff between two texts" />
+  <select props="id:string;source:string;options:string[]" component-role="Dropdown for selecting options" />
+  <overlay props="id:string;position:string;draggable:boolean;collapsible:boolean" component-role="Overlay for floating controls or chat" />
+  <badge props="id:string;position:string;visible-when:string" component-role="Indicator badge for status or notifications" />
+  <chat-bubble props="role:string" component-role="Bubble for displaying alerts, signals, or report items" />
+  <timeline props="id:string;source:string" component-role="Timeline for version history or events" />
+  <chart props="type:string;series:string[]" component-role="Chart for visualizing data" />
+</template>
 
-<script lang="ts">
-  // '...rest' captures any other attributes (id, class, etc.)
-  let { children, ...rest }: TabBarProps = $props();
-</script>
+<!-- [main-screen] : MAIN SCREEN — Writing Mode -->
+<column id="app-root" full-height role="Main application container">
+  <!-- [main-toolbar] : Fixed top main toolbar -->
+  <toolbar id="main-toolbar" role="Fixed top toolbar">
+    <!-- [text-toolbar] : Active project name + chapter -->
+    <text label="active_project / current_chapter" role="Project and chapter display" />
+    <!-- Global actions -->
+    <button action="focus-mode"  label="Focus" role="Toggle focus mode" behavior="Hides right panel" />
+    <button action="review-mode" label="Review" role="Switch to review mode" />
+    <button action="harden"      label="💾 New version" role="Trigger versioning" behavior="Creates new version" />
+    <button action="settings"    label="⚙" role="Open settings" />
+  </toolbar>
 
-<section class="tab-bar" {...rest}>
-    {@render children?.()}
-</section>
+  <!-- [main-body] : Main body — resizable split -->
+  <row id="main-body" role="Main body split: editor + AI panel" />
 
-<style lang="postcss">
-  .tab-bar {
-    /* Component styles */
-  }
-</style>
+    <!--[left-panel] LEFT PANEL — Editor -->
+    <panel id="editor-panel" default-width="55%" resizable role="Editor panel" />
+      <text-zone
+        id="main-editor"
+        fields="text:string"
+        role="Main editor for current chapter"
+        behavior="Edits .md narrative, triggers AI spinner on right panel"
+      />
+    </panel>
+
+    <!-- [resize-handle] : Resize handle between the two panels -->
+    <resize-handle id="split-handle" axis="horizontal" role="Panel resize handle" />
+
+    <!-- [right-panel] : RIGHT PANEL — AI & Tools -->
+    <panel id="ai-panel" default-width="45%" resizable collapsible role="AI & tools panel" />
+
+      <!-- [right-panel-tab-bar] : Right panel tab bar -->
+      <tab-bar id="ai-tabs" role="Tab bar for right panel" />
+        <tab id="tab-suggestions" label="Suggestions" default-active role="Suggestions tab" />
+        <tab id="tab-coherence"   label="Coherence" role="Coherence tab" />
+        <tab id="tab-style"       label="Style" role="Style tab" />
+        <tab id="tab-history"     label="History" role="History tab" />
+      </tab-bar>
+
+      <!-- [ai-spinner] : AI Spinner — visible during processing, in the right panel -->
+      <spinner
+        id="ai-spinner"
+        role="AI processing indicator"
+        behavior="Appears when AI is running, hides when result is ready"
+      />
+
+      <!-- [tab-content-suggestions] Suggestions tab content -->
+      <panel id="tab-content-suggestions" visible-when="tab-suggestions-active" role="Suggestions tab content" />
+        <!-- List of AI proposals as a diff -->
+        <diff-view
+          id="suggestions-diff"
+          fields="changes:[{id, type, diff}]"
+          role="AI proposals diff view"
+          behavior="Each change is a proposal; can accept/reject individually; click for details"
+        />
+        <row id="suggestion-actions" role="Suggestion actions" >
+          <button action="accept-suggestion" label="Accept" role="Accept selected suggestion" />
+          <button action="reject-suggestion" label="Reject" role="Reject selected suggestion" />
+          <button action="accept-all"        label="Accept all" role="Accept all suggestions" />
+        </row>
+      </panel>
+
+      <!-- [tab-content-coherence] : Coherence tab content -->
+      <panel id="tab-content-coherence" visible-when="tab-coherence-active" role="Coherence tab content" />
+        <!-- List of alerts produced by skill_coherence -->
+        <!-- Each alert: concerned entity + discrepancy type + confidence level -->
+        <column id="coherence-alerts" role="List of coherence alerts" >
+          <chat-bubble
+            role="coherence-alert"
+            fields="entity:string;discrepancy_type:string;confidence:number;note:string"
+            behavior="Color: low=grey, medium=orange, high=red"
+          />
+          <!-- One bubble per detected alert -->
+        </column>
+      </panel>
+
+      <!-- [tab-content-style] : Style tab content -->
+      <panel id="tab-content-style" visible-when="tab-style-active" role="Style tab content" >
+        <button action="analyse-passage" label="Analyse this passage" role="Analyse passage" />
+        <column id="style-results" role="Style analysis results" >
+          <chat-bubble role="style-signal" fields="location:string;signal:string;suggestion:string" />
+        </column>
+      </panel>
+
+      <!-- [tab-content-history] : History tab content -->
+      <panel id="tab-content-history" visible-when="tab-history-active" role="History tab content" >
+        <timeline
+          id="harden-timeline"
+          fields="points:[{label:string,message:string,date:string}]"
+          role="Harden version timeline"
+          behavior="Click = preview version; each point = Harden"
+        />
+        <row id="diff-controls" role="Diff controls" >
+          <text label="Compare:" />
+          <select id="version-a" source="harden-list" />
+          <text label="↔" />
+          <select id="version-b" source="harden-list" />
+          <button action="launch-diff" label="View differences" role="Launch diff" />
+        </row>
+        <diff-view id="version-diff" visible-when="diff-launched" role="Version diff view" />
+      </panel>
+
+    </panel>
+  </row>
+
+  <!-- [chat-bar] : OVERLAY — Floating chat bar (voice commands + image upload) -->
+  <overlay id="chat-bar" position="bottom-center" draggable collapsible role="Floating chat bar" >
+    <row >
+      <button action="toggle-voice" icon="mic"   label="Voice" role="Toggle voice input (LiveKit)" />
+      <text-zone id="chat-input" role="text or voice command to AI" inline />
+      <button action="upload-image" icon="image" label="Image" role="Upload image" />
+      <button action="send"         icon="send"  label="Send" role="Send chat input" />
+    </row>
+  </overlay>
+
+  <!-- [suggestions-ready-badge] : BADGE — Coloured dot indicating AI suggestions are ready Discreet indicator in Focus Mode (right panel hidden) -->
+  <badge
+    id="suggestions-ready-badge"
+    role="Suggestions ready indicator"
+    behavior="Shows when focus mode and suggestions available"
+  />
+
+</column>
+
+
+<!--  [onboarding-screen] : ONBOARDING SCREEN — First launch -->
+<column id="onboarding-screen" centered role="Onboarding screen" >
+
+  <!-- [step-name] : Step 1 — Name -->
+  <panel id="step-name" visible-when="step === 1" role="Onboarding step: name" >
+    <text-zone
+      id="input-name"
+      role="First name or pseudonym input"
+      behavior="Loose validation: any non-empty string"
+    />
+    <button action="next-step" label="Continue →" role="Continue to next step" />
+  </panel>
+
+  <!-- [step-security] : Step 2 — Security choice -->
+  <panel id="step-security" visible-when="step === 2" role="Onboarding step: security choice" >
+    <text label="Do you want to protect your space?" />
+    <column id="security-options" role="Security options" >
+      <button action="no-password"  label="Direct access — no password" role="Direct access (no password)" />
+      <button action="set-password" label="Create a password" role="Set password" />
+      <button action="use-oauth"    label="Sign in with an existing account" role="Sign in with OAuth" />
+    </column>
+  </panel>
+
+  <!-- [step-password] Step 2b — Password entry (if password chosen) -->
+  <panel id="step-password" visible-when="step === 2b" role="Onboarding step: password entry" >
+    <text-zone id="input-password"  role="password input"        type="password" placeholder="Password" />
+    <text-zone id="input-password2" role="password confirmation" type="password" placeholder="Confirm" />
+    <button action="confirm-password" label="Confirm" role="Confirm password" />
+  </panel>
+
+  <!-- [step-oauth] : Step 2c — OAuth provider choice (if OAuth chosen) -->
+  <panel id="step-oauth" visible-when="step === 2c" role="Onboarding step: OAuth provider" >
+    <text label="Choose a provider:" />
+    <column id="oauth-providers" role="OAuth provider options" >
+      <button action="oauth-google"  label="Continue with Google" role="Continue with Google" />
+      <button action="oauth-github"  label="Continue with GitHub" role="Continue with GitHub" />
+      <button action="oauth-apple"   label="Continue with Apple" role="Continue with Apple" />
+      <!-- extensible: oauth-discord, oauth-microsoft, etc. -->
+    </column>
+  </panel>
+
+</column>
+
+
+<!-- [review-screen] :REVIEW MODE SCREEN -->
+<column id="review-screen" role="Review mode screen" >
+  <!--  [toolbar] -->
+  <toolbar id="review-toolbar" position="top" role="Review toolbar" >
+    <text label="Review Mode" />
+    <select id="scope-selector" options="[selected passage, current chapter, entire volume]" role="Scope selector" />
+    <button action="launch-review" label="Run analysis" role="Run review analysis" />
+    <button action="exit-review"   label="← Back to writing" role="Exit review mode" />
+    <button action="export-report" label="Export report" role="Export report (.md/.pdf)" />
+  </toolbar>
+  <!--  [review-body] -->  
+  <row id="review-body" role="Review body" >
+
+    <!-- [review-text] : Read-only text with highlights -->
+    <panel id="review-text" width="55%" role="Read-only text panel" >
+      <!-- Flagged passages are highlighted -->
+      <!-- Click on a highlight = scroll to the corresponding alert -->
+      <text-zone
+        id="text-readonly"
+        role="Narrative text in read-only mode"
+      />
+    </panel>
+
+    <!-- [review-report] : Structured audit report -->
+    <panel id="review-report" width="45%" role="Structured audit report" >
+      <column id="report-sections"  role="Report sections" >
+        <panel id="report-inconsistencies" role="Inconsistencies section" >
+          <text label="Inconsistencies" role="section-header" />
+          <chat-bubble role="report-item" fields="entity:string;description:string;confidence:number" />
+        </panel>
+        <panel id="report-pov" role="Point of View section" >
+          <text label="Point of View" role="section-header" />
+          <chat-bubble role="report-item" fields="location:string;detected_deviation:string" />
+        </panel>
+        <panel id="report-threads" role="Narrative Threads section" >
+          <text label="Narrative Threads" role="section-header" />
+          <chat-bubble role="report-item" fields="thread_id:string;status:string;note:string" />
+        </panel>
+        <panel id="report-tension" role="Tension Curve section" >
+          <text label="Tension Curve" role="section-header" />
+          <chart type="line" series="[actual_tension, target_tension]" role="Line chart: tension" />
+        </panel>
+        <panel id="report-themes" role="Themes & Motifs section" >
+          <text label="Themes & Motifs" role="section-header" />
+          <chat-bubble role="report-item" fields="motif_id:string;presence:string;consistency:string" />
+        </panel>
+        <panel id="report-voices" role="Character Voices section" >
+          <text label="Character Voices" role="section-header" />
+          <chat-bubble role="report-item" fields="character_id:string;register_deviation:string;example:string" />
+        </panel>
+        <panel id="report-style" role="Style & Rhythm section" >
+          <text label="Style & Rhythm" role="section-header" />
+          <chat-bubble role="report-item" props="role:string" fields="signal_type:string;location:string;suggestion:string" />
+        </panel>
+      </column>
+    </panel>
+  </row>
+</column>

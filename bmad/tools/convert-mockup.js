@@ -1,13 +1,20 @@
 #!/usr/bin/env node
 
 /**
- * ESM MOCKUP -> Svelte scaffold converter (canonical)
- * Usage: node src/lib/tools/mockup/convert-mockup.js <input-file> [output-dir]
+ * ESM MOCKUP -> Svelte-5 with runes scaffold converter (canonical)
+ * Usage: node src/bmad/tools/convert-mockup.js <input-file> [output-dir]
  */
 
 import fs from 'fs/promises';
 import { existsSync, mkdirSync } from 'fs';
 import path from 'path';
+
+// CLI parameters (defaults match the npm script in package.json)
+// Usage: node src/bmad/tools/convert-mockup.js <input-file> [output-dir]
+const PARAMETERS = {
+  input: process.argv[2] ?? './bmad/references/sive-layout.html',
+  outDir: process.argv[3] ?? 'src/lib/elements/mockups'
+};
 
 /**
  * Parses HTML attributes from a string into an object.
@@ -62,8 +69,10 @@ function makeFilename(tag) {
  * @returns {Promise<string>} - The generated Svelte component content.
  */
 async function generateSvelte(tag, id, attrs, inner) {
-  const mdTemplatePath = path.resolve('./src/lib/tools/mockup/convert-mockup-template.md');
-  const htmlTemplatePath = path.resolve('./src/lib/tools/mockup/convert-component-template.md');
+  // Prefer a local markdown template if present under bmad/tools/mockup,
+  // otherwise fall back to the repository mockup HTML at bmad/references.
+  const mdTemplatePath = path.resolve('./bmad/tools/mockup/convert-mockup-template.md');
+  const htmlTemplatePath = path.resolve('./bmad/references/sive-layout.html');
   let tplRaw;
   try {
     tplRaw = await fs.readFile(mdTemplatePath, 'utf8');
@@ -161,13 +170,14 @@ async function convertMockupFromFile(inputPath, outDir) {
 // CLI
 if (process.argv && process.argv[1] && process.argv[1].endsWith('convert-mockup.js')) {
   (async () => {
-    const argv = process.argv.slice(2);
-    if (argv.length < 1) {
-      console.error('Usage: node src/lib/tools/mockup/convert-mockup.js <input-file> [output-dir]');
+    const inputPath = PARAMETERS.input;
+    const outDir = PARAMETERS.outDir;
+    if (!inputPath) {
+      console.error('Usage: node ./src/bmad/tools/convert-mockup.js <input-file> [output-dir]');
       process.exit(2);
     }
     try {
-      const written = await convertMockupFromFile(argv[0], argv[1]);
+      const written = await convertMockupFromFile(inputPath, outDir);
       console.log('Generated', written.length, 'component(s):');
       for (const w of written) console.log(' -', w);
     } catch (err) {

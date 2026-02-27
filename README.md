@@ -23,7 +23,7 @@ Sive is an AI-powered writing assistant designed for authors, screenwriters, and
 Sive uses a mockup-to-component templating system for rapid UI prototyping and reference. The goal is to provide some reference code for the ai follow svelte-5 rules.
 The mockup for the updated application layout is provided in the [bmad\references\sive-layout.html](bmad\references\sive-layout.html)
 - **Source:** HTML application mockup file (sive-layout) with custom tags and attributes. The application layout
-- **Conversion:** Run `node src/lib/tools/mockup/convert-mockup.js <input-file> [output-dir]` to generate Svelte 5 component scaffolds.
+- **Conversion:** Run `node ./src/bmad/tools/convert-mockup.js <input-file> [output-dir]` to generate Svelte 5 component scaffolds.
 - **Template:** The template for the components is defined in [`convert-mockup-template.md`](src/lib/tools/mockup/convert-mockup-template.md) and includes placeholders:
 	- `{{COMPONENT_NAME}}`: PascalCase component name
 	- `{{TAG}}`: original mockup tag
@@ -31,7 +31,7 @@ The mockup for the updated application layout is provided in the [bmad\reference
 	- `{{ATTRS_JSON}}`: JSON object of attributes
 - **Output:** Components are generated in `src/lib/elements/mockups/`., following Bits UI standards (headless, accessible, snippet-based).
 
-See [`convert-mockup.js`](src/lib/tools/mockup/convert-mockup.js) for implementation details.
+See [`convert-mockup.js`](src/bmad/tools/convert-mockup.js) for implementation details.
 
 ---
 

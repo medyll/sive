@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"gen:mockups": "node src/lib/tools/mockup/convert-mockup.js ./bmad/references/sive-layout.html src/lib/elements/mockups",
+		"gen:mockups": "node ./bmad/tools/convert-mockup.js ./bmad/references/sive-layout.html src/lib/elements/mockups",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",

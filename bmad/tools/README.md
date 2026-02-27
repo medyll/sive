@@ -1,7 +1,7 @@
-CMAD Master — Converter tool
+MOCKUP Master — Converter tool
 ----------------------------
 
-This folder contains a small converter that turns CMAD pseudo-HTML mockups into Svelte scaffold files.
+This folder contains a small converter that turns mockup pseudo-HTML mockups into Svelte scaffold files.
 The mockups are only used to help ai to keep consistency for the svelte-5 language, as a weight reference.
 
 Files
@@ -19,18 +19,18 @@ CMAD Master — Converter tool
 
 The canonical ESM converter for this repository is now:
 
-- `src/lib/tools/mockup/convert-mockup.js`
+- `src/bmad/tools/convert-mockup.js`
 
 Usage
 
 ```sh
 # from the repository root
-node src/lib/tools/mockup/convert-mockup.js bmad/references/mockup-master-reference.html
+node src/bmad/tools/convert-mockup.js bmad/references/mockup-master-reference.html
 ```
 
 Behavior
 
-- The script scans the input for CMAD pseudo-tags and generates one `.svelte` scaffold per opening tag.
+- The script scans the input for mockup pseudo-tags and generates one `.svelte` scaffold per opening tag.
 - Generated files are written into `src/lib/elements` by default and are prefixed with `mockup-`.
 
 Notes
@@ -39,8 +39,9 @@ Notes
 
 Example
 
-- Input: `bmad/references/mockup-master-reference.html`.
-- Command: `node src/lib/tools/mockup/convert-mockup.js bmad/references/mockup-master-reference.html`.
+- Input: `bmad/references/convert-component-template.md`.
+- Command: `node src/bmad/tools/convert-mockup.js bmad/references/convert-component-template.md`.
+- pnpm run gen:mockups
 
-After generation you can refine components in `src/lib/elements` and implement full Svelte 5-compatible behavior.
+After generation you can copy and refine components in `src/lib/elements` and implement full Svelte 5-compatible behavior.
 ```

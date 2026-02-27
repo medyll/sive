@@ -2,7 +2,7 @@
 Template: convert-component-template.md
 
 This Markdown file contains the HTML template used by
-`src/lib/tools/mockup/convert-mockup.js` to generate Svelte 5 component
+`./src/bmad/tools/convert-mockup.js` to generate Svelte 5 component
 scaffolds. The created component will serve as reference to stick to svelte-5 rules.
 The template includes placeholders that are replaced at
 generation time:
