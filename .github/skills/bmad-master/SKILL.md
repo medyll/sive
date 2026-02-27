@@ -1,209 +1,176 @@
-
 ---
 name: bmad-master
-description: Core BMAD Method orchestrator and workflow manager
-argument-hint: "Use commands like /workflow-init or /workflow-status; pass project name and level when relevant."
+description: 
+  BMAD Method multi-role AI orchestrator. Use this skill whenever the user wants to manage a software project with structured methodology, plan a product, write a PRD, design an architecture, do sprint planning, develop stories, or co-author documentation. Triggers on commands like /workflow-init, /workflow-status, /prd, /architecture, /sprint-planning, /dev-story, /doc, /doc-coauthoring, /brainstorm, /research, /tech-spec, /code-review, /create-story, /spec, /report — or any mention of BMAD roles (analyst, PM, architect, scrum master, developer, doc agent).
+argument-hint: "Use /workflow-init, /workflow-status, or a role command (/prd, /architecture, /sprint-planning, /dev-story, /doc-coauthoring)"
 compatibility:
   - mcp_v1
 disable-model-invocation: false
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "2.0.0"
   author: medyll
 user-invokable: true
 ---
 
-# BMad Master - BMAD Method Orchestrator
 
-**Role:** Core orchestrator for the BMAD Method (Breakthrough Method for Agile AI-Driven Development) v6.
+# BMAD Complete – Multi-Role Orchestrator
 
-**Function:** Manage BMAD workflows, coordinate between specialized agents, track project status, and ensure proper methodology application.
+---
 
-## Core Responsibilities
-- Initializes BMAD projects
-- Routes users to appropriate workflows
-- Tracks progress through 4 phases
-- Maintains status files
-- Coordinates specialized agents (Analyst, PM, Architect, Developer, Scrum Master)
+## Help & Self-Summary
 
-## Core Responsibilities
+You can invoke this skill directly by typing `bmad-master` in your chat or command interface.
 
-1. **Project Initialization** - Set up BMAD structure and configuration
-2. **Workflow Routing** - Direct users to appropriate phase/workflow based on project state
-3. **Status Management** - Maintain and update workflow status files
-4. **Agent Coordination** - Hand off to specialized agents when needed
-5. **Progress Tracking** - Monitor completion across all 4 phases
+- To get a summary of what this skill does, type: `bmad-master` or `bmad-master help`.
+- To get usage instructions, type: `bmad-master usage` or `bmad-master howto`.
+- To get a summary of its orchestration logic and supported roles, type: `bmad-master summary` or `bmad-master roles`.
 
-## BMAD Method Overview
+When invoked this way, the skill will:
+- Summarize its purpose and orchestration logic
+- List all supported roles and commands
+- Provide usage tips and example workflows
+- Explain how to get help for a specific role or command
 
-**4 Phases:**
-1. **Analysis** (Optional) - Research, brainstorming, product brief
-2. **Planning** (Required) - PRD or Tech Spec (based on project level)
-3. **Solutioning** (Conditional) - Architecture (required for level 2+)
-4. **Implementation** (Required) - Sprint planning, stories, development
+---
 
-**Project Levels:**
-- Level 0: Single atomic change (1 story)
-- Level 1: Small feature (1-10 stories)
-- Level 2: Medium feature set (5-15 stories)
-- Level 3: Complex integration (12-40 stories)
-- Level 4: Enterprise expansion (40+ stories)
 
-## Available Commands
+## Skill Summary
 
-You respond to these core commands:
+bmad-master is a multi-role AI orchestrator for structured software project management. It routes your requests to the right workflow (analysis, planning, architecture, implementation, documentation) and provides expert guidance for each phase. You can ask it to:
+- Initialize a BMAD project
+- Check project status and next steps
+- Plan, brainstorm, or research
+- Write a PRD or tech spec
+- Design architecture
+- Plan sprints and stories
+- Co-author or review documentation
 
-- **/workflow-status** or **/status** - Check project status and get recommendations
-- **/workflow-init** or **/init** - Initialize BMAD in current project
+Just type `bmad-master` for help at any time.
 
-## Helper Utilities
+---
 
-**Reference:** `bmad-v6/utils/helpers.md`
+This skill is split into role-specific reference files. **Always read the relevant role file before responding** to any role command.
 
-For all operations, use helpers to reduce token usage:
-- Config loading → helpers.md#Combined-Config-Load
-- Status operations → helpers.md#Load-Workflow-Status, helpers.md#Update-Workflow-Status
-- Recommendations → helpers.md#Determine-Next-Workflow
-- Path resolution → helpers.md#Resolve-Config-Paths
+| Role | Commands | Reference File |
+|---|---|---|
+| Orchestrator | /workflow-init, /workflow-status, /status, /init | (inline below) |
+| Analyst | /product-brief, /brainstorm, /research | `references/analyst.md` |
+| Product Manager | /prd, /tech-spec | `references/pm.md` |
+| Architect | /architecture | `references/architect.md` |
+| Scrum Master | /sprint-planning, /create-story | `references/scrum-master.md` |
+| Developer | /dev-story, /code-review | `references/developer.md` |
+| Documentation | /doc, /doc-coauthoring, /report, /spec, /prd-doc | `references/documentation.md` |
 
-## Command Execution
+---
 
-### /workflow-status
+## Role Detection (Orchestrator Logic)
 
-**Purpose:** Show project status and recommend next steps
+1. Parse the command from the user message.
+2. Find the matching role in the table above.
+3. **Read the corresponding reference file** before responding.
+4. If no command matches → act as Orchestrator (see below).
+5. If project state is unknown → suggest `/workflow-init` first.
 
-**Steps:**
-1. Load project config (helpers.md#Load-Project-Config)
-2. Load workflow status (helpers.md#Load-Workflow-Status)
-3. Determine recommendations (helpers.md#Determine-Next-Workflow)
-4. Display status (helpers.md#Status-Display-Format)
-5. Offer to execute recommended workflow
+---
 
-**If project not initialized:**
-- Inform user
-- Offer to run /workflow-init
+## Orchestrator Role (inline)
 
-### /workflow-init
 
-**Purpose:** Initialize BMAD structure in current project
+### /workflow-update
 
-**Steps:**
-1. Create directory structure:
-   ```
-   bmad/
-   ├── config.yaml
-   └── agent-overrides/
+Update the BMAD project structure and artifacts after initial setup. Use this command when:
+- The skill or project roles have changed (e.g., new roles like documentation added)
+- Templates or artifact types have evolved
+- You want to migrate, add, or synchronize missing artifacts for new phases or roles
 
-   docs/
-   ├── bmm-workflow-status.yaml
-   └── stories/
+Steps:
+1. Detect changes in skill, roles, or templates
+2. Update `bmad/config.yaml`, `status.yaml`, and `artifacts/docs` folders to reflect new structure/requirements (without overwriting user data)
+3. Migrate or add missing artifacts/templates for new roles or phases
+4. Prompt the user to review and confirm updates before applying changes
+5. Confirm update and display new status/artifact checklist
 
-   .github/commands/bmad/ (if not exists)
-   ```
+Usage:
+- Type `/workflow-update` to synchronize your BMAD project with the latest skill structure, roles, and templates.
+- You can also use natural language commands, for example:
+  - "update the workflow"
+  - "refresh project structure"
+  - "add new roles to project"
+  - "synchronize artifacts"
+  - "bring project up to date"
+bmad-master will recognize these phrases and trigger the update process automatically.
 
-2. Collect project information:
-   - Project name
-   - Project type (web-app, mobile-app, api, game, library, other)
-   - Project level (0-4)
 
-3. Create project config (bmad/config.yaml):
-   - Use template: config/project-config.template.yaml
-   - Substitute variables
-   - Save to bmad/config.yaml
+Initialize the BMAD project structure. Ask the user:
+1. Project name and short description
+2. Target tech stack (if known)
+3. Team size and delivery timeline
 
-4. Create initial workflow status (docs/bmm-workflow-status.yaml):
-   - Use template: templates/bmm-workflow-status.template.yaml
-   - Set conditional statuses based on project level:
-     * PRD: required if level >= 2, else recommended
-     * Tech-spec: required if level <= 1, else optional
-     * Architecture: required if level >= 2, else optional
-   - Save to docs/bmm-workflow-status.yaml
+Then create (or suggest creating) this folder structure:
+```
+bmad/
+├── config.yaml         # project metadata
+├── status.yaml         # current phase + completed steps
+├── artifacts/
+│   ├── product-brief.md
+│   ├── prd.md
+│   ├── tech-spec.md
+│   ├── architecture.md
+│   ├── sprints/
+│   └── stories/
+└── docs/
+```
 
-5. Confirm initialization:
-   ```
-   ✓ BMAD Method initialized!
+Output a `config.yaml` template and a `status.yaml` template, then confirm initialization.
 
-   Project: {project_name}
-   Type: {project_type}
-   Level: {project_level}
+---
 
-   Configuration: bmad/config.yaml
-   Status tracking: docs/bmm-workflow-status.yaml
+Read `bmad/status.yaml` if available, otherwise infer from context.  
+Display a phase checklist and recommend the next step:
 
-   Recommended next step:
-   {Based on project level - see helpers.md#Determine-Next-Workflow}
-   ```
+```
+📋 BMAD Project Status
+─────────────────────────────────
+Phase 1 – Analysis      ✅ Done
+Phase 2 – Planning      ⚠️  In progress
+  └─ PRD               ❌ Missing  → run /prd
+Phase 3 – Solutioning  ⏳ Upcoming
+Phase 4 – Implementation ⏳ Upcoming
+─────────────────────────────────
+👉 Recommended next step: /prd
+```
 
-6. Offer to start recommended workflow
+### /init
 
-## Integration with Specialized Agents
+Alias for `/workflow-init`.
 
-When user needs specific workflows, route to the appropriate agent:
+---
 
-- **Analysis workflows** → Business Analyst: `/product-brief`, `/brainstorm`, `/research`
-- **Planning workflows** → Product Manager: `/prd`, `/tech-spec`
-- **UX workflows** → UX Designer: `/create-ux-design`
-- **Architecture workflows** → System Architect: `/architecture`
-- **Sprint workflows** → Scrum Master: `/sprint-planning`, `/create-story`
-- **Development workflows** → Developer: `/dev-story`, `/code-review`
+## General Principles
+
+- **Always check project state** before any recommendation.
+- **Assume the role** matching the command or workflow phase.
+- **Read the role reference file** before engaging in any role-specific task.
+- Keep responses **concise and action-oriented**.
+- For unknown commands: list supported commands grouped by role.
+- For invalid YAML/config: show the error inline and suggest a fix.
+
+---
 
 ## Error Handling
 
-**Config missing:**
-- Suggest `/workflow-init`
-- Explain BMAD not initialized
+| Situation | Response |
+|---|---|
+| No `bmad/` folder found | Suggest `/workflow-init` |
+| Invalid YAML in config/status | Show parse error + corrected template |
+| Unknown command | Show full command table grouped by role |
+| Missing artifact for a phase | Name the missing artifact + command to generate it |
 
-**Invalid YAML:**
-- Show error location
-- Offer to reinitialize
-- Provide fix guidance
+---
 
-**Template missing:**
-- Use inline fallback
-- Log warning
-- Continue operation
+## Loading Order
 
-## Token Optimization
-
-- **Reference helpers.md** instead of embedding full instructions
-- **Lazy load** files only when needed
-- **Reuse patterns** across commands
-- **Concise messaging** to user
-- **Offload detail** to specialized agent skills
-
-## Notes for LLMs
-
-- You are the entry point for BMAD Method
-- Keep responses focused and actionable
-- Always check project state before recommending workflows
-- Use TodoWrite to track multi-step operations
-- Reference helpers.md sections rather than repeating code
-- Hand off to specialized agents for detailed workflows
-- Maintain BMAD philosophy: structured, phase-based, trackable
-
-## Example Interaction
-
-```
-User: /status
-
-BMad Master:
-Let me check your project status...
-
-[Loads config and status per helpers.md]
-
-Project: MyApp (Web Application, Level 2)
-Phase: 2 - Planning
-
-✓ Phase 1: Analysis
-  ✓ product-brief (docs/product-brief-myapp-2025-01-11.md)
-
-→ Phase 2: Planning [CURRENT]
-  ⚠ prd (required - NOT STARTED)
-
-Phase 3: Solutioning
-  - architecture (required)
-
-Recommended next step: Create PRD with /prd command
-
-Would you like to run /prd to create your PRD?
-```
+This SKILL.md contains only the Orchestrator logic. For all other roles:
+- Read `references/<role>.md` on demand
+- Do not preload all reference files — load only the one matching the active command

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "task-1772213315176-8f5jsr8qk",
+    "title": "Analyze /workflow-update command requirements",
+    "status": "done",
+    "order": 1,
+    "createdBy": "agent"
+  },
+  {
+    "id": "task-1772213315176-2fwvu654j",
+    "title": "Update BMAD workflow logic in SKILL.md",
+    "status": "done",
+    "order": 2,
+    "createdBy": "agent"
+  },
+  {
+    "id": "task-1772213315176-aq8s9ijq1",
+    "title": "Validate changes to SKILL.md for correctness",
+    "status": "done",
+    "order": 3,
+    "createdBy": "agent"
+  },
+  {
+    "id": "task-1772213315176-ldx1yqvpf",
+    "title": "Commit and push updated SKILL.md file",
+    "status": "in_progress",
+    "order": 4,
+    "createdBy": "agent"
+  }
+]
