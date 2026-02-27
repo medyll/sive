@@ -1,46 +1,95 @@
-# sv
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+# Sive — AI-Assisted Writing Software
 
-## Creating a project
+Sive is an AI-powered writing assistant designed for authors, screenwriters, and creative professionals. It helps you write, edit, and refine narrative text with real-time AI suggestions, coherence checks, and stylistic analysis. Built with SvelteKit (Svelte 5), it offers a modern, responsive interface and advanced developer tooling.
 
-If you're seeing this, you've probably already done this step. Congrats!
+---
 
-```sh
-# create a new project
-npx sv create my-app
-```
+## Features for End Users
 
-To recreate this project with the same configuration:
+- **Split-Screen Editor:** Resizable panels for writing and AI suggestions. Focus mode hides distractions.
+- **AI Suggestions:** Contextual proposals, diff view, and selective validation.
+- **Coherence Engine:** Real-time alerts for narrative and physical inconsistencies (character states, timelines, logic).
+- **Style Analysis:** Detects language tics, repetitions, and provides stylistic metrics. Adjustable sliders for tone, rhythm, density.
+- **History & Timeline:** Snapshot navigation and event chronology.
+- **Voice & Image:** Floating bar for voice commands and image uploads.
+- **Hybrid AI:** Local (Ollama) and cloud (Gemini, OpenAI) models, configurable per user/task.
+- **Fact-Checking:** On-demand web search (DuckDuckGo, Wikipedia) for factual verification.
 
-```sh
-# recreate this project
-pnpm dlx sv create --template minimal --types ts --add prettier eslint vitest="usages:unit,component" playwright tailwindcss="plugins:typography,forms" sveltekit-adapter="adapter:auto" better-auth="demo:password,github" mdsvex mcp="ide:vscode+setup:local" drizzle="database:sqlite+sqlite:better-sqlite3" --install pnpm ./
-```
+---
 
-## Developing
+## Developer Workflow: Mockup Templating
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Sive uses a mockup-to-component templating system for rapid UI prototyping:
 
-```sh
-npm run dev
+- **Source:** HTML mockup files with custom tags and attributes.
+- **Conversion:** Run `node src/lib/tools/mockup/convert-mockup.js <input-file> [output-dir]` to generate Svelte 5 component scaffolds.
+- **Template:** The template is defined in [`convert-mockup-template.md`](src/lib/tools/mockup/convert-mockup-template.md) and includes placeholders:
+	- `{{COMPONENT_NAME}}`: PascalCase component name
+	- `{{TAG}}`: original mockup tag
+	- `{{ID}}`: id value or null
+	- `{{ATTRS_JSON}}`: JSON object of attributes
+- **Output:** Components are generated in `src/lib/elements/`, following Bits UI standards (headless, accessible, snippet-based).
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+See [`convert-mockup.js`](src/lib/tools/mockup/convert-mockup.js) for implementation details.
 
-## Building
+---
 
-To create a production version of your app:
+## Bits UI Component Standards
 
-```sh
-npm run build
-```
+Sive follows the Bits UI convention for Svelte 5 primitives:
 
-You can preview the production build with `npm run preview`.
+- **Headless by default:** Logic and accessibility, no enforced styles.
+- **Snippets over slots:** Use Svelte 5 snippets for content injection.
+- **Prop drilling:** Pass all HTML attributes via `{...rest}`.
+- **Composition:** Build UI via component composition, not deep prop nesting.
+- **Type safety:** All components are TypeScript, with strict interfaces.
+- **Accessibility:** Implements ARIA roles and keyboard interactions.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+See [`BITS-UI-Standard.md`](docs/BITS-UI-Standard.md) for full guidelines.
 
-## Design & Component Standards
+---
 
-This project follows a Bits UI convention for building headless, accessible Svelte 5 primitives. See the guide: [BITS-UI-Standard.md](docs/BITS-UI-Standard.md).
+## Project Setup & Scripts
+
+- **Install dependencies:**
+	```sh
+	pnpm install
+	```
+- **Start dev server:**
+	```sh
+	npm run dev
+	```
+- **Build for production:**
+	```sh
+	npm run build
+	```
+- **Preview build:**
+	```sh
+	npm run preview
+	```
+- **Database migration:**
+	```sh
+	npm run db:generate
+	npm run db:push
+	npm run db:migrate
+	npm run db:studio
+	```
+- **Testing:**
+	```sh
+	npm run test:unit
+	npm run test:e2e
+	```
+
+---
+
+## Authentication & Database
+
+- **Auth:** Uses Better-Auth, configured in [`src/lib/server/auth.ts`](src/lib/server/auth.ts).
+- **Database:** SQLite via Drizzle ORM. Schema in [`src/lib/server/db/schema.ts`](src/lib/server/db/schema.ts).
+
+---
+
+## License
+
+MIT License. See LICENSE file.
