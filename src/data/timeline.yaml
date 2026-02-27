@@ -1,0 +1,40 @@
+# Example timeline.yaml
+
+timeUnit: day
+events:
+  - index: 1
+    story_date: "Day 1"
+    label: Story begins
+    type: normal
+    chapterRef: chapter_01
+    notes: Jean arrives at the Bastille precinct
+  - index: 2
+    story_date: "Day 3"
+    label: First crime scene
+    type: normal
+    chapterRef: chapter_01
+    notes: ~
+  - index: 15
+    story_date: "Day 47"
+    label: Martin's death
+    type: normal
+    chapterRef: chapter_04
+    notes: Turning point — Jean relapses
+  - index: 16
+    story_date: "15 years before Day 1"
+    label: Jean's wife's accident
+    type: flash_back
+    chapterRef: chapter_05
+    storyAnchor: "Day 47"
+    notes: Explains Jean's guilt
+  - index: 99
+    story_date: "Night of the storm"
+    label: Jean saves Marie
+    type: normal
+    chapterRef: chapter_07
+    notes: ~
+ellipses:
+  - betweenIndex: [2, 15]
+    storyDuration: "44 days"
+    summary: Routine investigation, Jean stays sober
+    chapterRef: ~

@@ -1,0 +1,71 @@
+# Example bible.yaml
+
+characters:
+  - id: jean_dupont
+    name: Jean Dupont
+    age_story_start: 42
+    birth_date_story: "20 years before Day 1"
+    gender: male
+    physical_description:
+      height: 6ft
+      eyes: brown
+      hair: grey, short
+      distinguishing_marks: scar above left eyebrow
+    character_traits: [taciturn, loyal, impulsive]
+    occupation: police inspector
+    initial_status: alive
+    first_appears: chapter_01
+    voice:
+      register: dry-casual
+      tics: ["Yeah", "That's just how it is"]
+      syntax: short sentences, few adjectives
+      tone: ironic by default, direct under pressure
+      notes: Never says "I love you" — shows it through actions
+    notes: former alcoholic, sober for 5 years at Day 1
+
+locations:
+  - id: bastille_precinct
+    name: Bastille Police Precinct
+    city: Paris
+    district: 11th arrondissement
+    description: 1970s building, damp basement
+    initial_status: active
+    first_appears: chapter_01
+    notes: ~
+
+objects:
+  - id: jean_revolver
+    name: Smith & Wesson Revolver
+    initial_owner: jean_dupont
+    description: .38 calibre, scratched black grip
+    initial_status: in possession
+    first_appears: chapter_02
+    symbolism: extension of Jean's authority, loss = loss of control
+    notes: ~
+
+vehicles:
+  - id: jean_peugeot
+    name: Grey Peugeot 308
+    initial_owner: jean_dupont
+    plate: AB-123-CD
+    initial_status: in service
+    first_appears: chapter_01
+    notes: ~
+
+relations:
+  - character_a: jean_dupont
+    character_b: marie_chen
+    type: colleagues
+    history:
+      - story_date: "Day 1"
+        chrono_index: 1
+        state: neutral
+        notes: First meeting at the precinct
+      - story_date: "Day 47"
+        chrono_index: 15
+        state: tense
+        notes: Marie discovers Jean's alcoholism
+      - story_date: "Night of the storm"
+        chrono_index: 99
+        state: trust
+        notes: Jean saves her life

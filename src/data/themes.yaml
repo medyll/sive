@@ -1,0 +1,33 @@
+# Example themes.yaml
+
+themes:
+  - id: theme_redemption
+    label: Redemption
+    description: Jean seeks to atone for past mistakes — alcohol, his wife's death
+    charactersInvolved: [jean_dupont]
+    associatedMotifs: [motif_water, motif_alcohol]
+    notes: Central theme — must be visible in Jean's arc
+
+motifs:
+  - id: motif_water
+    label: Water
+    description: Purification, dissolution, danger. The Seine as boundary between control and surrender.
+    occurrences:
+      - chapterRef: chapter_07
+        notes: Revolver lost in the Seine — Jean "unburdening" himself
+    notes: To be reinforced in final chapters
+
+  - id: motif_alcohol
+    label: Alcohol
+    description: Symbol of Jean's escape and failure
+    occurrences:
+      - chapterRef: chapter_04
+        notes: Jean relapses after Martin's death
+      - chapterRef: chapter_07
+        notes: The bottle in the glove compartment
+
+symbols:
+  - id: symbol_seine
+    label: The Seine
+    meaning: Boundary between the old Jean and the new
+    notes: ~

@@ -1,0 +1,61 @@
+# Example structure.yaml
+
+model: three_acts
+acts:
+  - id: act_1
+    label: Exposition
+    chapters: [chapter_01, chapter_02, chapter_03]
+    chronoIndexStart: 1
+    chronoIndexEnd: 15
+    goal: Establish Jean, the investigation, the relationship with Marie
+    pivotEvent: "Martin's death — Jean relapses"
+  - id: act_2
+    label: Confrontation
+    chapters: [chapter_04, chapter_05, chapter_06, chapter_07]
+    chronoIndexStart: 15
+    chronoIndexEnd: 99
+    goal: Investigation escalates, Jean-Marie relationship deepens
+    pivotEvent: "Jean saves Marie — everything changes"
+  - id: act_3
+    label: Resolution
+    chapters: [chapter_08, chapter_09]
+    chronoIndexStart: 99
+    chronoIndexEnd: ~
+    goal: Resolution of the investigation and Jean's personal arc
+    pivotEvent: ~
+narrativeThreads:
+  - id: main_investigation_thread
+    label: The investigation into Martin's murder
+    type: main
+    status: open
+    openedAt: chapter_01
+    resolvedAt: ~
+    activeChapters: [chapter_01, chapter_02, chapter_03, chapter_04, chapter_07]
+    notes: Plot driver thread
+  - id: jean_marie_relationship_thread
+    label: The relationship between Jean and Marie
+    type: secondary
+    status: open
+    openedAt: chapter_01
+    resolvedAt: ~
+    activeChapters: [chapter_01, chapter_03, chapter_07]
+    notes: Central emotional thread
+  - id: jean_alcoholism_thread
+    label: Jean's relapse
+    type: secondary
+    status: open
+    openedAt: chapter_04
+    resolvedAt: ~
+    activeChapters: [chapter_04, chapter_07]
+    notes: Opened by Martin's death
+tensionCurve:
+  - chapterRef: chapter_01
+    targetLevel: 3
+  - chapterRef: chapter_02
+    targetLevel: 4
+  - chapterRef: chapter_03
+    targetLevel: 5
+  - chapterRef: chapter_04
+    targetLevel: 7
+  - chapterRef: chapter_07
+    targetLevel: 8

@@ -1,18 +1,68 @@
-// Inferred application-wide types derived from PROJECT.md
+/**
+ * Theme, Motif, Symbol types for themes.yaml
+ * See PROJECT.md > themes.yaml
+ */
+export interface Theme {
+  id: string;
+  label: string;
+  description?: string;
+  charactersInvolved?: string[];
+  associatedMotifs?: string[];
+  notes?: string;
+}
+
+export interface Motif {
+  id: string;
+  label: string;
+  description?: string;
+  occurrences?: Array<{
+    chapterRef: string;
+    notes?: string;
+  }>;
+  notes?: string;
+}
+
+export interface Symbol {
+  id: string;
+  label: string;
+  meaning?: string;
+  notes?: string;
+}
+
+/**
+ * Narrative thread type for structure.yaml
+ * See PROJECT.md > structure.yaml > narrative_threads
+ */
+export interface NarrativeThread {
+  id: string;
+  label: string;
+  type: 'main' | 'secondary' | string;
+  status: 'open' | 'resolved' | 'abandoned' | string;
+  openedAt: string;
+  resolvedAt?: string;
+  activeChapters?: string[];
+  notes?: string;
+}
+
+// Application-wide types derived from PROJECT.md
+// Each type/interface is linked to its corresponding concept or section in PROJECT.md for traceability.
 // Comments are in English as requested.
 
 /**
  * Timeline and temporal structures describing the story backbone.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Timeline
  */
 export type TimeUnit = 'day' | 'week' | 'month' | 'year' | 'free';
 
 /**
  * Types of timeline events used across the narrative.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Timeline Events
  */
 export type EventType = 'normal' | 'ellipse' | 'flash_back' | 'flash_forward';
 
 /**
  * Single event item in the timeline (e.g. Day 1, turning points).
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Timeline Events
  */
 export interface TimelineEvent {
   index: number;
@@ -29,6 +79,7 @@ export interface TimelineEvent {
 
 /**
  * Ellipses represent summarized time ranges between two events.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Timeline Ellipses
  */
 export interface TimelineEllipse {
   betweenIndex: [number, number];
@@ -40,6 +91,7 @@ export interface TimelineEllipse {
 
 /**
  * Complete timeline schema containing events and optional ellipses.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Timeline Schema
  */
 export interface TimelineSchema {
   timeUnit: TimeUnit;
@@ -48,11 +100,13 @@ export interface TimelineSchema {
 }
 
 // Bible / global reference objects
+// See PROJECT.md > 2. Coherence Engine & Pure Logic > Bible (Characters, Locations, Objects, Vehicles)
 
 export type CharacterStatus = 'alive' | 'dead' | 'missing' | 'unknown';
 
 /**
  * Physical attributes for a character. Fields are optional and free-form.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Bible > Characters
  */
 export interface PhysicalDescription {
   height?: string;
@@ -69,12 +123,15 @@ export interface VoiceSchema {
   tone?: string; // e.g. 'ironic by default'
   notes?: string;
 }
+// See PROJECT.md > 2. Coherence Engine & Pure Logic > Bible > Characters > Voice/Profile
 
 /**
  * Describes voice/profile attributes for a character's dialogue.
  * Used by stylistic analysis and text generation components.
+ * See PROJECT.md > 3. Style Engine > Dialogue & Voice
  */
 
+// See PROJECT.md > 2. Coherence Engine & Pure Logic > Bible > Characters
 export interface CharacterEntry {
   id: string;
   name: string;
@@ -96,6 +153,7 @@ export interface CharacterEntry {
 /**
  * Location entry in the global bible. Represents places referenced
  * by id across chapters and timeline events.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Bible > Locations
  */
 
 export type LocationStatus = 'active' | 'destroyed' | 'abandoned' | 'unknown';
@@ -114,6 +172,7 @@ export interface LocationEntry {
 /**
  * Represents an object from the bible (props, symbolic items).
  * Tracks ownership and narrative role.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Bible > Objects
  */
 
 export type ObjectStatus = 'in possession' | 'lost' | 'destroyed' | 'stolen' | string;
@@ -132,6 +191,7 @@ export interface ObjectEntry {
 
 /**
  * Vehicle entry from the bible. Minimal fields for identification.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Bible > Vehicles
  */
 
 export interface VehicleEntry {
@@ -146,6 +206,7 @@ export interface VehicleEntry {
 
 /**
  * Single history record for a relation between two characters.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Bible > Relations
  */
 
 // Relations and history entries
@@ -160,6 +221,7 @@ export interface RelationHistoryEntry {
 
 /**
  * Relation between two characters; may include a time-ordered history.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Bible > Relations
  */
 
 export interface RelationEntry {
@@ -171,6 +233,7 @@ export interface RelationEntry {
 
 /**
  * Narrator/focalization information for a chapter.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Chapters > Narrator/Focalization
  */
 
 // Chapter-local state schemas
@@ -185,6 +248,7 @@ export interface NarratorSchema {
 
 /**
  * Per-chapter snapshot of a character's state.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Chapters > Character State
  */
 
 export interface ChapterCharacterState {
@@ -199,6 +263,7 @@ export interface ChapterCharacterState {
 
 /**
  * Per-chapter snapshot of an object's state.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Chapters > Object State
  */
 
 export interface ChapterObjectState {
@@ -210,6 +275,7 @@ export interface ChapterObjectState {
 
 /**
  * Per-chapter snapshot of a vehicle's state.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Chapters > Vehicle State
  */
 
 export interface ChapterVehicleState {
@@ -221,6 +287,7 @@ export interface ChapterVehicleState {
 
 /**
  * Key chronological event inside a chapter (used for timeline linking).
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Chapters > Key Events
  */
 
 export interface ChapterKeyEvent {
@@ -230,6 +297,7 @@ export interface ChapterKeyEvent {
 
 /**
  * Base type for transitions that affect global or chapter state.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Chapters > Transitions
  */
 
 export type TransitionType = 'object_status' | 'relation_state' | string;
@@ -240,6 +308,7 @@ export interface TransitionBase {
 
 /**
  * Transition describing an object status change (e.g. lost, destroyed).
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Chapters > Transitions
  */
 
 export interface ObjectStatusTransition extends TransitionBase {
@@ -250,6 +319,7 @@ export interface ObjectStatusTransition extends TransitionBase {
 
 /**
  * Transition describing a relation state change between two characters.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Chapters > Transitions
  */
 
 export interface RelationStateTransition extends TransitionBase {
@@ -264,6 +334,7 @@ export interface RelationStateTransition extends TransitionBase {
 /**
  * Full schema for a chapter file, representing local state, events,
  * narrator info and transitions applied to the bible.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Chapters > Chapter Schema
  */
 
 export type ChapterTransition = ObjectStatusTransition | RelationStateTransition | TransitionBase;
@@ -297,6 +368,7 @@ export interface ChapterSchema {
 
 /**
  * Act/structure entry used by the global story structure file.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Structure > Acts
  */
 
 // Structure / acts
@@ -307,20 +379,28 @@ export interface ActSchema {
   chronoIndexStart?: number;
   chronoIndexEnd?: number;
   goal?: string;
+  pivotEvent?: string; // See PROJECT.md > structure.yaml > acts > pivot_event
 }
 
 /**
  * Top-level narrative structure (acts, model name).
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Structure
  */
 
 export interface StructureSchema {
   model?: string; // e.g. 'three_acts'
   acts?: ActSchema[];
+  narrativeThreads?: NarrativeThread[];
+  tensionCurve?: Array<{
+    chapterRef: string;
+    targetLevel: number;
+  }>;
 }
 
 /**
  * Aggregated view of project files (bible, timeline, chapters, structure).
  * This type mirrors the on-disk project layout described in PROJECT.md.
+ * See PROJECT.md > 2. Coherence Engine & Pure Logic > Project File Layout
  */
 
 // Top-level project schema — partial view combining the pieces above
@@ -335,4 +415,63 @@ export interface ProjectFileTree {
   timeline?: TimelineSchema;
   chapters?: Record<string, ChapterSchema>;
   structure?: StructureSchema;
+  themes?: Theme[];
+  motifs?: Motif[];
+  symbols?: Symbol[];
+}
+
+/**
+ * POV exceptions and narration rules for narrator.yaml
+ * See PROJECT.md > narrator.yaml
+ */
+export interface PovException {
+  chapterRef: string;
+  focalizer: string;
+  focalization: 'internal' | 'external' | 'omniscient';
+  notes?: string;
+}
+
+export interface NarrationRule {
+  rule: string;
+}
+
+/**
+ * Detailed character sheet (optional, for characters/jean_dupont.yaml)
+ * See PROJECT.md > characters/jean_dupont.yaml
+ */
+export interface CharacterBiography {
+  childhood?: string;
+  training?: string;
+  keyEvents?: Array<{
+    storyDate: string;
+    description: string;
+  }>;
+}
+
+export interface CharacterPsychology {
+  fears?: string[];
+  motivations?: string[];
+  contradictions?: string[];
+}
+
+export interface CharacterDialogueExample {
+  context: string;
+  example: string;
+}
+
+export interface CharacterNarrativeArc {
+  start?: string;
+  evolution?: string;
+  end?: string;
+}
+
+export interface CharacterSheet {
+  id: string;
+  bibleRef?: boolean;
+  biography?: CharacterBiography;
+  psychology?: CharacterPsychology;
+  voice?: VoiceSchema & {
+    dialogueExamples?: CharacterDialogueExample[];
+  };
+  narrativeArc?: CharacterNarrativeArc;
 }

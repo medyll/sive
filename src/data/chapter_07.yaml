@@ -1,0 +1,58 @@
+# Example chapter_07.yaml
+
+chapterRef: chapter_07
+storyDateStart: "Night of the storm"
+storyDateEnd: "Next morning"
+chronoIndexStart: 99
+chronoIndexEnd: 100
+temporalType: normal
+summary: Jean saves Marie during the storm. Their relationship shifts.
+narrator:
+  pov: jean_dupont
+  focalization: internal
+  person: third
+narrativeThreads:
+  active: [main_investigation_thread, jean_marie_relationship_thread]
+  openedHere: []
+  closedHere: []
+tension:
+  level: 8
+  type: action
+states:
+  characters:
+    - id: jean_dupont
+      status: alive
+      currentAge: 42
+      outfit: black raincoat, unarmed
+      location: Seine riverbank
+      notes: Relapses tonight
+    - id: marie_chen
+      status: alive
+      outfit: white lab coat under overcoat
+      location: Seine riverbank
+      notes: Slightly injured, left arm
+  objects:
+    - id: jean_revolver
+      status: lost
+      currentOwner: ~
+      notes: Fell into the Seine during the scene
+  vehicles:
+    - id: jean_peugeot
+      status: in service
+      location: Seine riverbank, parked on side street
+      notes: ~
+keyEvents:
+  - chronoIndex: 99
+    description: Jean pushes Marie out of the path of an oncoming car
+  - chronoIndex: 100
+    description: Jean finds the bottle in his glove compartment
+transitions:
+  - type: object_status
+    id: jean_revolver
+    newValue: lost
+  - type: relation_state
+    characterA: jean_dupont
+    characterB: marie_chen
+    newValue: trust
+    storyDate: "Night of the storm"
+    chronoIndex: 99

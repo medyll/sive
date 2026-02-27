@@ -1,0 +1,31 @@
+# Example characters/jean_dupont.yaml
+
+id: jean_dupont
+bibleRef: true
+biography:
+  childhood: Northern suburb, father was a gendarme
+  training: Lyon Police Academy, class of 2003
+  keyEvents:
+    - storyDate: "15 years before Day 1"
+      description: Wife's death, car accident
+    - storyDate: "5 years before Day 1"
+      description: Rehab, successful
+psychology:
+  fears: [losing control, being abandoned]
+  motivations: [redemption, justice]
+  contradictions: [preaches loyalty but lies by omission]
+voice:
+  register: dry-casual
+  tics: ["Yeah", "That's just how it is"]
+  syntax: short sentences, few adjectives
+  tone: ironic by default, direct under pressure
+  dialogueExamples:
+    - context: under pressure
+      example: "Yeah. It's done."
+    - context: rare emotional moment
+      example: "You deserve better than this."
+  notes: Never says 'I love you' — shows it through actions
+narrativeArc:
+  start: Broken man running on autopilot
+  evolution: His relationship with Marie forces him to reopen old wounds
+  end: ~

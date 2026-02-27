@@ -1,0 +1,20 @@
+# Example narrator.yaml
+
+type: heterodiegetic
+default_focalization: internal
+default_person: third
+default_focalizer: jean_dupont
+narrative_voice:
+  tone: sober, slightly ironic
+  style: short sentences, police realism
+  emotional_distance: close
+  notes: Narrative voice mirrors Jean's register — sober, efficient
+pov_exceptions:
+  - chapterRef: chapter_05
+    focalizer: marie_chen
+    focalization: internal
+    notes: Chapter from Marie's point of view — deliberate exception
+rules:
+  - Stay in Jean's internal focalization unless explicitly noted as an exception
+  - Never reveal information Jean cannot know
+  - Flash-backs remain in the internal focalization of the relevant character
