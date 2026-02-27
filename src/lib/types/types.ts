@@ -1,3 +1,8 @@
+/* This file hosts the type definitions for the project.
+* The types defined here are used across the codebase to ensure type safety and consistency.
+* Each type/interface is linked to a specific concept or section in the project documentation (bmad/references/PROJECT.md) for traceability.
+*/
+
 /**
  * Theme, Motif, Symbol types for themes.yaml
  * See bmad/references/project/5-ai-architecture-mcp-skills.md > themes.yaml
