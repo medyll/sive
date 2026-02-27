@@ -1,30 +1,37 @@
 [
   {
-    "id": "task-1772213315176-8f5jsr8qk",
-    "title": "Analyze /workflow-update command requirements",
+    "id": "task-1772213718664-fwt4x0rdx",
+    "title": "Detect changes in skill, roles, or templates",
     "status": "done",
     "order": 1,
     "createdBy": "agent"
   },
   {
-    "id": "task-1772213315176-2fwvu654j",
-    "title": "Update BMAD workflow logic in SKILL.md",
+    "id": "task-1772213718664-fyr0kr0n6",
+    "title": "Update bmad/config.yaml, status.yaml, and artifacts/docs folders",
     "status": "done",
     "order": 2,
     "createdBy": "agent"
   },
   {
-    "id": "task-1772213315176-aq8s9ijq1",
-    "title": "Validate changes to SKILL.md for correctness",
+    "id": "task-1772213718664-v7726i7k5",
+    "title": "Migrate or add missing artifacts/templates for new roles or phases",
     "status": "done",
     "order": 3,
     "createdBy": "agent"
   },
   {
-    "id": "task-1772213315176-ldx1yqvpf",
-    "title": "Commit and push updated SKILL.md file",
-    "status": "in_progress",
+    "id": "task-1772213718664-srumeolv6",
+    "title": "Prompt user to review and confirm updates",
+    "status": "done",
     "order": 4,
+    "createdBy": "agent"
+  },
+  {
+    "id": "task-1772213718664-8uuybnkpy",
+    "title": "Confirm update and display new status/artifact checklist",
+    "status": "in_progress",
+    "order": 5,
     "createdBy": "agent"
   }
 ]

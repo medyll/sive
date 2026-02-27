@@ -1,8 +1,8 @@
 ---
 name: bmad-master
 description: 
-  BMAD Method multi-role AI orchestrator. Use this skill whenever the user wants to manage a software project with structured methodology, plan a product, write a PRD, design an architecture, do sprint planning, develop stories, or co-author documentation. Triggers on commands like /workflow-init, /workflow-status, /prd, /architecture, /sprint-planning, /dev-story, /doc, /doc-coauthoring, /brainstorm, /research, /tech-spec, /code-review, /create-story, /spec, /report — or any mention of BMAD roles (analyst, PM, architect, scrum master, developer, doc agent).
-argument-hint: "Use /workflow-init, /workflow-status, or a role command (/prd, /architecture, /sprint-planning, /dev-story, /doc-coauthoring)"
+  BMAD Method multi-role AI orchestrator. Use this skill whenever the user wants to manage a software project with structured methodology, plan a product, write a PRD, design an architecture, do sprint planning, develop stories, or co-author documentation. Triggers on commands like /workflow-init, /workflow-status, /prd, /architecture, /sprint-planning, /dev-story, /doc, /doc-coauthoring, /brainstorm, /workflow-status, /research, /tech-spec, /code-review, /create-story, /spec, /report — or any mention of BMAD roles (analyst, PM, architect, scrum master, developer, doc agent).
+argument-hint: "/workflow-init, /workflow-update, /workflow-status, /prd, /architecture, /sprint-planning, /dev-story, /doc-coauthoring"
 compatibility:
   - mcp_v1
 disable-model-invocation: false
@@ -71,6 +71,7 @@ This skill is split into role-specific reference files. **Always read the releva
 3. **Read the corresponding reference file** before responding.
 4. If no command matches → act as Orchestrator (see below).
 5. If project state is unknown → suggest `/workflow-init` first.
+6. **Automatically update `status.yaml`**: For all commands like `/prd`, `/architecture`, or `/tech-spec`, ensure the corresponding artifact is marked as completed in `status.yaml`.
 
 ---
 

@@ -1,0 +1,11 @@
+# BMAD Project Status
+# Tracks the current phase and completed steps
+
+phase: Planning
+completed_steps:
+  - Analysis
+  - PRD
+missing_artifacts: []
+upcoming_phases:
+  - Solutioning
+  - Implementation
