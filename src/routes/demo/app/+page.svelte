@@ -1,6 +1,6 @@
 <script lang="ts">
   // Mockup: [main-screen]
-  // PROJECT.md mockup sections implemented here (bracketed names):
+  // bmad/references/PROJECT.md mockup sections implemented here (bracketed names):
   // [main-toolbar]  : fixed top toolbar
   // [main-body]     : resizable split body
   // [left-panel]    : LEFT PANEL — Editor
@@ -12,7 +12,7 @@
   // [ai-spinner]    : AI processing indicator shown in the right panel
   // [chat-bar]      : floating chat bar overlay
   // [suggestions-ready-badge] : badge shown in focus mode (not implemented in mock)
-  // Minimal UI mockup for the application route based on PROJECT.md
+  // Minimal UI mockup for the application route based on bmad/references/PROJECT.md
   // - Left: editor area (resizable)
   // - Right: contextual tabs (Suggestions, Coherence, Style, History)
   // - Floating chat bar for voice/image uploads

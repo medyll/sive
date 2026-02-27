@@ -5,7 +5,7 @@
 
 Summary
 - Sive is a SvelteKit application using Svelte v5, Drizzle ORM (SQLite), and Better-Auth for authentication. Frontend routes live in `src/routes`; server helpers and DB code live under `src/lib/server`.
- - `PROJECT.md` is the central design/spec document for this repository and should be consulted frequently during development.
+ - `bmad/references/PROJECT.md` is the central design/spec document for this repository and should be consulted frequently during development.
 
 What to prioritize
 - Preserve database schema and migrations: changes to `src/lib/server/db/schema.ts` or the Drizzle schema must be accompanied by `drizzle-kit` commands (`db:generate`, `db:push`, `db:migrate`). See `package.json` scripts.

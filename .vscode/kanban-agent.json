@@ -1,37 +1,51 @@
 [
   {
-    "id": "task-1772213718664-fwt4x0rdx",
-    "title": "Detect changes in skill, roles, or templates",
-    "status": "done",
+    "id": "task-1772225419620-34lhtrcek",
+    "title": "Analyze shared/types.ts for prop definitions",
+    "status": "ready",
     "order": 1,
     "createdBy": "agent"
   },
   {
-    "id": "task-1772213718664-fyr0kr0n6",
-    "title": "Update bmad/config.yaml, status.yaml, and artifacts/docs folders",
-    "status": "done",
+    "id": "task-1772225419620-6qmkbpxmw",
+    "title": "Recreate EditorPanel component using shared/types.ts",
+    "status": "ready",
     "order": 2,
     "createdBy": "agent"
   },
   {
-    "id": "task-1772213718664-v7726i7k5",
-    "title": "Migrate or add missing artifacts/templates for new roles or phases",
-    "status": "done",
+    "id": "task-1772225419620-cjzqrl3u2",
+    "title": "Recreate AIPanel component using shared/types.ts",
+    "status": "ready",
     "order": 3,
     "createdBy": "agent"
   },
   {
-    "id": "task-1772213718664-srumeolv6",
-    "title": "Prompt user to review and confirm updates",
-    "status": "done",
+    "id": "task-1772225419620-ve79zbgwo",
+    "title": "Recreate TabBar component using shared/types.ts",
+    "status": "ready",
     "order": 4,
     "createdBy": "agent"
   },
   {
-    "id": "task-1772213718664-8uuybnkpy",
-    "title": "Confirm update and display new status/artifact checklist",
-    "status": "in_progress",
+    "id": "task-1772225419620-g5g5pm1f1",
+    "title": "Recreate Spinner component using shared/types.ts",
+    "status": "ready",
     "order": 5,
+    "createdBy": "agent"
+  },
+  {
+    "id": "task-1772225419620-uevahrbn9",
+    "title": "Recreate ChatBar component using shared/types.ts",
+    "status": "ready",
+    "order": 6,
+    "createdBy": "agent"
+  },
+  {
+    "id": "task-1772225419620-r1lotqaqc",
+    "title": "Validate recreated components for Svelte 5 compliance",
+    "status": "ready",
+    "order": 7,
     "createdBy": "agent"
   }
 ]

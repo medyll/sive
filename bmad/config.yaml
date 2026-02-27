@@ -11,4 +11,7 @@ notes: |
   - Auth: better-auth (server-side)
   - Testing: vitest + Playwright
   - Layout descriptor (canonical): src/interfaces/layout.html
-  Replace other placeholders above with any project-specific overrides.
+  - Workflow for creating components:
+    1. Define the new element in `sive-layout.html`.
+    2. Run `pnpm run gen:mockups` to generate mockup components in `lib/elements/mockups`.
+    3. Use the mockups as references to create new components in `lib/elements`.
