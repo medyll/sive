@@ -26,13 +26,13 @@ Placeholders:
   {{ATTRS_JSON}} - JSON object of attributes
 -->
 <script module lang="ts">
+  	import { cn } from "$lib/utils.js";
   /**
    * Component: {{COMPONENT_NAME}}
    * Type definitions for external usage
    */
   export type {{COMPONENT_NAME}}Props = {
     children?: import('svelte').Snippet;
-    [key: string]: any;
   };
 
   export const mockup = {{ATTRS_JSON}};
@@ -40,7 +40,7 @@ Placeholders:
 
 <script lang="ts">
   // '...rest' captures any other attributes (id, class, etc.)
-  let { children, ...rest }: {{COMPONENT_NAME}}Props = $props();
+  let { children, ...restProps }: {{COMPONENT_NAME}}Props = $props();
 </script>
 
 <section class="{{TAG}}" {...rest}>

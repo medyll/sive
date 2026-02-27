@@ -11,5 +11,3 @@ Getting started:
 1. Edit `bmad/config.yaml` and set `project_name`, `project_type`, and `project_level`.
 2. Review `docs/bmm-workflow-status.yaml` and adjust statuses as needed.
 3. Optionally, use the `bmad-master` skill or your own script to generate filled templates.
-
-Note: The canonical layout descriptor for the application is located at `src/interfaces/layout.html`.
