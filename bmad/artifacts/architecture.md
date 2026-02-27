@@ -5,7 +5,7 @@
 ### 1. Interface Architecture (Layout)
 
 #### 1.1 Resizable Split-Screen
-The panel is resizable by drag-and-drop. The default ratio is 55/45 (editor/suggestions) but the user can adjust freely — the preference is persisted per profile.
+The panel is resizable by drag-and-drop and uses css.clamp. The default ratio is 55/45 (editor/suggestions) but the user can adjust freely — the preference is persisted per profile.
 
 #### 1.2 Focus Mode
 A keyboard shortcut (e.g. `F11` or `Ctrl+Shift+F`) hides the right panel for a distraction-free writing session. When suggestions are ready during this mode, a discreet indicator (coloured dot in the margin) signals their availability without interrupting the flow.

@@ -2,6 +2,7 @@ CMAD Master — Converter tool
 ----------------------------
 
 This folder contains a small converter that turns CMAD pseudo-HTML mockups into Svelte scaffold files.
+The mockups are only used to help ai to keep consistency for the svelte-5 language, as a weight reference.
 
 Files
 - `convert-cmad.js`: Node script. Usage:

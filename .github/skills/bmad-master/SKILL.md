@@ -63,6 +63,7 @@ This skill is split into role-specific reference files. **Always read the releva
 | Scrum Master    | /sprint-planning, /create-story, /backlog                                 | `references/scrum-master.md`  |
 | Developer       | /dev-story, /code-review, /refactor                                       | `references/developer.md`     |
 | Documentation   | /doc, /doc-coauthoring, /report, /spec, /prd-doc                          | `references/documentation.md` |
+| Interface       | /layout, /mockup                                                         | `references/sive-layout.html` |
 
 ---
 
@@ -128,6 +129,8 @@ bmad/
 │   ├── architecture.md
 │   ├── sprints/
 │   └── stories/
+├── references/
+│   └── sive-layout.html
 └── docs/
 
 ```
@@ -153,9 +156,13 @@ Phase 4 – Implementation ⏳ Upcoming
 
 Take the initiative. Analyze the current state and say: "Mydde, the PRD is ready but the Architecture lacks the data model for the auth module. Should we run `/architecture` or start `/sprint-planning` for the MVP?"
 
-### /init
+### /layout
 
-Alias for `/workflow-init`.
+Centralize interface design and layout information. Use `references/sive-layout.html` to:
+
+1. Visualize the interface structure.
+2. Document component roles, props, and behaviors.
+3. Ensure alignment between design and implementation.
 
 ---
 
