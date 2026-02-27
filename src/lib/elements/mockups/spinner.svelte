@@ -3,15 +3,13 @@ Template for convert-mockup.js
 Placeholders:
   Spinner - PascalCase component name (e.g. ChatBubble)
   spinner - original mockup tag (e.g. chat-bubble)
-  ai-spinner - id value or null
+  null - id value or null
   {
   "tag": "spinner",
-  "id": "ai-spinner",
+  "id": null,
   "attrs": {
-    "id": "ai-spinner",
-    "position": "top-right-of-panel",
-    "visible-when": "ai-processing",
-    "behavior": "Appears as soon as an AI process is running, Disappears when the result is displayed"
+    "props": "id:string;position:string;visible-when:string",
+    "component-role": "Indicates processing state"
   }
 } - JSON object of attributes
 -->
@@ -27,12 +25,10 @@ Placeholders:
 
   export const mockup = {
   "tag": "spinner",
-  "id": "ai-spinner",
+  "id": null,
   "attrs": {
-    "id": "ai-spinner",
-    "position": "top-right-of-panel",
-    "visible-when": "ai-processing",
-    "behavior": "Appears as soon as an AI process is running, Disappears when the result is displayed"
+    "props": "id:string;position:string;visible-when:string",
+    "component-role": "Indicates processing state"
   }
 };
 </script>

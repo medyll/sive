@@ -3,13 +3,13 @@ Template for convert-mockup.js
 Placeholders:
   ResizeHandle - PascalCase component name (e.g. ChatBubble)
   resize-handle - original mockup tag (e.g. chat-bubble)
-  split-handle - id value or null
+  null - id value or null
   {
   "tag": "resize-handle",
-  "id": "split-handle",
+  "id": null,
   "attrs": {
-    "id": "split-handle",
-    "axis": "horizontal"
+    "props": "id:string;axis:string",
+    "component-role": "Allows resizing between panels"
   }
 } - JSON object of attributes
 -->
@@ -25,10 +25,10 @@ Placeholders:
 
   export const mockup = {
   "tag": "resize-handle",
-  "id": "split-handle",
+  "id": null,
   "attrs": {
-    "id": "split-handle",
-    "axis": "horizontal"
+    "props": "id:string;axis:string",
+    "component-role": "Allows resizing between panels"
   }
 };
 </script>

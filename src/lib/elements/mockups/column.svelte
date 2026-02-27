@@ -3,13 +3,13 @@ Template for convert-mockup.js
 Placeholders:
   Column - PascalCase component name (e.g. ChatBubble)
   column - original mockup tag (e.g. chat-bubble)
-  app-root - id value or null
+  null - id value or null
   {
   "tag": "column",
-  "id": "app-root",
+  "id": null,
   "attrs": {
-    "id": "app-root",
-    "full-height": true
+    "props": "id:string;centered:boolean;full-height:boolean",
+    "component-role": "Vertical arrangement of child components"
   }
 } - JSON object of attributes
 -->
@@ -25,10 +25,10 @@ Placeholders:
 
   export const mockup = {
   "tag": "column",
-  "id": "app-root",
+  "id": null,
   "attrs": {
-    "id": "app-root",
-    "full-height": true
+    "props": "id:string;centered:boolean;full-height:boolean",
+    "component-role": "Vertical arrangement of child components"
   }
 };
 </script>

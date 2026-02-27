@@ -3,14 +3,13 @@ Template for convert-mockup.js
 Placeholders:
   Badge - PascalCase component name (e.g. ChatBubble)
   badge - original mockup tag (e.g. chat-bubble)
-  suggestions-ready-badge - id value or null
+  null - id value or null
   {
   "tag": "badge",
-  "id": "suggestions-ready-badge",
+  "id": null,
   "attrs": {
-    "id": "suggestions-ready-badge",
-    "position": "right-edge-of-editor",
-    "visible-when": "focus-mode AND suggestions-available"
+    "props": "id:string;position:string;visible-when:string",
+    "component-role": "Indicator badge for status or notifications"
   }
 } - JSON object of attributes
 -->
@@ -26,11 +25,10 @@ Placeholders:
 
   export const mockup = {
   "tag": "badge",
-  "id": "suggestions-ready-badge",
+  "id": null,
   "attrs": {
-    "id": "suggestions-ready-badge",
-    "position": "right-edge-of-editor",
-    "visible-when": "focus-mode AND suggestions-available"
+    "props": "id:string;position:string;visible-when:string",
+    "component-role": "Indicator badge for status or notifications"
   }
 };
 </script>

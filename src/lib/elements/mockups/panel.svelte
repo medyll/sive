@@ -3,14 +3,13 @@ Template for convert-mockup.js
 Placeholders:
   Panel - PascalCase component name (e.g. ChatBubble)
   panel - original mockup tag (e.g. chat-bubble)
-  editor-panel - id value or null
+  null - id value or null
   {
   "tag": "panel",
-  "id": "editor-panel",
+  "id": null,
   "attrs": {
-    "id": "editor-panel",
-    "default-width": "55%",
-    "resizable": true
+    "props": "id:string;default-width:string;resizable:boolean;collapsible:boolean;width:string;visible-when:string",
+    "component-role": "Container for content, optionally resizable/collapsible"
   }
 } - JSON object of attributes
 -->
@@ -26,11 +25,10 @@ Placeholders:
 
   export const mockup = {
   "tag": "panel",
-  "id": "editor-panel",
+  "id": null,
   "attrs": {
-    "id": "editor-panel",
-    "default-width": "55%",
-    "resizable": true
+    "props": "id:string;default-width:string;resizable:boolean;collapsible:boolean;width:string;visible-when:string",
+    "component-role": "Container for content, optionally resizable/collapsible"
   }
 };
 </script>

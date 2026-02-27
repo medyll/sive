@@ -3,15 +3,13 @@ Template for convert-mockup.js
 Placeholders:
   Overlay - PascalCase component name (e.g. ChatBubble)
   overlay - original mockup tag (e.g. chat-bubble)
-  chat-bar - id value or null
+  null - id value or null
   {
   "tag": "overlay",
-  "id": "chat-bar",
+  "id": null,
   "attrs": {
-    "id": "chat-bar",
-    "position": "bottom-center",
-    "draggable": true,
-    "collapsible": true
+    "props": "id:string;position:string;draggable:boolean;collapsible:boolean",
+    "component-role": "Overlay for floating controls or chat"
   }
 } - JSON object of attributes
 -->
@@ -27,12 +25,10 @@ Placeholders:
 
   export const mockup = {
   "tag": "overlay",
-  "id": "chat-bar",
+  "id": null,
   "attrs": {
-    "id": "chat-bar",
-    "position": "bottom-center",
-    "draggable": true,
-    "collapsible": true
+    "props": "id:string;position:string;draggable:boolean;collapsible:boolean",
+    "component-role": "Overlay for floating controls or chat"
   }
 };
 </script>

@@ -3,12 +3,13 @@ Template for convert-mockup.js
 Placeholders:
   TabBar - PascalCase component name (e.g. ChatBubble)
   tab-bar - original mockup tag (e.g. chat-bubble)
-  ai-tabs - id value or null
+  null - id value or null
   {
   "tag": "tab-bar",
-  "id": "ai-tabs",
+  "id": null,
   "attrs": {
-    "id": "ai-tabs"
+    "props": "id:string",
+    "component-role": "Tab bar for switching views"
   }
 } - JSON object of attributes
 -->
@@ -24,9 +25,10 @@ Placeholders:
 
   export const mockup = {
   "tag": "tab-bar",
-  "id": "ai-tabs",
+  "id": null,
   "attrs": {
-    "id": "ai-tabs"
+    "props": "id:string",
+    "component-role": "Tab bar for switching views"
   }
 };
 </script>

@@ -3,13 +3,13 @@ Template for convert-mockup.js
 Placeholders:
   Toolbar - PascalCase component name (e.g. ChatBubble)
   toolbar - original mockup tag (e.g. chat-bubble)
-  main-toolbar - id value or null
+  null - id value or null
   {
   "tag": "toolbar",
-  "id": "main-toolbar",
+  "id": null,
   "attrs": {
-    "id": "main-toolbar",
-    "position": "top"
+    "props": "id:string;position:string",
+    "component-role": "Toolbar for navigation or actions"
   }
 } - JSON object of attributes
 -->
@@ -25,10 +25,10 @@ Placeholders:
 
   export const mockup = {
   "tag": "toolbar",
-  "id": "main-toolbar",
+  "id": null,
   "attrs": {
-    "id": "main-toolbar",
-    "position": "top"
+    "props": "id:string;position:string",
+    "component-role": "Toolbar for navigation or actions"
   }
 };
 </script>

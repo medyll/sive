@@ -3,13 +3,13 @@ Template for convert-mockup.js
 Placeholders:
   Row - PascalCase component name (e.g. ChatBubble)
   row - original mockup tag (e.g. chat-bubble)
-  main-body - id value or null
+  null - id value or null
   {
   "tag": "row",
-  "id": "main-body",
+  "id": null,
   "attrs": {
-    "id": "main-body",
-    "flex": true
+    "props": "id:string;flex:boolean",
+    "component-role": "Horizontal arrangement of child components"
   }
 } - JSON object of attributes
 -->
@@ -25,10 +25,10 @@ Placeholders:
 
   export const mockup = {
   "tag": "row",
-  "id": "main-body",
+  "id": null,
   "attrs": {
-    "id": "main-body",
-    "flex": true
+    "props": "id:string;flex:boolean",
+    "component-role": "Horizontal arrangement of child components"
   }
 };
 </script>
