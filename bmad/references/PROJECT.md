@@ -61,11 +61,11 @@
 
 ## 9. Layout — Semantic Interface Description
 
-- **Keywords:** placeholder / empty, semantic UI spec expected, panels/tabs/commands (intent)
-- **Role:** Placeholder for a formal semantic UI specification that will map UI elements to commands and data hooks
+- **Keywords:** placeholder / empty, semantic UI  sive-layout, mockups, gen:mockups, lib/elements/mockups, lib/elements, Svelte 5, components, component-model, generator, pnpm
+- **Role:** Documents the procedure and commands (mockup generation) that ensure consistency and compliance with Svelte 5 standards when creating components.
 - **Link:** [9-layout-semantic-interface-description.md](./project/9-layout-semantic-interface-description.md)
 
-## Appendix — Prioritization Recommendation
+## 10. Appendix — Prioritization Recommendation
 
 - **Keywords:** prioritized roadmap, UX foundation first, timeline/versioning, review mode, style profiling, coherence engine, censorship, multi-user isolation
 - **Role:** Provides the recommended development prioritization and rationale to sequence implementation and validation
