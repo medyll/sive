@@ -13,8 +13,7 @@ completed_steps:
   - Analysis
   - PRD
 
-missing_artifacts:
-  - auth:data-model
+missing_artifacts: []
 
 recommendation: /architecture
 last_updated: 2026-02-28
