@@ -18,6 +18,8 @@ DuckDuckGo / Wikipedia integration for on-demand factual verification. No automa
 ### 4.3 File System
 
 #### General Structure
+- **TYPES** this general structure is used to generate the types for the application components.
+The types are stored in the file '[text](../../../src/lib/types/types.ts)'
 
 ```
 mybook/

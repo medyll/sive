@@ -30,8 +30,9 @@
 
 ## 4. Intelligence & Data
 
-- **Keywords:** hybrid AI routing (local/cloud), Ollama, Gemini/OpenAI, web fact-check (DuckDuckGo/Wikipedia), bible.yaml, timeline.yaml, chapter YAMLs, templates, project filesystem schema
-- **Role:** Defines project data schemas, file layouts and model routing policies used by MCP and data-consuming components
+- **Keywords:**  bible.yaml, timeline.yaml, chapter YAMLs, templates, project filesystem schema, hybrid AI routing (local/cloud), Ollama, Gemini/OpenAI, web fact-check (DuckDuckGo/Wikipedia),
+- **Role:** Defines project data schemas, types.ts, types generation, file layouts and model routing policies used by MCP and data-consuming components. use this file to generate typings and types.ts files.
+
 - **Link:** [4-intelligence-data.md](./project/4-intelligence-data.md)
 
 ## 5. AI Architecture — MCP & Skills
