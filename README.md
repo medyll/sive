@@ -52,6 +52,17 @@ See [`BITS-UI-Standard.md`](docs/BITS-UI-Standard.md) for full guidelines.
 
 ## Project Setup & Scripts
 
+### Developer Quickstart
+
+1. Install dependencies: `pnpm install` (preferred) or `npm install`
+2. Copy example env (if present) and set required variables (`BETTER_AUTH_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `ORIGIN`)
+3. Start local dev server: `pnpm dev` or `npm run dev`
+4. Run unit tests: `npm run test:unit`
+5. Run e2e tests: `npm run test:e2e`
+
+
+## Project Setup & Scripts
+
 - **Install dependencies:**
 	```sh
 	pnpm install
@@ -87,6 +98,14 @@ See [`BITS-UI-Standard.md`](docs/BITS-UI-Standard.md) for full guidelines.
 
 - **Auth:** Uses Better-Auth, configured in [`src/lib/server/auth.ts`](src/lib/server/auth.ts).
 - **Database:** SQLite via Drizzle ORM. Schema in [`src/lib/server/db/schema.ts`](src/lib/server/db/schema.ts).
+
+## Project Structure
+
+- `src/routes/` — SvelteKit routes and pages
+- `src/lib/` — shared UI components, server helpers, and utilities
+- `src/lib/server/` — server-only helpers (DB, auth, adapters)
+- `bmad/` — project artifacts, PRDs, mockups, sprints
+
 
 ## BMAD Workflow & Artifacts
 
