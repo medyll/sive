@@ -1,17 +1,15 @@
 <!--
 Template for AIPanel component
 -->
-<script lang="ts" module>
+<script lang="ts">
   import type { TimelineEvent } from '$lib/types/types';
 
-  const props = () => ({
-    events: [] as TimelineEvent[],
-    theme: 'light',
-  });
+  export let events: TimelineEvent[] = [];
+  export let theme: string = 'light';
 </script>
 
-<div class="ai-panel" data-theme={props().theme}>
-  {#each props().events as event (event.index)}
+<div class="ai-panel" data-theme={theme}>
+  {#each events as event (event.index)}
     <div class="event">
       <h3>{event.label}</h3>
       <p>{event.storyDate}</p>

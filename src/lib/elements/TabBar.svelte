@@ -1,24 +1,22 @@
 <!--
 Template for TabBar component
 -->
-<script lang="ts" module>
+<script lang="ts">
   import type { Theme } from '$lib/types/types';
 
-  const props = () => ({
-    tabs: [] as string[],
-    activeTab: '',
-    theme: 'light' as Theme['id'],
-  });
+  export let tabs: string[] = [];
+  export let activeTab: string = '';
+  export let theme: Theme['id'] = 'light';
 
   const setActiveTab = (tab: string) => {
-    props().activeTab = tab;
+    activeTab = tab;
   };
 </script>
 
-<div class="tab-bar" data-theme={props().theme}>
-  {#each props().tabs as tab (tab)}
+<div class="tab-bar" data-theme={theme}>
+  {#each tabs as tab (tab)}
     <button
-      class="tab {tab === props().activeTab ? 'active' : ''}"
+      class="tab {tab === activeTab ? 'active' : ''}"
       on:click={() => setActiveTab(tab)}
     >
       {tab}

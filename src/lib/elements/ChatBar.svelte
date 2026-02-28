@@ -1,11 +1,11 @@
 <!--
 Template for ChatBar component
 -->
-<script lang="ts" module>
-  const props = () => ({
-    placeholder: 'Type a message...',
-    theme: 'light',
-  });
+<script lang="ts">
+  import type { Theme } from '$lib/types/types';
+
+  export let placeholder: string = 'Type a message...';
+  export let theme: Theme['id'] = 'light';
 
   const sendMessage = (message: string) => {
     console.log('Message sent:', message);
@@ -16,8 +16,8 @@ Template for ChatBar component
   <input
     type="text"
     class="chat-input"
-    placeholder={props().placeholder}
-    onkeydown={(e) => e.key === 'Enter' && sendMessage(e.target.value)}
+    placeholder={placeholder}
+    on:keydown={(e) => e.key === 'Enter' && sendMessage((e.target as HTMLInputElement).value)}
   />
 </div>
 

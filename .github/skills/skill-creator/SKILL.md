@@ -2,7 +2,7 @@
 name: skill-creator
 description: Guide for creating effective skills. This skill should be used when the user writes 'skill-creator' or wants to create a new skill (or update an existing skill) that extends VSCode capabilities with specialized knowledge, workflows, or tool integrations.
 license: Complete terms in LICENSE.txt
-argument-hint: "Describe the skill to create, or request 'skill-creator' for guidance."
+argument-hint: "[create|update] [skill-name]"
 compatibility:
     - mcp_v1
 disable-model-invocation: false 

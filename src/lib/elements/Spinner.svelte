@@ -1,14 +1,14 @@
 <!--
 Template for Spinner component
 -->
-<script lang="ts" module>
-  const props = () => ({
-    size: 'medium' as 'small' | 'medium' | 'large',
-    theme: 'light',
-  });
+<script lang="ts">
+  import type { Theme } from '$lib/types/types';
+
+  export let size: 'small' | 'medium' | 'large' = 'medium';
+  export let theme: Theme['id'] = 'light';
 </script>
 
-<div class="spinner {props().size}" data-theme={props().theme}></div>
+<div class="spinner {size}" data-theme={theme}></div>
 
 <style>
   .spinner {

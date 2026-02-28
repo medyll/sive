@@ -27,6 +27,7 @@ Placeholders:
 -->
 <script module lang="ts">
   	import { cn } from "$lib/utils.js";
+  	import type { ... } from "$lib/types/types.js";
   /**
    * Component: {{COMPONENT_NAME}}
    * Type definitions for external usage

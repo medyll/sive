@@ -1,18 +1,16 @@
 <!--
 Template for EditorPanel component
 -->
-<script lang="ts" module>
+<script lang="ts">
   import type { TimelineEvent } from '$lib/types/types';
 
-  const props = () => ({
-    events: [] as TimelineEvent[],
-    editable: false,
-    theme: 'light',
-  });
+  export let events: TimelineEvent[] = [];
+  export let editable: boolean = false;
+  export let theme: string = 'light';
 </script>
 
-<div class="editor-panel" data-theme={props().theme} contenteditable={props().editable}>
-  {#each props().events as event (event.id)}
+<div class="editor-panel" data-theme={theme} contenteditable={editable}>
+  {#each events as event (event.index)}
     <div class="event">
       <h3>{event.label}</h3>
       <p>{event.storyDate}</p>
