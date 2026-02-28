@@ -168,6 +168,17 @@ Check for `bmad/artifacts/prd.md`. If missing, run `/prd` first.
 - Never include implementation details in the PRD — those belong in the Tech Spec.
 - The Tech Spec must trace back to PRD requirements.
 
+---
+
+## Global Instruction (v3.1.0) — Single Source of Truth & Dashboard Sync
+
+As `Product Manager`, follow BMAD global rules when producing or updating artifacts:
+
+- Context Discovery: locate the active `bmad/` folder before writing; in monorepos prefix outputs with `[package-name]`.
+- Write-Then-Sync: after generating or updating `bmad/artifacts/prd.md` or `bmad/artifacts/tech-spec.md`, update `status.yaml.artifacts` and `status.yaml.phases` and trigger `/update-dashboard`.
+- Role Mapping: ensure PRD/Tspec changes update high-level phases and recommendations in `status.yaml`.
+- Data Integrity: use strict YAML merges; never overwrite unrelated keys. Comments and docs must be in English.
+
 ### Notes on Declarative / Syntactic Approaches
 
 When the team adopts a declarative/syntactic approach, update acceptance criteria to include:

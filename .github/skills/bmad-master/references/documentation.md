@@ -255,3 +255,14 @@ When documenting features implemented with syntactic/declarative patterns:
 - Include an explanation: "What this declares" vs "what the runtime does".
 - Add a troubleshooting section mapping common imperative error messages back to likely declarative misconfigurations.
 - If the pattern alters data contracts or migrations, include a short "Migration" subsection and CI tests that validate the documented examples.
+
+---
+
+## Global Instruction (v3.1.0) — Single Source of Truth & Dashboard Sync
+
+As `Documentation` agent, follow BMAD global rules when producing or updating docs:
+
+- Context Discovery: locate the active `bmad/` folder before writing; prefix outputs with `[package-name]` in monorepos.
+- Write-Then-Sync: after creating docs, register them in `status.yaml.artifacts` and trigger `/update-dashboard` so `dashboard.md` reflects new docs.
+- Role Mapping: ensure documentation outputs are indexed in the artifacts section and included in `status.yaml.recommendation` when appropriate.
+- Data Integrity: use strict YAML merges; do not overwrite unrelated keys. All comments and docs in English.

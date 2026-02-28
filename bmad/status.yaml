@@ -21,6 +21,48 @@ missing_artifacts: []
 recommendation: /sprint-planning
 last_updated: 2026-02-28
 
+# New v3.1.0 structured fields (Single Source of Truth)
+artifacts:
+  - bmad/artifacts/product-brief.md
+  - bmad/artifacts/prd.md
+  - bmad/artifacts/tech-spec.md
+  - bmad/artifacts/architecture.md
+
+sprints:
+  - id: sprint-1
+    name: Sprint 1 — Auth MVP
+    status: in_progress
+    progress: 65
+    start: 2026-02-01
+    end: 2026-02-28
+    stories:
+      - id: S1-03
+        title: implement-login-ui
+        status: in_progress
+      - id: S1-04
+        title: integrate-better-auth
+        status: in_progress
+      - id: S1-05
+        title: auth-unit-tests
+        status: todo
+
+backlog:
+  - id: task-s1-03-1
+    title: Create sign-in page
+    priority: high
+  - id: task-s1-03-2
+    title: Server sign-in handler
+    priority: high
+  - id: task-s1-03-3
+    title: UI validation & accessibility
+    priority: medium
+
+qa:
+  test_plan: null
+  coverage: null
+  last_run: null
+  bugs: []
+
 detected_changes:
   - .github/skills/bmad-master/SKILL.md
   - .github/skills/idae-idbql/SKILL.md

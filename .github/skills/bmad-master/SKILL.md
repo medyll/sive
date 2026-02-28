@@ -2,14 +2,15 @@
 
 name: bmad-master
 description:
-  BMAD Method multi-role AI orchestrator. Proactive & framing-oriented. Manages software projects, plans products, PRDs, architecture, sprint planning, stories, and documentation. Adaptive to all profiles (Beginner, Senior, ADHD). Triggers on commands like workflow-init, analyze-context, workflow-status, prd, architecture, sprint-planning, dev-story, doc, next — or any dev related task, or any BMAD role mention (analyst, PM, architect, scrum master, developer, doc agent).
-argument-hint: "workflow-init, workflow-update, workflow-status, analyze-context, prd, architecture, sprint-planning, dev-story, doc-coauthoring, next, readme, update-dashboard, add-knowledge"
+  BMAD Method multi-role AI orchestrator. Proactive & framing-oriented. Manages software projects, plans products, PRDs, architecture, sprint planning, stories, testing and documentation. Adaptive to all profiles (Beginner, Senior, ADHD). Triggers on commands like workflow-init, analyze-context, workflow-status, prd, architecture, sprint-planning, dev-story, doc, next — or any dev related task, or any BMAD role mention (analyst, PM, architect, scrum master, developer, tester, doc agent).
+argument-hint: "workflow-init, workflow-update, workflow-status, analyze-context, prd, architecture, sprint-planning, dev-story, doc-coauthoring, next, readme, update-dashboard, add-knowledge, test-plan"
 compatibility:
   - mcp_v2
 disable-model-invocation: false
 license: MIT
 metadata:
   version: "3.0.0"
+  release: "v3.1.0"
   author: medyll
   allowed-tools: [svelte-5]
 user-invokable: true
@@ -64,6 +65,7 @@ This skill is split into role-specific reference files. **Always read the releva
 | Developer       | /dev-story, /code-review, /refactor, /readme                                                  | `references/developer.md`     |
 | Documentation   | /doc, /doc-coauthoring, /report, /spec, /prd-doc                                              | `references/documentation.md` |
 | Interface       | /layout, /mockup                                                                              | `references/sive-layout.html` |
+| Tester          | /test-plan, /unit-test, /e2e-test, /qa, /bug-triage                                             | `references/tester.md`        |
 
 ---
 
@@ -161,6 +163,88 @@ Phase 4 – Implementation ⏳ Upcoming
 3. **Generate Markdown**: Overwrite `dashboard.md` with an interactive view (using `command:bmad.run` links).
 4. **Master View**: If in a monorepo root, generate `MASTER_DASHBOARD.md` indexing all detected `bmad/` instances.
 
+### /update-dashboard (Master Dashboard generation)
+
+The orchestrator auto-detects whether the repository is a monorepo by recursively scanning for `*/bmad/status.yaml` files. Passing `--root` is optional and not required to trigger a full scan.
+
+1) Command
+
+At the repository root, invoke:
+
+```
+bmad-master /update-dashboard
+```
+
+2) Execution logic (what the Orchestrator does)
+
+- Discovery: recursively search the repository for all `*/bmad/status.yaml` files.
+- Aggregation: extract a repo-relative package path (e.g., `apps/api`) for each instance, the current phase, and the progress score from each `status.yaml`.
+- Generation: write a consolidated `MASTER_DASHBOARD.md` at the repo root containing a summary table, critical QA/bugs, and global actions.
+
+3) MASTER_DASHBOARD.md structure (example output)
+
+# 👑 BMAD Master Dashboard
+> **Scope:** Monorepo Root | **Total Instances:** 3 | **Sync:** 2026-02-28
+
+---
+
+## 🏗️ Project Overview
+
+| Package | Phase | Progress | Status | Action |
+| :--- | :--- | :---: | :---: | :--- |
+| **apps/api** | Implementation | 85% | 🟢 | [Open Dash](./apps/api/bmad/dashboard.md) |
+| **apps/web** | Planning | 20% | 🟡 | [Open Dash](./apps/web/bmad/dashboard.md) |
+| **packages/ui** | Solutioning | 50% | 🟢 | [Open Dash](./packages/ui/bmad/dashboard.md) |
+
+---
+
+## ⚠️ Critical Issues (QA/Bugs)
+- [ ] **apps/api**: BUG-01 - Auth loop on Windows (Critical)
+- [ ] **apps/web**: Missing PRD for Login module.
+
+---
+
+## 🛠️ Global Actions
+- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%22%5D)
+- [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)
+
+4) Why this matters for the IDE / developer
+
+- Navigation: relative links let you jump from the master view into each package dashboard.
+- Sheldon Mode: centralized, ordered overview without opening every folder.
+- Senior visibility: quickly spot package-level bottlenecks (e.g., long-running Planning phase).
+
+The Orchestrator exposes `/update-dashboard` which auto-detects monorepo layout and generates the master dashboard.
+---
+
+## 🏗️ Project Overview
+
+| Package | Phase | Progress | Status | Action |
+| :--- | :--- | :---: | :---: | :--- |
+| **api-core** | Implementation | 85% | 🟢 | [Open Dash](./apps/api/bmad/dashboard.md) |
+| **web-client** | Planning | 20% | 🟡 | [Open Dash](./apps/web/bmad/dashboard.md) |
+| **shared-ui** | Solutioning | 50% | 🟢 | [Open Dash](./packages/ui/bmad/dashboard.md) |
+
+---
+
+## ⚠️ Critical Issues (QA/Bugs)
+- [ ] **api-core**: BUG-01 - Auth loop on Windows (Critical)
+- [ ] **web-client**: Missing PRD for Login module.
+
+---
+
+## 🛠️ Global Actions
+- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%20--root%22%5D)
+- [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)
+
+4) Why this matters for the IDE / developer
+
+- Navigation: relative links let you jump from the master view into each package dashboard.
+- Sheldon Mode: centralized, ordered overview without opening every folder.
+- Senior visibility: quickly spot package-level bottlenecks (e.g., long-running Planning phase).
+
+The Orchestrator should expose `--root` in `SKILL.md` so users know how to trigger monorepo master dashboard generation.
+
 ### /next
 
 Take the initiative. Analyze the project state (Artifacts + Sprint progress) and suggest the most logical next step. 
@@ -197,6 +281,37 @@ Outputs:
 - A ranked list of affected role files with proposed diffs.
 - A recommended `SKILL.md` metadata change when new triggers/commands are required (e.g., adding `add-knowledge` to `argument-hint`).
 - Optional automated edits (applied only after explicit user approval).
+
+---
+
+## Global Instruction (v3.1.0) — Single Source of Truth & Dashboard Sync
+
+All BMAD roles MUST follow the Global Instruction v3.1.0 when producing or modifying artifacts.
+
+1. Context Discovery Rule
+  - Locate the active `bmad/` directory before any write. Use the nearest `bmad/` relative to the current file or the provided `--path` flag.
+  - In monorepos, prefix outputs with the package name in square brackets (e.g., `[package-name]`).
+
+2. Mandatory State Sync (Write-Then-Sync Loop)
+  - After creating or modifying any artifact, update `status.yaml` (phases, artifacts, sprints/backlog progress).
+  - Tester-specific: update `qa` object with `test_plan`, `coverage`, `last_run`, and `bugs`.
+  - Trigger `/update-dashboard` to regenerate `dashboard.md` and, for monorepos, update `MASTER_DASHBOARD.md` when root status changes.
+
+3. Role-Specific Data Mapping
+  - Analyst/PM/Architect: update high-level phases and artifacts in `status.yaml`.
+  - Scrum Master/Developer: update `sprints` and `backlog` entries and progress percent.
+  - Tester: execute `/test-plan` or `/bug-triage` flows and sync QA state to the dashboard.
+  - Documentation: register created artifacts in the artifacts index.
+
+4. Data Integrity & Style
+  - Use strict YAML for `status.yaml`. Never overwrite unrelated keys; merge or append only.
+  - All comments and documentation must be in English.
+  - Update `status.yaml.recommendation` to point to the next logical step after changes (e.g., `/run-test`, `/next`).
+
+5. Monorepo Support
+  - If the package's global status changes, ensure `MASTER_DASHBOARD.md` is updated at the repo root.
+
+Failure to follow these rules should cause the agent to present a corrective plan rather than silently writing state.
 - A changelog artifact `bmad/artifacts/knowledge-updates-{timestamp}.md` capturing source, decisions, and applied patches.
 
 Safety & policy:

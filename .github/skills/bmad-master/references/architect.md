@@ -133,3 +133,14 @@ The Syntactic Methodology emphasizes declarative system design and composition. 
 - Identify runtime or library support required to implement declarative intent (e.g., transformation engines, middleware that materializes declarative state into imperative operations).
 - Document performance trade-offs and observability approaches for declarative layers (how to trace a high-level transformation through runtime effects).
 - Ensure backward-compatibility strategies and migration paths when introducing declarative layers that replace imperative workflows.
+
+---
+
+## Global Instruction (v3.1.0) — Single Source of Truth & Dashboard Sync
+
+As `Architect`, follow BMAD global rules when producing architecture artifacts:
+
+- Context Discovery: locate the active `bmad/` folder before writing architecture docs; in monorepos prefix outputs with `[package-name]`.
+- Write-Then-Sync: after drafting `bmad/artifacts/architecture.md` or ADRs, update `status.yaml.artifacts` and `status.yaml.phases` and trigger `/update-dashboard`.
+- Role Mapping: ensure architectural decisions update high-level phase status and `status.yaml.recommendation` when they unblock next steps.
+- Data Integrity: use strict YAML merges; never overwrite unrelated keys. Keep comments and ADR text in English.

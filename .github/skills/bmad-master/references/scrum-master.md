@@ -139,3 +139,14 @@ Then {expected result}
 - Each story should be completable in under 3 days; split larger stories.
 - Always trace stories back to a PRD requirement.
 - Sprint goal must be achievable with the available capacity — be conservative.
+
+---
+
+## Global Instruction (v3.1.0) — Single Source of Truth & Dashboard Sync
+
+As `Scrum Master`, follow BMAD global rules when creating or changing sprint/story artifacts:
+
+- Context Discovery: locate the active `bmad/` folder before any write; in monorepos prefix outputs with `[package-name]`.
+- Write-Then-Sync: after generating `bmad/artifacts/sprints/*` or story files, update `status.yaml.sprints` and `status.yaml.backlog` (progress %) and trigger `/update-dashboard`.
+- Role Mapping: update sprint-level progress and backlog entries; populate `status.yaml.recommendation` with the next logical command.
+- Data Integrity: use strict YAML merges; never overwrite unrelated keys. Use English for all comments.

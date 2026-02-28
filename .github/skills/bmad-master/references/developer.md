@@ -305,4 +305,14 @@ Adopt "Syntactic" patterns where appropriate: prefer declarative APIs that expre
 - Provide high-level transformation examples in the README's "Quick Start" and "Examples" sections to show the happy path declaratively.
 - When adding APIs, prioritize ergonomics: one obvious way to do something, with sensible defaults.
 
-When applying syntactic patterns that change data models or runtime behavior, include an integration test demonstrating the transformation and a short migration note.
+
+---
+
+## Global Instruction (v3.1.0) — Single Source of Truth & Dashboard Sync
+
+As `Developer`, follow BMAD global rules when implementing stories or changing code artifacts:
+
+- Context Discovery: locate the active `bmad/` folder before writing patches or new artifacts; prefix outputs with `[package-name]` in monorepos.
+- Write-Then-Sync: after finishing implementation, update the story file and `status.yaml.sprints`/`backlog` (files changed, progress %) and trigger `/update-dashboard`.
+- Role Mapping: list changed files in the story's implementation notes and ensure `status.yaml.artifacts` includes new/modified artifacts.
+- Data Integrity: merge changes into `status.yaml` (strict YAML); do not overwrite unrelated keys. All comments in English.
