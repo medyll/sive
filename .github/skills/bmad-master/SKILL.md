@@ -3,7 +3,7 @@
 name: bmad-master
 description:
   BMAD Method multi-role AI orchestrator. Proactive & framing-oriented. Manages software projects, plans products, PRDs, architecture, sprint planning, stories, and documentation. Adaptive to all profiles (Beginner, Senior, ADHD). Triggers on commands like workflow-init, analyze-context, workflow-status, prd, architecture, sprint-planning, dev-story, doc, next — or any dev related task, or any BMAD role mention (analyst, PM, architect, scrum master, developer, doc agent).
-argument-hint: "workflow-init, workflow-update, workflow-status, analyze-context, prd, architecture, sprint-planning, dev-story, doc-coauthoring, next, readme"
+argument-hint: "workflow-init, workflow-update, workflow-status, analyze-context, prd, architecture, sprint-planning, dev-story, doc-coauthoring, next, readme, update-dashboard, add-knowledge"
 compatibility:
   - mcp_v2
 disable-model-invocation: false
@@ -54,16 +54,16 @@ Just type `bmad-master` for help at any time.
 
 This skill is split into role-specific reference files. **Always read the relevant role file before responding** to any role command.
 
-| Role            | Commands                                                                  | Reference File                |
-| --------------- | ------------------------------------------------------------------------- | ----------------------------- |
-| Orchestrator    | /workflow-init, /analyze-context, /workflow-status, /status, /init, /next | (inline below)                |
-| Analyst         | /product-brief, /brainstorm, /research, /audit                            | `references/analyst.md`       |
-| Product Manager | /prd, /tech-spec, /roadmap                                                | `references/pm.md`            |
-| Architect       | /architecture, /stack                                                     | `references/architect.md`     |
-| Scrum Master    | /sprint-planning, /create-story, /backlog                                 | `references/scrum-master.md`  |
-| Developer       | /dev-story, /code-review, /refactor, /readme                              | `references/developer.md`     |
-| Documentation   | /doc, /doc-coauthoring, /report, /spec, /prd-doc                          | `references/documentation.md` |
-| Interface       | /layout, /mockup                                                          | `references/sive-layout.html` |
+| Role            | Commands                                                                                      | Reference File                |
+| --------------- | --------------------------------------------------------------------------------------------- | ----------------------------- |
+| Orchestrator    | /workflow-init, /analyze-context, /workflow-status, /status, /init, /next, /update-dashboard  | (inline below)                |
+| Analyst         | /product-brief, /brainstorm, /research, /audit                                                | `references/analyst.md`       |
+| Product Manager | /prd, /tech-spec, /roadmap                                                                    | `references/pm.md`            |
+| Architect       | /architecture, /stack                                                                         | `references/architect.md`     |
+| Scrum Master    | /sprint-planning, /create-story, /backlog                                                     | `references/scrum-master.md`  |
+| Developer       | /dev-story, /code-review, /refactor, /readme                                                  | `references/developer.md`     |
+| Documentation   | /doc, /doc-coauthoring, /report, /spec, /prd-doc                                              | `references/documentation.md` |
+| Interface       | /layout, /mockup                                                                              | `references/sive-layout.html` |
 
 ---
 
@@ -71,15 +71,17 @@ This skill is split into role-specific reference files. **Always read the releva
 
 1. **Parse Command**: Identify the command from the user message.
 2. **Profile Adaptation**: Detect if the user is a beginner, senior, or TDAH.
-
-- _TDAH_: Use lists, bolding, and clear milestones.
-- _Senior_: Minimum fluff, direct technical data.
-
+  - *Syntactic*: Use lists, bolding, and clear milestones. 
+   - *Senior*: Minimal fluff, direct technical data, no useless praise.
 3. **Legacy Analysis**: If code or docs are provided without a `bmad/` folder, suggest `/analyze-context`.
 4. **Read Reference**: Load the specific role file before responding.
 5. **Update `status.yaml**`: Automatically mark artifacts as completed after command execution.
 6. **Code Standards**: All code comments must be in English.
-
+7. **Context Awareness**: If multiple `bmad/` folders exist, prefix responses with `[package-name]`.
+8. **Auto-Sync Trigger**: Every command modifying state (`/prd`, `/create-story`, etc.) MUST call `/update-dashboard` automatically.
+9. **Profile Adaptation**: 
+10. **Code Standards**: All code comments must be in **English**.
+11. **Formatting**: Use tables, bolding, and horizontal rules for scannability.
 ---
 
 ## Orchestrator Role (inline)
@@ -152,9 +154,18 @@ Phase 4 – Implementation ⏳ Upcoming
 
 ```
 
+### /update-dashboard
+**The Heart of the Dashboard Engine.**
+1. **Data Sync**: Read `status.yaml` + `./artifacts/sprints/` + `./artifacts/stories/`.
+2. **Update YAML**: Ensure `sprints` and `backlog` keys are populated and up-to-date.
+3. **Generate Markdown**: Overwrite `dashboard.md` with an interactive view (using `command:bmad.run` links).
+4. **Master View**: If in a monorepo root, generate `MASTER_DASHBOARD.md` indexing all detected `bmad/` instances.
+
 ### /next
 
-Take the initiative. Analyze the current state and say: "Mydde, the PRD is ready but the Architecture lacks the data model for the auth module. Should we run `/architecture` or start `/sprint-planning` for the MVP?"
+Take the initiative. Analyze the project state (Artifacts + Sprint progress) and suggest the most logical next step. 
+*Example: "The Sprint 01 is 80% done. ST-104 is missing its dev-story. Should we run `/dev-story ST-104`?"*
+*Example: "The PRD is ready but the Architecture lacks the data model for the auth module. Should we run `/architecture` or start `/sprint-planning` for the MVP?"*
 
 ### /layout
 
@@ -164,6 +175,42 @@ Centralize interface design and layout information. Use `references/sive-layout.
 2. Document component roles, props, and behaviors.
 3. Ensure alignment between design and implementation.
 
+
+---
+
+### /add-knowledge (new)
+
+Purpose: ingest a new piece of project knowledge (doc, spec, example, or code snippet), evaluate its scope, and propose or apply updates to role reference files in `/references/` and to `SKILL.md` when the skill's triggers, workflows, or metadata should change.
+
+Usage: run `bmad-master add-knowledge` with a short description and attach the knowledge resource (text or file). The skill will respond with an actionable plan and optionally apply safe edits after user confirmation.
+
+Process:
+
+1. **Intake & summarize** — parse the submitted knowledge, extract intent, keywords, and affected domains.
+2. **Map to roles** — score which role reference files in `/references/` (analyst, pm, architect, developer, documentation, scrum-master, etc.) are impacted based on keywords and intent.
+3. **Propose updates** — for each affected role produce: a) short summary of recommended edits, b) exact snippets or patches to apply, and c) whether `SKILL.md` frontmatter (triggers, argument-hint) should be updated.
+4. **Validate conflicts** — detect contradictions with existing references or frontmatter and surface them as blockers.
+5. **Review & apply** — present the plan to the user. On approval, apply only the selected edits and create a small changelog entry under `bmad/artifacts/` recording what changed and why.
+
+Outputs:
+
+- A ranked list of affected role files with proposed diffs.
+- A recommended `SKILL.md` metadata change when new triggers/commands are required (e.g., adding `add-knowledge` to `argument-hint`).
+- Optional automated edits (applied only after explicit user approval).
+- A changelog artifact `bmad/artifacts/knowledge-updates-{timestamp}.md` capturing source, decisions, and applied patches.
+
+Safety & policy:
+
+- Never modify production code or sensitive files without explicit approval.
+- When a knowledge item touches DB schemas, require an explicit migration plan and do not auto-apply schema edits.
+- Keep edits minimal and well-scoped; prefer appending a "Notes / Additions" section in role reference files rather than wholesale rewrites.
+
+Example flow:
+
+User: `bmad-master add-knowledge` (attach `auth-flow-v2.md`)
+Skill: Summarizes the doc, lists affected roles (`developer.md`, `architect.md`, `documentation.md`), shows patch snippets, and recommends adding `auth` triggers to `SKILL.md` frontmatter.
+User: Approves patches.
+Skill: Applies patches, writes `bmad/artifacts/knowledge-updates-2026-02-28.md`, and updates the dashboard status.
 
 ---
 

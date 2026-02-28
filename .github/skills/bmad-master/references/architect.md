@@ -124,3 +124,12 @@ Check for `bmad/artifacts/tech-spec.md`. If missing, suggest `/tech-spec` first.
 - Architecture must be reviewable by developers: no ambiguity in component responsibilities.
 - Cross-cutting concerns (auth, logging, errors) must be addressed explicitly.
 - Flag scalability limits honestly — note when a simpler approach is sufficient for the current scale.
+
+### Syntactic / Declarative Architectural Considerations
+
+The Syntactic Methodology emphasizes declarative system design and composition. Architects should:
+
+- Evaluate whether a declarative surface (e.g., configuration-driven pipelines, domain-specific transforms, or pure functional modules) reduces coupling and improves local reasoning.
+- Identify runtime or library support required to implement declarative intent (e.g., transformation engines, middleware that materializes declarative state into imperative operations).
+- Document performance trade-offs and observability approaches for declarative layers (how to trace a high-level transformation through runtime effects).
+- Ensure backward-compatibility strategies and migration paths when introducing declarative layers that replace imperative workflows.

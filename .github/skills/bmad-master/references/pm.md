@@ -167,3 +167,11 @@ Check for `bmad/artifacts/prd.md`. If missing, run `/prd` first.
 - Always assign a priority (Must / Should / Could / Won't) to each requirement.
 - Never include implementation details in the PRD — those belong in the Tech Spec.
 - The Tech Spec must trace back to PRD requirements.
+
+### Notes on Declarative / Syntactic Approaches
+
+When the team adopts a declarative/syntactic approach, update acceptance criteria to include:
+
+- A minimal integration example that demonstrates the declared behavior.
+- Performance and observability expectations for the declarative layer.
+- A migration plan if the approach changes data formats or runtime behaviors.

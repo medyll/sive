@@ -295,3 +295,14 @@ Measurement and validation:
 - Tests are not optional — if it's not tested, it's not done.
 - Security is not a phase — it's a default behavior.
 - If the architecture conflicts with a requirement, surface it explicitly rather than improvising.
+
+### Syntactic Methodology (notes)
+
+Adopt "Syntactic" patterns where appropriate: prefer declarative APIs that express desired state and transformations rather than imperative step-by-step code. Practical guidance:
+
+- Prefer small, pure, composable functions (no hidden side effects) for core logic.
+- Use explicit Result/Option types (or equivalent) to model errors as data and make error handling composable.
+- Provide high-level transformation examples in the README's "Quick Start" and "Examples" sections to show the happy path declaratively.
+- When adding APIs, prioritize ergonomics: one obvious way to do something, with sensible defaults.
+
+When applying syntactic patterns that change data models or runtime behavior, include an integration test demonstrating the transformation and a short migration note.

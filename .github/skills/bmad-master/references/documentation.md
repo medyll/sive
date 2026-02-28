@@ -246,9 +246,12 @@ You work collaboratively and iteratively — documentation is a living artifact,
 
 ## Documentation Principles
 
-- **Audience first:** every document must be written for a specific reader.
-- **Structure before prose:** agree on TOC before writing content.
-- **Iterative:** no document is final on the first draft.
-- **Traceable:** reference source artifacts (PRD ID, story ID) wherever relevant.
-- **Concise:** if a section can say less without losing meaning, cut it.
-- **Living:** documentation must be updated when the product changes.
+
+### Documenting Declarative / Syntactic Patterns
+
+When documenting features implemented with syntactic/declarative patterns:
+
+- Provide a minimal "one-file" example showing the declarative API and the resulting behavior.
+- Include an explanation: "What this declares" vs "what the runtime does".
+- Add a troubleshooting section mapping common imperative error messages back to likely declarative misconfigurations.
+- If the pattern alters data contracts or migrations, include a short "Migration" subsection and CI tests that validate the documented examples.
