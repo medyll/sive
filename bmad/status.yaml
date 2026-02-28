@@ -1,23 +1,25 @@
+```yaml
 phase:
   - name: Analysis
     status: done
   - name: Planning
-    status: pending
+    status: in_progress
   - name: Solutioning
     status: upcoming
   - name: Implementation
     status: upcoming
 
-recommendation: /prd
-last_updated: 2026-02-28
-# BMAD Project Status
-# Tracks the current phase and completed steps
-
-phase: Planning
 completed_steps:
   - Analysis
   - PRD
-missing_artifacts: []
-upcoming_phases:
-  - Solutioning
-  - Implementation
+
+missing_artifacts:
+  - auth:data-model
+
+recommendation: /architecture
+last_updated: 2026-02-28
+
+# BMAD Project Status
+# Tracks the current phase and completed steps
+
+```

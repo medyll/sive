@@ -14,13 +14,19 @@ project_name: "sive"
 project_type: web-app # options: web-app, mobile-app, api, game, library, other
 project_level: 1 # 0-4
 created_at: 2026-02-26T00:00:00Z
+layout_descriptor: bmad/references/sive-layout.html
+workflow:
+  gen_command: pnpm run gen:mockups
+  mockups_dir: lib/elements/mockups
+  components_dir: lib/elements
+recommended_next_step: /architecture
 notes: |
   mandatory : See `bmad/references/PROJECT.md` for the full project specification. Extracted constraints:
   - Stack: Svelte 5 + SvelteKit, TypeScript
   - Database: SQLite (drizzle-orm)
   - Auth: better-auth (server-side)
   - Testing: vitest + Playwright
-  - Layout descriptor (canonical): src/bmad/references/sive-layout.html
+  - Layout descriptor (canonical): bmad/references/sive-layout.html
   - Workflow for creating layouts and components:
     1. Define the new layout or element in `sive-layout.html` with english comments.
     2. Run `pnpm run gen:mockups` to generate mockup components in `lib/elements/mockups`.
