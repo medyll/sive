@@ -21,6 +21,11 @@ DuckDuckGo / Wikipedia integration for on-demand factual verification. No automa
 - **TYPES** this general structure is used to generate the types for the application components.
 The types are stored in the file '[text](../../../src/lib/types/types.ts)'
 
+> Note: The corresponding TypeScript definitions for these on-disk YAML schemas are maintained in
+> [src/lib/types/types.ts](../../../src/lib/types/types.ts). Keep the YAML schema (this document)
+> as the source of truth for on-disk files; when you change the YAML layout, update the TypeScript
+> types accordingly (or run your types generation workflow) so the codebase remains consistent.
+
 ```
 mybook/
 ├── bible.yaml                  ← characters, locations, objects, relations, voices

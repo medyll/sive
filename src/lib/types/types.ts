@@ -1,7 +1,13 @@
-/* This file hosts the type definitions for the project.
-* The types defined here are used across the codebase to ensure type safety and consistency.
-* Each type/interface is linked to a specific concept or section in the project documentation (bmad/references/PROJECT.md) for traceability.
-*/
+/*
+ * This file hosts the type definitions for the project.
+ * The types defined here are used across the codebase to ensure type safety and consistency.
+ * Source of truth: bmad/references/project/4-intelligence-data.md
+ *
+ * NOTE: 4-intelligence-data.md describes the on-disk YAML schemas (bible.yaml, timeline.yaml,
+ * chapter_XX.yaml, structure.yaml, themes.yaml, etc.). If you regenerate or modify these types,
+ * update that source file first and keep the nomenclature consistent (snake_case on-disk ->
+ * camelCase in TypeScript where appropriate).
+ */
 
 /**
  * Theme, Motif, Symbol types for themes.yaml
