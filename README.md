@@ -88,6 +88,23 @@ See [`BITS-UI-Standard.md`](docs/BITS-UI-Standard.md) for full guidelines.
 - **Auth:** Uses Better-Auth, configured in [`src/lib/server/auth.ts`](src/lib/server/auth.ts).
 - **Database:** SQLite via Drizzle ORM. Schema in [`src/lib/server/db/schema.ts`](src/lib/server/db/schema.ts).
 
+## BMAD Workflow & Artifacts
+
+- Project planning, PRDs, sprint plans, and mockup templates live under the `bmad/` folder (see `bmad/config.yaml`).
+- Generate mockups with the repository's helper command: `pnpm run gen:mockups` (produces components in `src/lib/elements/mockups`).
+- Sprint plans and stories: `bmad/artifacts/sprints/` and `bmad/artifacts/stories/`.
+
+## Environment
+
+- Required environment variables for local development: `BETTER_AUTH_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `ORIGIN`.
+- Local DB: uses SQLite (no external DB required); see `src/lib/server/db/` for configuration and schema.
+
+## Contributing
+
+- Use pnpm for dependency management: `pnpm install`.
+- Run unit tests: `npm run test:unit`. Run e2e tests: `npm run test:e2e`.
+- When opening PRs, include clear description, link to related BMAD artifact (if any), and ensure tests pass locally.
+
 ---
 
 ## License
