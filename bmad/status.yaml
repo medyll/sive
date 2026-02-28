@@ -1,4 +1,6 @@
-```yaml
+# BMAD Project Status
+# Tracks the current phase and completed steps 
+
 phase:
   - name: Analysis
     status: done
@@ -12,10 +14,11 @@ phase:
 completed_steps:
   - Analysis
   - PRD
+  - Architecture
 
 missing_artifacts: []
 
-recommendation: /architecture
+recommendation: /sprint-planning
 last_updated: 2026-02-28
 
 detected_changes:
@@ -29,7 +32,4 @@ detected_changes:
   - src/lib/elements/Spinner.svelte
   - src/lib/elements/TabBar.svelte
 
-# BMAD Project Status
-# Tracks the current phase and completed steps
 
-```

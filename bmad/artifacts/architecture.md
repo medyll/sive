@@ -1,43 +1,85 @@
-# Architecture — Placeholder
+# Architecture Document — Auth-focused
 
-High-level architecture notes for Sive.
+This document describes the architecture decisions for the Auth MVP and the concrete next steps to implement auth safely and predictably.
 
-- Frontend: SvelteKit svelte-5 + Vite
-- Backend: server routes in SvelteKit; Drizzle ORM (SQLite)
-- Auth: Better-Auth with drizzleAdapter
+## Summary
 
-Next actions:
-- Add data model for auth in `src/lib/server/db/schema.ts`
-- Document plugin order in `src/lib/server/auth.ts`
-# Architecture Document
+- Goal: Implement a minimal, secure authentication layer using Better-Auth with a Drizzle/SQLite adapter and server-side session handling.
+- Primary files: `src/lib/server/db/auth.schema.ts`, `src/lib/server/db/index.ts`, `src/lib/server/auth.ts`, and SvelteKit protected routes under `src/routes/*`.
 
-## System Design
+## Data Model (Auth)
 
-### 1. Interface Architecture (Layout)
+The Drizzle schema includes the following tables (implemented in `src/lib/server/db/auth.schema.ts`):
 
-#### 1.1 Resizable Split-Screen
-The panel is resizable by drag-and-drop and uses css.clamp. The default ratio is 55/45 (editor/suggestions) but the user can adjust freely — the preference is persisted per profile.
+- users
+  - id (PK, uuid)
+  - email (string, unique)
+  - name (string)
+  - password_hash (string)
+  - created_at (timestamp ms)
 
-#### 1.2 Focus Mode
-A keyboard shortcut (e.g. `F11` or `Ctrl+Shift+F`) hides the right panel for a distraction-free writing session. When suggestions are ready during this mode, a discreet indicator (coloured dot in the margin) signals their availability without interrupting the flow.
+- sessions
+  - id (PK, uuid)
+  - user_id (FK -> users.id)
+  - session_token (string)
+  - expires_at (timestamp ms)
 
-#### 1.3 Multi-Tab Right Panel
-The right panel is organised into four contextual tabs. The active tab switches automatically based on the current action, but the user can navigate freely.
+- accounts (for social/OAuth)
+  - id (PK, uuid)
+  - user_id (FK -> users.id)
+  - provider (string e.g., "github")
+  - provider_account_id (string)
+  - access_token, refresh_token, expires_at
 
-- **Suggestions** — AI proposal diff with selective validation
-- **Coherence** — Narrative and physical inconsistency alerts
-- **Style** — Stylistic analysis, language tics, metrics
-- **History** — Snapshot timeline and navigation
+Notes:
+- Prefer a single source of truth for user identifiers (users.id) and use provider accounts only to map external identities.
+- Passwords must be stored as a salted hash (bcrypt/argon2) in `password_hash`.
 
-#### 1.4 Floating Chat Bar
-Central floating bar for voice commands (LiveKit) and image uploads. Absolute positioning, collapsible.
+## Better-Auth Integration
 
-#### 1.5 AI Spinner
-The spinner appears in the right panel as soon as an AI process is triggered (after a text modification or explicit action). It is not tied to user inactivity — a motionless author is thinking. The spinner is an **AI processing indicator**, not an idle indicator.
+- Use `betterAuth({ database: drizzleAdapter(db, { provider: 'sqlite' }), ... })` as demonstrated in `src/lib/server/auth.ts`.
+- Ensure the `sveltekitCookies(getRequestEvent)` plugin is the last plugin in the `plugins` array (this is required by hooks that rely on cookie injection).
+- Enable `emailAndPassword` provider for MVP; register GitHub as an optional social provider behind feature flag.
 
----
+## Plugin Order and Hooks
 
-### 2. Coherence Engine & Pure Logic
+1. Configure adapters and providers.
+2. Register authentication plugins (e.g., logging, rate-limiting) if any.
+3. Add `sveltekitCookies(getRequestEvent)` as the last plugin to ensure cookies are available to downstream handlers.
 
-#### 2.1 Inconsistency Detector
-Real-time monitoring of character and object states. Alerts are displayed in the **Coherence** tab of the right panel.
+Example order (in `auth.ts`):
+- loggingPlugin
+- rateLimitPlugin
+- sveltekitCookies(getRequestEvent)
+
+Document this ordering clearly in `src/lib/server/auth.ts` (inline comments already present) and add a unit test that validates `auth.api.getSession()` is available in hooks when running with a real DB.
+
+## Migrations & Local Dev
+
+- Use Drizzle Kit for migrations: run `npm run db:generate` to create migration from schema and `npm run db:push` / `npm run db:migrate` to apply.
+- For local development, `src/lib/server/db/index.ts` falls back to a mocked DB when `DATABASE_URL` is not set; this preserves UI work without requiring native better-sqlite3 bindings.
+- Add a short `README` note under `src/lib/server/db/README.md` describing how to set `DATABASE_URL` and run migrations locally.
+
+## Protected Routes & Session Handling
+
+- Protect server routes using `auth.api.getSession()` in `+page.server.ts` or `hooks.server.ts`.
+- Ensure server-only code (DB access and secrets) remains in `.server.ts` files.
+
+## Testing
+
+- Unit tests: cover hashing, session creation, and adapter integration (mock the DB layer when necessary).
+- E2E: Playwright test for sign-up, login, session persistence, and logout (already included in sprint items).
+
+## Security Considerations
+
+- Use `HttpOnly`, `Secure`, and `SameSite=Strict` cookies for session cookies.
+- Rotate `BETTER_AUTH_SECRET` in staging/production and document the process.
+- Rate-limit sign-in endpoints to reduce brute-force risk.
+
+## Next Actions
+
+1. Finalize migrations and run `npm run db:migrate` in a test environment.
+2. Implement server routes for sign-up/login and protect sample content pages.
+3. Create follow-up stories in BMAD: `S1-02` (auth architecture doc) is completed; add implementation stories for adapter and UI.
+
+Generated by bmad-master on 2026-02-28
