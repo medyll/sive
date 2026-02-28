@@ -7,7 +7,7 @@ compatibility:
 disable-model-invocation: false
 license: MIT
 metadata:
-	version: "1.0.0" 
+  version: "1.0.0" 
 user-invokable: true
 ---
 

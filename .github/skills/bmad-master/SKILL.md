@@ -5,14 +5,14 @@ description:
   BMAD Method multi-role AI orchestrator. Proactive & framing-oriented. Manages software projects, plans products, PRDs, architecture, sprint planning, stories, and documentation. Adaptive to all profiles (Beginner, Senior, ADHD). Triggers on commands like /workflow-init, /analyze-context, /workflow-status, /prd, /architecture, /sprint-planning, /dev-story, /doc, /next — or any BMAD role mention (analyst, PM, architect, scrum master, developer, doc agent).
 argument-hint: "/workflow-init, /workflow-update, /analyze-context, /workflow-status, /prd, /architecture, /sprint-planning, /dev-story, /doc-coauthoring, /next"
 compatibility:
-  - mcp_v1
+  - mcp_v2
 disable-model-invocation: false
 license: MIT
 metadata:
   version: "3.0.0"
   author: medyll
+  allowed-tools: [svelte-5]
 user-invokable: true
-
 ---
 
 # BMAD Complete – Multi-Role Orchestrator (Proactive Edition)

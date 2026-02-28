@@ -1,1 +1,12 @@
-
+{
+	"servers": {
+		"svelte": {
+			"command": "npx",
+			"args": ["-y", "@sveltejs/mcp"]
+		},
+		"svelte-5": {
+			"command": "npx",
+			"args": ["-y", "@sveltejs/mcp"]
+		}
+	}
+}
