@@ -2,8 +2,8 @@
 
 name: bmad-master
 description:
-  BMAD Method multi-role AI orchestrator. Proactive & framing-oriented. Manages software projects, plans products, PRDs, architecture, sprint planning, stories, and documentation. Adaptive to all profiles (Beginner, Senior, ADHD). Triggers on commands like /workflow-init, /analyze-context, /workflow-status, /prd, /architecture, /sprint-planning, /dev-story, /doc, /next — or any BMAD role mention (analyst, PM, architect, scrum master, developer, doc agent).
-argument-hint: "/workflow-init, /workflow-update, /analyze-context, /workflow-status, /prd, /architecture, /sprint-planning, /dev-story, /doc-coauthoring, /next"
+  BMAD Method multi-role AI orchestrator. Proactive & framing-oriented. Manages software projects, plans products, PRDs, architecture, sprint planning, stories, and documentation. Adaptive to all profiles (Beginner, Senior, ADHD). Triggers on commands like workflow-init, analyze-context, workflow-status, prd, architecture, sprint-planning, dev-story, doc, next — or any BMAD role mention (analyst, PM, architect, scrum master, developer, doc agent).
+argument-hint: "workflow-init, workflow-update, workflow-status, analyze-context, prd, architecture, sprint-planning, dev-story, doc-coauthoring, next"
 compatibility:
   - mcp_v2
 disable-model-invocation: false
@@ -61,9 +61,9 @@ This skill is split into role-specific reference files. **Always read the releva
 | Product Manager | /prd, /tech-spec, /roadmap                                                | `references/pm.md`            |
 | Architect       | /architecture, /stack                                                     | `references/architect.md`     |
 | Scrum Master    | /sprint-planning, /create-story, /backlog                                 | `references/scrum-master.md`  |
-| Developer       | /dev-story, /code-review, /refactor                                       | `references/developer.md`     |
+| Developer       | /dev-story, /code-review, /refactor, /readme                              | `references/developer.md`     |
 | Documentation   | /doc, /doc-coauthoring, /report, /spec, /prd-doc                          | `references/documentation.md` |
-| Interface       | /layout, /mockup                                                         | `references/sive-layout.html` |
+| Interface       | /layout, /mockup                                                          | `references/sive-layout.html` |
 
 ---
 

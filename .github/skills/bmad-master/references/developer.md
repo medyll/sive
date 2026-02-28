@@ -69,6 +69,137 @@ Check for the story file in `bmad/artifacts/stories/`. If missing, ask for the s
 - {any tech debt or deferred edge case}
 ```
 
+7. **Create package README** – Produce a high-quality package README for any new package, library, or reusable module the story introduces.
+
+### Prerequisites
+
+- Confirm the package scope and audience (app internal, public npm, private registry).
+- Gather install/build/test commands and any environment variables required to run or develop the package.
+- Identify runtime and dev dependencies, target Node/Svelte/TS versions, and license.
+
+### Step-by-step process
+
+1. **Clarify requirements** — Ask the product/owner: who will read this README and what problems should the package solve for them?
+2. **Draft the README structure** using the template below, customizing sections that are not relevant (remove rather than leave empty).
+3. **Fill in developer-focused sections** (Development, Testing, Contributing, Release) with explicit commands and examples.
+4. **Add usage examples** that are copy-paste runnable where possible (small code snippets, expected outputs).
+5. **Add API reference** for exported functions/types with short examples and link to in-code docs if available.
+6. **Document versioning & changelog policy** (SemVer expectation, where to find CHANGELOG.md or releases).
+7. **Add badges** for CI, coverage, npm version, license when meaningful.
+8. **Proofread and verify** by following the instructions from a clean checkout on a separate branch or temporary clone.
+9. **Include maintenance notes**: owner/team, how to release, and any db/migration considerations if relevant.
+
+### README Template (detailed)
+
+```markdown
+# Package Name — short one-line description
+
+> One-paragraph overview: what the package does and when to use it.
+
+## Table of Contents
+
+- Installation
+- Quick Start / Usage
+- API
+- Configuration
+- Development
+- Testing
+- Releasing
+- Contributing
+- License
+
+## Installation
+
+Install from pnpm (or local instructions):
+
+```bash
+pnpm install @your-scope/package-name
+```
+
+## Quick Start
+
+Minimal example showing how to import and run the package with expected output:
+
+```js
+import { createThing } from '@your-scope/package-name'
+
+const t = createThing({ option: true })
+console.log(t.do())
+```
+
+## API
+
+- `createThing(opts: Options): Thing` — short description.
+
+Example usage and a short table of exported functions/types.
+
+## Configuration
+
+List environment variables, config file keys, or runtime flags the package respects.
+
+## Development
+
+How to run locally, rebuild, and a short explanation of the project layout.
+
+```bash
+pnpm install
+pnpm dev
+pnpm build
+```
+
+## Testing
+
+Commands to run tests and expectations for CI:
+
+```bash
+pnpm test
+pnpm test:unit
+pnpm test:e2e
+```
+
+## Releasing
+
+Describe the release process (who runs it, commands, tags):
+
+```bash
+pnpm version patch
+pnpm publish --access public
+```
+
+## Contributing
+
+How to open issues, PR templates to follow, and branch naming conventions.
+
+## License
+
+State the license and any important legal notes.
+
+## Maintainers
+
+- Team/owner: @team or team@example.com
+- Where to find maintainer docs and on-call rotation (if any)
+
+```
+
+### Checklist before merging a README
+
+- **Audience:** Is the README tailored to the expected reader (user vs. maintainer)?
+- **Commands verified:** Can a new developer follow the install and run steps from scratch?
+- **Examples runnable:** Code snippets are minimal and copy-paste runnable where possible.
+- **Badges and links:** CI, license, and package links point to correct resources.
+- **Release notes:** There is a clear place for changelog or release notes.
+
+### Where to put the README
+
+- Top-level of the package folder: `README.md`.
+- For monorepos, add package-specific READMEs in package folders and a top-level README linking them.
+
+### Notes for this repo (sive)
+
+- Follow the repo-wide conventions (see `bmad/references/PROJECT.md`) for naming, versioning, and scripts.
+- If the package introduces DB schema changes, add a short "Migrations" subsection explaining how to run `drizzle-kit` commands and where migrations live.
+
+
 ---
 
 ## /code-review
