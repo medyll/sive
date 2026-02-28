@@ -19,6 +19,17 @@ missing_artifacts:
 recommendation: /architecture
 last_updated: 2026-02-28
 
+detected_changes:
+  - .github/skills/bmad-master/SKILL.md
+  - .github/skills/idae-idbql/SKILL.md
+  - .github/skills/svelte-5/SKILL.md
+  - .vscode/mcp.json
+  - src/lib/elements/AIPanel.svelte
+  - src/lib/elements/ChatBar.svelte
+  - src/lib/elements/EditorPanel.svelte
+  - src/lib/elements/Spinner.svelte
+  - src/lib/elements/TabBar.svelte
+
 # BMAD Project Status
 # Tracks the current phase and completed steps
 

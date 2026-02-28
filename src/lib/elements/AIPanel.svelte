@@ -4,8 +4,12 @@ Template for AIPanel component
 <script lang="ts">
   import type { TimelineEvent } from '$lib/types/types';
 
-  export let events: TimelineEvent[] = [];
-  export let theme: string = 'light';
+  export interface AIPanelProps {
+    events?: TimelineEvent[];
+    theme?: string;
+  }
+
+  let { events = [], theme = 'light' }: AIPanelProps = $props();
 </script>
 
 <div class="ai-panel" data-theme={theme}>

@@ -1,8 +1,8 @@
 ---
 
 name: svelte-5
-description: Expert Svelte 5 & SvelteKit (Runes, Snippets, Proxies). Triggered by "svelte", "kit", ".svelte", ".ts" or any modern frontend query. Proactive, strict on Svelte 5 patterns, and adaptive to Mydde's profile.
-argument-hint: "Permissive: matches svelte, sveltekit, runes, snippets, or file extensions .svelte, .ts"
+description: Expert Svelte 5 & SvelteKit (Runes, Snippets, Proxies). Triggered by "svelte", "kit", ".svelte", ".ts" or any modern frontend query. Proactive, strict on Svelte 5 patterns, and adaptive to the user's profile.
+argument-hint: "Permissive: matches svelte, sveltekit, svelte-5, runes, snippets, or file extensions .svelte, .ts, components"
 compatibility:
   - mcp_v1
 disable-model-invocation: false

@@ -4,21 +4,48 @@ Template for ChatBar component
 <script lang="ts">
   import type { Theme } from '$lib/types/types';
 
-  export let placeholder: string = 'Type a message...';
-  export let theme: Theme['id'] = 'light';
+  export interface ChatBarProps {
+    placeholder?: string;
+    theme?: Theme['id'];
+    onSend?: (message: string) => void;
+  }
 
-  const sendMessage = (message: string) => {
-    console.log('Message sent:', message);
-  };
+  let { placeholder = 'Type a message...', theme = 'light', onSend }: ChatBarProps = $props();
+
+  let inputEl: HTMLInputElement | null = null;
+
+  function ref(node: HTMLInputElement) {
+    inputEl = node;
+    return () => {
+      inputEl = null;
+    };
+  }
+
+  function sendMessage() {
+    const message = inputEl?.value?.trim();
+    if (!message) return;
+    // prefer callback prop over custom events
+    if (onSend) onSend(message);
+    if (inputEl) inputEl.value = '';
+  }
+
+  function onKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
 </script>
 
-<div class="chat-bar" data-theme={props().theme}>
+<div class="chat-bar" data-theme={theme}>
   <input
     type="text"
     class="chat-input"
     placeholder={placeholder}
-    on:keydown={(e) => e.key === 'Enter' && sendMessage((e.target as HTMLInputElement).value)}
+    {@attach ref}
+    onkeydown={onKeydown}
   />
+  <button type="button" onclick={sendMessage}>Send</button>
 </div>
 
 <style>
