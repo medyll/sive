@@ -40,10 +40,10 @@
   </toolbar>
 
   <!-- [main-body] : Main body — resizable split -->
-  <row id="main-body" role="Main body split: editor + AI panel" />
+  <row id="main-body" role="Main body split: editor + AI panel">
 
     <!--[left-panel] LEFT PANEL — Editor -->
-    <panel id="editor-panel" default-width="55%" resizable role="Editor panel" />
+    <panel id="editor-panel" default-width="55%" resizable role="Editor panel">
       <text-zone
         id="main-editor"
         fields="text:string"
@@ -56,10 +56,10 @@
     <resize-handle id="split-handle" axis="horizontal" role="Panel resize handle" />
 
     <!-- [right-panel] : RIGHT PANEL — AI & Tools -->
-    <panel id="ai-panel" default-width="45%" resizable collapsible role="AI & tools panel" />
+    <panel id="ai-panel" default-width="45%" resizable collapsible role="AI & tools panel">
 
       <!-- [right-panel-tab-bar] : Right panel tab bar -->
-      <tab-bar id="ai-tabs" role="Tab bar for right panel" />
+      <tab-bar id="ai-tabs" role="Tab bar for right panel">
         <tab id="tab-suggestions" label="Suggestions" default-active role="Suggestions tab" />
         <tab id="tab-coherence"   label="Coherence" role="Coherence tab" />
         <tab id="tab-style"       label="Style" role="Style tab" />
@@ -74,11 +74,11 @@
       />
 
       <!-- [tab-content-suggestions] Suggestions tab content -->
-      <panel id="tab-content-suggestions" visible-when="tab-suggestions-active" role="Suggestions tab content" />
+      <panel id="tab-content-suggestions" visible-when="tab-suggestions-active" role="Suggestions tab content">
         <!-- List of AI proposals as a diff -->
         <diff-view
           id="suggestions-diff"
-          fields="changes:[{id, type, diff}]"
+          fields="changes:[id,type,diff]"
           role="AI proposals diff view"
           behavior="Each change is a proposal; can accept/reject individually; click for details"
         />
@@ -115,7 +115,7 @@
       <panel id="tab-content-history" visible-when="tab-history-active" role="History tab content" >
         <timeline
           id="harden-timeline"
-          fields="points:[{label:string,message:string,date:string}]"
+          fields="points:[label:string,message:string,date:string]"
           role="Harden version timeline"
           behavior="Click = preview version; each point = Harden"
         />
