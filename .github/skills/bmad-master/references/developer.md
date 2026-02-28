@@ -199,6 +199,42 @@ State the license and any important legal notes.
 - Follow the repo-wide conventions (see `bmad/references/PROJECT.md`) for naming, versioning, and scripts.
 - If the package introduces DB schema changes, add a short "Migrations" subsection explaining how to run `drizzle-kit` commands and where migrations live.
 
+### Consumer-First Approach
+
+In addition to a **developer-first** mindset, adopt a **consumer-first** approach: prioritize the needs, expectations, and experience of the package's consumers (both internal teams and external users). Treat consumers as primary stakeholders during design, implementation, and documentation.
+
+Guiding principles:
+
+- **Empathy:** understand typical consumer workflows, constraints, and environments before designing APIs or UX.
+- **Simplicity:** prefer small, well-documented surface areas that solve concrete problems over broad, generic APIs that require extensive learning.
+- **Discoverability:** make it trivial for a consumer to find how to install, get started, and find examples (move Quick Start and Examples to the top of the README).
+- **Ergonomics:** design APIs that read naturally and require minimal ceremony; provide sensible defaults and a single obvious way to do common tasks.
+- **Stability:** guarantee backward-compatibility where practical, document breaking changes clearly, and follow SemVer for public packages.
+- **Performance & Accessibility:** consider runtime constraints and accessibility (if applicable) as first-class concerns—measure and document expected performance characteristics.
+
+Practical steps for a consumer-first workflow:
+
+1. **Write consumer tests and examples first** — create minimal integration examples and tests that simulate how a real consumer would use the package.
+2. **Design API surface from consumer scenarios** — sketch a few real-world usage flows and design the API to make those flows concise and obvious.
+3. **Document the happy path** — the README's Quick Start should demonstrate the minimal steps to achieve value in <5 lines of code/config.
+4. **Provide migration & troubleshooting guides** — include a short section in the README for migrating between versions and common errors with solutions.
+5. **Add explicit compatibility notes** — supported Node/Svelte/TS versions, browser targets, polyfills, and feature flags.
+6. **Include onboarding checklist** — what a consumer needs to do to adopt the package (env vars, registry access, secrets, migrations).
+7. **Collect feedback loops** — add instructions for how consumers can report issues, request features, and contribute examples.
+
+Consumer-focused README additions (suggested):
+
+- "Getting Started" with a one-file, runnable example.
+- "Examples" directory link with real-world use cases and copyable snippets.
+- "Troubleshooting" with common problems and explicit error messages.
+- "Migration Guide" for breaking changes and upgrade steps.
+
+Measurement and validation:
+
+- Validate that a new developer or consumer can follow the README in a fresh checkout within 10 minutes.
+- Run the consumer integration examples in CI to prevent regressions.
+- Track adoption feedback and issue patterns to evolve API ergonomics.
+
 
 ---
 

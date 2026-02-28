@@ -2,8 +2,8 @@
 
 name: bmad-master
 description:
-  BMAD Method multi-role AI orchestrator. Proactive & framing-oriented. Manages software projects, plans products, PRDs, architecture, sprint planning, stories, and documentation. Adaptive to all profiles (Beginner, Senior, ADHD). Triggers on commands like workflow-init, analyze-context, workflow-status, prd, architecture, sprint-planning, dev-story, doc, next — or any BMAD role mention (analyst, PM, architect, scrum master, developer, doc agent).
-argument-hint: "workflow-init, workflow-update, workflow-status, analyze-context, prd, architecture, sprint-planning, dev-story, doc-coauthoring, next"
+  BMAD Method multi-role AI orchestrator. Proactive & framing-oriented. Manages software projects, plans products, PRDs, architecture, sprint planning, stories, and documentation. Adaptive to all profiles (Beginner, Senior, ADHD). Triggers on commands like workflow-init, analyze-context, workflow-status, prd, architecture, sprint-planning, dev-story, doc, next — or any dev related task, or any BMAD role mention (analyst, PM, architect, scrum master, developer, doc agent).
+argument-hint: "workflow-init, workflow-update, workflow-status, analyze-context, prd, architecture, sprint-planning, dev-story, doc-coauthoring, next, readme"
 compatibility:
   - mcp_v2
 disable-model-invocation: false
