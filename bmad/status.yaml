@@ -28,6 +28,8 @@ completed_steps:
   - Sprint 6 Implementation — Coherence Tab UI (S6-01 → S6-05)
   - Sprint 7 Planning — Suggestions Tab UI
   - Sprint 7 Implementation — Suggestions Tab UI (S7-01 → S7-05)
+  - Sprint 8 Planning — Document Persistence
+  - Sprint 8 Implementation — Document Persistence (S8-01 → S8-06)
 
 missing_artifacts: []
 

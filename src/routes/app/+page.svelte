@@ -1,15 +1,27 @@
 <script lang="ts">
   import { browser } from '$app/environment';
+  import { enhance } from '$app/forms';
   import EditorPanel from '$lib/elements/EditorPanel.svelte';
   import AIPanel from '$lib/elements/AIPanel.svelte';
   import ChatBar from '$lib/elements/ChatBar.svelte';
   import ReviewScreen from '$lib/elements/ReviewScreen.svelte';
   import HardenModal from '$lib/elements/HardenModal.svelte';
+  import DocumentList from '$lib/elements/DocumentList.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
 
   const SPLIT_KEY = 'sive.splitRatio';
   const FOCUS_KEY = 'sive.focusMode';
   const DEFAULT_RATIO = 0.55;
+
+  interface Props {
+    data: {
+      documents: Array<{ id: string; title: string; content: string; updated_at: number }>;
+      activeDocumentId: string;
+    };
+    form?: unknown;
+  }
+
+  let { data }: Props = $props();
 
   let splitRatio = $state<number>(
     browser ? parseFloat(localStorage.getItem(SPLIT_KEY) ?? String(DEFAULT_RATIO)) : DEFAULT_RATIO
@@ -22,6 +34,45 @@
   let reviewMode = $state(false);
   let hardenOpen = $state(false);
 
+  // Document state
+  let documents = $state(data.documents);
+  let activeDocumentId = $state(data.activeDocumentId);
+  let activeContent = $state(
+    data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+  );
+
+  // Sync activeContent when switching documents
+  $effect(() => {
+    activeContent = documents.find((d) => d.id === activeDocumentId)?.content ?? '';
+  });
+
+  // Hidden form references for programmatic submission
+  let createDocForm: HTMLFormElement;
+  let saveDocForm: HTMLFormElement;
+  let saveIdInput: HTMLInputElement;
+  let saveContentInput: HTMLInputElement;
+
+  function handleSelectDocument(id: string) {
+    activeDocumentId = id;
+  }
+
+  async function handleNewDocument() {
+    createDocForm?.requestSubmit();
+  }
+
+  function handleSave(id: string, content: string) {
+    // Update local state immediately
+    const doc = documents.find((d) => d.id === id);
+    if (doc) doc.content = content;
+
+    // Submit to server via hidden form
+    if (saveDocForm && saveIdInput && saveContentInput) {
+      saveIdInput.value = id;
+      saveContentInput.value = content;
+      saveDocForm.requestSubmit();
+    }
+  }
+
   function handleHarden(label: string, message: string) {
     hardenStore.add({
       id: nextHardenId(hardenStore.snapshots.length),
@@ -33,12 +84,8 @@
     hardenOpen = false;
   }
 
-  /** Stub — will be wired to AI results in a later sprint */
   let suggestionsReady = $state(false);
-
-  /** Stub — will be wired to AI processing state in a later sprint */
   let aiProcessing = $state(false);
-
   let dragging = $state(false);
   let chatBarOpen = $state(true);
 
@@ -102,7 +149,7 @@
 
 <div class="app-root" {@attach persistState} {@attach globalKeyboardShortcuts}>
   <header class="main-toolbar">
-    <span class="project-label">My project / Chapter 1</span>
+    <span class="project-label">My project / {documents.find(d => d.id === activeDocumentId)?.title ?? 'Untitled'}</span>
     <div class="toolbar-actions">
       {#if !reviewMode}
         <button type="button" onclick={toggleFocusMode} aria-pressed={focusMode}>
@@ -125,11 +172,24 @@
     </div>
   {:else}
     <div class="workspace" {@attach workspaceRef}>
+      {#if !focusMode}
+        <DocumentList
+          {documents}
+          activeId={activeDocumentId}
+          onSelect={handleSelectDocument}
+          onNew={handleNewDocument}
+        />
+      {/if}
+
       <div
         class="panel editor-panel"
-        style="width: {focusMode ? '100%' : `${splitRatio * 100}%`}"
+        style="width: {focusMode ? '100%' : `calc(${splitRatio * 100}% - 14rem)`}"
       >
-        <EditorPanel />
+        <EditorPanel
+          documentId={activeDocumentId}
+          bind:content={activeContent}
+          onSave={handleSave}
+        />
       </div>
 
       {#if !focusMode}
@@ -146,6 +206,40 @@
         </div>
       {/if}
     </div>
+
+    <!-- Hidden forms for server actions -->
+    <form
+      method="POST"
+      action="?/createDocument"
+      bind:this={createDocForm}
+      use:enhance={({ formData: _fd, cancel }) => {
+        return async ({ result }) => {
+          if (result.type === 'success' && result.data?.id) {
+            const newDoc = { id: result.data.id as string, user_id: 'guest', title: 'Untitled', content: '', updated_at: Date.now() };
+            documents = [...documents, newDoc];
+            activeDocumentId = newDoc.id;
+          } else {
+            // mock mode: still create a local stub
+            const stubId = `local-${Date.now()}`;
+            const newDoc = { id: stubId, user_id: 'guest', title: 'Untitled', content: '', updated_at: Date.now() };
+            documents = [...documents, newDoc];
+            activeDocumentId = stubId;
+          }
+        };
+      }}
+      style="display:none"
+    ></form>
+
+    <form
+      method="POST"
+      action="?/updateDocument"
+      bind:this={saveDocForm}
+      use:enhance
+      style="display:none"
+    >
+      <input type="hidden" name="id" bind:this={saveIdInput} />
+      <input type="hidden" name="content" bind:this={saveContentInput} />
+    </form>
 
     <!-- Floating chat bar overlay -->
     <div class="chat-overlay" id="chat-bar">

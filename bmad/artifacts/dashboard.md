@@ -110,7 +110,9 @@
 - **E2E (Sprint 6):** `e2e/coherence-tab.spec.ts` — 7 tests ✅
 - **Unit (Sprint 7):** `SuggestionItem.svelte.spec.ts` — 7 tests ✅
 - **E2E (Sprint 7):** `e2e/suggestions-tab.spec.ts` — 8 tests ✅
-- **Last run:** 2026-04-16
+- **Unit (Sprint 8):** `src/routes/app/page.server.spec.ts` — 7 tests ✅
+- **E2E (Sprint 8):** `e2e/document-persistence.spec.ts` — 8 tests ✅
+- **Last run:** 2026-03-01
 - **Bugs:** none
 
 ---
@@ -182,7 +184,31 @@
 
 ---
 
-## 👉 Next: `/next` — Sprint 8
+## 🏁 Sprint 8 — Document Persistence — **CLOSED** ✅
+
+**Progress:** 100% (18/18 pts) | **Status:** done
+
+| ID | Title | Pts | Priority | Status |
+|---|---|---:|---|---|
+| S8-01 | Schema Drizzle `documents` table | 3 | Must | ✅ done |
+| S8-02 | Server load/save handlers | 3 | Must | ✅ done |
+| S8-03 | Wire EditorPanel → DB (auto-save 2s) | 5 | Must | ✅ done |
+| S8-04 | DocumentList sidebar component | 3 | Must | ✅ done |
+| S8-05 | Unit tests — server handlers | 2 | Should | ✅ done |
+| S8-06 | E2E — create doc, type, reload | 2 | Should | ✅ done |
+
+### Sprint 8 Definition of Done — ✅ All Criteria Met
+- `documents` table in Drizzle schema + migration generated ✅
+- `/app` page server load returns user documents (stubs in mock mode) ✅
+- EditorPanel refactored to `<textarea>` with debounced auto-save (2s) ✅
+- DocumentList sidebar: list docs + "New document" button ✅
+- "Saving…" / "Saved at HH:MM:SS" status indicator ✅
+- 7 unit tests pass (server handlers in mock mode) ✅
+- 8 E2E tests pass (persistence flow) ✅
+
+---
+
+## 👉 Next: `/next` — Sprint 9
 
 ```
 /next
