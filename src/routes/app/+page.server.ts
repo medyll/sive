@@ -70,7 +70,7 @@ export const actions: Actions = {
 	updateDocument: async ({ request }) => {
 		const data = await request.formData();
 		const id = data.get('id') as string;
-		const content = data.get('content') as string;
+		const content = data.get('content') as string | null;
 		const title = data.get('title') as string | null;
 
 		if (!id) return { success: false, error: 'Missing document id' };
@@ -82,10 +82,28 @@ export const actions: Actions = {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const typedDb = db as any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const updates: Record<string, any> = { content, updated_at: Date.now() };
+		const updates: Record<string, any> = { updated_at: Date.now() };
+		if (content !== null) updates.content = content;
 		if (title) updates.title = title;
 
 		typedDb.update(documents).set(updates).where(eq(documents.id, id)).run();
+
+		return { success: true };
+	},
+
+	deleteDocument: async ({ request }) => {
+		const data = await request.formData();
+		const id = data.get('id') as string;
+
+		if (!id) return { success: false, error: 'Missing document id' };
+
+		if (isMock || !db) {
+			return { success: true };
+		}
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const typedDb = db as any;
+		typedDb.delete(documents).where(eq(documents.id, id)).run();
 
 		return { success: true };
 	}

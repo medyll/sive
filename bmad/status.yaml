@@ -28,8 +28,8 @@ completed_steps:
   - Sprint 6 Implementation — Coherence Tab UI (S6-01 → S6-05)
   - Sprint 7 Planning — Suggestions Tab UI
   - Sprint 7 Implementation — Suggestions Tab UI (S7-01 → S7-05)
-  - Sprint 8 Planning — Document Persistence
-  - Sprint 8 Implementation — Document Persistence (S8-01 → S8-06)
+  - Sprint 9 Planning — Document UX
+  - Sprint 9 Implementation — Document UX (S9-01 → S9-06)
 
 missing_artifacts: []
 
@@ -259,7 +259,7 @@ sprints:
     status: done
 
   qa:
-    coverage: "84 unit tests + 8 E2E (suggestions) + 7 E2E (coherence) + 7 E2E (style)"
+    coverage: "98 unit tests + 8 E2E (persistence) + 5 E2E (document-ux) + 8 E2E (suggestions) + 7 E2E (coherence) + 7 E2E (style)"
     last_run: 2026-04-16
 
   recommendation: /next

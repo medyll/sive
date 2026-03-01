@@ -51,6 +51,11 @@
   let saveDocForm: HTMLFormElement;
   let saveIdInput: HTMLInputElement;
   let saveContentInput: HTMLInputElement;
+  let renameDocForm: HTMLFormElement;
+  let renameIdInput: HTMLInputElement;
+  let renameTitleInput: HTMLInputElement;
+  let deleteDocForm: HTMLFormElement;
+  let deleteIdInput: HTMLInputElement;
 
   function handleSelectDocument(id: string) {
     activeDocumentId = id;
@@ -73,6 +78,29 @@
     }
   }
 
+  function handleRename(id: string, title: string) {
+    const doc = documents.find((d) => d.id === id);
+    if (doc) doc.title = title;
+
+    if (renameDocForm && renameIdInput && renameTitleInput) {
+      renameIdInput.value = id;
+      renameTitleInput.value = title;
+      renameDocForm.requestSubmit();
+    }
+  }
+
+  function handleDelete(id: string) {
+    documents = documents.filter((d) => d.id !== id);
+    if (activeDocumentId === id) {
+      activeDocumentId = documents[0]?.id ?? '';
+    }
+
+    if (deleteDocForm && deleteIdInput) {
+      deleteIdInput.value = id;
+      deleteDocForm.requestSubmit();
+    }
+  }
+
   function handleHarden(label: string, message: string) {
     hardenStore.add({
       id: nextHardenId(hardenStore.snapshots.length),
@@ -84,7 +112,24 @@
     hardenOpen = false;
   }
 
-  let suggestionsReady = $state(false);
+  let editingToolbarTitle = $state(false);
+  let toolbarTitleValue = $state('');
+
+  function startToolbarEdit() {
+    toolbarTitleValue = documents.find(d => d.id === activeDocumentId)?.title ?? '';
+    editingToolbarTitle = true;
+  }
+
+  function commitToolbarTitle() {
+    editingToolbarTitle = false;
+    const trimmed = toolbarTitleValue.trim();
+    if (trimmed) handleRename(activeDocumentId, trimmed);
+  }
+
+  function onToolbarTitleKey(e: KeyboardEvent) {
+    if (e.key === 'Enter') { e.preventDefault(); commitToolbarTitle(); }
+    if (e.key === 'Escape') { editingToolbarTitle = false; }
+  }
   let aiProcessing = $state(false);
   let dragging = $state(false);
   let chatBarOpen = $state(true);
@@ -102,6 +147,11 @@
       if (e.key === 'F11' || (e.ctrlKey && e.shiftKey && e.key === 'F')) {
         e.preventDefault();
         focusMode = !focusMode;
+      }
+      // Ctrl+S — immediate save
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        if (activeDocumentId) handleSave(activeDocumentId, activeContent);
       }
     }
     window.addEventListener('keydown', onKeydown);
@@ -149,7 +199,29 @@
 
 <div class="app-root" {@attach persistState} {@attach globalKeyboardShortcuts}>
   <header class="main-toolbar">
-    <span class="project-label">My project / {documents.find(d => d.id === activeDocumentId)?.title ?? 'Untitled'}</span>
+    <div class="project-label">
+      {#if editingToolbarTitle}
+        <input
+          class="toolbar-title-input"
+          type="text"
+          bind:value={toolbarTitleValue}
+          onblur={commitToolbarTitle}
+          onkeydown={onToolbarTitleKey}
+          aria-label="Document title"
+        />
+      {:else}
+        <span
+          class="toolbar-title"
+          role="button"
+          tabindex="0"
+          onclick={startToolbarEdit}
+          onkeydown={(e) => e.key === 'Enter' && startToolbarEdit()}
+          title="Click to rename"
+        >
+          {documents.find(d => d.id === activeDocumentId)?.title ?? 'Untitled'}
+        </span>
+      {/if}
+    </div>
     <div class="toolbar-actions">
       {#if !reviewMode}
         <button type="button" onclick={toggleFocusMode} aria-pressed={focusMode}>
@@ -178,6 +250,8 @@
           activeId={activeDocumentId}
           onSelect={handleSelectDocument}
           onNew={handleNewDocument}
+          onRename={handleRename}
+          onDelete={handleDelete}
         />
       {/if}
 
@@ -239,6 +313,31 @@
     >
       <input type="hidden" name="id" bind:this={saveIdInput} />
       <input type="hidden" name="content" bind:this={saveContentInput} />
+    </form>
+
+    <form
+      method="POST"
+      action="?/updateDocument"
+      bind:this={renameDocForm}
+      use:enhance
+      style="display:none"
+    >
+      <input type="hidden" name="id" bind:this={renameIdInput} />
+      <input type="hidden" name="title" bind:this={renameTitleInput} />
+    </form>
+
+    <form
+      method="POST"
+      action="?/deleteDocument"
+      bind:this={deleteDocForm}
+      use:enhance={({ formData: _fd, cancel: _cancel }) => {
+        return async () => {
+          // Local state already updated in handleDelete
+        };
+      }}
+      style="display:none"
+    >
+      <input type="hidden" name="id" bind:this={deleteIdInput} />
     </form>
 
     <!-- Floating chat bar overlay -->
@@ -303,6 +402,29 @@
   .project-label {
     flex: 1;
     font-weight: 500;
+  }
+
+  .toolbar-title {
+    cursor: pointer;
+    padding: 0.1rem 0.25rem;
+    border-radius: 3px;
+    border: 1px solid transparent;
+  }
+
+  .toolbar-title:hover {
+    border-color: var(--color-border, #e0e0e0);
+    background: var(--color-hover, #f0f0f0);
+  }
+
+  .toolbar-title-input {
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid var(--color-primary, #646cff);
+    border-radius: 3px;
+    padding: 0.1rem 0.25rem;
+    background: #fff;
+    outline: none;
+    min-width: 8rem;
   }
 
   .toolbar-actions {
