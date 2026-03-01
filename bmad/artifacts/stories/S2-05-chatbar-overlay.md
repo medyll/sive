@@ -24,9 +24,20 @@ Wire `ChatBar` as a floating overlay at the bottom-center of the app layout. The
 - `$state chatBarOpen: boolean = true` in `src/routes/app/+page.svelte`
 - The `onSend` callback should `console.log` for now with a TODO comment for AI wiring
 
-## References
+---
 
-- `src/lib/elements/ChatBar.svelte`
-- `src/lib/elements/mockups/overlay.svelte`
-- `bmad/references/sive-layout.html` — `#chat-bar`
-- `bmad/references/project/1-interface-architecture.md` — §1.4 Floating Chat Bar
+## Implementation Notes
+
+**Date:** 2026-03-01
+**Files changed:**
+- `src/routes/app/+page.svelte` — Ajout overlay `.chat-overlay` fixed bottom-center; `chatBarOpen: boolean = true`; bouton toggle `▲/▼` (`aria-expanded`); `ChatBar` avec `onSend → console.log`; boutons 🎤 et 🖼 stubs (`aria-disabled`)
+
+**Notable decisions:**
+- ChatBar intégré dans `.chat-bar-inner` avec border-radius `2rem` pour le look "pill" flottant, ombré
+- `chatBarOpen` non persisté localStorage (préférence volatile de session)
+- Les boutons voice/image sont stubs avec `aria-disabled` + `opacity: 0.5` — câblage LiveKit en Sprint 3+
+
+**Known limitations:**
+- `onSend` logue en console — wiring AI Command Bus en Sprint 3+
+- Pas de drag pour repositionner l'overlay (spec: draggable) — déféré Sprint 3+
+

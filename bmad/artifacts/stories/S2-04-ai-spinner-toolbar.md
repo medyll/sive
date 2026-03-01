@@ -26,10 +26,19 @@ Wire the `Spinner` component inside `AIPanel` so it appears while `aiProcessing 
 - No routing or real actions needed for Review / Harden / Settings yet — `aria-disabled` is sufficient
 - `Focus` button should toggle the `focusMode` state (passed as a callback from the page)
 
-## References
+---
 
-- `src/lib/elements/Spinner.svelte`
-- `src/lib/elements/AIPanel.svelte`
-- `src/lib/elements/mockups/toolbar.svelte`
-- `bmad/references/sive-layout.html` — `#main-toolbar`, `#ai-spinner`
-- `bmad/references/project/1-interface-architecture.md` — §1.5 AI Spinner
+## Implementation Notes
+
+**Date:** 2026-03-01
+**Files changed:**
+- `src/lib/elements/AIPanel.svelte` — Ajout prop `aiProcessing: boolean`; import + rendu conditionnel de `Spinner` (size `small`, `data-testid="ai-spinner"`) dans un `.spinner-row` entre TabBar et tab-content; `aria-live="polite"` pour accessibilité
+
+**Notable decisions:**
+- `data-testid="ai-spinner"` sur le Spinner pour les tests E2E (S2-07)
+- Spinner positionné entre TabBar et contenu (pas en overlay) pour ne pas masquer les onglets
+- Toolbar Focus wired depuis S2-03 — stubs Review/Harden/Settings avec `aria-disabled`
+
+**Known limitations:**
+- `aiProcessing` stub `false` dans la page — câblage AI en Sprint 3+
+

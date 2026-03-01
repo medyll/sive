@@ -20,7 +20,7 @@ completed_steps:
 
 missing_artifacts: []
 
-recommendation: /dev-story S2-04
+recommendation: /dev-story S2-06
 last_updated: 2026-03-01
 
 # New v3.1.0 structured fields (Single Source of Truth)
@@ -72,10 +72,10 @@ sprints:
         status: done
       - id: S2-04
         title: ai-spinner-toolbar
-        status: pending
+        status: done
       - id: S2-05
         title: chatbar-overlay
-        status: pending
+        status: done
       - id: S2-06
         title: unit-tests-ui-components
         status: pending
