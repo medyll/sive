@@ -71,7 +71,7 @@ async function main() {
   const cwd = process.cwd();
   const args = process.argv.slice(2);
   const rootMode = args.includes('--root');
-  const outPath = path.join(cwd, 'MASTER_DASHBOARD.md');
+  const outPath = path.join(cwd, 'master-dashboard.md');
 
   // discover bmad/status.yaml files
   const statusFiles = await walk(cwd, []);
@@ -124,7 +124,7 @@ async function main() {
 
   const out = [header, table, '\n---\n\n', critical, '\n---\n\n', actions].join('\n');
   await fs.writeFile(outPath, out, 'utf8');
-  console.log('MASTER_DASHBOARD.md written at', outPath);
+  console.log('master-dashboard.md written at', outPath);
 }
 
 main().catch(err => { console.error(err); process.exit(1); });

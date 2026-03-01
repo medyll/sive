@@ -102,7 +102,7 @@ function emojiForProgress(p) {
 async function main() {
   const cwd = process.cwd();
   const args = process.argv.slice(2);
-  const outPath = path.join(cwd, 'MASTER_DASHBOARD.md');
+  const outPath = path.join(cwd, 'master-dashboard.md');
 
   const startTime = Date.now();
   console.log('[bmad] generate-master-dashboard starting');
@@ -161,10 +161,10 @@ async function main() {
   const actions = `## 🛠️ Global Actions\n- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%22%5D)\n- [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)\n`;
 
   const out = [header, table, '\n---\n\n', critical, '\n---\n\n', actions].join('\n');
-  console.log('[bmad] writing MASTER_DASHBOARD.md to', outPath);
+  console.log('[bmad] writing master-dashboard.md to', outPath);
   await fs.writeFile(outPath, out, 'utf8');
   const duration = Date.now() - startTime;
-  console.log(`[bmad] MASTER_DASHBOARD.md written at ${outPath} (${duration}ms)`);
+  console.log(`[bmad] master-dashboard.md written at ${outPath} (${duration}ms)`);
 
   // Also write a machine-readable JSON summary (hidden file)
   try {
