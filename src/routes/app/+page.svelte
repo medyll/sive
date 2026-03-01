@@ -4,6 +4,8 @@
   import AIPanel from '$lib/elements/AIPanel.svelte';
   import ChatBar from '$lib/elements/ChatBar.svelte';
   import ReviewScreen from '$lib/elements/ReviewScreen.svelte';
+  import HardenModal from '$lib/elements/HardenModal.svelte';
+  import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
 
   const SPLIT_KEY = 'sive.splitRatio';
   const FOCUS_KEY = 'sive.focusMode';
@@ -18,6 +20,18 @@
   );
 
   let reviewMode = $state(false);
+  let hardenOpen = $state(false);
+
+  function handleHarden(label: string, message: string) {
+    hardenStore.add({
+      id: nextHardenId(hardenStore.snapshots.length),
+      label,
+      timestamp: new Date().toISOString(),
+      message,
+      wordCount: 0
+    });
+    hardenOpen = false;
+  }
 
   /** Stub — will be wired to AI results in a later sprint */
   let suggestionsReady = $state(false);
@@ -100,7 +114,7 @@
         onclick={() => { reviewMode = !reviewMode; }}
         aria-pressed={reviewMode}
       >Review</button>
-      <button type="button" aria-disabled="true">💾 New version</button>
+      <button type="button" onclick={() => { hardenOpen = true; }}>💾 New version</button>
       <button type="button" aria-disabled="true">⚙</button>
     </div>
   </header>
@@ -165,6 +179,15 @@
     {/if}
   {/if}
 </div>
+
+{#key hardenOpen}
+  {#if hardenOpen}
+    <HardenModal
+      onConfirm={handleHarden}
+      onCancel={() => { hardenOpen = false; }}
+    />
+  {/if}
+{/key}
 
 <style>
   .app-root {

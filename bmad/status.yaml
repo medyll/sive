@@ -20,11 +20,19 @@ completed_steps:
   - Sprint 2 Implementation — AI/Chat UI (S2-01 → S2-07)
   - Sprint 3 Planning — Review Mode UI
   - Sprint 3 Implementation — Review Mode UI (S3-01 → S3-07)
+  - Sprint 4 Planning — Versioning (Harden)
+  - Sprint 4 Implementation — Versioning (S4-01 → S4-07)
+  - Sprint 5 Planning — Style Settings UI
+  - Sprint 5 Implementation — Style Settings UI (S5-01 → S5-06)
+  - Sprint 6 Planning — Coherence Tab UI
+  - Sprint 6 Implementation — Coherence Tab UI (S6-01 → S6-05)
+  - Sprint 7 Planning — Suggestions Tab UI
+  - Sprint 7 Implementation — Suggestions Tab UI (S7-01 → S7-05)
 
 missing_artifacts: []
 
 recommendation: /next
-last_updated: 2026-03-31
+last_updated: 2026-04-16
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -116,7 +124,106 @@ sprints:
         status: done
 
 
-  - id: task-s1-03-1
+  - id: sprint-4
+    name: Sprint 4 — Versioning (Harden)
+    status: done
+    progress: 100
+    start: 2026-04-01
+    end: 2026-04-15
+    stories:
+      - id: S4-01
+        title: harden-modal
+        status: done
+      - id: S4-02
+        title: harden-store
+        status: done
+      - id: S4-03
+        title: harden-timeline
+        status: done
+      - id: S4-04
+        title: harden-diff
+        status: done
+      - id: S4-05
+        title: wire-history-tab
+        status: done
+      - id: S4-06
+        title: unit-tests-harden
+        status: done
+      - id: S4-07
+        title: e2e-harden
+        status: done
+
+  - id: sprint-5
+    name: Sprint 5 — Style Settings UI
+    status: done
+    progress: 100
+    start: 2026-04-16
+    end: 2026-04-30
+    stories:
+      - id: S5-01
+        title: style-sliders
+        status: done
+      - id: S5-02
+        title: style-signal
+        status: done
+      - id: S5-03
+        title: style-store
+        status: done
+      - id: S5-04
+        title: wire-style-tab
+        status: done
+      - id: S5-05
+        title: unit-tests-style
+        status: done
+      - id: S5-06
+        title: e2e-style-tab
+        status: done
+
+  - id: sprint-6
+    name: Sprint 6 — Coherence Tab UI
+    status: done
+    progress: 100
+    start: 2026-04-16
+    end: 2026-04-30
+    stories:
+      - id: S6-01
+        title: coherence-alert
+        status: done
+      - id: S6-02
+        title: coherence-store
+        status: done
+      - id: S6-03
+        title: wire-coherence-tab
+        status: done
+      - id: S6-04
+        title: unit-tests-coherence
+        status: done
+      - id: S6-05
+        title: e2e-coherence-tab
+        status: done
+
+  - id: sprint-7
+    name: Sprint 7 — Suggestions Tab UI
+    status: done
+    progress: 100
+    start: 2026-04-16
+    end: 2026-04-30
+    stories:
+      - id: S7-01
+        title: suggestion-item
+        status: done
+      - id: S7-02
+        title: suggestions-store
+        status: done
+      - id: S7-03
+        title: wire-suggestions-tab
+        status: done
+      - id: S7-04
+        title: unit-tests-suggestions
+        status: done
+      - id: S7-05
+        title: e2e-suggestions-tab
+        status: done
     title: Create sign-in page
     priority: high
     status: done
@@ -149,11 +256,10 @@ sprints:
     priority: medium
     status: done
 
-qa:
-  test_plan: S1-05 unit tests + S1-06 E2E + S2-06 unit tests + S2-07 E2E + S3-06 unit tests + S3-07 E2E
-  coverage: "auth (8 unit) + login E2E (7) + UI components (20 unit) + app layout E2E (13) + Review Mode (16 unit) + Review Mode E2E (7)"
-  last_run: 2026-03-31
-  bugs: []
+  qa:
+    coverage: "84 unit tests + 8 E2E (suggestions) + 7 E2E (coherence) + 7 E2E (style)"
+    last_run: 2026-04-16
 
-detected_changes: []
+  recommendation: /next
+  last_updated: 2026-04-16
 

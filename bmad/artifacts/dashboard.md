@@ -1,6 +1,6 @@
 # BMAD Dashboard — Project: sive
 
-> Last updated: 2026-03-31 | Phase: Implementation (in_progress)
+> Last updated: 2026-04-16 | Phase: Implementation (in_progress)
 
 ---
 
@@ -13,7 +13,7 @@
 | Solutioning | ✅ Done |
 | Implementation | 🔥 In progress |
 
-**Completed artifacts:** product-brief.md, prd.md, tech-spec.md, architecture.md, sprint-1.md, sprint-2.md, sprint-3.md
+**Completed artifacts:** product-brief.md, prd.md, tech-spec.md, architecture.md, sprint-1.md → sprint-5.md
 
 ---
 
@@ -74,7 +74,27 @@
 
 ---
 
-## 🧪 QA & Tests
+## 🏁 Sprint 4 — Versioning (Harden) — **CLOSED** ✅
+
+**Progress:** 100% (19/19 pts) | **Status:** done
+
+| ID | Title | Pts | Priority | Status |
+|---|---|---:|---|---|
+| S4-01 | HardenModal component + toolbar button | 5 | Must | ✅ done |
+| S4-02 | Harden data types & stub store | 2 | Must | ✅ done |
+| S4-03 | HardenTimeline component | 3 | Must | ✅ done |
+| S4-04 | HardenDiff component | 3 | Must | ✅ done |
+| S4-05 | Wire History tab in AIPanel | 2 | Must | ✅ done |
+| S4-06 | Unit tests — HardenModal + HardenTimeline | 2 | Should | ✅ done |
+| S4-07 | E2E — Harden flow | 2 | Should | ✅ done |
+
+### Sprint 4 Definition of Done — ✅ All Criteria Met
+- `💾 New version` button opens HardenModal (label + message, confirm/cancel) ✅
+- Confirm adds stub entry to in-memory harden store ✅
+- History tab shows HardenTimeline with Harden points ✅
+- Diff controls: version-a/version-b selects + View differences → stub diff ✅
+- Vitest unit tests pass for HardenModal + HardenTimeline ✅ (10 tests)
+- Playwright E2E tests pass for full Harden flow ✅ (9 tests)
 
 - **Unit (Sprint 1):** `src/routes/auth/tests/server.spec.ts` — 8 tests ✅
 - **E2E (Sprint 1):** `e2e/auth-login.spec.ts` — 7 tests ✅
@@ -82,15 +102,90 @@
 - **E2E (Sprint 2):** `e2e/app-layout.spec.ts` — 13 tests ✅
 - **Unit (Sprint 3):** `src/lib/elements/ReviewToolbar.svelte.spec.ts`, `ReviewReport.svelte.spec.ts` — 16 tests ✅
 - **E2E (Sprint 3):** `e2e/review-mode.spec.ts` — 7 tests ✅
-- **Last run:** 2026-03-31
+- **Unit (Sprint 4):** `HardenModal.svelte.spec.ts`, `HardenTimeline.svelte.spec.ts` — 10 tests ✅
+- **E2E (Sprint 4):** `e2e/harden.spec.ts` — 9 tests ✅
+- **Unit (Sprint 5):** `StyleSliders.svelte.spec.ts`, `StyleSignal.svelte.spec.ts` — 9 tests ✅
+- **E2E (Sprint 5):** `e2e/style-tab.spec.ts` — 7 tests ✅
+- **Unit (Sprint 6):** `CoherenceAlert.svelte.spec.ts` — 5 tests ✅
+- **E2E (Sprint 6):** `e2e/coherence-tab.spec.ts` — 7 tests ✅
+- **Unit (Sprint 7):** `SuggestionItem.svelte.spec.ts` — 7 tests ✅
+- **E2E (Sprint 7):** `e2e/suggestions-tab.spec.ts` — 8 tests ✅
+- **Last run:** 2026-04-16
 - **Bugs:** none
 
 ---
 
-## 👉 Next: `/next` — Sprint 4 planning (Versioning P3 or AI integration P5)
+---
+
+## 🏁 Sprint 5 — Style Settings UI — **CLOSED** ✅
+
+**Progress:** 100% (16/16 pts) | **Status:** done
+
+| ID | Title | Pts | Priority | Status |
+|---|---|---:|---|---|
+| S5-01 | StyleSliders component | 3 | Must | ✅ done |
+| S5-02 | StyleSignal component | 2 | Must | ✅ done |
+| S5-03 | styleStore — reactive slider values | 2 | Must | ✅ done |
+| S5-04 | Wire Style tab in AIPanel | 3 | Must | ✅ done |
+| S5-05 | Unit tests — StyleSliders + StyleSignal | 3 | Should | ✅ done |
+| S5-06 | E2E — Style tab flow | 3 | Should | ✅ done |
+
+### Sprint 5 Definition of Done — ✅ All Criteria Met
+- Style tab shows 4 sliders (Cynicism, Syntactic complexity, Rhythm, Narrative density) ✅
+- Sliders bound to styleStore (reactive $state) ✅
+- "Analyse this passage" `.btn-analyse` triggers 1.8s stub analysis ✅
+- 3 StyleSignal cards appear after analysis ✅
+- 9 unit tests pass for StyleSliders + StyleSignal ✅
+- 7 E2E tests pass for Style tab flow ✅
+
+---
+
+## 🏁 Sprint 6 — Coherence Tab UI — **CLOSED** ✅
+
+**Progress:** 100% (12/12 pts) | **Status:** done
+
+| ID | Title | Pts | Priority | Status |
+|---|---|---:|---|---|
+| S6-01 | CoherenceAlert component | 2 | Must | ✅ done |
+| S6-02 | coherenceStore — stub alerts | 2 | Must | ✅ done |
+| S6-03 | Wire Coherence tab in AIPanel | 3 | Must | ✅ done |
+| S6-04 | Unit tests — CoherenceAlert | 2 | Should | ✅ done |
+| S6-05 | E2E — Coherence tab flow | 3 | Should | ✅ done |
+
+### Sprint 6 Definition of Done — ✅ All Criteria Met
+- Coherence tab: "Run coherence check" `.btn-coherence` button ✅
+- 5 stub alerts with entity, discrepancy_type, confidence (High/Medium/Low), note ✅
+- Confidence color: Low=grey, Medium=orange, High=red ✅
+- 5 unit tests pass (CoherenceAlert) ✅
+- 7 E2E tests pass (Coherence tab flow) ✅
+
+---
+
+## 🏁 Sprint 7 — Suggestions Tab UI — **CLOSED** ✅
+
+**Progress:** 100% (14/14 pts) | **Status:** done
+
+| ID | Title | Pts | Priority | Status |
+|---|---|---:|---|---|
+| S7-01 | SuggestionItem component | 3 | Must | ✅ done |
+| S7-02 | suggestionsStore — stub data + accept/reject | 2 | Must | ✅ done |
+| S7-03 | Wire Suggestions tab in AIPanel | 3 | Must | ✅ done |
+| S7-04 | Unit tests — SuggestionItem | 3 | Should | ✅ done |
+| S7-05 | E2E — Suggestions tab flow | 3 | Should | ✅ done |
+
+### Sprint 7 Definition of Done — ✅ All Criteria Met
+- Suggestions tab: "Generate suggestions" `.btn-suggest` button ✅
+- 3 stub suggestions (modification/addition/deletion) with `<ins>`/`<del>` diff markup ✅
+- Accept removes card from list; Reject removes card; "Accept all" clears all ✅
+- 7 unit tests pass (SuggestionItem) ✅
+- 8 E2E tests pass (Suggestions tab flow) ✅
+
+---
+
+## 👉 Next: `/next` — Sprint 8
 
 ```
-/dev-story S3-01    # Wire Review Mode toggle in +page.svelte
+/next
 ```
 
 ---
@@ -98,9 +193,8 @@
 ## 🛠️ Actions
 
 - [🔄 Update dashboard](command:bmad.run%20/update-dashboard)
-- [📖 Dev story S3-01](command:bmad.run%20/dev-story%20S3-01)
-- [📖 Dev story S3-02](command:bmad.run%20/dev-story%20S3-02)
+- [📖 Next sprint](command:bmad.run%20/next)
 
 ---
 
-Generated by bmad-master (sprint-planning Sprint 3) on 2026-03-01
+Generated by bmad-master (sprint-5 done) on 2026-04-16
