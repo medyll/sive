@@ -226,7 +226,7 @@ Phase 4 – Implementation ⏳ Upcoming
 1. **Data Sync**: Read `status.yaml` + `./artifacts/sprints/` + `./artifacts/stories/`.
 2. **Update YAML**: Ensure `sprints` and `backlog` keys are populated and up-to-date.
 3. **Generate Markdown**: Overwrite `dashboard.md` with an interactive view (using `command:bmad.run` links).
-4. **Master View**: If in a monorepo root, generate `MASTER_DASHBOARD.md` indexing all detected `bmad/` instances.
+4. **Master View**: If in a monorepo root, generate `master-dashboard.json` indexing all detected `bmad/` instances.
 
 ### /update-dashboard (Master Dashboard generation)
 
@@ -244,9 +244,9 @@ bmad-master /update-dashboard
 
 - Discovery: recursively search the repository for all `*/bmad/status.yaml` files.
 - Aggregation: extract a repo-relative package path (e.g., `apps/api`) for each instance, the current phase, and the progress score from each `status.yaml`.
-- Generation: write a consolidated `MASTER_DASHBOARD.md` at the repo root containing a summary table, critical QA/bugs, and global actions.
+- Generation: write a consolidated `master-dashboard.json` at the repo root containing a summary table, critical QA/bugs, and global actions.
 
-3) MASTER_DASHBOARD.md structure (example output)
+3) master-dashboard.json structure (example output)
 
 # 👑 BMAD Master Dashboard
 > **Scope:** Monorepo Root | **Total Instances:** 3 | **Sync:** 2026-02-28
@@ -360,7 +360,7 @@ All BMAD roles MUST follow the Global Instruction v3.1.0 when producing or modif
 2. Mandatory State Sync (Write-Then-Sync Loop)
   - After creating or modifying any artifact, update `status.yaml` (phases, artifacts, sprints/backlog progress).
   - Tester-specific: update `qa` object with `test_plan`, `coverage`, `last_run`, and `bugs`.
-  - Trigger `/update-dashboard` to regenerate `dashboard.md` and, for monorepos, update `MASTER_DASHBOARD.md` when root status changes.
+  - Trigger `/update-dashboard` to regenerate `dashboard.md` and, for monorepos, update `master-dashboard.json` when root status changes.
 
 3. Role-Specific Data Mapping
   - Analyst/PM/Architect: update high-level phases and artifacts in `status.yaml`.
@@ -374,7 +374,7 @@ All BMAD roles MUST follow the Global Instruction v3.1.0 when producing or modif
   - Update `status.yaml.recommendation` to point to the next logical step after changes (e.g., `/run-test`, `/next`).
 
 5. Monorepo Support
-  - If the package's global status changes, ensure `MASTER_DASHBOARD.md` is updated at the repo root.
+  - If the package's global status changes, ensure `master-dashboard.json` is updated at the repo root.
 
 Failure to follow these rules should cause the agent to present a corrective plan rather than silently writing state.
 - A changelog artifact `bmad/artifacts/knowledge-updates-{timestamp}.md` capturing source, decisions, and applied patches.
