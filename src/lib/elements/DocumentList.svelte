@@ -11,6 +11,7 @@
   export interface DocumentListProps {
     documents?: DocumentItem[];
     activeId?: string;
+    loading?: boolean;
     onSelect?: (id: string) => void;
     onNew?: () => void;
     onRename?: (id: string, title: string) => void;
@@ -20,6 +21,7 @@
   let {
     documents = [],
     activeId = '',
+    loading = false,
     onSelect,
     onNew,
     onRename,
@@ -73,7 +75,20 @@
   </div>
 
   <ul class="doc-list-items" role="list">
-    {#each documents as doc (doc.id)}
+    {#if loading}
+      {#each [1, 2, 3] as _}
+        <li class="doc-skeleton" aria-hidden="true">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-date"></div>
+        </li>
+      {/each}
+    {:else if documents.length === 0}
+      <li class="doc-empty">
+        <span>No documents yet.</span>
+        <button type="button" class="btn-empty-new" onclick={onNew}>Create one →</button>
+      </li>
+    {:else}
+      {#each documents as doc (doc.id)}
       <li>
         <div
           class="doc-item"
@@ -116,6 +131,7 @@
         </div>
       </li>
     {/each}
+    {/if}
   </ul>
 </aside>
 
@@ -230,4 +246,52 @@
   }
 
   .btn-delete-doc:hover { opacity: 1 !important; }
+
+  /* Skeleton loader */
+  .doc-skeleton {
+    list-style: none;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .skeleton-title, .skeleton-date {
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+  }
+
+  .skeleton-title { height: 0.85rem; width: 70%; }
+  .skeleton-date  { height: 0.65rem; width: 35%; }
+
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to   { background-position: -200% 0; }
+  }
+
+  /* Empty state */
+  .doc-empty {
+    list-style: none;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-muted, #9ca3af);
+    font-size: 0.85rem;
+  }
+
+  .btn-empty-new {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-primary, #646cff);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0;
+  }
+
+  .btn-empty-new:hover { text-decoration: underline; }
 </style>

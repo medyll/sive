@@ -38,6 +38,17 @@ describe('+page.server.ts — document handlers (mock mode)', () => {
 			expect(typeof result.documents[0].content).toBe('string');
 			expect(result.documents[0].content.length).toBeGreaterThan(0);
 		});
+
+		it('returns user=null when no user in mock mode', async () => {
+			const result = await load({ locals: mockLocals } as Parameters<typeof load>[0]);
+			expect(result.user).toBeNull();
+		});
+
+		it('returns the user when present in mock mode', async () => {
+			const user = { id: 'u1', name: 'Alice', email: 'alice@example.com' };
+			const result = await load({ locals: { user } } as Parameters<typeof load>[0]);
+			expect(result.user).toEqual(user);
+		});
 	});
 
 	describe('actions.createDocument()', () => {

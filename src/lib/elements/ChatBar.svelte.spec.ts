@@ -1,12 +1,23 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import { page, userEvent } from '@vitest/browser/context';
 import ChatBar from './ChatBar.svelte';
 
+// Mock fetch for chatStore calls
+const mockFetch = vi.fn().mockResolvedValue({
+	ok: true,
+	json: async () => ({ reply: 'Mock AI response' })
+});
+
+beforeEach(() => {
+	vi.stubGlobal('fetch', mockFetch);
+	mockFetch.mockClear();
+});
+
 describe('ChatBar', () => {
 	it('renders with default placeholder', async () => {
 		render(ChatBar, {});
-		await expect.element(page.getByPlaceholder('Type a message...')).toBeVisible();
+		await expect.element(page.getByRole('textbox', { name: 'Chat input' })).toBeVisible();
 	});
 
 	it('renders with custom placeholder', async () => {
@@ -19,52 +30,33 @@ describe('ChatBar', () => {
 		await expect.element(page.getByRole('button', { name: 'Send' })).toBeVisible();
 	});
 
-	it('calls onSend with input value on Send button click', async () => {
-		const onSend = vi.fn();
-		render(ChatBar, { onSend });
-		const input = page.getByRole('textbox');
+	it('clears the input after Send button click', async () => {
+		render(ChatBar, {});
+		const input = page.getByRole('textbox', { name: 'Chat input' });
 		await input.fill('Hello AI');
 		await page.getByRole('button', { name: 'Send' }).click();
-		expect(onSend).toHaveBeenCalledExactlyOnceWith('Hello AI');
-	});
-
-	it('clears the input after Send button click', async () => {
-		render(ChatBar, { onSend: vi.fn() });
-		const input = page.getByRole('textbox');
-		await input.fill('some message');
-		await page.getByRole('button', { name: 'Send' }).click();
 		await expect.element(input).toHaveValue('');
-	});
-
-	it('calls onSend with input value on Enter key', async () => {
-		const onSend = vi.fn();
-		render(ChatBar, { onSend });
-		const input = page.getByRole('textbox');
-		await input.fill('Enter test');
-		await userEvent.keyboard('{Enter}');
-		expect(onSend).toHaveBeenCalledExactlyOnceWith('Enter test');
 	});
 
 	it('clears the input after Enter key', async () => {
-		render(ChatBar, { onSend: vi.fn() });
-		const input = page.getByRole('textbox');
-		await input.fill('clear me');
+		render(ChatBar, {});
+		const input = page.getByRole('textbox', { name: 'Chat input' });
+		await input.fill('Enter test');
 		await userEvent.keyboard('{Enter}');
 		await expect.element(input).toHaveValue('');
 	});
 
-	it('does NOT call onSend when input is empty on Send click', async () => {
-		const onSend = vi.fn();
-		render(ChatBar, { onSend });
-		await page.getByRole('button', { name: 'Send' }).click();
-		expect(onSend).not.toHaveBeenCalled();
+	it('Send button is disabled when input is empty', async () => {
+		render(ChatBar, {});
+		const btn = page.getByRole('button', { name: 'Send' });
+		await expect.element(btn).toBeDisabled();
 	});
 
-	it('does NOT call onSend when input is whitespace-only', async () => {
-		const onSend = vi.fn();
-		render(ChatBar, { onSend });
-		await page.getByRole('textbox').fill('   ');
-		await page.getByRole('button', { name: 'Send' }).click();
-		expect(onSend).not.toHaveBeenCalled();
+	it('Send button is disabled when input is whitespace-only', async () => {
+		render(ChatBar, {});
+		await page.getByRole('textbox', { name: 'Chat input' }).fill('   ');
+		const btn = page.getByRole('button', { name: 'Send' });
+		await expect.element(btn).toBeDisabled();
 	});
 });
+

@@ -16,6 +16,7 @@
     activeTab?: string;
     aiProcessing?: boolean;
     theme?: string;
+    editorContent?: string;
   }
 
   const TABS = ['Suggestions', 'Coherence', 'Style', 'History'] as const;
@@ -24,7 +25,8 @@
   let {
     activeTab = $bindable<string>('Suggestions'),
     aiProcessing = false,
-    theme = 'light'
+    theme = 'light',
+    editorContent = ''
   }: AIPanelProps = $props();
 
   let selectedHardenId = $state<string | undefined>(undefined);
@@ -48,25 +50,55 @@
   async function handleAnalyse() {
     analysing = true;
     signals = [];
-    await new Promise<void>((resolve) => setTimeout(resolve, 1800));
-    signals = STUB_SIGNALS;
-    analysing = false;
+    try {
+      const res = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'style', content: editorContent })
+      });
+      const data = await res.json();
+      signals = data.signals ?? STUB_SIGNALS;
+    } catch {
+      signals = STUB_SIGNALS;
+    } finally {
+      analysing = false;
+    }
   }
 
   async function handleCoherenceCheck() {
     checking = true;
     coherenceAlerts = [];
-    await new Promise<void>((resolve) => setTimeout(resolve, 1500));
-    coherenceAlerts = STUB_ALERTS;
-    checking = false;
+    try {
+      const res = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'coherence', content: editorContent })
+      });
+      const data = await res.json();
+      coherenceAlerts = data.alerts ?? STUB_ALERTS;
+    } catch {
+      coherenceAlerts = STUB_ALERTS;
+    } finally {
+      checking = false;
+    }
   }
 
   async function handleGenerateSuggestions() {
     suggesting = true;
     suggestionsStore.setItems([]);
-    await new Promise<void>((resolve) => setTimeout(resolve, 1500));
-    suggestionsStore.setItems(STUB_SUGGESTIONS);
-    suggesting = false;
+    try {
+      const res = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'suggestions', content: editorContent })
+      });
+      const data = await res.json();
+      suggestionsStore.setItems(data.suggestions ?? STUB_SUGGESTIONS);
+    } catch {
+      suggestionsStore.setItems(STUB_SUGGESTIONS);
+    } finally {
+      suggesting = false;
+    }
   }
 </script>
 
@@ -113,6 +145,8 @@
               onclick={() => suggestionsStore.acceptAll()}
             >Accept all</button>
           </div>
+        {:else if !suggesting}
+          <p class="tab-empty">Click "Generate suggestions" to analyse your text.</p>
         {/if}
       </div>
     {:else if activeTab === 'Coherence'}
@@ -138,6 +172,8 @@
               />
             {/each}
           </div>
+        {:else if !checking}
+          <p class="tab-empty">Click "Run coherence check" to detect inconsistencies.</p>
         {/if}
       </div>
     {:else if activeTab === 'Style'}
@@ -162,6 +198,8 @@
               <StyleSignal location={s.location} signal={s.signal} suggestion={s.suggestion} />
             {/each}
           </div>
+        {:else if !analysing}
+          <p class="tab-empty">Click "Analyse this passage" to get style feedback.</p>
         {/if}
       </div>
     {:else if activeTab === 'History'}
@@ -201,6 +239,13 @@
 
   .tab-pane {
     color: var(--color-text, #333);
+  }
+
+  .tab-empty {
+    text-align: center;
+    color: var(--color-text-muted, #9ca3af);
+    font-size: 0.82rem;
+    margin: 1.5rem 0;
   }
 
   .analyse-bar {

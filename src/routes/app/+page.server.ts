@@ -1,6 +1,7 @@
 import { db, isMock } from '$lib/server/db';
 import { documents } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
+import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
 // Guest user id used when auth is unavailable (mock/dev mode)
@@ -19,10 +20,15 @@ const STUB_DOCUMENTS = [
 ];
 
 export const load: PageServerLoad = async ({ locals }) => {
-	const userId = (locals as Record<string, unknown> & { user?: { id: string } }).user?.id ?? GUEST_USER_ID;
+	// In production mode (real DB + auth), require authentication
+	if (!isMock && !locals.user) {
+		throw redirect(302, '/auth');
+	}
+
+	const userId = locals.user?.id ?? GUEST_USER_ID;
 
 	if (isMock || !db) {
-		return { documents: STUB_DOCUMENTS, activeDocumentId: STUB_DOCUMENTS[0].id };
+		return { documents: STUB_DOCUMENTS, activeDocumentId: STUB_DOCUMENTS[0].id, user: locals.user ?? null };
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,12 +48,12 @@ export const load: PageServerLoad = async ({ locals }) => {
 		return { documents: [newDoc], activeDocumentId: newDoc.id };
 	}
 
-	return { documents: docs, activeDocumentId: docs[0].id };
+	return { documents: docs, activeDocumentId: docs[0].id, user: locals.user ?? null };
 };
 
 export const actions: Actions = {
 	createDocument: async ({ locals }) => {
-		const userId = (locals as Record<string, unknown> & { user?: { id: string } }).user?.id ?? GUEST_USER_ID;
+		const userId = locals.user?.id ?? GUEST_USER_ID;
 
 		if (isMock || !db) {
 			return { success: true, id: `stub-doc-${Date.now()}` };

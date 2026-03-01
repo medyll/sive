@@ -7,7 +7,10 @@
   import ReviewScreen from '$lib/elements/ReviewScreen.svelte';
   import HardenModal from '$lib/elements/HardenModal.svelte';
   import DocumentList from '$lib/elements/DocumentList.svelte';
+  import ExportButton from '$lib/elements/ExportButton.svelte';
+  import Toast from '$lib/elements/Toast.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
+  import { toastStore } from '$lib/toastStore.svelte';
 
   const SPLIT_KEY = 'sive.splitRatio';
   const FOCUS_KEY = 'sive.focusMode';
@@ -17,6 +20,7 @@
     data: {
       documents: Array<{ id: string; title: string; content: string; updated_at: number }>;
       activeDocumentId: string;
+      user?: { id: string; name?: string | null; email?: string | null } | null;
     };
     form?: unknown;
   }
@@ -33,6 +37,7 @@
 
   let reviewMode = $state(false);
   let hardenOpen = $state(false);
+  let sidebarOpen = $state(true);
 
   // Document state
   let documents = $state(data.documents);
@@ -76,6 +81,7 @@
       saveContentInput.value = content;
       saveDocForm.requestSubmit();
     }
+    toastStore.success('Document saved');
   }
 
   function handleRename(id: string, title: string) {
@@ -190,11 +196,6 @@
   function toggleFocusMode() {
     focusMode = !focusMode;
   }
-
-  function handleChatSend(message: string) {
-    // TODO: wire to AI command bus in a later sprint
-    console.log('[chat]', message);
-  }
 </script>
 
 <div class="app-root" {@attach persistState} {@attach globalKeyboardShortcuts}>
@@ -223,6 +224,12 @@
       {/if}
     </div>
     <div class="toolbar-actions">
+      <button
+        type="button"
+        class="btn-sidebar-toggle"
+        aria-label={sidebarOpen ? 'Hide sidebar' : 'Show sidebar'}
+        onclick={() => (sidebarOpen = !sidebarOpen)}
+      >☰</button>
       {#if !reviewMode}
         <button type="button" onclick={toggleFocusMode} aria-pressed={focusMode}>
           {focusMode ? 'Exit Focus' : 'Focus'}
@@ -234,7 +241,25 @@
         aria-pressed={reviewMode}
       >Review</button>
       <button type="button" onclick={() => { hardenOpen = true; }}>💾 New version</button>
+      <ExportButton
+        title={documents.find(d => d.id === activeDocumentId)?.title ?? 'document'}
+        content={activeContent}
+      />
       <button type="button" aria-disabled="true">⚙</button>
+      <a
+        href="/profile"
+        class="user-badge"
+        aria-label="Profile"
+        title={data.user?.name ?? data.user?.email ?? 'Guest'}
+      >
+        {#if data.user?.name}
+          {data.user.name.slice(0, 2).toUpperCase()}
+        {:else if data.user?.email}
+          {data.user.email.slice(0, 2).toUpperCase()}
+        {:else}
+          G
+        {/if}
+      </a>
     </div>
   </header>
 
@@ -244,11 +269,11 @@
     </div>
   {:else}
     <div class="workspace" {@attach workspaceRef}>
-      {#if !focusMode}
+      {#if !focusMode && sidebarOpen}
         <DocumentList
           {documents}
           activeId={activeDocumentId}
-          onSelect={handleSelectDocument}
+          onSelect={(id) => { handleSelectDocument(id); if (browser && window.innerWidth < 768) sidebarOpen = false; }}
           onNew={handleNewDocument}
           onRename={handleRename}
           onDelete={handleDelete}
@@ -276,7 +301,7 @@
         ></div>
 
         <div class="panel ai-panel" style="width: {(1 - splitRatio) * 100}%">
-          <AIPanel {aiProcessing} />
+          <AIPanel {aiProcessing} editorContent={activeContent} />
         </div>
       {/if}
     </div>
@@ -355,7 +380,7 @@
       {#if chatBarOpen}
         <div id="chat-bar-content" class="chat-bar-inner">
           <button type="button" class="chat-action" aria-disabled="true" aria-label="Toggle voice input">🎤</button>
-          <ChatBar placeholder="Type a command or question…" onSend={handleChatSend} />
+          <ChatBar placeholder="Ask the AI…" />
           <button type="button" class="chat-action" aria-disabled="true" aria-label="Upload image">🖼</button>
         </div>
       {/if}
@@ -381,6 +406,8 @@
     />
   {/if}
 {/key}
+
+<Toast />
 
 <style>
   .app-root {
@@ -430,7 +457,27 @@
   .toolbar-actions {
     display: flex;
     gap: 0.5rem;
+    align-items: center;
   }
+
+  .user-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-primary, #646cff);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+
+  .user-badge:hover { opacity: 0.82; }
 
   .workspace {
     display: flex;
@@ -516,5 +563,62 @@
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
+  }
+
+  /* Sidebar toggle — always visible */
+  .btn-sidebar-toggle {
+    display: inline-flex;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0.2rem 0.4rem;
+    color: var(--color-text, #1a1a1a);
+  }
+
+  @media (max-width: 767px) {
+    .btn-sidebar-toggle {
+      display: inline-flex;
+    }
+
+    .main-toolbar {
+      padding: 0 0.5rem;
+      gap: 0.25rem;
+    }
+
+    /* Hide some toolbar buttons on small screens */
+    .main-toolbar button[aria-disabled="true"] {
+      display: none;
+    }
+
+    .workspace {
+      flex-direction: column;
+    }
+
+    /* DocumentList becomes full-width overlay on mobile */
+    :global(.doc-list) {
+      width: 100% !important;
+      height: auto;
+      max-height: 40vh;
+      border-right: none;
+      border-bottom: 1px solid var(--color-border, #e0e0e0);
+    }
+
+    .panel {
+      width: 100% !important;
+      height: auto;
+      flex: 1;
+    }
+
+    .resize-handle {
+      display: none;
+    }
+
+    /* Chat overlay mobile */
+    .chat-overlay {
+      left: 0.5rem;
+      right: 0.5rem;
+      max-width: none;
+    }
   }
 </style>

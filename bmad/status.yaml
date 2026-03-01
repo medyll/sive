@@ -28,13 +28,19 @@ completed_steps:
   - Sprint 6 Implementation — Coherence Tab UI (S6-01 → S6-05)
   - Sprint 7 Planning — Suggestions Tab UI
   - Sprint 7 Implementation — Suggestions Tab UI (S7-01 → S7-05)
+  - Sprint 8 Planning — Document Persistence
+  - Sprint 8 Implementation — Document Persistence (S8-01 → S8-06)
   - Sprint 9 Planning — Document UX
   - Sprint 9 Implementation — Document UX (S9-01 → S9-06)
+  - Sprint 11 Planning — Auth Hardening
+  - Sprint 11 Implementation — Auth Hardening (S11-01 → S11-07)
+  - Sprint 12 Planning — UX Polish & Export
+  - Sprint 12 Implementation — UX Polish & Export (S12-01 → S12-07)
 
 missing_artifacts: []
 
-recommendation: /next
-last_updated: 2026-04-16
+recommendation: /dev-story S10-01
+last_updated: 2026-03-01
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -259,9 +265,73 @@ sprints:
     status: done
 
   qa:
-    coverage: "98 unit tests + 8 E2E (persistence) + 5 E2E (document-ux) + 8 E2E (suggestions) + 7 E2E (coherence) + 7 E2E (style)"
-    last_run: 2026-04-16
+    coverage: "124 unit tests + 6 E2E (ux-polish) + 6 E2E (auth-flow) + 6 E2E (ai-integration) + 8 E2E (persistence) + 5 E2E (document-ux) + 8 E2E (suggestions) + 7 E2E (coherence) + 7 E2E (style)"
+    last_run: 2026-03-01
 
   recommendation: /next
-  last_updated: 2026-04-16
+  last_updated: 2026-03-01
+  - id: sprint-8
+    name: Sprint 8 — Document Persistence
+    status: done
+    progress: 100
+
+  - id: sprint-9
+    name: Sprint 9 — Document UX
+    status: done
+    progress: 100
+
+  - id: sprint-10
+    name: Sprint 10 — AI Integration MVP
+    status: done
+    progress: 100
+
+  - id: sprint-11
+    name: Sprint 11 — Auth Hardening
+    status: done
+    progress: 100
+    stories:
+      - id: S11-01
+        title: route-guard-app
+        status: done
+      - id: S11-02
+        title: login-page-svelte5
+        status: done
+      - id: S11-03
+        title: signup-page
+        status: done
+      - id: S11-04
+        title: profile-page
+        status: done
+      - id: S11-05
+        title: toolbar-user-indicator
+        status: done
+      - id: S11-06
+        title: unit-tests-auth
+        status: done
+  - id: sprint-12
+    name: Sprint 12 — UX Polish & Export
+    status: done
+    progress: 100
+    stories:
+      - id: S12-01
+        title: skeleton-loader-doclist
+        status: done
+      - id: S12-02
+        title: empty-states-ai-doclist
+        status: done
+      - id: S12-03
+        title: export-button
+        status: done
+      - id: S12-04
+        title: mobile-responsiveness
+        status: done
+      - id: S12-05
+        title: toast-notifications
+        status: done
+      - id: S12-06
+        title: unit-tests-sprint12
+        status: done
+      - id: S12-07
+        title: e2e-ux-polish
+        status: done
 
