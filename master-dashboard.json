@@ -1,0 +1,16 @@
+{
+  "sync": "2026-03-01",
+  "generatedAt": "2026-03-01T02:45:32.795Z",
+  "totalInstances": 1,
+  "instances": [
+    {
+      "package": "sive",
+      "phase": "Unknown",
+      "progress": 100,
+      "bugs": [],
+      "dashboardPath": "bmad\\artifacts\\dashboard.md"
+    }
+  ],
+  "criticalIssues": [],
+  "generatedMarkdown": "# 👑 BMAD Master Dashboard\n> **Scope:** Monorepo Root | **Total Instances:** 1 | **Sync:** 2026-03-01\n\n---\n\n\n## 🏗️ Project Overview\n\n| Package | Phase | Progress | Status | Action |\n| :--- | :--- | :---: | :---: | :--- |\n| **sive** | Unknown | 100% | 🟢 | [Open Dash](bmad/artifacts/dashboard.md) |\n\n\n---\n\n\n## ⚠️ Critical Issues (QA/Bugs)\n- None recorded\n\n\n---\n\n\n## 🛠️ Global Actions\n- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%22%5D)\n- [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)\n"
+}

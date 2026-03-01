@@ -161,23 +161,32 @@ async function main() {
   const actions = `## 🛠️ Global Actions\n- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%22%5D)\n- [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)\n`;
 
   const out = [header, table, '\n---\n\n', critical, '\n---\n\n', actions].join('\n');
-  console.log('[bmad] writing master-dashboard.md to', outPath);
-  await fs.writeFile(outPath, out, 'utf8');
-  const duration = Date.now() - startTime;
-  console.log(`[bmad] master-dashboard.md written at ${outPath} (${duration}ms)`);
 
-  // Also write a machine-readable JSON summary (hidden file)
+  // Produce a machine-readable JSON summary as the primary artifact
+  const jsonPath = path.join(cwd, 'master-dashboard.json');
+  const criticalIssues = [];
+  for (const inst of instances) {
+    if (inst.bugs && inst.bugs.length) {
+      for (const b of inst.bugs) {
+        criticalIssues.push({ package: inst.package, bug: b });
+      }
+    }
+  }
+  const json = {
+    sync: syncDate,
+    generatedAt: new Date().toISOString(),
+    totalInstances: instances.length,
+    instances,
+    criticalIssues,
+    generatedMarkdown: out
+  };
+
   try {
-    const jsonPath = path.join(cwd, '.master-dashboard.json');
-    const json = {
-      sync: syncDate,
-      generatedAt: new Date().toISOString(),
-      instances
-    };
     await fs.writeFile(jsonPath, JSON.stringify(json, null, 2) + '\n', 'utf8');
-    console.log('[bmad] .master-dashboard.json written at', jsonPath);
+    const duration = Date.now() - startTime;
+    console.log(`[bmad] master-dashboard.json written at ${jsonPath} (${duration}ms)`);
   } catch (e) {
-    console.error('[bmad] failed to write .master-dashboard.json', e.message);
+    console.error('[bmad] failed to write master-dashboard.json', e.message);
   }
 }
 

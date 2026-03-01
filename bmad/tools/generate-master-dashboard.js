@@ -123,8 +123,24 @@ async function main() {
   const actions = `## 🛠️ Global Actions\n- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%20--root%22%5D)\n- [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)\n`;
 
   const out = [header, table, '\n---\n\n', critical, '\n---\n\n', actions].join('\n');
-  await fs.writeFile(outPath, out, 'utf8');
-  console.log('master-dashboard.md written at', outPath);
+  // Write JSON primary artifact
+  const jsonPath = path.join(cwd, 'master-dashboard.json');
+  const criticalIssues = [];
+  for (const inst of instances) {
+    if (inst.bugs && inst.bugs.length) {
+      for (const b of inst.bugs) criticalIssues.push({ package: inst.package, bug: b });
+    }
+  }
+  const json = {
+    sync: syncDate,
+    generatedAt: new Date().toISOString(),
+    totalInstances: instances.length,
+    instances,
+    criticalIssues,
+    generatedMarkdown: out
+  };
+  await fs.writeFile(jsonPath, JSON.stringify(json, null, 2) + '\n', 'utf8');
+  console.log('master-dashboard.json written at', jsonPath);
 }
 
 main().catch(err => { console.error(err); process.exit(1); });
