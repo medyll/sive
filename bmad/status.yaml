@@ -19,11 +19,12 @@ completed_steps:
   - Sprint 2 Planning — AI/Chat UI
   - Sprint 2 Implementation — AI/Chat UI (S2-01 → S2-07)
   - Sprint 3 Planning — Review Mode UI
+  - Sprint 3 Implementation — Review Mode UI (S3-01 → S3-07)
 
 missing_artifacts: []
 
-recommendation: /dev-story S3-01
-last_updated: 2026-03-01
+recommendation: /next
+last_updated: 2026-03-31
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -87,32 +88,32 @@ sprints:
 
   - id: sprint-3
     name: Sprint 3 — Review Mode UI
-    status: active
-    progress: 0
+    status: done
+    progress: 100
     start: 2026-03-16
     end: 2026-03-31
     stories:
       - id: S3-01
         title: review-mode-toggle-layout
-        status: pending
+        status: done
       - id: S3-02
         title: review-toolbar
-        status: pending
+        status: done
       - id: S3-03
         title: review-text
-        status: pending
+        status: done
       - id: S3-04
         title: review-report
-        status: pending
+        status: done
       - id: S3-05
         title: review-screen
-        status: pending
+        status: done
       - id: S3-06
         title: unit-tests-review
-        status: pending
+        status: done
       - id: S3-07
         title: e2e-review-mode
-        status: pending
+        status: done
 
 
   - id: task-s1-03-1
@@ -149,9 +150,9 @@ sprints:
     status: done
 
 qa:
-  test_plan: S1-05 unit tests (server.spec.ts) + S1-06 E2E tests (auth-login.spec.ts)
-  coverage: "auth POST handler (8 unit tests) + login flow E2E (7 tests)"
-  last_run: 2026-03-01
+  test_plan: S1-05 unit tests + S1-06 E2E + S2-06 unit tests + S2-07 E2E + S3-06 unit tests + S3-07 E2E
+  coverage: "auth (8 unit) + login E2E (7) + UI components (20 unit) + app layout E2E (13) + Review Mode (16 unit) + Review Mode E2E (7)"
+  last_run: 2026-03-31
   bugs: []
 
 detected_changes: []

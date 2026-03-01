@@ -3,6 +3,7 @@
   import EditorPanel from '$lib/elements/EditorPanel.svelte';
   import AIPanel from '$lib/elements/AIPanel.svelte';
   import ChatBar from '$lib/elements/ChatBar.svelte';
+  import ReviewScreen from '$lib/elements/ReviewScreen.svelte';
 
   const SPLIT_KEY = 'sive.splitRatio';
   const FOCUS_KEY = 'sive.focusMode';
@@ -15,6 +16,8 @@
   let focusMode = $state<boolean>(
     browser ? localStorage.getItem(FOCUS_KEY) === 'true' : false
   );
+
+  let reviewMode = $state(false);
 
   /** Stub — will be wired to AI results in a later sprint */
   let suggestionsReady = $state(false);
@@ -87,67 +90,79 @@
   <header class="main-toolbar">
     <span class="project-label">My project / Chapter 1</span>
     <div class="toolbar-actions">
-      <button type="button" onclick={toggleFocusMode} aria-pressed={focusMode}>
-        {focusMode ? 'Exit Focus' : 'Focus'}
-      </button>
-      <button type="button" aria-disabled="true">Review</button>
+      {#if !reviewMode}
+        <button type="button" onclick={toggleFocusMode} aria-pressed={focusMode}>
+          {focusMode ? 'Exit Focus' : 'Focus'}
+        </button>
+      {/if}
+      <button
+        type="button"
+        onclick={() => { reviewMode = !reviewMode; }}
+        aria-pressed={reviewMode}
+      >Review</button>
       <button type="button" aria-disabled="true">💾 New version</button>
       <button type="button" aria-disabled="true">⚙</button>
     </div>
   </header>
 
-  <div class="workspace" {@attach workspaceRef}>
-    <div
-      class="panel editor-panel"
-      style="width: {focusMode ? '100%' : `${splitRatio * 100}%`}"
-    >
-      <EditorPanel />
+  {#if reviewMode}
+    <div class="workspace">
+      <ReviewScreen onExitReview={() => { reviewMode = false; }} />
+    </div>
+  {:else}
+    <div class="workspace" {@attach workspaceRef}>
+      <div
+        class="panel editor-panel"
+        style="width: {focusMode ? '100%' : `${splitRatio * 100}%`}"
+      >
+        <EditorPanel />
+      </div>
+
+      {#if !focusMode}
+        <div
+          class="resize-handle"
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize panels"
+          onpointerdown={onPointerDown}
+        ></div>
+
+        <div class="panel ai-panel" style="width: {(1 - splitRatio) * 100}%">
+          <AIPanel {aiProcessing} />
+        </div>
+      {/if}
     </div>
 
-    {#if !focusMode}
+    <!-- Floating chat bar overlay -->
+    <div class="chat-overlay" id="chat-bar">
+      <button
+        class="chat-toggle"
+        type="button"
+        aria-expanded={chatBarOpen}
+        aria-controls="chat-bar-content"
+        onclick={() => { chatBarOpen = !chatBarOpen; }}
+      >
+        {chatBarOpen ? '▼' : '▲'}
+      </button>
+
+      {#if chatBarOpen}
+        <div id="chat-bar-content" class="chat-bar-inner">
+          <button type="button" class="chat-action" aria-disabled="true" aria-label="Toggle voice input">🎤</button>
+          <ChatBar placeholder="Type a command or question…" onSend={handleChatSend} />
+          <button type="button" class="chat-action" aria-disabled="true" aria-label="Upload image">🖼</button>
+        </div>
+      {/if}
+    </div>
+
+    {#if focusMode && suggestionsReady}
       <div
-        class="resize-handle"
-        role="separator"
-        aria-orientation="vertical"
-        aria-label="Resize panels"
-        onpointerdown={onPointerDown}
+        id="suggestions-ready-badge"
+        class="badge"
+        role="status"
+        aria-label="AI suggestions are ready"
+        title="Suggestions ready — exit Focus Mode to view"
       ></div>
-
-      <div class="panel ai-panel" style="width: {(1 - splitRatio) * 100}%">
-        <AIPanel {aiProcessing} />
-      </div>
     {/if}
-  </div>
-
-  <!-- Floating chat bar overlay -->
-  <div class="chat-overlay" id="chat-bar">
-    <button
-      class="chat-toggle"
-      type="button"
-      aria-expanded={chatBarOpen}
-      aria-controls="chat-bar-content"
-      onclick={() => { chatBarOpen = !chatBarOpen; }}
-    >
-      {chatBarOpen ? '▼' : '▲'}
-    </button>
-
-    {#if chatBarOpen}
-      <div id="chat-bar-content" class="chat-bar-inner">
-        <button type="button" class="chat-action" aria-disabled="true" aria-label="Toggle voice input">🎤</button>
-        <ChatBar placeholder="Type a command or question…" onSend={handleChatSend} />
-        <button type="button" class="chat-action" aria-disabled="true" aria-label="Upload image">🖼</button>
-      </div>
-    {/if}
-  </div>
-
-  {#if focusMode && suggestionsReady}
-    <div
-      id="suggestions-ready-badge"
-      class="badge"
-      role="status"
-      aria-label="AI suggestions are ready"
-      title="Suggestions ready — exit Focus Mode to view"
-    ></div>
   {/if}
 </div>
 

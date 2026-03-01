@@ -1,6 +1,6 @@
 # BMAD Dashboard — Project: sive
 
-> Last updated: 2026-03-01 | Phase: Implementation (in_progress)
+> Last updated: 2026-03-31 | Phase: Implementation (in_progress)
 
 ---
 
@@ -13,7 +13,7 @@
 | Solutioning | ✅ Done |
 | Implementation | 🔥 In progress |
 
-**Completed artifacts:** product-brief.md, prd.md, tech-spec.md, architecture.md, sprint-2.md, sprint-3.md
+**Completed artifacts:** product-brief.md, prd.md, tech-spec.md, architecture.md, sprint-1.md, sprint-2.md, sprint-3.md
 
 ---
 
@@ -49,28 +49,28 @@
 
 ---
 
-## 🔥 Sprint 3 — Review Mode UI — **ACTIVE**
+## 🏁 Sprint 3 — Review Mode UI — **CLOSED** ✅
 
-**Progress:** 0% (0/21 pts) | **Status:** active
+**Progress:** 100% (21/21 pts) | **Status:** done
 
 | ID | Title | Pts | Priority | Status |
 |---|---|---:|---|---|
-| S3-01 | Review Mode toggle & layout scaffold | 5 | Must | ⏳ pending |
-| S3-02 | ReviewToolbar component | 2 | Must | ⏳ pending |
-| S3-03 | ReviewText component | 2 | Must | ⏳ pending |
-| S3-04 | ReviewReport component | 5 | Must | ⏳ pending |
-| S3-05 | ReviewScreen orchestrator | 3 | Must | ⏳ pending |
-| S3-06 | Unit tests — ReviewToolbar, ReviewReport | 2 | Should | ⏳ pending |
-| S3-07 | E2E Review Mode tests | 2 | Should | ⏳ pending |
+| S3-01 | Review Mode toggle & layout scaffold | 5 | Must | ✅ done |
+| S3-02 | ReviewToolbar component | 2 | Must | ✅ done |
+| S3-03 | ReviewText component | 2 | Must | ✅ done |
+| S3-04 | ReviewReport component | 5 | Must | ✅ done |
+| S3-05 | ReviewScreen orchestrator | 3 | Must | ✅ done |
+| S3-06 | Unit tests — ReviewToolbar, ReviewReport | 2 | Should | ✅ done |
+| S3-07 | E2E Review Mode tests | 2 | Should | ✅ done |
 
-### Sprint 3 Definition of Done
-- `Review` button in toolbar switches to Review Mode layout
-- ReviewToolbar: scope selector (3 options), Run analysis, ← Back, Export
-- ReviewText: read-only prose panel (55%), stub text, highlight support
-- ReviewReport: 7 sections with stub data (Inconsistencies, PoV, Threads, Tension, Themes, Voices, Style)
-- `← Back to writing` restores normal workspace
-- Vitest unit tests pass for ReviewToolbar + ReviewReport
-- Playwright E2E tests pass for the full toggle flow
+### Sprint 3 Definition of Done — ✅ All Criteria Met
+- `Review` button in toolbar switches to Review Mode layout ✅
+- ReviewToolbar: scope selector (3 options), Run analysis, ← Back, Export ✅
+- ReviewText: read-only prose panel (55%), stub text, highlight support ✅
+- ReviewReport: 7 sections with stub data (Inconsistencies, PoV, Threads, Tension, Themes, Voices, Style) ✅
+- `← Back to writing` restores normal workspace ✅
+- Vitest unit tests pass for ReviewToolbar + ReviewReport ✅ (16 tests)
+- Playwright E2E tests pass for the full toggle flow ✅ (7 tests)
 
 ---
 
@@ -80,14 +80,14 @@
 - **E2E (Sprint 1):** `e2e/auth-login.spec.ts` — 7 tests ✅
 - **Unit (Sprint 2):** `src/lib/elements/*.svelte.spec.ts` — 21 tests ✅
 - **E2E (Sprint 2):** `e2e/app-layout.spec.ts` — 13 tests ✅
-- **Unit (Sprint 3):** `src/lib/elements/ReviewToolbar/ReviewReport.svelte.spec.ts` — planned
-- **E2E (Sprint 3):** `e2e/review-mode.spec.ts` — planned
-- **Last run:** 2026-03-01
+- **Unit (Sprint 3):** `src/lib/elements/ReviewToolbar.svelte.spec.ts`, `ReviewReport.svelte.spec.ts` — 16 tests ✅
+- **E2E (Sprint 3):** `e2e/review-mode.spec.ts` — 7 tests ✅
+- **Last run:** 2026-03-31
 - **Bugs:** none
 
 ---
 
-## 👉 Next: Start S3-01
+## 👉 Next: `/next` — Sprint 4 planning (Versioning P3 or AI integration P5)
 
 ```
 /dev-story S3-01    # Wire Review Mode toggle in +page.svelte
