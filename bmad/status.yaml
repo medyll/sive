@@ -7,19 +7,20 @@ phase:
   - name: Planning
     status: done
   - name: Solutioning
-    status: in_progress
+    status: done
   - name: Implementation
-    status: upcoming
+    status: in_progress
 
 completed_steps:
   - Analysis
   - PRD
   - Architecture
   - Sprint 1 — Auth MVP
+  - Sprint 2 Planning — AI/Chat UI
 
 missing_artifacts: []
 
-recommendation: /sprint-planning Sprint 2
+recommendation: /dev-story S2-01
 last_updated: 2026-03-01
 
 # New v3.1.0 structured fields (Single Source of Truth)
@@ -53,6 +54,35 @@ sprints:
         title: docs-auth-setup
         status: done
 
+  - id: sprint-2
+    name: Sprint 2 — AI/Chat UI Foundation
+    status: active
+    progress: 0
+    start: 2026-03-01
+    end: 2026-03-15
+    stories:
+      - id: S2-01
+        title: main-app-layout-wiring
+        status: pending
+      - id: S2-02
+        title: tabbar-integration-aipanel
+        status: pending
+      - id: S2-03
+        title: focus-mode
+        status: pending
+      - id: S2-04
+        title: ai-spinner-toolbar
+        status: pending
+      - id: S2-05
+        title: chatbar-overlay
+        status: pending
+      - id: S2-06
+        title: unit-tests-ui-components
+        status: pending
+      - id: S2-07
+        title: e2e-layout-tests
+        status: pending
+
 backlog:
   - id: task-s1-03-1
     title: Create sign-in page
@@ -85,7 +115,7 @@ backlog:
   - id: task-ui-01
     title: "[New] Track AI/Chat UI feature — AIPanel, ChatBar, EditorPanel, Spinner, TabBar"
     priority: medium
-    status: todo
+    status: done
 
 qa:
   test_plan: S1-05 unit tests (server.spec.ts) + S1-06 E2E tests (auth-login.spec.ts)
