@@ -1,0 +1,13 @@
+{
+  "sync": "2026-03-01",
+  "generatedAt": "2026-03-01T01:48:33.886Z",
+  "instances": [
+    {
+      "package": "sive",
+      "phase": "Unknown",
+      "progress": 100,
+      "bugs": [],
+      "dashboardPath": "bmad\\artifacts\\dashboard.md"
+    }
+  ]
+}

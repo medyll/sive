@@ -165,6 +165,20 @@ async function main() {
   await fs.writeFile(outPath, out, 'utf8');
   const duration = Date.now() - startTime;
   console.log(`[bmad] MASTER_DASHBOARD.md written at ${outPath} (${duration}ms)`);
+
+  // Also write a machine-readable JSON summary (hidden file)
+  try {
+    const jsonPath = path.join(cwd, '.master-dashboard.json');
+    const json = {
+      sync: syncDate,
+      generatedAt: new Date().toISOString(),
+      instances
+    };
+    await fs.writeFile(jsonPath, JSON.stringify(json, null, 2) + '\n', 'utf8');
+    console.log('[bmad] .master-dashboard.json written at', jsonPath);
+  } catch (e) {
+    console.error('[bmad] failed to write .master-dashboard.json', e.message);
+  }
 }
 
 main().catch(err => { console.error(err); process.exit(1); });

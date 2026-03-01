@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 // Simple visual / functional test for the suggestions-ready-badge mock
 test('suggestions-ready-badge appears when entering Focus mode', async ({ page }) => {
-	await page.goto('/application');
+	await page.goto('/demo/app');
 	// ensure page loaded
 	await expect(page.locator('text=AI-Assisted Writer')).toBeVisible();
 
