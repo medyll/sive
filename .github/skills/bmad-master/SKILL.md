@@ -1,3 +1,68 @@
+## Update Dashboard
+
+1) Command
+At the repository root, invoke:
+
+```
+bmad-master /update-dashboard
+```
+
+2) Execution logic (what the Orchestrator does)
+
+- Discovery: recursively search the repository for all `*/bmad/status.yaml` files.
+- Aggregation: extract a repo-relative package path (e.g., `apps/api`) for each instance, the current phase, and the progress score from each `status.yaml`.
+- Generation: write a consolidated `master-dashboard.json` at the repo root containing a summary table, critical QA/bugs, and global actions.
+
+3) master-dashboard.json structure (example output)
+
+# 👑 BMAD Master Dashboard
+> **Scope:** Monorepo Root | **Total Instances:** 3 | **Sync:** 2026-02-28
+
+---
+
+## 🏗️ Project Overview
+
+| Package | Phase | Progress | Status | Action |
+| :--- | :--- | :---: | :---: | :--- |
+| **apps/api** | Implementation | 85% | 🟢 | [Open Dash](./apps/api/bmad/dashboard.md) |
+| **apps/web** | Planning | 20% | 🟡 | [Open Dash](./apps/web/bmad/dashboard.md) |
+| **packages/ui** | Solutioning | 50% | 🟢 | [Open Dash](./packages/ui/bmad/dashboard.md) |
+
+---
+
+## ⚠️ Critical Issues (QA/Bugs)
+- [ ] **apps/api**: BUG-01 - Auth loop on Windows (Critical)
+- [ ] **apps/web**: Missing PRD for Login module.
+
+---
+
+## 🛠️ Global Actions
+- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%22%5D)
+- [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)
+
+4) Why this matters for the IDE / developer
+
+- Navigation: relative links let you jump from the master view into each package dashboard.
+- Sheldon Mode: centralized, ordered overview without opening every folder.
+- Senior visibility: quickly spot package-level bottlenecks (e.g., long-running Planning phase).
+
+The Orchestrator exposes `/update-dashboard` which auto-detects monorepo layout and generates the master dashboard.
+
+---
+
+## Role Detection (Orchestrator Logic)
+
+1. **Parse Command**: Identify the command from the user message.
+2. **Profile Adaptation**: Detect if the user is a beginner, senior, or TDAH.
+3. **Legacy Analysis**: If code or docs are provided without a `bmad/` folder, suggest `/analyze-context`.
+4. **Read Reference**: Load the specific role file before responding.
+5. **Update `status.yaml**`: Automatically mark artifacts as completed after command execution.
+6. **Code Standards**: All code comments must be in English.
+7. **Context Awareness**: If multiple `bmad/` folders exist, prefix responses with `[package-name]`.
+8. **Auto-Sync Trigger**: Every command modifying state (`/prd`, `/create-story`, etc.) MUST call `/update-dashboard` automatically.
+9. **Profile Adaptation**: 
+10. **Code Standards**: All code comments must be in **English**.
+11. **Formatting**: Use tables, bolding, and horizontal rules for scannability.
 ---
 
 name: bmad-master

@@ -46,4 +46,4 @@ When acting as `Tester`, follow the global BMAD rules for state and dashboard in
 - Write-Then-Sync: after producing or changing test artifacts update `status.yaml.qa` (`test_plan`, `coverage`, `last_run`, `bugs`) and trigger `/update-dashboard`.
 - Role Mapping: ensure QA entries populate the dashboard's QA & Bugs section; update sprint `tests` progress when tests are scheduled or completed.
 - Data Integrity: merge into `status.yaml` (strict YAML); do not overwrite unrelated keys. All comments in English.
-- Monorepo: prefix outputs with `[package-name]` and ensure `MASTER_DASHBOARD.md` is updated when package status changes.
+  - Monorepo: prefix outputs with `[package-name]` and ensure `master-dashboard.json` is updated when package status changes.
