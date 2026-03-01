@@ -17,10 +17,12 @@ completed_steps:
   - Architecture
   - Sprint 1 — Auth MVP
   - Sprint 2 Planning — AI/Chat UI
+  - Sprint 2 Implementation — AI/Chat UI (S2-01 → S2-07)
+  - Sprint 3 Planning — Review Mode UI
 
 missing_artifacts: []
 
-recommendation: /next # Sprint 2 complete — ready for Sprint 3 or review
+recommendation: /dev-story S3-01
 last_updated: 2026-03-01
 
 # New v3.1.0 structured fields (Single Source of Truth)
@@ -82,8 +84,37 @@ sprints:
       - id: S2-07
         title: e2e-layout-tests
         status: done
+
+  - id: sprint-3
+    name: Sprint 3 — Review Mode UI
+    status: active
+    progress: 0
+    start: 2026-03-16
+    end: 2026-03-31
+    stories:
+      - id: S3-01
+        title: review-mode-toggle-layout
+        status: pending
+      - id: S3-02
+        title: review-toolbar
+        status: pending
+      - id: S3-03
+        title: review-text
+        status: pending
+      - id: S3-04
+        title: review-report
+        status: pending
+      - id: S3-05
+        title: review-screen
+        status: pending
+      - id: S3-06
+        title: unit-tests-review
+        status: pending
+      - id: S3-07
+        title: e2e-review-mode
+        status: pending
 
-backlog:
+
   - id: task-s1-03-1
     title: Create sign-in page
     priority: high
