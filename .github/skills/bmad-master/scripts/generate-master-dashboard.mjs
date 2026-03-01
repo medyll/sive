@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'fs/promises';
 import path from 'path';
+import YAML from 'js-yaml';
 
 async function walk(dir, results = []) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -16,7 +17,21 @@ async function walk(dir, results = []) {
   return results;
 }
 
-function parsePhase(content) {
+function parsePhase(content, fallbackName = 'Unknown') {
+  try {
+    const data = YAML.load(content);
+    if (data) {
+      const phases = Array.isArray(data.phases) ? data.phases : data.phase ? [data.phase] : null;
+      if (phases && phases.length) {
+        const cur = phases.find(p => p.status === 'in_progress') || phases.find(p => p.status !== 'upcoming') || phases[0];
+        return cur && (cur.name || cur['name']) ? String(cur.name || cur['name']) : fallbackName;
+      }
+      if (data.phase && typeof data.phase === 'string') return data.phase;
+      if (data.phase && data.phase.name) return data.phase.name;
+    }
+  } catch (e) {
+    // ignore and fallback to regex below
+  }
   const phaseRegex = /-\s*name:\s*(.+)\r?\n\s*status:\s*(\w+)/g;
   let m;
   const phases = [];
@@ -24,16 +39,36 @@ function parsePhase(content) {
     phases.push({ name: m[1].trim(), status: m[2].trim() });
   }
   let cur = phases.find(p => p.status === 'in_progress') || phases.find(p => p.status !== 'upcoming') || phases[0];
-  return cur ? cur.name : 'Unknown';
+  return cur ? cur.name : fallbackName;
 }
 
 function parseProgress(content) {
+  try {
+    const data = YAML.load(content);
+    if (data && (data.progress !== undefined && data.progress !== null)) {
+      const p = data.progress;
+      if (typeof p === 'number') return p;
+      if (typeof p === 'string') return Number(String(p).replace(/[^0-9]/g, '')) || null;
+    }
+  } catch (e) {
+    // fall through to regex
+  }
   const prog = content.match(/progress:\s*(\d{1,3})/);
   if (prog) return Number(prog[1]);
   return null;
 }
 
 function parseQaBugs(content) {
+  try {
+    const data = YAML.load(content);
+    if (data && data.qa) {
+      const qa = data.qa;
+      if (Array.isArray(qa.bugs)) return qa.bugs.map(String);
+      if (typeof qa.bugs === 'string') return qa.bugs.split(/[,\n]+/).map(s => s.trim()).filter(Boolean);
+    }
+  } catch (e) {
+    // fallback
+  }
   const qaIndex = content.indexOf('\nqa:');
   if (qaIndex === -1) return [];
   const sub = content.slice(qaIndex);

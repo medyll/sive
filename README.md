@@ -55,49 +55,76 @@ See [`BITS-UI-Standard.md`](docs/BITS-UI-Standard.md) for full guidelines.
 ### Developer Quickstart
 
 1. Install dependencies: `pnpm install` (preferred) or `npm install`
-2. Copy example env (if present) and set required variables (`BETTER_AUTH_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `ORIGIN`)
-3. Start local dev server: `pnpm dev` or `npm run dev`
-4. Run unit tests: `npm run test:unit`
-5. Run e2e tests: `npm run test:e2e`
+2. Copy and fill env: `cp .env.example .env` (see **Authentication & Database** below)
+3. Run DB migrations: `npm run db:generate && npm run db:migrate`
+4. Start dev server: `pnpm dev` or `npm run dev`
+5. Run unit tests: `npm run test:unit`
+6. Run e2e tests: `npm run test:e2e`
 
+### All scripts
 
-## Project Setup & Scripts
-
-- **Install dependencies:**
-	```sh
-	pnpm install
-	```
-- **Start dev server:**
-	```sh
-	npm run dev
-	```
-- **Build for production:**
-	```sh
-	npm run build
-	```
-- **Preview build:**
-	```sh
-	npm run preview
-	```
-- **Database migration:**
-	```sh
-	npm run db:generate
-	npm run db:push
-	npm run db:migrate
-	npm run db:studio
-	```
-- **Testing:**
-	```sh
-	npm run test:unit
-	npm run test:e2e
-	```
+| Command | Description |
+|---|---|
+| `pnpm install` | Install dependencies |
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build |
+| `npm run db:generate` | Generate Drizzle migration files |
+| `npm run db:push` | Push schema to DB (dev shortcut) |
+| `npm run db:migrate` | Apply migrations |
+| `npm run db:studio` | Open Drizzle Studio |
+| `npm run test:unit` | Run Vitest unit tests |
+| `npm run test:e2e` | Run Playwright E2E tests |
+| `npm run auth:schema` | Regenerate `auth.schema.ts` from Better-Auth |
 
 ---
 
 ## Authentication & Database
 
-- **Auth:** Uses Better-Auth, configured in [`src/lib/server/auth.ts`](src/lib/server/auth.ts).
-- **Database:** SQLite via Drizzle ORM. Schema in [`src/lib/server/db/schema.ts`](src/lib/server/db/schema.ts).
+Sive uses [Better-Auth](https://www.better-auth.com/) for authentication and SQLite via [Drizzle ORM](https://orm.drizzle.team/) for persistence.
+
+### 1. Environment variables
+
+Copy the example file and fill in the values:
+
+```sh
+cp .env.example .env
+```
+
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | Yes (for full auth) | Path to the SQLite file, e.g. `local.db` |
+| `BETTER_AUTH_SECRET` | Yes | Random 32-char secret — generate with `openssl rand -base64 32` |
+| `ORIGIN` | Yes | App origin URL, e.g. `http://localhost:5173` |
+| `GITHUB_CLIENT_ID` | Optional | GitHub OAuth app client ID |
+| `GITHUB_CLIENT_SECRET` | Optional | GitHub OAuth app client secret |
+
+### 2. Database setup & migrations
+
+After setting `DATABASE_URL`, run the Drizzle migrations:
+
+```sh
+npm run db:generate   # generate migration files from schema
+npm run db:migrate    # apply migrations to the SQLite file
+```
+
+To browse the database interactively:
+
+```sh
+npm run db:studio
+```
+
+### 3. Running without a database (mock mode)
+
+If `DATABASE_URL` is not set (or `better-sqlite3` native bindings fail to load), the app starts in **degraded mock mode**: all pages render, but sign-in/sign-out calls return a `503 Auth unavailable` error. This is useful for pure UI work without a local DB.
+
+To re-enable full auth, ensure `DATABASE_URL` is set and run `npm run db:migrate`.
+
+### 4. Auth configuration
+
+- Auth is initialised in [`src/lib/server/auth.ts`](src/lib/server/auth.ts) with `drizzleAdapter` and the `sveltekitCookies` plugin (must remain last in the `plugins` array).
+- Session and user data are attached to `event.locals` by [`src/hooks.server.ts`](src/hooks.server.ts).
+- Schema for auth tables is generated via `npm run auth:schema` (outputs `src/lib/server/db/auth.schema.ts`).
 
 ## Project Structure
 
@@ -112,11 +139,6 @@ See [`BITS-UI-Standard.md`](docs/BITS-UI-Standard.md) for full guidelines.
 - Project planning, PRDs, sprint plans, and mockup templates live under the `bmad/` folder (see `bmad/config.yaml`).
 - Generate mockups with the repository's helper command: `pnpm run gen:mockups` (produces components in `src/lib/elements/mockups`).
 - Sprint plans and stories: `bmad/artifacts/sprints/` and `bmad/artifacts/stories/`.
-
-## Environment
-
-- Required environment variables for local development: `BETTER_AUTH_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `ORIGIN`.
-- Local DB: uses SQLite (no external DB required); see `src/lib/server/db/` for configuration and schema.
 
 ## Contributing
 

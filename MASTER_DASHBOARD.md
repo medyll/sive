@@ -8,7 +8,7 @@
 
 | Package | Phase | Progress | Status | Action |
 | :--- | :--- | :---: | :---: | :--- |
-| **sive** | Planning | 65% | 🟢 | [Open Dash](bmad/artifacts/dashboard.md) |
+| **sive** | Unknown | 100% | 🟢 | [Open Dash](bmad/artifacts/dashboard.md) |
 
 
 ---

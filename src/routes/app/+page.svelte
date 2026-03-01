@@ -43,7 +43,9 @@
       <AIPanel bind:selectedTab={currentTab} />
     {/if}
 
-    <Spinner bind:isProcessing />
+    {#if $isProcessing}
+      <Spinner />
+    {/if}
   </div>
 
   <ChatBar />

@@ -5,9 +5,9 @@ phase:
   - name: Analysis
     status: done
   - name: Planning
-    status: in_progress
+    status: done
   - name: Solutioning
-    status: upcoming
+    status: in_progress
   - name: Implementation
     status: upcoming
 
@@ -15,11 +15,12 @@ completed_steps:
   - Analysis
   - PRD
   - Architecture
+  - Sprint 1 — Auth MVP
 
 missing_artifacts: []
 
-recommendation: /sprint-planning
-last_updated: 2026-02-28
+recommendation: /sprint-planning Sprint 2
+last_updated: 2026-03-01
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -31,47 +32,66 @@ artifacts:
 sprints:
   - id: sprint-1
     name: Sprint 1 — Auth MVP
-    status: in_progress
-    progress: 65
+    status: done
+    progress: 100
     start: 2026-02-01
     end: 2026-02-28
     stories:
       - id: S1-03
         title: implement-login-ui
-        status: in_progress
+        status: done
       - id: S1-04
         title: integrate-better-auth
-        status: in_progress
+        status: done
       - id: S1-05
         title: auth-unit-tests
-        status: todo
+        status: done
+      - id: S1-06
+        title: e2e-login-flow
+        status: done
+      - id: S1-07
+        title: docs-auth-setup
+        status: done
 
 backlog:
   - id: task-s1-03-1
     title: Create sign-in page
     priority: high
+    status: done
   - id: task-s1-03-2
     title: Server sign-in handler
     priority: high
+    status: done
   - id: task-s1-03-3
     title: UI validation & accessibility
     priority: medium
+    status: done
+  - id: task-s1-05-1
+    title: Write unit tests for auth handler
+    priority: high
+    status: done
+  - id: task-s1-05-2
+    title: Mock DB tests for adapter
+    priority: medium
+    status: done
+  - id: task-s1-06-1
+    title: Add Playwright smoke test for login flow
+    priority: high
+    status: done
+  - id: task-s1-07-1
+    title: Document auth setup in README
+    priority: low
+    status: done
+  - id: task-ui-01
+    title: "[New] Track AI/Chat UI feature — AIPanel, ChatBar, EditorPanel, Spinner, TabBar"
+    priority: medium
+    status: todo
 
 qa:
-  test_plan: null
-  coverage: null
-  last_run: null
+  test_plan: S1-05 unit tests (server.spec.ts) + S1-06 E2E tests (auth-login.spec.ts)
+  coverage: "auth POST handler (8 unit tests) + login flow E2E (7 tests)"
+  last_run: 2026-03-01
   bugs: []
 
-detected_changes:
-  - .github/skills/bmad-master/SKILL.md
-  - .github/skills/idae-idbql/SKILL.md
-  - .github/skills/svelte-5/SKILL.md
-  - .vscode/mcp.json
-  - src/lib/elements/AIPanel.svelte
-  - src/lib/elements/ChatBar.svelte
-  - src/lib/elements/EditorPanel.svelte
-  - src/lib/elements/Spinner.svelte
-  - src/lib/elements/TabBar.svelte
-
+detected_changes: []
 
