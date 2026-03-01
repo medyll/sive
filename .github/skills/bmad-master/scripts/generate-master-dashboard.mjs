@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const fs = require('fs').promises;
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
 
 async function walk(dir, results = []) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -69,9 +69,15 @@ async function main() {
   const args = process.argv.slice(2);
   const outPath = path.join(cwd, 'MASTER_DASHBOARD.md');
 
+  const startTime = Date.now();
+  console.log('[bmad] generate-master-dashboard starting');
+  console.log('[bmad] args=', args.join(' '));
+  console.log('[bmad] cwd=', cwd);
+
   const statusFiles = await walk(cwd, []);
+  console.log(`[bmad] found ${statusFiles.length} bmad/status.yaml file(s)`);
   if (statusFiles.length === 0) {
-    console.log('No bmad/status.yaml files found.');
+    console.log('[bmad] No bmad/status.yaml files found. Exiting.');
     return;
   }
 
@@ -79,17 +85,18 @@ async function main() {
   for (const f of statusFiles) {
     try {
       const content = await fs.readFile(f, 'utf8');
-        const pkgDir = path.dirname(path.dirname(f));
-        // derive package name as repo-relative path (e.g., apps/api or packages/ui)
-        let rel = path.relative(cwd, pkgDir).replace(/\\/g, '/');
-        const pkgName = rel && rel !== '' ? rel : path.basename(pkgDir) || path.basename(cwd);
+      const pkgDir = path.dirname(path.dirname(f));
+      // derive package name as repo-relative path (e.g., apps/api or packages/ui)
+      let rel = path.relative(cwd, pkgDir).replace(/\\/g, '/');
+      const pkgName = rel && rel !== '' ? rel : path.basename(pkgDir) || path.basename(cwd);
       const phase = parsePhase(content);
       const progress = parseProgress(content);
       const bugs = parseQaBugs(content);
       const relDash = path.relative(cwd, path.join(pkgDir, 'bmad', 'artifacts', 'dashboard.md'));
       instances.push({ package: pkgName, phase, progress, bugs, dashboardPath: relDash });
+      console.log(`[bmad] processed: ${f} -> package=${pkgName}, phase=${phase}, progress=${progress ?? 'N/A'}, bugs=${bugs.length}`);
     } catch (e) {
-      console.error('Failed to read', f, e.message);
+      console.error('[bmad] Failed to read', f, e.message);
     }
   }
 
@@ -116,11 +123,13 @@ async function main() {
   }
   if (!any) critical += '- None recorded\n';
 
-  const actions = `## 🛠️ Global Actions\n- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%20--root%22%5D)\n- [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)\n`;
+  const actions = `## 🛠️ Global Actions\n- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%22%5D)\n- [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)\n`;
 
   const out = [header, table, '\n---\n\n', critical, '\n---\n\n', actions].join('\n');
+  console.log('[bmad] writing MASTER_DASHBOARD.md to', outPath);
   await fs.writeFile(outPath, out, 'utf8');
-  console.log('MASTER_DASHBOARD.md written at', outPath);
+  const duration = Date.now() - startTime;
+  console.log(`[bmad] MASTER_DASHBOARD.md written at ${outPath} (${duration}ms)`);
 }
 
 main().catch(err => { console.error(err); process.exit(1); });

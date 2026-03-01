@@ -1,5 +1,5 @@
 # 👑 BMAD Master Dashboard
-> **Scope:** Monorepo Root | **Total Instances:** 1 | **Sync:** 2026-02-28
+> **Scope:** Monorepo Root | **Total Instances:** 1 | **Sync:** 2026-03-01
 
 ---
 
@@ -22,5 +22,5 @@
 
 
 ## 🛠️ Global Actions
-- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%20--root%22%5D)
+- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%22%5D)
 - [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)

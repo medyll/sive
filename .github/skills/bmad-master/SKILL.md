@@ -165,7 +165,7 @@ Phase 4 – Implementation ⏳ Upcoming
 
 ### /update-dashboard (Master Dashboard generation)
 
-The orchestrator auto-detects whether the repository is a monorepo by recursively scanning for `*/bmad/status.yaml` files. Passing `--root` is optional and not required to trigger a full scan.
+The orchestrator auto-detects whether the repository is a monorepo by recursively scanning for `*/bmad/status.yaml` files. No `--root` flag is required — run `/update-dashboard` from the repo root or any package and the Orchestrator will perform a full scan when applicable.
 
 1) Command
 
@@ -234,7 +234,7 @@ The Orchestrator exposes `/update-dashboard` which auto-detects monorepo layout 
 ---
 
 ## 🛠️ Global Actions
-- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%20--root%22%5D)
+- [🔄 Full Rescan](command:bmad.run?%5B%22/update-dashboard%22%5D)
 - [➕ New Package](command:bmad.run?%5B%22/workflow-init%22%5D)
 
 4) Why this matters for the IDE / developer
@@ -243,7 +243,7 @@ The Orchestrator exposes `/update-dashboard` which auto-detects monorepo layout 
 - Sheldon Mode: centralized, ordered overview without opening every folder.
 - Senior visibility: quickly spot package-level bottlenecks (e.g., long-running Planning phase).
 
-The Orchestrator should expose `--root` in `SKILL.md` so users know how to trigger monorepo master dashboard generation.
+The Orchestrator documents `/update-dashboard` as the single command to regenerate dashboards; it auto-detects monorepo layouts.
 
 ### /next
 
