@@ -12,7 +12,7 @@ Template for Spinner component
   let { size = 'medium', theme = 'light' }: SpinnerProps = $props();
 </script>
 
-<div class={"spinner " + size} data-theme={theme}></div>
+<div class={"spinner " + size} data-theme={theme} role="status" aria-label="Loading"></div>
 
 <style>
   .spinner {

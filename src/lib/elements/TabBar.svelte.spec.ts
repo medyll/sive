@@ -41,10 +41,8 @@ describe('TabBar', () => {
 	});
 
 	it('renders no tabs when tabs prop is empty', async () => {
-		render(TabBar, { tabs: [], activeTab: '' });
-		const buttons = page.getByRole('button');
-		await expect.element(buttons).not.toBeVisible().catch(() => {
-			// no buttons is also valid
-		});
+		const { container } = render(TabBar, { tabs: [], activeTab: '' });
+		const tabs = container.querySelectorAll('.tab');
+		expect(tabs.length).toBe(0);
 	});
 });
