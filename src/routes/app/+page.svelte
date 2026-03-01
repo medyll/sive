@@ -4,20 +4,43 @@
   import AIPanel from '$lib/elements/AIPanel.svelte';
 
   const SPLIT_KEY = 'sive.splitRatio';
+  const FOCUS_KEY = 'sive.focusMode';
   const DEFAULT_RATIO = 0.55;
 
   let splitRatio = $state<number>(
     browser ? parseFloat(localStorage.getItem(SPLIT_KEY) ?? String(DEFAULT_RATIO)) : DEFAULT_RATIO
   );
 
+  let focusMode = $state<boolean>(
+    browser ? localStorage.getItem(FOCUS_KEY) === 'true' : false
+  );
+
+  /** Stub — will be wired to AI results in a later sprint */
+  let suggestionsReady = $state(false);
+
   let dragging = $state(false);
 
-  function saveRatio(_node: HTMLElement) {
-    // Side-effect attachment: persist splitRatio to localStorage on each change
+  function persistState(_node: HTMLElement) {
     $effect(() => {
       localStorage.setItem(SPLIT_KEY, `${splitRatio}`);
+      localStorage.setItem(FOCUS_KEY, `${focusMode}`);
     });
     return {};
+  }
+
+  function globalKeyboardShortcuts(_node: HTMLElement) {
+    function onKeydown(e: KeyboardEvent) {
+      if (e.key === 'F11' || (e.ctrlKey && e.shiftKey && e.key === 'F')) {
+        e.preventDefault();
+        focusMode = !focusMode;
+      }
+    }
+    window.addEventListener('keydown', onKeydown);
+    return {
+      destroy() {
+        window.removeEventListener('keydown', onKeydown);
+      }
+    };
   }
 
   function workspaceRef(node: HTMLElement) {
@@ -44,12 +67,19 @@
     dragging = true;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }
+
+  function toggleFocusMode() {
+    focusMode = !focusMode;
+  }
 </script>
 
-<div class="app-root" {@attach saveRatio}>
+<div class="app-root" {@attach persistState} {@attach globalKeyboardShortcuts}>
   <header class="main-toolbar">
     <span class="project-label">My project / Chapter 1</span>
     <div class="toolbar-actions">
+      <button type="button" onclick={toggleFocusMode} aria-pressed={focusMode}>
+        {focusMode ? 'Exit Focus' : 'Focus'}
+      </button>
       <button type="button" aria-disabled="true">Review</button>
       <button type="button" aria-disabled="true">💾 New version</button>
       <button type="button" aria-disabled="true">⚙</button>
@@ -57,22 +87,37 @@
   </header>
 
   <div class="workspace" {@attach workspaceRef}>
-    <div class="panel editor-panel" style="width: {splitRatio * 100}%">
+    <div
+      class="panel editor-panel"
+      style="width: {focusMode ? '100%' : `${splitRatio * 100}%`}"
+    >
       <EditorPanel />
     </div>
 
-    <div
-      class="resize-handle"
-      role="separator"
-      aria-orientation="vertical"
-      aria-label="Resize panels"
-      onpointerdown={onPointerDown}
-    ></div>
+    {#if !focusMode}
+      <div
+        class="resize-handle"
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Resize panels"
+        onpointerdown={onPointerDown}
+      ></div>
 
-    <div class="panel ai-panel" style="width: {(1 - splitRatio) * 100}%">
-      <AIPanel />
-    </div>
+      <div class="panel ai-panel" style="width: {(1 - splitRatio) * 100}%">
+        <AIPanel />
+      </div>
+    {/if}
   </div>
+
+  {#if focusMode && suggestionsReady}
+    <div
+      id="suggestions-ready-badge"
+      class="badge"
+      role="status"
+      aria-label="AI suggestions are ready"
+      title="Suggestions ready — exit Focus Mode to view"
+    ></div>
+  {/if}
 </div>
 
 <style>
@@ -111,6 +156,7 @@
   .panel {
     overflow: hidden;
     height: 100%;
+    transition: width 0.2s ease;
   }
 
   .resize-handle {
@@ -124,5 +170,22 @@
   .resize-handle:hover,
   .resize-handle:active {
     background-color: var(--color-primary, #646cff);
+  }
+
+  .badge {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-primary, #646cff);
+    box-shadow: 0 0 6px var(--color-primary, #646cff);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
 </style>

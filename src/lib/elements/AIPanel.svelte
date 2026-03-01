@@ -1,34 +1,61 @@
-<!--
-Template for AIPanel component
--->
 <script lang="ts">
-  import type { TimelineEvent } from '$lib/types/types';
+  import TabBar from './TabBar.svelte';
 
   export interface AIPanelProps {
-    events?: TimelineEvent[];
+    activeTab?: string;
     theme?: string;
   }
 
-  let { events = [], theme = 'light' }: AIPanelProps = $props();
+  const TABS = ['Suggestions', 'Coherence', 'Style', 'History'] as const;
+  type Tab = (typeof TABS)[number];
+
+  let { activeTab = $bindable<string>('Suggestions'), theme = 'light' }: AIPanelProps = $props();
 </script>
 
 <div class="ai-panel" data-theme={theme}>
-  {#each events as event (event.index)}
-    <div class="event">
-      <h3>{event.label}</h3>
-      <p>{event.storyDate}</p>
-    </div>
-  {/each}
+  <TabBar
+    tabs={[...TABS]}
+    {activeTab}
+    onChange={(tab) => { activeTab = tab; }}
+  />
+
+  <div class="tab-content">
+    {#if activeTab === 'Suggestions'}
+      <div id="tab-content-suggestions" class="tab-pane" role="tabpanel" aria-label="Suggestions">
+        <p>Suggestions — AI proposals will appear here.</p>
+      </div>
+    {:else if activeTab === 'Coherence'}
+      <div id="tab-content-coherence" class="tab-pane" role="tabpanel" aria-label="Coherence">
+        <p>Coherence — narrative consistency alerts will appear here.</p>
+      </div>
+    {:else if activeTab === 'Style'}
+      <div id="tab-content-style" class="tab-pane" role="tabpanel" aria-label="Style">
+        <p>Style — stylistic analysis will appear here.</p>
+      </div>
+    {:else if activeTab === 'History'}
+      <div id="tab-content-history" class="tab-pane" role="tabpanel" aria-label="History">
+        <p>History — version timeline will appear here.</p>
+      </div>
+    {/if}
+  </div>
 </div>
 
 <style>
   .ai-panel {
-    border: 1px solid var(--color-border);
-    padding: 1rem;
-    background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-left: 1px solid var(--color-border, #e0e0e0);
+    background-color: var(--color-background, #fff);
   }
 
-  .event {
-    margin-bottom: 1rem;
+  .tab-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .tab-pane {
+    color: var(--color-text, #333);
   }
 </style>

@@ -22,9 +22,20 @@ Wire `TabBar` inside `AIPanel` with the four contextual tabs defined in `sive-la
 - Use `$state` for `activeTab` inside `AIPanel`; sync with prop via `$effect`
 - Tab IDs match those in `sive-layout.html`: `tab-suggestions`, `tab-coherence`, `tab-style`, `tab-history`
 
-## References
+---
 
-- `src/lib/elements/TabBar.svelte`
-- `src/lib/elements/AIPanel.svelte`
-- `bmad/references/sive-layout.html` — `#ai-tabs`, tab definitions
-- `bmad/references/project/1-interface-architecture.md` — §1.3 Multi-Tab Right Panel
+## Implementation Notes
+
+**Date:** 2026-03-01
+**Files changed:**
+- `src/lib/elements/AIPanel.svelte` — Refactorisé : suppression du loop `events`, ajout de `TabBar` + switching de contenu par onglet; `activeTab` en `$bindable` pour permettre l'override externe
+
+**Notable decisions:**
+- `$bindable` pour `activeTab` plutôt que `$state` + `$effect` de synchronisation — évite le bug "captures initial value only" et permet le two-way binding depuis le parent
+- Contenu des onglets en placeholders simples (`<p>`) — le vrai contenu (diff-view, coherence alerts, timeline) viendra dans les sprints suivants
+- `TABS` en `as const` tuple pour typage strict de l'union `Tab`
+
+**Known limitations:**
+- Onglets sans contenu réel (placeholders) — wiring métier en Sprint 3+
+- Spinner non encore intégré dans AIPanel (S2-04)
+

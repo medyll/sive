@@ -24,8 +24,21 @@ Implement Focus Mode: a keyboard shortcut hides the right panel (AIPanel + resiz
 - `suggestionsReady` is a prop / stub `$state` for now — will be wired to AI results in a later sprint
 - Shortcut: `F11` alone, or `Ctrl+Shift+F` (check both `e.key` conditions)
 
-## References
+---
 
-- `src/lib/elements/mockups/badge.svelte`
-- `bmad/references/sive-layout.html` — `#suggestions-ready-badge`
-- `bmad/references/project/1-interface-architecture.md` — §1.2 Focus Mode
+## Implementation Notes
+
+**Date:** 2026-03-01
+**Files changed:**
+- `src/routes/app/+page.svelte` — Ajout de `focusMode` (`$state` + localStorage `sive.focusMode`); listener clavier global (`F11` / `Ctrl+Shift+F`) via `{@attach globalKeyboardShortcuts}` sur `window`; bouton Focus dans toolbar; badge `#suggestions-ready-badge` conditionnel (`focusMode && suggestionsReady`)
+
+**Notable decisions:**
+- Listener sur `window` (pas sur le div) pour capturer `F11` et `Ctrl+Shift+F` quelle que soit la position du focus dans la page
+- `suggestionsReady` stubé à `false` — sera câblé au résultat AI dans un sprint ultérieur
+- Badge en `position: fixed` bottom-right avec animation `pulse` — discret sans bloquer l'UI
+- `persistState` attachment consolidé : persiste `splitRatio` et `focusMode` dans le même `$effect`
+
+**Known limitations:**
+- `suggestionsReady` non câblé (stub) — Sprint 3+
+- `F11` peut être intercepté par le navigateur en plein écran selon le contexte — le `Ctrl+Shift+F` est le fallback fiable
+
