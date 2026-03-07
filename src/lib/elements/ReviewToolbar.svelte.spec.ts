@@ -35,6 +35,8 @@ describe('ReviewToolbar', () => {
 		const onRunAnalysis = vi.fn();
 		render(ReviewToolbar, { onRunAnalysis });
 		await page.getByRole('button', { name: 'Run analysis' }).click();
+		// allow any async handlers to run
+		await new Promise((r) => setTimeout(r, 10));
 		expect(onRunAnalysis).toHaveBeenCalledOnce();
 	});
 
@@ -47,6 +49,7 @@ describe('ReviewToolbar', () => {
 		const onExitReview = vi.fn();
 		render(ReviewToolbar, { onExitReview });
 		await page.getByRole('button', { name: /Back to writing/ }).click();
+		await new Promise((r) => setTimeout(r, 10));
 		expect(onExitReview).toHaveBeenCalledOnce();
 	});
 

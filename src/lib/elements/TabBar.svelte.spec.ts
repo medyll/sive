@@ -29,6 +29,8 @@ describe('TabBar', () => {
 		const onChange = vi.fn();
 		render(TabBar, { tabs: TABS, activeTab: 'Suggestions', onChange });
 		await page.getByRole('button', { name: 'Style' }).click();
+		// allow microtask queue for any async handlers
+		await new Promise((r) => setTimeout(r, 10));
 		expect(onChange).toHaveBeenCalledExactlyOnceWith('Style');
 	});
 

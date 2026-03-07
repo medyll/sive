@@ -11,10 +11,18 @@ Template for TabBar component
     onChange?: (tab: string) => void;
   }
 
-  let { tabs = [], activeTab = '', theme = 'light', onChange }: TabBarProps = $props();
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
+
+  export let tabs: string[] = [];
+  export let activeTab: string = '';
+  export let theme: Theme['id'] = 'light';
+  export let onChange: ((tab: string) => void) | undefined;
 
   function setActiveTab(tab: string) {
-    if (onChange) onChange(tab);
+    if (typeof onChange === 'function') onChange(tab);
+    // also dispatch a Svelte event for consumers using on:change
+    dispatch('change', tab);
   }
 </script>
 

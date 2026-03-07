@@ -63,6 +63,9 @@
         <button type="submit" class="btn-signout">Sign out</button>
       </form>
     {/if}
+    {#if data.user}
+      <a href="/settings" class="btn-settings" title="Settings">Settings</a>
+    {/if}
   </div>
 </main>
 

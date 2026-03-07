@@ -246,7 +246,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         title={documents.find(d => d.id === activeDocumentId)?.title ?? 'document'}
         content={activeContent}
       />
-      <button type="button" aria-disabled="true">⚙</button>
+      <a href="/settings" title="Settings" class="btn-settings">⚙</a>
       <a
         href="/profile"
         class="user-badge"
