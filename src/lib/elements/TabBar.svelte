@@ -28,15 +28,17 @@ Template for TabBar component
     // and dispatch a global window event for test harnesses or non-svelte consumers
     try {
       if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+        console.debug('[TabBar] dispatching window event', tab);
         window.dispatchEvent(new CustomEvent('tabbar-change', { detail: tab }));
       }
-    } catch (_) {}
+    } catch (err) { console.debug('[TabBar] window dispatch failed', err) }
     // also dispatch on the root element so tests that hold a container can listen
     try {
       if (rootEl && typeof rootEl.dispatchEvent === 'function') {
+        console.debug('[TabBar] dispatching rootEl event', tab);
         rootEl.dispatchEvent(new CustomEvent('tabbar-change', { detail: tab }));
       }
-    } catch (_) {}
+    } catch (err) { console.debug('[TabBar] rootEl dispatch failed', err) }
   }
 </script>
 

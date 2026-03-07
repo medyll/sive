@@ -22,17 +22,19 @@
   function handleSelect(id: string) {
     try {
       if (typeof onSelectVersion === 'function') onSelectVersion(id);
-    } catch (_) {}
+    } catch (err) { console.debug('[HardenTimeline] onSelectVersion failed', err) }
     try {
       if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+        console.debug('[HardenTimeline] dispatching window event', id);
         window.dispatchEvent(new CustomEvent('harden-select', { detail: id }));
       }
-    } catch (_) {}
+    } catch (err) { console.debug('[HardenTimeline] window dispatch failed', err) }
     try {
       if (rootEl && typeof rootEl.dispatchEvent === 'function') {
+        console.debug('[HardenTimeline] dispatching rootEl event', id);
         rootEl.dispatchEvent(new CustomEvent('harden-select', { detail: id }));
       }
-    } catch (_) {}
+    } catch (err) { console.debug('[HardenTimeline] rootEl dispatch failed', err) }
   }
 </script>
 
