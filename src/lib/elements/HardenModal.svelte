@@ -8,21 +8,51 @@
 
   let label = $state('');
   let message = $state('');
+  let rootEl: HTMLDivElement | null = null;
 
   function handleConfirm() {
     if (!label.trim()) return;
-    onConfirm(label.trim(), message.trim());
+    try {
+      onConfirm(label.trim(), message.trim());
+    } catch (_) {}
+    try {
+      if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+        window.dispatchEvent(new CustomEvent('harden-confirm', { detail: { label: label.trim(), message: message.trim() } }));
+      }
+    } catch (_) {}
+    try {
+      if (rootEl && typeof rootEl.dispatchEvent === 'function') {
+        rootEl.dispatchEvent(new CustomEvent('harden-confirm', { detail: { label: label.trim(), message: message.trim() } }));
+      }
+    } catch (_) {}
+  }
+
+  function handleCancel() {
+    try {
+      if (typeof onCancel === 'function') onCancel();
+    } catch (_) {}
+    try {
+      if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+        window.dispatchEvent(new CustomEvent('harden-cancel'));
+      }
+    } catch (_) {}
+    try {
+      if (rootEl && typeof rootEl.dispatchEvent === 'function') {
+        rootEl.dispatchEvent(new CustomEvent('harden-cancel'));
+      }
+    } catch (_) {}
   }
 </script>
 
 <div
   class="modal-backdrop"
   role="presentation"
-  onclick={onCancel}
-  onkeydown={(e) => { if (e.key === 'Escape') onCancel(); }}
+  onclick={handleCancel}
+  onkeydown={(e) => { if (e.key === 'Escape') handleCancel(); }}
 >
   <div
     class="harden-modal"
+    bind:this={rootEl}
     role="dialog"
     aria-modal="true"
     aria-labelledby="harden-modal-title"
