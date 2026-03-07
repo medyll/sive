@@ -19,4 +19,13 @@ export const documents = sqliteTable('documents', {
 	updated_at: integer('updated_at').notNull().$defaultFn(() => Date.now())
 });
 
+export const user_preferences = sqliteTable('user_preferences', {
+	id: text('id')
+		.primaryKey()
+		.$defaultFn(() => crypto.randomUUID()),
+	user_id: text('user_id').notNull().unique(),
+	prefs: text('prefs').notNull().default('{}'),
+	updated_at: integer('updated_at').notNull().$defaultFn(() => Date.now())
+});
+
 export * from './auth.schema';

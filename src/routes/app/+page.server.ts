@@ -48,7 +48,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		return { documents: [newDoc], activeDocumentId: newDoc.id };
 	}
 
-	return { documents: docs, activeDocumentId: docs[0].id, user: locals.user ?? null };
+	return { documents: docs, activeDocumentId: docs[0].id, user: locals.user ?? null, preferences: locals.preferences ?? null };
 };
 
 export const actions: Actions = {

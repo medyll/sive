@@ -9,6 +9,7 @@
   import DocumentList from '$lib/elements/DocumentList.svelte';
   import ExportButton from '$lib/elements/ExportButton.svelte';
   import Toast from '$lib/elements/Toast.svelte';
+import Onboarding from '$lib/elements/Onboarding.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
   import { toastStore } from '$lib/toastStore.svelte';
 
@@ -406,6 +407,8 @@
     />
   {/if}
 {/key}
+
+<Onboarding />
 
 <Toast />
 
