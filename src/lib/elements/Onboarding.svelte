@@ -48,7 +48,7 @@
       <div class="onboard-steps">
         {#each steps as s, i}
           <button
-            class:onboard-step
+            class="onboard-step"
             class:active={i === step}
             aria-current={i === step}
             on:click={() => (step = i)}

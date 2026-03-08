@@ -8,21 +8,55 @@
 
   let label = $state('');
   let message = $state('');
+  let rootEl: HTMLDivElement | null = null;
 
   function handleConfirm() {
     if (!label.trim()) return;
-    onConfirm(label.trim(), message.trim());
+    try {
+      onConfirm(label.trim(), message.trim());
+    } catch (err) { console.debug('[HardenModal] onConfirm failed', err) }
+    try {
+      if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+        console.debug('[HardenModal] dispatching window harden-confirm', { label: label.trim(), message: message.trim() });
+        window.dispatchEvent(new CustomEvent('harden-confirm', { detail: { label: label.trim(), message: message.trim() } }));
+      }
+    } catch (err) { console.debug('[HardenModal] window dispatch failed', err) }
+    try {
+      if (rootEl && typeof rootEl.dispatchEvent === 'function') {
+        console.debug('[HardenModal] dispatching rootEl harden-confirm', { label: label.trim(), message: message.trim() });
+        rootEl.dispatchEvent(new CustomEvent('harden-confirm', { detail: { label: label.trim(), message: message.trim() } }));
+      }
+    } catch (err) { console.debug('[HardenModal] rootEl dispatch failed', err) }
+  }
+
+  function handleCancel() {
+    try {
+      if (typeof onCancel === 'function') onCancel();
+    } catch (err) { console.debug('[HardenModal] onCancel failed', err) }
+    try {
+      if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+        console.debug('[HardenModal] dispatching window harden-cancel');
+        window.dispatchEvent(new CustomEvent('harden-cancel'));
+      }
+    } catch (err) { console.debug('[HardenModal] window cancel dispatch failed', err) }
+    try {
+      if (rootEl && typeof rootEl.dispatchEvent === 'function') {
+        console.debug('[HardenModal] dispatching rootEl harden-cancel');
+        rootEl.dispatchEvent(new CustomEvent('harden-cancel'));
+      }
+    } catch (err) { console.debug('[HardenModal] rootEl cancel dispatch failed', err) }
   }
 </script>
 
 <div
   class="modal-backdrop"
   role="presentation"
-  onclick={onCancel}
-  onkeydown={(e) => { if (e.key === 'Escape') onCancel(); }}
+  onclick={handleCancel}
+  onkeydown={(e) => { if (e.key === 'Escape') handleCancel(); }}
 >
   <div
     class="harden-modal"
+    bind:this={rootEl}
     role="dialog"
     aria-modal="true"
     aria-labelledby="harden-modal-title"

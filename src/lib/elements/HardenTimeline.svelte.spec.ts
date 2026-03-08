@@ -22,11 +22,18 @@ describe('HardenTimeline', () => {
 			.toBeVisible();
 	});
 
-	it('clicking a point calls onSelectVersion with the snapshot id', async () => {
-		const onSelectVersion = vi.fn();
-		render(HardenTimeline, { snapshots: STUB_HARDENS, onSelectVersion });
+	it('clicking a point dispatches a harden-select event with the snapshot id', async () => {
+		const { container } = render(HardenTimeline, { snapshots: STUB_HARDENS });
+		const root = container.querySelector('.harden-timeline');
+		let last: string | null = null;
+		if (root) {
+			root.addEventListener('harden-select', (e: any) => {
+				last = e.detail;
+			});
+		}
 		await page.getByRole('button', { name: /incipit/ }).click();
-		expect(onSelectVersion).toHaveBeenCalledWith('h001');
+		await new Promise((r) => setTimeout(r, 10));
+		expect(last).toBe('h001');
 	});
 
 	it('selected snapshot button has aria-current="true"', async () => {

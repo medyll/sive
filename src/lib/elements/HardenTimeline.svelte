@@ -16,9 +16,29 @@
   function truncate(text: string, max = 40): string {
     return text.length > max ? text.slice(0, max - 1) + '…' : text;
   }
+
+  let rootEl: HTMLDivElement | null = null;
+
+  function handleSelect(id: string) {
+    try {
+      if (typeof onSelectVersion === 'function') onSelectVersion(id);
+    } catch (err) { console.debug('[HardenTimeline] onSelectVersion failed', err) }
+    try {
+      if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
+        console.debug('[HardenTimeline] dispatching window event', id);
+        window.dispatchEvent(new CustomEvent('harden-select', { detail: id }));
+      }
+    } catch (err) { console.debug('[HardenTimeline] window dispatch failed', err) }
+    try {
+      if (rootEl && typeof rootEl.dispatchEvent === 'function') {
+        console.debug('[HardenTimeline] dispatching rootEl event', id);
+        rootEl.dispatchEvent(new CustomEvent('harden-select', { detail: id }));
+      }
+    } catch (err) { console.debug('[HardenTimeline] rootEl dispatch failed', err) }
+  }
 </script>
 
-<div class="harden-timeline" role="list" aria-label="Version history">
+<div class="harden-timeline" bind:this={rootEl} role="list" aria-label="Version history">
   {#if snapshots.length === 0}
     <p class="empty-state">No versions yet. Use 💾 New version to create one.</p>
   {:else}
@@ -28,7 +48,7 @@
         class:selected={snap.id === selectedId}
         type="button"
         aria-current={snap.id === selectedId ? 'true' : undefined}
-        onclick={() => onSelectVersion(snap.id)}
+        onclick={() => handleSelect(snap.id)}
       >
         <span class="point-marker" aria-hidden="true"></span>
         <span class="point-content">

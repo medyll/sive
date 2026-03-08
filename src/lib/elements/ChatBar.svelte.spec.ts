@@ -35,6 +35,8 @@ describe('ChatBar', () => {
 		const input = page.getByRole('textbox', { name: 'Chat input' });
 		await input.fill('Hello AI');
 		await page.getByRole('button', { name: 'Send' }).click();
+		// wait briefly for component to process the click and clear the input
+		await new Promise((r) => setTimeout(r, 20));
 		await expect.element(input).toHaveValue('');
 	});
 

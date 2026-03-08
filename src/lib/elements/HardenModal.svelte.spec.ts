@@ -22,20 +22,30 @@ describe('HardenModal', () => {
 		await expect.element(page.getByRole('button', { name: 'Confirm' })).not.toBeDisabled();
 	});
 
-	it('clicking Confirm calls onConfirm with label and message', async () => {
-		const onConfirm = vi.fn();
-		render(HardenModal, { onConfirm, onCancel: vi.fn() });
+	it('clicking Confirm dispatches harden-confirm with label and message', async () => {
+		const { container } = render(HardenModal, { onConfirm: vi.fn(), onCancel: vi.fn() });
+		const root = container.querySelector('.harden-modal');
+		let last: any = null;
+		if (root) {
+			root.addEventListener('harden-confirm', (e: any) => { last = e.detail; });
+		}
 		await userEvent.fill(page.getByRole('textbox', { name: /version label/i }), 'incipit');
 		await userEvent.fill(page.getByRole('textbox', { name: /description/i }), 'First draft');
 		await page.getByRole('button', { name: 'Confirm' }).click();
-		expect(onConfirm).toHaveBeenCalledWith('incipit', 'First draft');
+		await new Promise((r) => setTimeout(r, 50));
+		expect(last).toEqual({ label: 'incipit', message: 'First draft' });
 	});
 
-	it('clicking Cancel calls onCancel', async () => {
-		const onCancel = vi.fn();
-		render(HardenModal, { onConfirm: vi.fn(), onCancel });
+	it('clicking Cancel dispatches harden-cancel', async () => {
+		const { container } = render(HardenModal, { onConfirm: vi.fn(), onCancel: vi.fn() });
+		const root = container.querySelector('.harden-modal');
+		let cancelled = false;
+		if (root) {
+			root.addEventListener('harden-cancel', () => { cancelled = true; });
+		}
 		await page.getByRole('button', { name: 'Cancel' }).click();
-		expect(onCancel).toHaveBeenCalled();
+		await new Promise((r) => setTimeout(r, 50));
+		expect(cancelled).toBe(true);
 	});
 
 	it('dialog has accessible title', async () => {
