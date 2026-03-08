@@ -38,10 +38,12 @@ completed_steps:
   - Sprint 12 Implementation — UX Polish & Export (S12-01 → S12-07)
   - Sprint 13 Planning — Settings & Onboarding
   - Sprint 13 Implementation — Settings & Onboarding (S13-01 → S13-06)
+  - Sprint 14 Planning — Real-time Collaboration Foundation
+  - Sprint 14 In Progress — Real-time Collaboration (S14-01)
 
 missing_artifacts: []
 
-recommendation: /dev-story S14-01
+recommendation: /dev-story S14-02
 last_updated: 2026-03-08
 
 # New v3.1.0 structured fields (Single Source of Truth)
@@ -360,4 +362,28 @@ sprints:
       - id: S13-06
         title: e2e-onboarding-flow
         status: done
+
+  - id: sprint-14
+    name: Sprint 14 — Real-time Collaboration Foundation
+    status: in_progress
+    progress: 17
+    stories:
+      - id: S14-01
+        title: websocket-server-setup
+        status: done
+      - id: S14-02
+        title: presence-indicators
+        status: pending
+      - id: S14-03
+        title: real-time-cursor-sync
+        status: pending
+      - id: S14-04
+        title: conflict-detection
+        status: pending
+      - id: S14-05
+        title: unit-tests-collaboration
+        status: pending
+      - id: S14-06
+        title: e2e-collaboration-flow
+        status: pending
 
