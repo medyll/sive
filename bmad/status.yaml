@@ -41,8 +41,8 @@ completed_steps:
 
 missing_artifacts: []
 
-recommendation: /next
-last_updated: 2026-03-07
+recommendation: /dev-story S14-01
+last_updated: 2026-03-08
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
