@@ -36,11 +36,15 @@ completed_steps:
   - Sprint 11 Implementation — Auth Hardening (S11-01 → S11-07)
   - Sprint 12 Planning — UX Polish & Export
   - Sprint 12 Implementation — UX Polish & Export (S12-01 → S12-07)
+  - Sprint 13 Planning — Settings & Onboarding
+  - Sprint 13 Implementation — Settings & Onboarding (S13-01 → S13-06)
+  - Sprint 14 Planning — Real-time Collaboration Foundation
+  - Sprint 14 Implementation — Real-time Collaboration (S14-01 → S14-06)
 
 missing_artifacts: []
 
-recommendation: /next
-last_updated: 2026-03-07
+recommendation: sprint 15 planning
+last_updated: 2026-03-08
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
