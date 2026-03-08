@@ -1,25 +1,22 @@
-import { test as baseTest } from '@playwright/test';
+import { test as baseTest, Browser } from '@playwright/test';
 
 export const test = baseTest.extend({
-  // Auto-dismiss onboarding modal before each test
-  page: async ({ page }, use) => {
-    page.on('load', async () => {
+  // Auto-dismiss onboarding modal by setting localStorage before any page loads
+  page: async ({ context }, use) => {
+    // Add init script that runs before page script executes
+    await context.addInitScript(() => {
       try {
-        // Mark onboarding as seen so modal doesn't appear
-        await page.evaluate(() => {
-          localStorage.setItem('sive:onboarding_seen', '1');
-        });
+        localStorage.setItem('sive:onboarding_seen', '1');
       } catch (e) {
-        // ignore
+        // ignore localStorage errors
       }
     });
 
-    // Set before navigating
-    await page.evaluate(() => {
-      localStorage.setItem('sive:onboarding_seen', '1');
-    });
+    // Create page after init script is set
+    const page = await context.newPage();
 
     await use(page);
+    await page.close();
   }
 });
 
