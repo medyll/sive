@@ -36,6 +36,8 @@ completed_steps:
   - Sprint 11 Implementation — Auth Hardening (S11-01 → S11-07)
   - Sprint 12 Planning — UX Polish & Export
   - Sprint 12 Implementation — UX Polish & Export (S12-01 → S12-07)
+  - Sprint 13 Planning — Settings & Onboarding
+  - Sprint 13 Implementation — Settings & Onboarding (S13-01 → S13-06)
 
 missing_artifacts: []
 
@@ -333,5 +335,29 @@ sprints:
         status: done
       - id: S12-07
         title: e2e-ux-polish
+        status: done
+
+  - id: sprint-13
+    name: Sprint 13 — Settings & Onboarding
+    status: done
+    progress: 100
+    stories:
+      - id: S13-01
+        title: settings-page-skeleton
+        status: done
+      - id: S13-02
+        title: onboarding-modal-checklist
+        status: done
+      - id: S13-03
+        title: preferences-persistence-server
+        status: done
+      - id: S13-04
+        title: profile-settings-link
+        status: done
+      - id: S13-05
+        title: unit-tests-settings-onboarding
+        status: done
+      - id: S13-06
+        title: e2e-onboarding-flow
         status: done
 
