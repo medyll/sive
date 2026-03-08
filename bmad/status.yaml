@@ -43,7 +43,7 @@ completed_steps:
 
 missing_artifacts: []
 
-recommendation: /dev-story S14-03
+recommendation: /dev-story S14-04
 last_updated: 2026-03-08
 
 # New v3.1.0 structured fields (Single Source of Truth)
@@ -366,7 +366,7 @@ sprints:
   - id: sprint-14
     name: Sprint 14 — Real-time Collaboration Foundation
     status: in_progress
-    progress: 33
+    progress: 50
     stories:
       - id: S14-01
         title: websocket-server-setup
@@ -376,7 +376,7 @@ sprints:
         status: done
       - id: S14-03
         title: real-time-cursor-sync
-        status: pending
+        status: done
       - id: S14-04
         title: conflict-detection
         status: pending
