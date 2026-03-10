@@ -40,11 +40,14 @@ completed_steps:
   - Sprint 13 Implementation — Settings & Onboarding (S13-01 → S13-06)
   - Sprint 14 Planning — Real-time Collaboration Foundation
   - Sprint 14 Implementation — Real-time Collaboration (S14-01 → S14-06)
+  - Sprint 15 Implementation — Real-time Collaboration (S15-01 → S15-06)
+  - Sprint 16 Planning — Document Sharing & RBAC
+  - Sprint 16 Implementation — Document Sharing & RBAC (S16-01 → S16-06)
 
 missing_artifacts: []
 
-recommendation: sprint 15 planning
-last_updated: 2026-03-08
+recommendation: /sprint
+last_updated: 2026-03-10
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -52,6 +55,7 @@ artifacts:
   - bmad/artifacts/prd.md
   - bmad/artifacts/tech-spec.md
   - bmad/artifacts/architecture.md
+  - bmad/artifacts/sprints/sprint-16.md
 
 sprints:
   - id: sprint-1

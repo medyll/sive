@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PresenceList from './PresenceList.svelte';
+	import ShareModal from './ShareModal.svelte';
 	import type { OnlineUser } from './PresenceList.svelte';
 	import { onMount } from 'svelte';
 
@@ -7,6 +8,9 @@
 	export let currentUserId: string | null = null;
 	export let documentId: string = '';
 	export let documentTitle: string = 'Untitled Document';
+	export let isOwner: boolean = false;
+
+	let showShareModal = false;
 
 	let isFocusMode = false;
 
@@ -72,6 +76,18 @@
 			<span class="label">Focus</span>
 		</button>
 
+		<!-- Share Button -->
+		<button
+			class="toolbar-button"
+			on:click={() => (showShareModal = true)}
+			title="Share document"
+			data-testid="share-btn"
+			disabled={!documentId}
+		>
+			<span class="icon">🔗</span>
+			<span class="label">Share</span>
+		</button>
+
 		<!-- Export Button -->
 		<button
 			class="toolbar-button"
@@ -84,6 +100,10 @@
 		</button>
 	</div>
 </div>
+
+{#if showShareModal}
+	<ShareModal {documentId} {isOwner} onClose={() => (showShareModal = false)} />
+{/if}
 
 <style>
 	.editor-toolbar {

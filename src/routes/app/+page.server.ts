@@ -2,6 +2,8 @@ import { db, isMock } from '$lib/server/db';
 import { documents } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import { redirect } from '@sveltejs/kit';
+import { createOwnerShare } from '$lib/server/shares';
+import { requireDocumentRole } from '$lib/server/rbac';
 import type { PageServerLoad, Actions } from './$types';
 
 // Guest user id used when auth is unavailable (mock/dev mode)
@@ -45,6 +47,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			updated_at: Date.now()
 		};
 		typedDb.insert(documents).values(newDoc).run();
+		createOwnerShare(db, newDoc.id, userId);
 		return { documents: [newDoc], activeDocumentId: newDoc.id };
 	}
 
@@ -70,10 +73,11 @@ export const actions: Actions = {
 			updated_at: Date.now()
 		};
 		typedDb.insert(documents).values(newDoc).run();
+		createOwnerShare(db, newDoc.id, userId);
 		return { success: true, id: newDoc.id };
 	},
 
-	updateDocument: async ({ request }) => {
+	updateDocument: async ({ request, locals }) => {
 		const data = await request.formData();
 		const id = data.get('id') as string;
 		const content = data.get('content') as string | null;
@@ -84,6 +88,9 @@ export const actions: Actions = {
 		if (isMock || !db) {
 			return { success: true };
 		}
+
+		// Require at least editor role
+		await requireDocumentRole(db, locals.user?.id, id, 'editor');
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const typedDb = db as any;
@@ -97,7 +104,7 @@ export const actions: Actions = {
 		return { success: true };
 	},
 
-	deleteDocument: async ({ request }) => {
+	deleteDocument: async ({ request, locals }) => {
 		const data = await request.formData();
 		const id = data.get('id') as string;
 
@@ -106,6 +113,9 @@ export const actions: Actions = {
 		if (isMock || !db) {
 			return { success: true };
 		}
+
+		// Require owner role to delete
+		await requireDocumentRole(db, locals.user?.id, id, 'owner');
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const typedDb = db as any;
