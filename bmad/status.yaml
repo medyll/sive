@@ -48,7 +48,7 @@ completed_steps:
 
 missing_artifacts: []
 
-recommendation: /sprint
+recommendation: /sprints/sprint-18
 last_updated: 2026-03-10
 
 # New v3.1.0 structured fields (Single Source of Truth)
