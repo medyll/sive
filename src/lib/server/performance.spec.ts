@@ -254,7 +254,8 @@ describe('WebSocket Performance', () => {
 		console.log(`Mixed message processing: ${duration}ms for 100 messages`);
 	});
 
-	it('should maintain stability under sustained load', () => {
+	it('should maintain stability under sustained load', function () {
+		// Note: test intentionally runs for 5 seconds; timeout raised to 12s
 		const clients = Array.from({ length: 20 }, (_, i) => ({
 			clientId: `c${i}`,
 			userId: `user${i}`
@@ -295,5 +296,5 @@ describe('WebSocket Performance', () => {
 
 		expect(wsServer.getDocumentPresence('doc1').length).toBe(20);
 		expect(throughput).toBeGreaterThan(500);
-	});
+	}, 12000);
 });

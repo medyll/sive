@@ -25,11 +25,12 @@
 
 	$: positionedCursors = cursors
 		.filter((c) => c.isVisible)
+		.filter((c) => !c.lastUpdated || Date.now() - c.lastUpdated < 5000)
 		.map((cursor) => ({
 			...cursor,
 			top: (cursor.line - 1) * lineHeight,
 			left: cursor.column * charWidth,
-			isRecent: cursor.lastUpdated ? Date.now() - cursor.lastUpdated < 5000 : true
+			isRecent: true
 		})) as PositionedCursor[];
 
 	onMount(() => {

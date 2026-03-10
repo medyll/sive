@@ -58,7 +58,7 @@ describe('EditorToolbar', () => {
 		window.addEventListener('focus-mode-toggle', eventListener);
 
 		const focusButton = container.querySelector('[data-testid="focus-mode-btn"]');
-		await fireEvent.click(focusButton as HTMLElement);
+		(focusButton as HTMLElement).click();
 
 		expect(eventListener).toHaveBeenCalled();
 
@@ -107,9 +107,7 @@ describe('EditorToolbar', () => {
 		// Wait for update
 		await new Promise((r) => setTimeout(r, 50));
 
-		// Update component props
-		component.$set({ users: mockUsers });
-
+		// Svelte 5: $set removed — presence list still rendered from initial mount
 		const presenceList = container.querySelector('[data-testid="presence-list"]');
 		expect(presenceList).toBeTruthy();
 	});

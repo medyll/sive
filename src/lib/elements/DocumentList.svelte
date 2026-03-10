@@ -6,6 +6,7 @@
     id: string;
     title: string;
     updated_at: number;
+    role?: string;
   }
 
   export interface DocumentListProps {
@@ -111,6 +112,10 @@
               {@attach focusOnMount}
             />
           {:else}
+            <div class="doc-title-row">
+            {#if doc.role && doc.role !== 'owner'}
+              <span class="doc-shared-badge" data-testid="shared-badge-{doc.id}" title="Shared with you ({doc.role})">Shared</span>
+            {/if}
             <span
               class="doc-title"
               role="button"
@@ -118,6 +123,7 @@
               aria-label="Rename {doc.title}"
               ondblclick={(e) => startEdit(doc, e)}
             >{doc.title}</span>
+            </div>
           {/if}
           <span class="doc-meta">
             <span class="doc-date">{formatDate(doc.updated_at)}</span>
@@ -136,6 +142,25 @@
 </aside>
 
 <style>
+  .doc-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .doc-shared-badge {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.2rem;
+    background: #bee3f8;
+    color: #2b6cb0;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
   .doc-list {
     display: flex;
     flex-direction: column;

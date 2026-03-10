@@ -43,6 +43,8 @@ completed_steps:
   - Sprint 15 Implementation — Real-time Collaboration (S15-01 → S15-06)
   - Sprint 16 Planning — Document Sharing & RBAC
   - Sprint 16 Implementation — Document Sharing & RBAC (S16-01 → S16-06)
+  - Sprint 17 Planning — Test Hardening & OAuth
+  - Sprint 17 Implementation — Test Hardening & OAuth (S17-01 → S17-06)
 
 missing_artifacts: []
 

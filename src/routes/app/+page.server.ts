@@ -1,5 +1,5 @@
 import { db, isMock } from '$lib/server/db';
-import { documents } from '$lib/server/db/schema';
+import { documents, document_shares } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import { redirect } from '@sveltejs/kit';
 import { createOwnerShare } from '$lib/server/shares';
@@ -35,9 +35,16 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const typedDb = db as any;
-	const docs = typedDb.select().from(documents).where(eq(documents.user_id, userId)).all();
 
-	if (docs.length === 0) {
+	// Fetch all share records for this user to find accessible documents
+	const userShares: { document_id: string; role: string }[] = typedDb
+		.select({ document_id: document_shares.document_id, role: document_shares.role })
+		.from(document_shares)
+		.where(eq(document_shares.user_id, userId))
+		.all() ?? [];
+
+	if (userShares.length === 0) {
+		// First visit — create a default document and owner share
 		const newDoc = {
 			id: crypto.randomUUID(),
 			user_id: userId,
@@ -48,10 +55,24 @@ export const load: PageServerLoad = async ({ locals }) => {
 		};
 		typedDb.insert(documents).values(newDoc).run();
 		createOwnerShare(db, newDoc.id, userId);
-		return { documents: [newDoc], activeDocumentId: newDoc.id };
+		return { documents: [{ ...newDoc, role: 'owner' }], activeDocumentId: newDoc.id };
 	}
 
-	return { documents: docs, activeDocumentId: docs[0].id, user: locals.user ?? null, preferences: locals.preferences ?? null };
+	// Fetch all accessible documents in one pass, annotate with role
+	const shareMap = new Map(userShares.map((s) => [s.document_id, s.role]));
+	const accessibleDocIds = userShares.map((s) => s.document_id);
+
+	// Fetch each document (SQLite doesn't support IN with drizzle easily — fetch individually)
+	const docs = accessibleDocIds
+		.map((docId) => {
+			const rows = typedDb.select().from(documents).where(eq(documents.id, docId)).all();
+			if (!rows || rows.length === 0) return null;
+			return { ...rows[0], role: shareMap.get(docId) ?? 'viewer' };
+		})
+		.filter(Boolean)
+		.sort((a: { updated_at: number }, b: { updated_at: number }) => b.updated_at - a.updated_at);
+
+	return { documents: docs, activeDocumentId: docs[0]?.id ?? null, user: locals.user ?? null, preferences: locals.preferences ?? null };
 };
 
 export const actions: Actions = {
