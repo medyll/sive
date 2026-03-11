@@ -19,8 +19,9 @@ try {
 	const { drizzleAdapter } = require('better-auth/adapters/drizzle');
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { sveltekitCookies } = require('better-auth/svelte-kit');
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	const { db, isMock: dbIsMock } = require('./db');
+	// Use dynamic ESM import so the bundler can resolve the correct chunk at build time
+	// and avoid requiring file-system paths that don't exist in the built output.
+	const { db, isMock: dbIsMock } = await import('./db');
 
 	if (dbIsMock) throw new Error('DB unavailable, skipping real auth initialization');
 

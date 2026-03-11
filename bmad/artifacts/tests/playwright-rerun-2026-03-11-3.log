@@ -1,4 +1,4 @@
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:44:25 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:44:25 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
 [WebServer] https://svelte.dev/e/state_referenced_locally
 [WebServer] 42: 
 [WebServer] 43:   // Document state
@@ -6,7 +6,7 @@
 [WebServer]                                  ^
 [WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
 [WebServer] 46:   let activeContent = $state(
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:45:32 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:45:32 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
 [WebServer] https://svelte.dev/e/state_referenced_locally
 [WebServer] 43:   // Document state
 [WebServer] 44:   let documents = $state(data.documents);
@@ -14,7 +14,7 @@
 [WebServer]                                         ^
 [WebServer] 46:   let activeContent = $state(
 [WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:47:4 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:47:4 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
 [WebServer] https://svelte.dev/e/state_referenced_locally
 [WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
 [WebServer] 46:   let activeContent = $state(
@@ -22,7 +22,7 @@
 [WebServer]             ^
 [WebServer] 48:   );
 [WebServer] 49: 
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:56:6 `createDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:56:6 `createDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 54: 
 [WebServer] 55:   // Hidden form references for programmatic submission
@@ -30,7 +30,7 @@
 [WebServer]                                         ^
 [WebServer] 57:   let saveDocForm: HTMLFormElement;
 [WebServer] 58:   let saveIdInput: HTMLInputElement;
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:57:6 `saveDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:57:6 `saveDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 55:   // Hidden form references for programmatic submission
 [WebServer] 56:   let createDocForm: HTMLFormElement;
@@ -38,7 +38,7 @@
 [WebServer]                                       ^
 [WebServer] 58:   let saveIdInput: HTMLInputElement;
 [WebServer] 59:   let saveContentInput: HTMLInputElement;
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:58:6 `saveIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:58:6 `saveIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 56:   let createDocForm: HTMLFormElement;
 [WebServer] 57:   let saveDocForm: HTMLFormElement;
@@ -46,7 +46,7 @@
 [WebServer]                                        ^
 [WebServer] 59:   let saveContentInput: HTMLInputElement;
 [WebServer] 60:   let renameDocForm: HTMLFormElement;
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:59:6 `saveContentInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:59:6 `saveContentInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 57:   let saveDocForm: HTMLFormElement;
 [WebServer] 58:   let saveIdInput: HTMLInputElement;
@@ -54,7 +54,7 @@
 [WebServer]                                             ^
 [WebServer] 60:   let renameDocForm: HTMLFormElement;
 [WebServer] 61:   let renameIdInput: HTMLInputElement;
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:60:6 `renameDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:60:6 `renameDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 58:   let saveIdInput: HTMLInputElement;
 [WebServer] 59:   let saveContentInput: HTMLInputElement;
@@ -62,7 +62,7 @@
 [WebServer]                                         ^
 [WebServer] 61:   let renameIdInput: HTMLInputElement;
 [WebServer] 62:   let renameTitleInput: HTMLInputElement;
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:61:6 `renameIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:61:6 `renameIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 59:   let saveContentInput: HTMLInputElement;
 [WebServer] 60:   let renameDocForm: HTMLFormElement;
@@ -70,7 +70,7 @@
 [WebServer]                                          ^
 [WebServer] 62:   let renameTitleInput: HTMLInputElement;
 [WebServer] 63:   let deleteDocForm: HTMLFormElement;
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:62:6 `renameTitleInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:62:6 `renameTitleInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 60:   let renameDocForm: HTMLFormElement;
 [WebServer] 61:   let renameIdInput: HTMLInputElement;
@@ -78,7 +78,7 @@
 [WebServer]                                             ^
 [WebServer] 63:   let deleteDocForm: HTMLFormElement;
 [WebServer] 64:   let deleteIdInput: HTMLInputElement;
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:63:6 `deleteDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:63:6 `deleteDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 61:   let renameIdInput: HTMLInputElement;
 [WebServer] 62:   let renameTitleInput: HTMLInputElement;
@@ -86,7 +86,7 @@
 [WebServer]                                         ^
 [WebServer] 64:   let deleteIdInput: HTMLInputElement;
 [WebServer] 65: 
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:64:6 `deleteIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:64:6 `deleteIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 62:   let renameTitleInput: HTMLInputElement;
 [WebServer] 63:   let deleteDocForm: HTMLFormElement;
@@ -94,7 +94,7 @@
 [WebServer]                                          ^
 [WebServer] 65: 
 [WebServer] 66:   function handleSelectDocument(id: string) {
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/app/+page.svelte:593:4 Unused CSS selector ".main-toolbar button[aria-disabled="true"]"
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/app/+page.svelte:593:4 Unused CSS selector ".main-toolbar button[aria-disabled="true"]"
 [WebServer] https://svelte.dev/e/css_unused_selector
 [WebServer] 591: 
 [WebServer] 592:     /* Hide some toolbar buttons on small screens */
@@ -102,7 +102,7 @@
 [WebServer]                                                    ^
 [WebServer] 594:       display: none;
 [WebServer] 595:     }
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/settings/+page.svelte:38:4 A form label must be associated with a control
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/settings/+page.svelte:38:4 A form label must be associated with a control
 [WebServer] https://svelte.dev/e/a11y_label_has_associated_control
 [WebServer] 36: 
 [WebServer] 37:   <div class="mb-4">
@@ -110,7 +110,7 @@
 [WebServer]                                                            ^
 [WebServer] 39:     <label><input type="radio" bind:group={theme} value="light" /> Light</label>
 [WebServer] 40:     <label class="ml-4"><input type="radio" bind:group={theme} value="dark" /> Dark</label>
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/settings/+page.svelte:44:4 A form label must be associated with a control
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/settings/+page.svelte:44:4 A form label must be associated with a control
 [WebServer] https://svelte.dev/e/a11y_label_has_associated_control
 [WebServer] 42: 
 [WebServer] 43:   <div class="mb-4">
@@ -118,7 +118,7 @@
 [WebServer]                                                                ^
 [WebServer] 45:     <select bind:value={fontSize}>
 [WebServer] 46:       <option value="small">Small</option>
-[WebServer] 11:47:52 [vite-plugin-svelte] src/routes/settings/+page.svelte:53:4 A form label must be associated with a control
+[WebServer] 12:58:28 [vite-plugin-svelte] src/routes/settings/+page.svelte:53:4 A form label must be associated with a control
 [WebServer] https://svelte.dev/e/a11y_label_has_associated_control
 [WebServer] 51: 
 [WebServer] 52:   <div class="mb-4">
@@ -126,7 +126,7 @@
 [WebServer]                                                                                  ^
 [WebServer] 54:     <input type="number" bind:value={autosave} min="0" />
 [WebServer] 55:   </div>
-[WebServer] 11:47:52 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:61:2 The attribute 'aria-readonly' is not supported by the role 'document'
+[WebServer] 12:58:28 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:61:2 The attribute 'aria-readonly' is not supported by the role 'document'
 [WebServer] https://svelte.dev/e/a11y_role_supports_aria_props
 [WebServer] 59:   role="document"
 [WebServer] 60:   aria-label="Manuscript text ÔÇö read only"
@@ -134,7 +134,7 @@
 [WebServer]                           ^
 [WebServer] 62: >
 [WebServer] 63:   <div class="text-content">
-[WebServer] 11:47:52 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:68:8 Non-interactive element `<mark>` cannot have interactive role 'button'
+[WebServer] 12:58:28 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:68:8 Non-interactive element `<mark>` cannot have interactive role 'button'
 [WebServer] https://svelte.dev/e/a11y_no_noninteractive_element_to_interactive_role
 [WebServer] 66:         <!-- svelte-ignore a11y_click_events_have_key_events -->
 [WebServer] 67:         <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -142,7 +142,7 @@
 [WebServer]                   ^
 [WebServer] 69:           class="highlight highlight--{seg.highlight.category}"
 [WebServer] 70:           data-category={seg.highlight.category}
-[WebServer] 11:47:52 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:67:37 Redundant role 'article'
+[WebServer] 12:58:28 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:67:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 65:       <h3 id="sec-inconsistencies">Inconsistencies</h3>
 [WebServer] 66:       {#each report.inconsistencies as item}
@@ -150,7 +150,7 @@
 [WebServer]                                                        ^
 [WebServer] 68:           <strong>{item.entity}</strong>
 [WebServer] 69:           <span class="badge-confidence">{Math.round(item.confidence * 100)}%</span>
-[WebServer] 11:47:52 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:79:37 Redundant role 'article'
+[WebServer] 12:58:28 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:79:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 77:       <h3 id="sec-pov">Point of View</h3>
 [WebServer] 78:       {#each report.pov as item}
@@ -158,7 +158,7 @@
 [WebServer]                                                        ^
 [WebServer] 80:           <strong>{item.location}</strong>
 [WebServer] 81:           <p>{item.detected_deviation}</p>
-[WebServer] 11:47:52 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:90:37 Redundant role 'article'
+[WebServer] 12:58:28 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:90:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 88:       <h3 id="sec-threads">Narrative Threads</h3>
 [WebServer] 89:       {#each report.threads as item}
@@ -166,7 +166,7 @@
 [WebServer]                                                        ^
 [WebServer] 91:           <strong>{item.thread_id}</strong>
 [WebServer] 92:           <span class="thread-status status--{item.status}">{item.status}</span>
-[WebServer] 11:47:52 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:114:37 Redundant role 'article'
+[WebServer] 12:58:28 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:114:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 112:       <h3 id="sec-motifs">Themes &amp; Motifs</h3>
 [WebServer] 113:       {#each report.motifs as item}
@@ -174,7 +174,7 @@
 [WebServer]                                                         ^
 [WebServer] 115:           <strong>{item.motif_id}</strong>
 [WebServer] 116:           <span class="badge-presence">{item.presence}</span>
-[WebServer] 11:47:52 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:126:37 Redundant role 'article'
+[WebServer] 12:58:28 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:126:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 124:       <h3 id="sec-voices">Character Voices</h3>
 [WebServer] 125:       {#each report.voices as item}
@@ -182,7 +182,7 @@
 [WebServer]                                                         ^
 [WebServer] 127:           <strong>{item.character_id}</strong>
 [WebServer] 128:           <p>{item.register_deviation}</p>
-[WebServer] 11:47:52 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:138:37 Redundant role 'article'
+[WebServer] 12:58:28 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:138:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 136:       <h3 id="sec-style">Style &amp; Rhythm</h3>
 [WebServer] 137:       {#each report.style as item}
@@ -192,10 +192,8 @@
 [WebServer] 140:           <span class="item-location">{item.location}</span>
 [WebServer] "optionsMiddleware" is imported from external module "@better-auth/core/api" but never used in "node_modules/.pnpm/better-auth@1.4.19_@sveltej_749df91839a5bba8df355eb9e7d8a0ab/node_modules/better-auth/dist/api/index.mjs".
 [WebServer] Unknown output options: codeSplitting. Allowed options: amd, assetFileNames, banner, chunkFileNames, compact, dir, dynamicImportInCjs, entryFileNames, esModule, experimentalMinChunkSize, exports, extend, externalImportAssertions, externalImportAttributes, externalLiveBindings, file, footer, format, freeze, generatedCode, globals, hashCharacters, hoistTransitiveImports, importAttributesKey, indent, inlineDynamicImports, interop, intro, manualChunks, minifyInternalExports, name, noConflict, onlyExplicitManualChunks, outro, paths, plugins, preserveModules, preserveModulesRoot, reexportProtoFromExternal, sanitizeFileName, sourcemap, sourcemapBaseUrl, sourcemapDebugIds, sourcemapExcludeSources, sourcemapFile, sourcemapFileNames, sourcemapIgnoreList, sourcemapPathTransform, strict, systemNullSetters, validate, virtualDirname
-[WebServer] better-auth init failed; using auth stub for dev: Cannot find module './db'
-[WebServer] Require stack:
-[WebServer] - D:\boulot\dev\node\sive\.svelte-kit\output\server\chunks\auth.js
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:44:25 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] 2026-03-11T11:58:32.329Z WARN [Better Auth]: Social provider github is missing clientId or clientSecret
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:44:25 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
 [WebServer] https://svelte.dev/e/state_referenced_locally
 [WebServer] 42: 
 [WebServer] 43:   // Document state
@@ -203,7 +201,7 @@
 [WebServer]                                  ^
 [WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
 [WebServer] 46:   let activeContent = $state(
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:45:32 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:45:32 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
 [WebServer] https://svelte.dev/e/state_referenced_locally
 [WebServer] 43:   // Document state
 [WebServer] 44:   let documents = $state(data.documents);
@@ -211,7 +209,7 @@
 [WebServer]                                         ^
 [WebServer] 46:   let activeContent = $state(
 [WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:47:4 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:47:4 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
 [WebServer] https://svelte.dev/e/state_referenced_locally
 [WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
 [WebServer] 46:   let activeContent = $state(
@@ -219,7 +217,7 @@
 [WebServer]             ^
 [WebServer] 48:   );
 [WebServer] 49: 
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:56:6 `createDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:56:6 `createDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 54: 
 [WebServer] 55:   // Hidden form references for programmatic submission
@@ -227,7 +225,7 @@
 [WebServer]                                         ^
 [WebServer] 57:   let saveDocForm: HTMLFormElement;
 [WebServer] 58:   let saveIdInput: HTMLInputElement;
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:57:6 `saveDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:57:6 `saveDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 55:   // Hidden form references for programmatic submission
 [WebServer] 56:   let createDocForm: HTMLFormElement;
@@ -235,7 +233,7 @@
 [WebServer]                                       ^
 [WebServer] 58:   let saveIdInput: HTMLInputElement;
 [WebServer] 59:   let saveContentInput: HTMLInputElement;
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:58:6 `saveIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:58:6 `saveIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 56:   let createDocForm: HTMLFormElement;
 [WebServer] 57:   let saveDocForm: HTMLFormElement;
@@ -243,7 +241,7 @@
 [WebServer]                                        ^
 [WebServer] 59:   let saveContentInput: HTMLInputElement;
 [WebServer] 60:   let renameDocForm: HTMLFormElement;
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:59:6 `saveContentInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:59:6 `saveContentInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 57:   let saveDocForm: HTMLFormElement;
 [WebServer] 58:   let saveIdInput: HTMLInputElement;
@@ -251,7 +249,7 @@
 [WebServer]                                             ^
 [WebServer] 60:   let renameDocForm: HTMLFormElement;
 [WebServer] 61:   let renameIdInput: HTMLInputElement;
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:60:6 `renameDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:60:6 `renameDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 58:   let saveIdInput: HTMLInputElement;
 [WebServer] 59:   let saveContentInput: HTMLInputElement;
@@ -259,7 +257,7 @@
 [WebServer]                                         ^
 [WebServer] 61:   let renameIdInput: HTMLInputElement;
 [WebServer] 62:   let renameTitleInput: HTMLInputElement;
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:61:6 `renameIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:61:6 `renameIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 59:   let saveContentInput: HTMLInputElement;
 [WebServer] 60:   let renameDocForm: HTMLFormElement;
@@ -267,7 +265,7 @@
 [WebServer]                                          ^
 [WebServer] 62:   let renameTitleInput: HTMLInputElement;
 [WebServer] 63:   let deleteDocForm: HTMLFormElement;
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:62:6 `renameTitleInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:62:6 `renameTitleInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 60:   let renameDocForm: HTMLFormElement;
 [WebServer] 61:   let renameIdInput: HTMLInputElement;
@@ -275,7 +273,7 @@
 [WebServer]                                             ^
 [WebServer] 63:   let deleteDocForm: HTMLFormElement;
 [WebServer] 64:   let deleteIdInput: HTMLInputElement;
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:63:6 `deleteDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:63:6 `deleteDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 61:   let renameIdInput: HTMLInputElement;
 [WebServer] 62:   let renameTitleInput: HTMLInputElement;
@@ -283,7 +281,7 @@
 [WebServer]                                         ^
 [WebServer] 64:   let deleteIdInput: HTMLInputElement;
 [WebServer] 65: 
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:64:6 `deleteIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:64:6 `deleteIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
 [WebServer] https://svelte.dev/e/non_reactive_update
 [WebServer] 62:   let renameTitleInput: HTMLInputElement;
 [WebServer] 63:   let deleteDocForm: HTMLFormElement;
@@ -291,7 +289,7 @@
 [WebServer]                                          ^
 [WebServer] 65: 
 [WebServer] 66:   function handleSelectDocument(id: string) {
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/app/+page.svelte:593:4 Unused CSS selector ".main-toolbar button[aria-disabled="true"]"
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/app/+page.svelte:593:4 Unused CSS selector ".main-toolbar button[aria-disabled="true"]"
 [WebServer] https://svelte.dev/e/css_unused_selector
 [WebServer] 591: 
 [WebServer] 592:     /* Hide some toolbar buttons on small screens */
@@ -299,7 +297,7 @@
 [WebServer]                                                    ^
 [WebServer] 594:       display: none;
 [WebServer] 595:     }
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/settings/+page.svelte:38:4 A form label must be associated with a control
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/settings/+page.svelte:38:4 A form label must be associated with a control
 [WebServer] https://svelte.dev/e/a11y_label_has_associated_control
 [WebServer] 36: 
 [WebServer] 37:   <div class="mb-4">
@@ -307,7 +305,7 @@
 [WebServer]                                                            ^
 [WebServer] 39:     <label><input type="radio" bind:group={theme} value="light" /> Light</label>
 [WebServer] 40:     <label class="ml-4"><input type="radio" bind:group={theme} value="dark" /> Dark</label>
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/settings/+page.svelte:44:4 A form label must be associated with a control
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/settings/+page.svelte:44:4 A form label must be associated with a control
 [WebServer] https://svelte.dev/e/a11y_label_has_associated_control
 [WebServer] 42: 
 [WebServer] 43:   <div class="mb-4">
@@ -315,7 +313,7 @@
 [WebServer]                                                                ^
 [WebServer] 45:     <select bind:value={fontSize}>
 [WebServer] 46:       <option value="small">Small</option>
-[WebServer] 11:48:06 [vite-plugin-svelte] src/routes/settings/+page.svelte:53:4 A form label must be associated with a control
+[WebServer] 12:58:32 [vite-plugin-svelte] src/routes/settings/+page.svelte:53:4 A form label must be associated with a control
 [WebServer] https://svelte.dev/e/a11y_label_has_associated_control
 [WebServer] 51: 
 [WebServer] 52:   <div class="mb-4">
@@ -323,7 +321,7 @@
 [WebServer]                                                                                  ^
 [WebServer] 54:     <input type="number" bind:value={autosave} min="0" />
 [WebServer] 55:   </div>
-[WebServer] 11:48:06 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:61:2 The attribute 'aria-readonly' is not supported by the role 'document'
+[WebServer] 12:58:32 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:61:2 The attribute 'aria-readonly' is not supported by the role 'document'
 [WebServer] https://svelte.dev/e/a11y_role_supports_aria_props
 [WebServer] 59:   role="document"
 [WebServer] 60:   aria-label="Manuscript text ÔÇö read only"
@@ -331,7 +329,7 @@
 [WebServer]                           ^
 [WebServer] 62: >
 [WebServer] 63:   <div class="text-content">
-[WebServer] 11:48:06 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:68:8 Non-interactive element `<mark>` cannot have interactive role 'button'
+[WebServer] 12:58:32 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:68:8 Non-interactive element `<mark>` cannot have interactive role 'button'
 [WebServer] https://svelte.dev/e/a11y_no_noninteractive_element_to_interactive_role
 [WebServer] 66:         <!-- svelte-ignore a11y_click_events_have_key_events -->
 [WebServer] 67:         <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -339,7 +337,7 @@
 [WebServer]                   ^
 [WebServer] 69:           class="highlight highlight--{seg.highlight.category}"
 [WebServer] 70:           data-category={seg.highlight.category}
-[WebServer] 11:48:06 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:67:37 Redundant role 'article'
+[WebServer] 12:58:32 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:67:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 65:       <h3 id="sec-inconsistencies">Inconsistencies</h3>
 [WebServer] 66:       {#each report.inconsistencies as item}
@@ -347,7 +345,7 @@
 [WebServer]                                                        ^
 [WebServer] 68:           <strong>{item.entity}</strong>
 [WebServer] 69:           <span class="badge-confidence">{Math.round(item.confidence * 100)}%</span>
-[WebServer] 11:48:06 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:79:37 Redundant role 'article'
+[WebServer] 12:58:32 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:79:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 77:       <h3 id="sec-pov">Point of View</h3>
 [WebServer] 78:       {#each report.pov as item}
@@ -355,7 +353,7 @@
 [WebServer]                                                        ^
 [WebServer] 80:           <strong>{item.location}</strong>
 [WebServer] 81:           <p>{item.detected_deviation}</p>
-[WebServer] 11:48:06 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:90:37 Redundant role 'article'
+[WebServer] 12:58:32 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:90:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 88:       <h3 id="sec-threads">Narrative Threads</h3>
 [WebServer] 89:       {#each report.threads as item}
@@ -363,7 +361,7 @@
 [WebServer]                                                        ^
 [WebServer] 91:           <strong>{item.thread_id}</strong>
 [WebServer] 92:           <span class="thread-status status--{item.status}">{item.status}</span>
-[WebServer] 11:48:06 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:114:37 Redundant role 'article'
+[WebServer] 12:58:32 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:114:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 112:       <h3 id="sec-motifs">Themes &amp; Motifs</h3>
 [WebServer] 113:       {#each report.motifs as item}
@@ -371,7 +369,7 @@
 [WebServer]                                                         ^
 [WebServer] 115:           <strong>{item.motif_id}</strong>
 [WebServer] 116:           <span class="badge-presence">{item.presence}</span>
-[WebServer] 11:48:06 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:126:37 Redundant role 'article'
+[WebServer] 12:58:32 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:126:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 124:       <h3 id="sec-voices">Character Voices</h3>
 [WebServer] 125:       {#each report.voices as item}
@@ -379,7 +377,7 @@
 [WebServer]                                                         ^
 [WebServer] 127:           <strong>{item.character_id}</strong>
 [WebServer] 128:           <p>{item.register_deviation}</p>
-[WebServer] 11:48:06 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:138:37 Redundant role 'article'
+[WebServer] 12:58:32 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:138:37 Redundant role 'article'
 [WebServer] https://svelte.dev/e/a11y_no_redundant_roles
 [WebServer] 136:       <h3 id="sec-style">Style &amp; Rhythm</h3>
 [WebServer] 137:       {#each report.style as item}
@@ -388,132 +386,140 @@
 [WebServer] 139:           <strong>{item.signal_type}</strong>
 [WebServer] 140:           <span class="item-location">{item.location}</span>
 [WebServer] Unknown output options: codeSplitting. Allowed options: amd, assetFileNames, banner, chunkFileNames, compact, dir, dynamicImportInCjs, entryFileNames, esModule, experimentalMinChunkSize, exports, extend, externalImportAssertions, externalImportAttributes, externalLiveBindings, file, footer, format, freeze, generatedCode, globals, hashCharacters, hoistTransitiveImports, importAttributesKey, indent, inlineDynamicImports, interop, intro, manualChunks, minifyInternalExports, name, noConflict, onlyExplicitManualChunks, outro, paths, plugins, preserveModules, preserveModulesRoot, reexportProtoFromExternal, sanitizeFileName, sourcemap, sourcemapBaseUrl, sourcemapDebugIds, sourcemapExcludeSources, sourcemapFile, sourcemapFileNames, sourcemapIgnoreList, sourcemapPathTransform, strict, systemNullSetters, validate, virtualDirname
-[WebServer] better-auth init failed; using auth stub for dev: Cannot find module './db'
-[WebServer] Require stack:
-[WebServer] - D:\boulot\dev\node\sive\.svelte-kit\output\server\chunks\auth.js
+[WebServer] 2026-03-11T11:58:37.408Z WARN [Better Auth]: Social provider github is missing clientId or clientSecret
 
 Running 120 tests using 1 worker
 
-  Ô£ÿ    1 e2e\ai-integration.spec.ts:8:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: "Generate suggestions" button is present (5.4s)
+  Ô£ÿ    1 e2e\ai-integration.spec.ts:8:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: "Generate suggestions" button is present (5.2s)
+[WebServer] 
+[WebServer] [404] GET /timeline
   Ô£ÿ    2 e2e\ai-integration.spec.ts:14:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: clicking button shows results or loading state (30.1s)
+[WebServer] 
+[WebServer] [404] GET /timeline
   Ô£ÿ    3 e2e\ai-integration.spec.ts:22:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Coherence tab: "Run coherence check" button is present (30.0s)
-  Ô£ÿ    4 e2e\ai-integration.spec.ts:27:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Style tab: "Analyse this passage" button is present (30.0s)
+[WebServer] 
+[WebServer] [404] GET /timeline
+  Ô£ÿ    4 e2e\ai-integration.spec.ts:27:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Style tab: "Analyse this passage" button is present (30.1s)
   Ô£ÿ    5 e2e\ai-integration.spec.ts:32:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ ChatBar is visible with input and Send button (5.2s)
-  Ô£ÿ    6 e2e\ai-integration.spec.ts:37:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ ChatBar: typing and sending shows user message bubble (30.1s)
+[WebServer] 
+[WebServer] [404] GET /timeline
+  Ô£ÿ    6 e2e\ai-integration.spec.ts:37:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ ChatBar: typing and sending shows user message bubble (30.0s)
   Ô£ÿ    7 e2e\app-layout.spec.ts:10:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ toolbar is visible with project label and action buttons (5.2s)
   Ô£ÿ    8 e2e\app-layout.spec.ts:16:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ editor panel and AI panel are side-by-side (5.2s)
   Ô£ÿ    9 e2e\app-layout.spec.ts:21:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ resize handle is visible between panels (5.2s)
   Ô£ÿ   10 e2e\app-layout.spec.ts:27:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ all four AI tabs are visible (5.2s)
-  Ô£ÿ   11 e2e\app-layout.spec.ts:33:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ clicking a tab activates it and shows its content panel (30.1s)
+[WebServer] 
+[WebServer] [404] GET /timeline
+  Ô£ÿ   11 e2e\app-layout.spec.ts:33:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ clicking a tab activates it and shows its content panel (30.0s)
   Ô£ÿ   12 e2e\app-layout.spec.ts:39:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Suggestions tab panel is visible by default (5.2s)
   Ô£ÿ   13 e2e\app-layout.spec.ts:45:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button hides the AI panel and resize handle (30.0s)
   Ô£ÿ   14 e2e\app-layout.spec.ts:52:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Exit Focus button restores the AI panel (30.0s)
   Ô£ÿ   15 e2e\app-layout.spec.ts:59:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button has aria-pressed reflecting focus mode state (5.2s)
   Ô£ÿ   16 e2e\app-layout.spec.ts:71:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Ctrl+Shift+F keyboard shortcut toggles focus mode (5.2s)
   Ô£ÿ   17 e2e\app-layout.spec.ts:86:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar overlay is open by default with an input (5.2s)
-  Ô£ÿ   18 e2e\app-layout.spec.ts:91:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle button collapses and reopens the overlay (30.0s)
+  Ô£ÿ   18 e2e\app-layout.spec.ts:91:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle button collapses and reopens the overlay (30.1s)
   Ô£ÿ   19 e2e\app-layout.spec.ts:101:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle has correct aria-expanded attribute (5.2s)
   Ô£ÿ   20 e2e\auth-flow.spec.ts:4:2 ÔÇ║ Auth flow ÔÇ║ login page renders with email, password fields and GitHub button (5.2s)
-  Ô£ô   21 e2e\auth-flow.spec.ts:11:2 ÔÇ║ Auth flow ÔÇ║ login page has link to signup (316ms)
-  Ô£ô   22 e2e\auth-flow.spec.ts:16:2 ÔÇ║ Auth flow ÔÇ║ signup page renders with email and password fields (272ms)
-  Ô£ô   23 e2e\auth-flow.spec.ts:23:2 ÔÇ║ Auth flow ÔÇ║ signup page has link back to sign in (291ms)
-  Ô£ô   24 e2e\auth-flow.spec.ts:28:2 ÔÇ║ Auth flow ÔÇ║ login page shows dev mode notice in mock environment (588ms)
-  Ô£ô   25 e2e\auth-flow.spec.ts:36:2 ÔÇ║ Auth flow ÔÇ║ login form shows error on submit in mock mode (460ms)
-  Ô£ô   26 e2e\auth-login.spec.ts:10:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ sign-in page loads with title and form elements (175ms)
-  Ô£ô   27 e2e\auth-login.spec.ts:17:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ email input is of type email and password input is of type password (170ms)
-  Ô£ô   28 e2e\auth-login.spec.ts:22:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ both inputs are required (HTML5 validation) (177ms)
-  Ô£ô   29 e2e\auth-login.spec.ts:29:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ shows accessible error message on invalid credentials (308ms)
-  Ô£ô   30 e2e\auth-login.spec.ts:40:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ error message disappears on subsequent submission attempt (461ms)
-  Ô£ÿ   31 e2e\auth-login.spec.ts:55:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ redirects to / on successful sign-in (5.3s)
+  Ô£ô   21 e2e\auth-flow.spec.ts:11:2 ÔÇ║ Auth flow ÔÇ║ login page has link to signup (181ms)
+  Ô£ô   22 e2e\auth-flow.spec.ts:16:2 ÔÇ║ Auth flow ÔÇ║ signup page renders with email and password fields (187ms)
+  Ô£ô   23 e2e\auth-flow.spec.ts:23:2 ÔÇ║ Auth flow ÔÇ║ signup page has link back to sign in (150ms)
+  Ô£ÿ   24 e2e\auth-flow.spec.ts:28:2 ÔÇ║ Auth flow ÔÇ║ login page shows dev mode notice in mock environment (5.2s)
+  Ô£ô   25 e2e\auth-flow.spec.ts:36:2 ÔÇ║ Auth flow ÔÇ║ login form shows error on submit in mock mode (262ms)
+  Ô£ô   26 e2e\auth-login.spec.ts:10:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ sign-in page loads with title and form elements (162ms)
+  Ô£ô   27 e2e\auth-login.spec.ts:17:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ email input is of type email and password input is of type password (149ms)
+  Ô£ô   28 e2e\auth-login.spec.ts:22:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ both inputs are required (HTML5 validation) (145ms)
+  Ô£ô   29 e2e\auth-login.spec.ts:29:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ shows accessible error message on invalid credentials (315ms)
+  Ô£ô   30 e2e\auth-login.spec.ts:40:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ error message disappears on subsequent submission attempt (342ms)
+  Ô£ÿ   31 e2e\auth-login.spec.ts:55:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ redirects to / on successful sign-in (5.2s)
   Ô£ÿ   32 e2e\auth-login.spec.ts:79:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ form is labelled via aria-labelledby (5.2s)
   Ô£ÿ   33 e2e\coherence-tab.spec.ts:8:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ Coherence tab button is visible (5.2s)
-  Ô£ÿ   34 e2e\coherence-tab.spec.ts:12:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Coherence tab shows the coherence panel (30.1s)
+  Ô£ÿ   34 e2e\coherence-tab.spec.ts:12:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Coherence tab shows the coherence panel (30.0s)
   Ô£ÿ   35 e2e\coherence-tab.spec.ts:17:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ "Run coherence check" button is visible (30.0s)
   Ô£ÿ   36 e2e\coherence-tab.spec.ts:22:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Run shows "CheckingÔÇª" loading state (30.0s)
-  Ô£ÿ   37 e2e\coherence-tab.spec.ts:28:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ after check, 5 alert cards are visible (30.1s)
+  Ô£ÿ   37 e2e\coherence-tab.spec.ts:28:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ after check, 5 alert cards are visible (30.0s)
   Ô£ÿ   38 e2e\coherence-tab.spec.ts:34:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ alert cards have entity, discrepancy type, and confidence badge (30.1s)
   Ô£ÿ   39 e2e\coherence-tab.spec.ts:45:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ High confidence alerts have a red-ish badge (30.0s)
   Ô£ô   40 e2e\collaboration.spec.ts:12:2 ÔÇ║ Collaboration Features ÔÇ║ presence list displays online users with initials and status (2.3s)
   Ô£ô   41 e2e\collaboration.spec.ts:50:2 ÔÇ║ Collaboration Features ÔÇ║ cursor position updates trigger broadcasts (5.2s)
-  Ô£ô   42 e2e\collaboration.spec.ts:88:2 ÔÇ║ Collaboration Features ÔÇ║ user status transitions from active to idle (262ms)
+  Ô£ô   42 e2e\collaboration.spec.ts:88:2 ÔÇ║ Collaboration Features ÔÇ║ user status transitions from active to idle (255ms)
   Ô£ô   43 e2e\collaboration.spec.ts:130:2 ÔÇ║ Collaboration Features ÔÇ║ editing document broadcasts changes to other clients (1.2s)
-  Ô£ô   44 e2e\collaboration.spec.ts:160:2 ÔÇ║ Collaboration Features ÔÇ║ disconnected users are removed from presence list (260ms)
-  Ô£ô   45 e2e\collaboration.spec.ts:198:2 ÔÇ║ Collaboration Features ÔÇ║ edits in one document do not affect other documents (657ms)
-  Ô£ô   46 e2e\collaboration.spec.ts:232:2 ÔÇ║ Collaboration Features ÔÇ║ remote cursors have consistent colors based on client ID (142ms)
-  Ô£ô   47 e2e\collaboration.spec.ts:260:2 ÔÇ║ Collaboration Features ÔÇ║ server sends heartbeat to keep connection alive (145ms)
-  Ô£ô   48 e2e\collaboration.spec.ts:286:2 ÔÇ║ Collaboration Features ÔÇ║ collaboration messages are delivered in order (155ms)
-  Ô£ô   49 e2e\collaboration.spec.ts:315:2 ÔÇ║ Collaboration Features ÔÇ║ presence list shows +N indicator when users exceed max visible (353ms)
-  Ô£ô   50 e2e\collaboration.spec.ts:348:2 ÔÇ║ Collaboration Features ÔÇ║ remote cursors are hidden after 5 seconds of inactivity (154ms)
-  Ô£ô   51 e2e\collaboration.spec.ts:388:2 ÔÇ║ Collaboration Features ÔÇ║ each browser context maintains separate client ID (233ms)
-  Ô£ô   52 e2e\demo.test.ts:3:1 ÔÇ║ home page has expected h1 (137ms)
-  Ô£ÿ   53 e2e\document-persistence.spec.ts:8:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ DocumentList sidebar is visible (5.1s)
+  Ô£ô   44 e2e\collaboration.spec.ts:160:2 ÔÇ║ Collaboration Features ÔÇ║ disconnected users are removed from presence list (254ms)
+  Ô£ô   45 e2e\collaboration.spec.ts:198:2 ÔÇ║ Collaboration Features ÔÇ║ edits in one document do not affect other documents (654ms)
+  Ô£ô   46 e2e\collaboration.spec.ts:232:2 ÔÇ║ Collaboration Features ÔÇ║ remote cursors have consistent colors based on client ID (134ms)
+  Ô£ô   47 e2e\collaboration.spec.ts:260:2 ÔÇ║ Collaboration Features ÔÇ║ server sends heartbeat to keep connection alive (132ms)
+  Ô£ô   48 e2e\collaboration.spec.ts:286:2 ÔÇ║ Collaboration Features ÔÇ║ collaboration messages are delivered in order (141ms)
+  Ô£ô   49 e2e\collaboration.spec.ts:315:2 ÔÇ║ Collaboration Features ÔÇ║ presence list shows +N indicator when users exceed max visible (359ms)
+  Ô£ô   50 e2e\collaboration.spec.ts:348:2 ÔÇ║ Collaboration Features ÔÇ║ remote cursors are hidden after 5 seconds of inactivity (150ms)
+  Ô£ô   51 e2e\collaboration.spec.ts:388:2 ÔÇ║ Collaboration Features ÔÇ║ each browser context maintains separate client ID (219ms)
+  Ô£ô   52 e2e\demo.test.ts:3:1 ÔÇ║ home page has expected h1 (140ms)
+  Ô£ÿ   53 e2e\document-persistence.spec.ts:8:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ DocumentList sidebar is visible (5.2s)
   Ô£ÿ   54 e2e\document-persistence.spec.ts:12:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ at least one document is listed on load (5.2s)
   Ô£ÿ   55 e2e\document-persistence.spec.ts:17:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ editor textarea is visible and editable (5.2s)
   Ô£ÿ   56 e2e\document-persistence.spec.ts:23:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ stub document content is loaded in editor (5.2s)
   Ô£ÿ   57 e2e\document-persistence.spec.ts:28:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ "New document" button creates a new document entry (5.2s)
-  Ô£ÿ   58 e2e\document-persistence.spec.ts:39:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ typing in editor shows "SavingÔÇª" status (30.0s)
+  Ô£ÿ   58 e2e\document-persistence.spec.ts:39:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ typing in editor shows "SavingÔÇª" status (30.1s)
   Ô£ÿ   59 e2e\document-persistence.spec.ts:46:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ after 2s debounce, "Saved at" status appears (30.0s)
   Ô£ÿ   60 e2e\document-persistence.spec.ts:56:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ toolbar shows active document title (5.2s)
   Ô£ÿ   61 e2e\document-ux.spec.ts:8:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ toolbar title is visible and clickable to edit (5.2s)
   Ô£ÿ   62 e2e\document-ux.spec.ts:16:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ sidebar title has aria-label for rename accessibility (5.2s)
   Ô£ÿ   63 e2e\document-ux.spec.ts:21:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ delete button is present for each document item (5.2s)
   Ô£ÿ   64 e2e\document-ux.spec.ts:26:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ Ctrl+S triggers immediate save (no 2s debounce) (30.0s)
-  Ô£ÿ   65 e2e\document-ux.spec.ts:36:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ deleting a document removes it from the list (with confirm) (30.1s)
+  Ô£ÿ   65 e2e\document-ux.spec.ts:36:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ deleting a document removes it from the list (with confirm) (30.0s)
   Ô£ÿ   66 e2e\harden.spec.ts:8:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking ­ƒÆ¥ New version opens the HardenModal (30.0s)
-  Ô£ÿ   67 e2e\harden.spec.ts:13:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ modal has label input and message textarea (30.0s)
-  Ô£ÿ   68 e2e\harden.spec.ts:19:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ Confirm button is disabled when label is empty (30.0s)
+  Ô£ÿ   67 e2e\harden.spec.ts:13:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ modal has label input and message textarea (30.1s)
+  Ô£ÿ   68 e2e\harden.spec.ts:19:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ Confirm button is disabled when label is empty (30.1s)
   Ô£ÿ   69 e2e\harden.spec.ts:24:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking Cancel closes the modal without adding an entry (30.0s)
-  Ô£ÿ   70 e2e\harden.spec.ts:30:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ confirming a Harden adds it to the History tab timeline (30.0s)
+  Ô£ÿ   70 e2e\harden.spec.ts:30:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ confirming a Harden adds it to the History tab timeline (30.1s)
   Ô£ÿ   71 e2e\harden.spec.ts:45:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ History tab shows stub Harden timeline points by default (30.0s)
-  Ô£ÿ   72 e2e\harden.spec.ts:51:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ diff controls are visible in History tab (30.1s)
-  Ô£ÿ   73 e2e\harden.spec.ts:58:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ View differences is disabled until both versions are selected (30.0s)
+  Ô£ÿ   72 e2e\harden.spec.ts:51:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ diff controls are visible in History tab (30.0s)
+  Ô£ÿ   73 e2e\harden.spec.ts:58:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ View differences is disabled until both versions are selected (30.1s)
   Ô£ÿ   74 e2e\harden.spec.ts:69:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking View differences shows the diff panel (30.0s)
   Ô£ÿ   75 e2e\onboarding.spec.ts:4:3 ÔÇ║ Onboarding flow ÔÇ║ shows onboarding on first visit and can be completed (5.2s)
   Ô£ÿ   76 e2e\review-mode.spec.ts:8:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Review button enters review mode (30.0s)
   Ô£ÿ   77 e2e\review-mode.spec.ts:14:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button has aria-pressed=true when review mode is active (5.2s)
-  Ô£ÿ   78 e2e\review-mode.spec.ts:24:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ review screen shows toolbar, text panel and report panel (30.1s)
-  Ô£ÿ   79 e2e\review-mode.spec.ts:31:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ scope selector is visible with default value (30.0s)
+  Ô£ÿ   78 e2e\review-mode.spec.ts:24:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ review screen shows toolbar, text panel and report panel (30.0s)
+  Ô£ÿ   79 e2e\review-mode.spec.ts:31:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ scope selector is visible with default value (30.1s)
   Ô£ÿ   80 e2e\review-mode.spec.ts:38:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Back to writing exits review mode (30.0s)
-  Ô£ÿ   81 e2e\review-mode.spec.ts:46:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button aria-pressed returns to false after exiting (30.0s)
-  Ô£ÿ   82 e2e\review-mode.spec.ts:55:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Run analysis button triggers loading state (30.0s)
+  Ô£ÿ   81 e2e\review-mode.spec.ts:46:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button aria-pressed returns to false after exiting (30.1s)
+  Ô£ÿ   82 e2e\review-mode.spec.ts:55:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Run analysis button triggers loading state (30.1s)
   Ô£ÿ   83 e2e\sharing-flow.spec.ts:34:2 ÔÇ║ Document sharing UI ÔÇ║ Share button is visible in the editor toolbar (3.2s)
-  Ô£ÿ   84 e2e\sharing-flow.spec.ts:39:2 ÔÇ║ Document sharing UI ÔÇ║ Clicking Share button opens the ShareModal (30.0s)
+  Ô£ÿ   84 e2e\sharing-flow.spec.ts:39:2 ÔÇ║ Document sharing UI ÔÇ║ Clicking Share button opens the ShareModal (30.1s)
   Ô£ÿ   85 e2e\sharing-flow.spec.ts:46:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal has a title (30.1s)
   Ô£ÿ   86 e2e\sharing-flow.spec.ts:52:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed with the X button (30.0s)
   Ô£ÿ   87 e2e\sharing-flow.spec.ts:59:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed by clicking the backdrop (30.1s)
-  Ô£ô   88 e2e\sharing-flow.spec.ts:68:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/shares returns 401 when unauthenticated (54ms)
+  Ô£ô   88 e2e\sharing-flow.spec.ts:68:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/shares returns 401 when unauthenticated (56ms)
   Ô£ô   89 e2e\sharing-flow.spec.ts:74:2 ÔÇ║ Share API (mock mode) ÔÇ║ POST /api/shares returns mock success or 401 (36ms)
-  Ô£ÿ   90 e2e\sharing-flow.spec.ts:81:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns empty for short query (31ms)
-  Ô£ÿ   91 e2e\sharing-flow.spec.ts:89:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns stub user in mock mode (49ms)
-  Ô£ô   92 e2e\sprint-17.spec.ts:12:2 ÔÇ║ GitHub OAuth UI ÔÇ║ GitHub sign-in button is hidden in mock/dev mode (186ms)
-  Ô£ô   93 e2e\sprint-17.spec.ts:21:2 ÔÇ║ GitHub OAuth UI ÔÇ║ auth page renders email/password form (146ms)
-  Ô£ô   94 e2e\sprint-17.spec.ts:27:2 ÔÇ║ GitHub OAuth UI ÔÇ║ auth page has Sign in button (155ms)
-  Ô£ÿ   95 e2e\sprint-17.spec.ts:40:2 ÔÇ║ Document list ÔÇö shared badge ÔÇ║ app page loads with document list (3.1s)
-  Ô£ô   96 e2e\sprint-17.spec.ts:46:2 ÔÇ║ Document list ÔÇö shared badge ÔÇ║ stub document has no Shared badge in mock mode (183ms)
-  Ô£ô   97 e2e\sprint-17.spec.ts:63:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page renders without error (193ms)
-  Ô£ô   98 e2e\sprint-17.spec.ts:70:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page has back link to editor (157ms)
-  Ô£ÿ   99 e2e\style-tab.spec.ts:8:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Style tab button is visible in the AI panel (5.1s)
+  Ô£ÿ   90 e2e\sharing-flow.spec.ts:81:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns empty for short query (32ms)
+  Ô£ÿ   91 e2e\sharing-flow.spec.ts:89:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns stub user in mock mode (54ms)
+  Ô£ô   92 e2e\sprint-17.spec.ts:12:2 ÔÇ║ GitHub OAuth UI ÔÇ║ GitHub sign-in button is hidden in mock/dev mode (168ms)
+  Ô£ô   93 e2e\sprint-17.spec.ts:21:2 ÔÇ║ GitHub OAuth UI ÔÇ║ auth page renders email/password form (150ms)
+  Ô£ô   94 e2e\sprint-17.spec.ts:27:2 ÔÇ║ GitHub OAuth UI ÔÇ║ auth page has Sign in button (143ms)
+  Ô£ÿ   95 e2e\sprint-17.spec.ts:40:2 ÔÇ║ Document list ÔÇö shared badge ÔÇ║ app page loads with document list (3.2s)
+  Ô£ô   96 e2e\sprint-17.spec.ts:46:2 ÔÇ║ Document list ÔÇö shared badge ÔÇ║ stub document has no Shared badge in mock mode (201ms)
+  Ô£ÿ   97 e2e\sprint-17.spec.ts:63:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page renders without error (198ms)
+  Ô£ÿ   98 e2e\sprint-17.spec.ts:70:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page has back link to editor (2.2s)
+  Ô£ÿ   99 e2e\style-tab.spec.ts:8:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Style tab button is visible in the AI panel (5.2s)
   Ô£ÿ  100 e2e\style-tab.spec.ts:12:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Style tab shows the style sliders panel (30.0s)
-  Ô£ÿ  101 e2e\style-tab.spec.ts:17:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ all 4 slider labels are visible (30.0s)
+  Ô£ÿ  101 e2e\style-tab.spec.ts:17:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ all 4 slider labels are visible (30.1s)
   Ô£ÿ  102 e2e\style-tab.spec.ts:25:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Analyse this passage button is visible (30.0s)
   Ô£ÿ  103 e2e\style-tab.spec.ts:30:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Analyse shows "AnalysingÔÇª" loading state (30.1s)
-  Ô£ÿ  104 e2e\style-tab.spec.ts:36:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ after analysis, 3 result cards are visible (30.0s)
-  Ô£ÿ  105 e2e\style-tab.spec.ts:42:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ result cards contain location, signal, and suggestion text (30.0s)
-  Ô£ô  106 e2e\suggestions-badge.spec.ts:4:1 ÔÇ║ suggestions-ready-badge appears when entering Focus mode (363ms)
-  Ô£ÿ  107 e2e\suggestions-tab.spec.ts:8:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Suggestions tab button is visible and active by default (5.2s)
+  Ô£ÿ  104 e2e\style-tab.spec.ts:36:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ after analysis, 3 result cards are visible (30.1s)
+  Ô£ÿ  105 e2e\style-tab.spec.ts:42:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ result cards contain location, signal, and suggestion text (30.1s)
+  Ô£ô  106 e2e\suggestions-badge.spec.ts:4:1 ÔÇ║ suggestions-ready-badge appears when entering Focus mode (282ms)
+  Ô£ÿ  107 e2e\suggestions-tab.spec.ts:8:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Suggestions tab button is visible and active by default (5.1s)
   Ô£ÿ  108 e2e\suggestions-tab.spec.ts:12:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Generate suggestions" button is visible (5.2s)
   Ô£ÿ  109 e2e\suggestions-tab.spec.ts:16:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Generate shows "GeneratingÔÇª" loading state (30.1s)
   Ô£ÿ  110 e2e\suggestions-tab.spec.ts:21:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ after generation, 3 suggestion cards appear (30.1s)
-  Ô£ÿ  111 e2e\suggestions-tab.spec.ts:26:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ suggestion cards show type badge and diff content (30.0s)
+  Ô£ÿ  111 e2e\suggestions-tab.spec.ts:26:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ suggestion cards show type badge and diff content (30.1s)
   Ô£ÿ  112 e2e\suggestions-tab.spec.ts:34:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Accept and Reject buttons are visible on each card (30.1s)
   Ô£ÿ  113 e2e\suggestions-tab.spec.ts:42:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Reject removes that card from the list (30.1s)
-  Ô£ÿ  114 e2e\suggestions-tab.spec.ts:49:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Accept all" button removes all cards (30.0s)
+  Ô£ÿ  114 e2e\suggestions-tab.spec.ts:49:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Accept all" button removes all cards (30.1s)
   Ô£ÿ  115 e2e\ux-polish.spec.ts:4:2 ÔÇ║ UX Polish & Export ÔÇ║ export button renders in toolbar (5.2s)
-  Ô£ÿ  116 e2e\ux-polish.spec.ts:9:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown shows Markdown and Plain text options (30.0s)
-  Ô£ÿ  117 e2e\ux-polish.spec.ts:16:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown closes when clicking Markdown (30.1s)
+  Ô£ÿ  116 e2e\ux-polish.spec.ts:9:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown shows Markdown and Plain text options (30.1s)
+  Ô£ÿ  117 e2e\ux-polish.spec.ts:16:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown closes when clicking Markdown (30.0s)
   Ô£ÿ  118 e2e\ux-polish.spec.ts:28:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggle button is visible (5.2s)
   Ô£ÿ  119 e2e\ux-polish.spec.ts:33:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggles on button click (5.2s)
-  Ô£ÿ  120 e2e\ux-polish.spec.ts:45:2 ÔÇ║ UX Polish & Export ÔÇ║ AI tab shows empty state hint before running analysis (30.0s)
+  Ô£ÿ  120 e2e\ux-polish.spec.ts:45:2 ÔÇ║ UX Polish & Export ÔÇ║ AI tab shows empty state hint before running analysis (30.1s)
 
 
   1) e2e\ai-integration.spec.ts:8:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: "Generate suggestions" button is present 
@@ -1136,7 +1142,40 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  21) e2e\auth-login.spec.ts:55:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ redirects to / on successful sign-in ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  21) e2e\auth-flow.spec.ts:28:2 ÔÇ║ Auth flow ÔÇ║ login page shows dev mode notice in mock environment 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('.auth-notice')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('.auth-notice')[22m
+
+
+      30 | 		// In dev (isMock=true) mode the notice is shown and links to /app
+      31 | 		const notice = page.locator('.auth-notice');
+    > 32 | 		await expect(notice).toBeVisible();
+         | 		                     ^
+      33 | 		await expect(page.getByRole('link', { name: /Continue as guest/i })).toBeVisible();
+      34 | 	});
+      35 |
+        at D:\boulot\dev\node\sive\e2e\auth-flow.spec.ts:32:24
+
+    Error Context: test-results\auth-flow-Auth-flow-login--66c3a--notice-in-mock-environment\error-context.md
+
+    attachment #2: trace (application/zip) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    test-results\auth-flow-Auth-flow-login--66c3a--notice-in-mock-environment\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-flow-Auth-flow-login--66c3a--notice-in-mock-environment\trace.zip
+
+    ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+  22) e2e\auth-login.spec.ts:55:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ redirects to / on successful sign-in ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     TimeoutError: page.waitForURL: Timeout 5000ms exceeded.
     =========================== logs ===========================
@@ -1162,7 +1201,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  22) e2e\auth-login.spec.ts:79:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ form is labelled via aria-labelledby ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  23) e2e\auth-login.spec.ts:79:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ form is labelled via aria-labelledby ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1195,7 +1234,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  23) e2e\coherence-tab.spec.ts:8:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ Coherence tab button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  24) e2e\coherence-tab.spec.ts:8:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ Coherence tab button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1228,7 +1267,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  24) e2e\coherence-tab.spec.ts:12:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Coherence tab shows the coherence panel 
+  25) e2e\coherence-tab.spec.ts:12:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Coherence tab shows the coherence panel 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1256,7 +1295,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  25) e2e\coherence-tab.spec.ts:17:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ "Run coherence check" button is visible 
+  26) e2e\coherence-tab.spec.ts:17:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ "Run coherence check" button is visible 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1284,7 +1323,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  26) e2e\coherence-tab.spec.ts:22:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Run shows "CheckingÔÇª" loading state 
+  27) e2e\coherence-tab.spec.ts:22:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Run shows "CheckingÔÇª" loading state 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1312,7 +1351,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  27) e2e\coherence-tab.spec.ts:28:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ after check, 5 alert cards are visible 
+  28) e2e\coherence-tab.spec.ts:28:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ after check, 5 alert cards are visible 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1340,7 +1379,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  28) e2e\coherence-tab.spec.ts:34:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ alert cards have entity, discrepancy type, and confidence badge 
+  29) e2e\coherence-tab.spec.ts:34:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ alert cards have entity, discrepancy type, and confidence badge 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1368,7 +1407,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  29) e2e\coherence-tab.spec.ts:45:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ High confidence alerts have a red-ish badge 
+  30) e2e\coherence-tab.spec.ts:45:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ High confidence alerts have a red-ish badge 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1396,7 +1435,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  30) e2e\document-persistence.spec.ts:8:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ DocumentList sidebar is visible 
+  31) e2e\document-persistence.spec.ts:8:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ DocumentList sidebar is visible 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1429,7 +1468,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  31) e2e\document-persistence.spec.ts:12:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ at least one document is listed on load 
+  32) e2e\document-persistence.spec.ts:12:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ at least one document is listed on load 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1462,7 +1501,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  32) e2e\document-persistence.spec.ts:17:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ editor textarea is visible and editable 
+  33) e2e\document-persistence.spec.ts:17:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ editor textarea is visible and editable 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1495,7 +1534,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  33) e2e\document-persistence.spec.ts:23:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ stub document content is loaded in editor 
+  34) e2e\document-persistence.spec.ts:23:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ stub document content is loaded in editor 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).not.[22mtoBeEmpty[2m([22m[2m)[22m failed
 
@@ -1528,7 +1567,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  34) e2e\document-persistence.spec.ts:28:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ "New document" button creates a new document entry 
+  35) e2e\document-persistence.spec.ts:28:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ "New document" button creates a new document entry 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1561,7 +1600,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  35) e2e\document-persistence.spec.ts:39:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ typing in editor shows "SavingÔÇª" status 
+  36) e2e\document-persistence.spec.ts:39:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ typing in editor shows "SavingÔÇª" status 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1589,7 +1628,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  36) e2e\document-persistence.spec.ts:46:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ after 2s debounce, "Saved at" status appears 
+  37) e2e\document-persistence.spec.ts:46:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ after 2s debounce, "Saved at" status appears 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1617,7 +1656,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  37) e2e\document-persistence.spec.ts:56:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ toolbar shows active document title 
+  38) e2e\document-persistence.spec.ts:56:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ toolbar shows active document title 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1650,7 +1689,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  38) e2e\document-ux.spec.ts:8:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ toolbar title is visible and clickable to edit 
+  39) e2e\document-ux.spec.ts:8:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ toolbar title is visible and clickable to edit 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1683,7 +1722,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  39) e2e\document-ux.spec.ts:16:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ sidebar title has aria-label for rename accessibility 
+  40) e2e\document-ux.spec.ts:16:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ sidebar title has aria-label for rename accessibility 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1716,7 +1755,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  40) e2e\document-ux.spec.ts:21:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ delete button is present for each document item 
+  41) e2e\document-ux.spec.ts:21:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ delete button is present for each document item 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -1749,7 +1788,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  41) e2e\document-ux.spec.ts:26:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ Ctrl+S triggers immediate save (no 2s debounce) 
+  42) e2e\document-ux.spec.ts:26:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ Ctrl+S triggers immediate save (no 2s debounce) 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1777,7 +1816,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  42) e2e\document-ux.spec.ts:36:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ deleting a document removes it from the list (with confirm) 
+  43) e2e\document-ux.spec.ts:36:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ deleting a document removes it from the list (with confirm) 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1805,7 +1844,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  43) e2e\harden.spec.ts:8:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking ­ƒÆ¥ New version opens the HardenModal ÔöÇÔöÇ
+  44) e2e\harden.spec.ts:8:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking ­ƒÆ¥ New version opens the HardenModal ÔöÇÔöÇ
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1833,7 +1872,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  44) e2e\harden.spec.ts:13:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ modal has label input and message textarea ÔöÇÔöÇÔöÇÔöÇ
+  45) e2e\harden.spec.ts:13:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ modal has label input and message textarea ÔöÇÔöÇÔöÇÔöÇ
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1861,7 +1900,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  45) e2e\harden.spec.ts:19:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ Confirm button is disabled when label is empty 
+  46) e2e\harden.spec.ts:19:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ Confirm button is disabled when label is empty 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1889,7 +1928,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  46) e2e\harden.spec.ts:24:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking Cancel closes the modal without adding an entry 
+  47) e2e\harden.spec.ts:24:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking Cancel closes the modal without adding an entry 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1917,7 +1956,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  47) e2e\harden.spec.ts:30:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ confirming a Harden adds it to the History tab timeline 
+  48) e2e\harden.spec.ts:30:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ confirming a Harden adds it to the History tab timeline 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1945,7 +1984,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  48) e2e\harden.spec.ts:45:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ History tab shows stub Harden timeline points by default 
+  49) e2e\harden.spec.ts:45:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ History tab shows stub Harden timeline points by default 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -1973,7 +2012,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  49) e2e\harden.spec.ts:51:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ diff controls are visible in History tab ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  50) e2e\harden.spec.ts:51:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ diff controls are visible in History tab ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2001,7 +2040,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  50) e2e\harden.spec.ts:58:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ View differences is disabled until both versions are selected 
+  51) e2e\harden.spec.ts:58:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ View differences is disabled until both versions are selected 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2029,7 +2068,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  51) e2e\harden.spec.ts:69:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking View differences shows the diff panel 
+  52) e2e\harden.spec.ts:69:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking View differences shows the diff panel 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2057,7 +2096,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  52) e2e\onboarding.spec.ts:4:3 ÔÇ║ Onboarding flow ÔÇ║ shows onboarding on first visit and can be completed 
+  53) e2e\onboarding.spec.ts:4:3 ÔÇ║ Onboarding flow ÔÇ║ shows onboarding on first visit and can be completed 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -2090,7 +2129,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  53) e2e\review-mode.spec.ts:8:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Review button enters review mode ÔöÇ
+  54) e2e\review-mode.spec.ts:8:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Review button enters review mode ÔöÇ
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2118,7 +2157,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  54) e2e\review-mode.spec.ts:14:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button has aria-pressed=true when review mode is active 
+  55) e2e\review-mode.spec.ts:14:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button has aria-pressed=true when review mode is active 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed
 
@@ -2151,7 +2190,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  55) e2e\review-mode.spec.ts:24:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ review screen shows toolbar, text panel and report panel 
+  56) e2e\review-mode.spec.ts:24:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ review screen shows toolbar, text panel and report panel 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2179,7 +2218,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  56) e2e\review-mode.spec.ts:31:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ scope selector is visible with default value 
+  57) e2e\review-mode.spec.ts:31:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ scope selector is visible with default value 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2207,7 +2246,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  57) e2e\review-mode.spec.ts:38:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Back to writing exits review mode 
+  58) e2e\review-mode.spec.ts:38:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Back to writing exits review mode 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2235,7 +2274,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  58) e2e\review-mode.spec.ts:46:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button aria-pressed returns to false after exiting 
+  59) e2e\review-mode.spec.ts:46:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button aria-pressed returns to false after exiting 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2263,7 +2302,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  59) e2e\review-mode.spec.ts:55:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Run analysis button triggers loading state 
+  60) e2e\review-mode.spec.ts:55:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Run analysis button triggers loading state 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2291,7 +2330,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  60) e2e\sharing-flow.spec.ts:34:2 ÔÇ║ Document sharing UI ÔÇ║ Share button is visible in the editor toolbar 
+  61) e2e\sharing-flow.spec.ts:34:2 ÔÇ║ Document sharing UI ÔÇ║ Share button is visible in the editor toolbar 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -2324,7 +2363,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  61) e2e\sharing-flow.spec.ts:39:2 ÔÇ║ Document sharing UI ÔÇ║ Clicking Share button opens the ShareModal 
+  62) e2e\sharing-flow.spec.ts:39:2 ÔÇ║ Document sharing UI ÔÇ║ Clicking Share button opens the ShareModal 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2352,7 +2391,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  62) e2e\sharing-flow.spec.ts:46:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal has a title ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  63) e2e\sharing-flow.spec.ts:46:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal has a title ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2380,7 +2419,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  63) e2e\sharing-flow.spec.ts:52:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed with the X button 
+  64) e2e\sharing-flow.spec.ts:52:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed with the X button 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2408,7 +2447,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  64) e2e\sharing-flow.spec.ts:59:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed by clicking the backdrop 
+  65) e2e\sharing-flow.spec.ts:59:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed by clicking the backdrop 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2436,7 +2475,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  65) e2e\sharing-flow.spec.ts:81:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns empty for short query 
+  66) e2e\sharing-flow.spec.ts:81:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns empty for short query 
 
     Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
@@ -2460,7 +2499,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  66) e2e\sharing-flow.spec.ts:89:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns stub user in mock mode 
+  67) e2e\sharing-flow.spec.ts:89:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns stub user in mock mode 
 
     Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
 
@@ -2484,7 +2523,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  67) e2e\sprint-17.spec.ts:40:2 ÔÇ║ Document list ÔÇö shared badge ÔÇ║ app page loads with document list 
+  68) e2e\sprint-17.spec.ts:40:2 ÔÇ║ Document list ÔÇö shared badge ÔÇ║ app page loads with document list 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -2517,7 +2556,95 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  68) e2e\style-tab.spec.ts:8:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Style tab button is visible in the AI panel ÔöÇÔöÇÔöÇ
+  69) e2e\sprint-17.spec.ts:63:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page renders without error 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"profile"[39m
+    Received string:    [31m"<!DOCTYPE html><html lang=\"en\"><head>[39m
+    [31m		<meta charset=\"utf-8\">[39m
+    [31m		<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">[39m
+    [31m		<!--12qhfyh--><link rel=\"icon\" href=\"data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='107'%20height='128'%20viewBox='0%200%20107%20128'%3e%3ctitle%3esvelte-logo%3c/title%3e%3cpath%20d='M94.157%2022.819c-10.4-14.885-30.94-19.297-45.792-9.835L22.282%2029.608A29.92%2029.92%200%200%200%208.764%2049.65a31.5%2031.5%200%200%200%203.108%2020.231%2030%2030%200%200%200-4.477%2011.183%2031.9%2031.9%200%200%200%205.448%2024.116c10.402%2014.887%2030.942%2019.297%2045.791%209.835l26.083-16.624A29.92%2029.92%200%200%200%2098.235%2078.35a31.53%2031.53%200%200%200-3.105-20.232%2030%2030%200%200%200%204.474-11.182%2031.88%2031.88%200%200%200-5.447-24.116'%20style='fill:%23ff3e00'/%3e%3cpath%20d='M45.817%20106.582a20.72%2020.72%200%200%201-22.237-8.243%2019.17%2019.17%200%200%201-3.277-14.503%2018%2018%200%200%201%20.624-2.435l.49-1.498%201.337.981a33.6%2033.6%200%200%200%2010.203%205.098l.97.294-.09.968a5.85%205.85%200%200%200%201.052%203.878%206.24%206.24%200%200%200%206.695%202.485%205.8%205.8%200%200%200%201.603-.704L69.27%2076.28a5.43%205.43%200%200%200%202.45-3.631%205.8%205.8%200%200%200-.987-4.371%206.24%206.24%200%200%200-6.698-2.487%205.7%205.7%200%200%200-1.6.704l-9.953%206.345a19%2019%200%200%201-5.296%202.326%2020.72%2020.72%200%200%201-22.237-8.243%2019.17%2019.17%200%200%201-3.277-14.502%2017.99%2017.99%200%200%201%208.13-12.052l26.081-16.623a19%2019%200%200%201%205.3-2.329%2020.72%2020.72%200%200%201%2022.237%208.243%2019.17%2019.17%200%200%201%203.277%2014.503%2018%2018%200%200%201-.624%202.435l-.49%201.498-1.337-.98a33.6%2033.6%200%200%200-10.203-5.1l-.97-.294.09-.968a5.86%205.86%200%200%200-1.052-3.878%206.24%206.24%200%200%200-6.696-2.485%205.8%205.8%200%200%200-1.602.704L37.73%2051.72a5.42%205.42%200%200%200-2.449%203.63%205.79%205.79%200%200%200%20.986%204.372%206.24%206.24%200%200%200%206.698%202.486%205.8%205.8%200%200%200%201.602-.704l9.952-6.342a19%2019%200%200%201%205.295-2.328%2020.72%2020.72%200%200%201%2022.237%208.242%2019.17%2019.17%200%200%201%203.277%2014.503%2018%2018%200%200%201-8.13%2012.053l-26.081%2016.622a19%2019%200%200%201-5.3%202.328'%20style='fill:%23fff'/%3e%3c/svg%3e\"><!---->[39m
+    [31m		<link href=\"./_app/immutable/assets/0.ChaDd_xp.css\" rel=\"stylesheet\">[39m
+    [31m		<link href=\"./_app/immutable/assets/4.CXcQ6bns.css\" rel=\"stylesheet\">[39m
+    [31m	<link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/nodes/0.Dpg7rc82.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/DsnmJJEf.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/DlWYyI2F.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/FQJYQako.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/OtlsuR3_.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/nodes/1.9bFkPuZ3.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/Bc0nqugK.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/BvnzT1uu.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/fQ0eOZeC.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/BUNY2Dtw.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/0HQMekwv.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/D-ke6iLc.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/nodes/4.6mzSciW9.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/AyIQN4cC.js\"><link rel=\"modulepreload\" as=\"script\" crossorigin=\"\" href=\"http://localhost:4173/_app/immutable/chunks/CqiK6Vza.js\"></head>[39m
+    [31m	<body data-sveltekit-preload-data=\"hover\">[39m
+    [31m		<div style=\"display: contents\"><!--[--><!--[--><!--[--><!--[--><main class=\"auth-page svelte-1s728sz\"><div class=\"auth-card svelte-1s728sz\"><h1 class=\"auth-title svelte-1s728sz\">Sign in to Sive</h1> <!--[!--><!--]--> <!--[!--><!--]--> <form method=\"POST\" action=\"?/login\" class=\"auth-form svelte-1s728sz\"><label for=\"email\" class=\"svelte-1s728sz\">Email</label> <input id=\"email\" name=\"email\" type=\"email\" required=\"\" autocomplete=\"email\" class=\"svelte-1s728sz\"> <label for=\"password\" class=\"svelte-1s728sz\">Password</label> <input id=\"password\" name=\"password\" type=\"password\" required=\"\" autocomplete=\"current-password\" class=\"svelte-1s728sz\"> <button type=\"submit\" class=\"btn-primary svelte-1s728sz\">Sign in</button></form> <!--[!--><!--]--> <p class=\"auth-footer svelte-1s728sz\">No account? <a href=\"/auth/signup\" class=\"svelte-1s728sz\">Create one</a></p></div></main><!--]--><!----><!--]--><!--]--> <!--[!--><!--]--><!--]-->┬À┬À┬À┬À[39m
+    [31m			<script>[39m
+    [31m				{[39m
+    [31m					__sveltekit_iqzol3 = {[39m
+    [31m						base: new URL(\".\", location).pathname.slice(0, -1)[39m
+    [31m					};┬À[39m
+    [31m					const element = document.currentScript.parentElement;┬À[39m
+    [31m					Promise.all([[39m
+    [31m						import(\"./_app/immutable/entry/start.BF6NzBUL.js\"),[39m
+    [31m						import(\"./_app/immutable/entry/app.CC7ng6wB.js\")[39m
+    [31m					]).then(([kit, app]) => {[39m
+    [31m						kit.start(app, element, {[39m
+    [31m							node_ids: [0, 4],[39m
+    [31m							data: [null,{type:\"data\",data:{isMock:false,hasGithub:false},uses:{}}],[39m
+    [31m							form: null,[39m
+    [31m							error: null[39m
+    [31m						});[39m
+    [31m					});[39m
+    [31m				}[39m
+    [31m			</script>[39m
+    [31m		</div>┬À┬À┬À[39m
+    [31m</body></html>"[39m
+
+      65 | 		// Profile page accessible (may show guest mode in dev)
+      66 | 		const body = await page.content();
+    > 67 | 		expect(body).toContain('profile');
+         | 		             ^
+      68 | 	});
+      69 |
+      70 | 	test('profile page has back link to editor', async ({ page }) => {
+        at D:\boulot\dev\node\sive\e2e\sprint-17.spec.ts:67:16
+
+    Error Context: test-results\sprint-17-Profile-page-ÔÇö-d-0f7f4--page-renders-without-error\error-context.md
+
+    attachment #2: trace (application/zip) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    test-results\sprint-17-Profile-page-ÔÇö-d-0f7f4--page-renders-without-error\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sprint-17-Profile-page-ÔÇö-d-0f7f4--page-renders-without-error\trace.zip
+
+    ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+  70) e2e\sprint-17.spec.ts:70:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page has back link to editor 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('a[href="/app"]')
+    Expected: visible
+    Timeout: 2000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 2000ms[22m
+    [2m  - waiting for locator('a[href="/app"]')[22m
+
+
+      71 | 		await page.goto('/profile');
+      72 | 		const backLink = page.locator('a[href="/app"]');
+    > 73 | 		await expect(backLink).toBeVisible({ timeout: 2000 });
+         | 		                       ^
+      74 | 	});
+      75 | });
+      76 |
+        at D:\boulot\dev\node\sive\e2e\sprint-17.spec.ts:73:26
+
+    Error Context: test-results\sprint-17-Profile-page-ÔÇö-d-791d8-age-has-back-link-to-editor\error-context.md
+
+    attachment #2: trace (application/zip) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    test-results\sprint-17-Profile-page-ÔÇö-d-791d8-age-has-back-link-to-editor\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\sprint-17-Profile-page-ÔÇö-d-791d8-age-has-back-link-to-editor\trace.zip
+
+    ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+  71) e2e\style-tab.spec.ts:8:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Style tab button is visible in the AI panel ÔöÇÔöÇÔöÇ
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -2550,7 +2677,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  69) e2e\style-tab.spec.ts:12:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Style tab shows the style sliders panel 
+  72) e2e\style-tab.spec.ts:12:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Style tab shows the style sliders panel 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2578,7 +2705,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  70) e2e\style-tab.spec.ts:17:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ all 4 slider labels are visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  73) e2e\style-tab.spec.ts:17:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ all 4 slider labels are visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2606,7 +2733,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  71) e2e\style-tab.spec.ts:25:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Analyse this passage button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  74) e2e\style-tab.spec.ts:25:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Analyse this passage button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2634,7 +2761,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  72) e2e\style-tab.spec.ts:30:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Analyse shows "AnalysingÔÇª" loading state 
+  75) e2e\style-tab.spec.ts:30:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Analyse shows "AnalysingÔÇª" loading state 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2662,7 +2789,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  73) e2e\style-tab.spec.ts:36:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ after analysis, 3 result cards are visible ÔöÇÔöÇÔöÇ
+  76) e2e\style-tab.spec.ts:36:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ after analysis, 3 result cards are visible ÔöÇÔöÇÔöÇ
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2690,7 +2817,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  74) e2e\style-tab.spec.ts:42:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ result cards contain location, signal, and suggestion text 
+  77) e2e\style-tab.spec.ts:42:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ result cards contain location, signal, and suggestion text 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2718,7 +2845,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  75) e2e\suggestions-tab.spec.ts:8:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Suggestions tab button is visible and active by default 
+  78) e2e\suggestions-tab.spec.ts:8:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Suggestions tab button is visible and active by default 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -2751,7 +2878,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  76) e2e\suggestions-tab.spec.ts:12:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Generate suggestions" button is visible 
+  79) e2e\suggestions-tab.spec.ts:12:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Generate suggestions" button is visible 
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -2784,7 +2911,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  77) e2e\suggestions-tab.spec.ts:16:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Generate shows "GeneratingÔÇª" loading state 
+  80) e2e\suggestions-tab.spec.ts:16:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Generate shows "GeneratingÔÇª" loading state 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2812,7 +2939,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  78) e2e\suggestions-tab.spec.ts:21:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ after generation, 3 suggestion cards appear 
+  81) e2e\suggestions-tab.spec.ts:21:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ after generation, 3 suggestion cards appear 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2840,7 +2967,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  79) e2e\suggestions-tab.spec.ts:26:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ suggestion cards show type badge and diff content 
+  82) e2e\suggestions-tab.spec.ts:26:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ suggestion cards show type badge and diff content 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2868,7 +2995,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  80) e2e\suggestions-tab.spec.ts:34:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Accept and Reject buttons are visible on each card 
+  83) e2e\suggestions-tab.spec.ts:34:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Accept and Reject buttons are visible on each card 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2896,7 +3023,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  81) e2e\suggestions-tab.spec.ts:42:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Reject removes that card from the list 
+  84) e2e\suggestions-tab.spec.ts:42:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Reject removes that card from the list 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2924,7 +3051,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  82) e2e\suggestions-tab.spec.ts:49:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Accept all" button removes all cards 
+  85) e2e\suggestions-tab.spec.ts:49:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Accept all" button removes all cards 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -2952,7 +3079,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  83) e2e\ux-polish.spec.ts:4:2 ÔÇ║ UX Polish & Export ÔÇ║ export button renders in toolbar ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  86) e2e\ux-polish.spec.ts:4:2 ÔÇ║ UX Polish & Export ÔÇ║ export button renders in toolbar ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -2985,7 +3112,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  84) e2e\ux-polish.spec.ts:9:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown shows Markdown and Plain text options 
+  87) e2e\ux-polish.spec.ts:9:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown shows Markdown and Plain text options 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -3013,7 +3140,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  85) e2e\ux-polish.spec.ts:16:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown closes when clicking Markdown 
+  88) e2e\ux-polish.spec.ts:16:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown closes when clicking Markdown 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -3041,7 +3168,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  86) e2e\ux-polish.spec.ts:28:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggle button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  89) e2e\ux-polish.spec.ts:28:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggle button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -3074,7 +3201,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  87) e2e\ux-polish.spec.ts:33:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggles on button click ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+  90) e2e\ux-polish.spec.ts:33:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggles on button click ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
     Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
 
@@ -3107,7 +3234,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  88) e2e\ux-polish.spec.ts:45:2 ÔÇ║ UX Polish & Export ÔÇ║ AI tab shows empty state hint before running analysis 
+  91) e2e\ux-polish.spec.ts:45:2 ÔÇ║ UX Polish & Export ÔÇ║ AI tab shows empty state hint before running analysis 
 
     [31mTest timeout of 30000ms exceeded.[39m
 
@@ -3135,7 +3262,7 @@ Running 120 tests using 1 worker
 
     ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
 
-  88 failed
+  91 failed
     e2e\ai-integration.spec.ts:8:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: "Generate suggestions" button is present 
     e2e\ai-integration.spec.ts:14:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: clicking button shows results or loading state 
     e2e\ai-integration.spec.ts:22:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Coherence tab: "Run coherence check" button is present 
@@ -3156,6 +3283,7 @@ Running 120 tests using 1 worker
     e2e\app-layout.spec.ts:91:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle button collapses and reopens the overlay 
     e2e\app-layout.spec.ts:101:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle has correct aria-expanded attribute 
     e2e\auth-flow.spec.ts:4:2 ÔÇ║ Auth flow ÔÇ║ login page renders with email, password fields and GitHub button 
+    e2e\auth-flow.spec.ts:28:2 ÔÇ║ Auth flow ÔÇ║ login page shows dev mode notice in mock environment ÔöÇÔöÇ
     e2e\auth-login.spec.ts:55:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ redirects to / on successful sign-in ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
     e2e\auth-login.spec.ts:79:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ form is labelled via aria-labelledby ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
     e2e\coherence-tab.spec.ts:8:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ Coherence tab button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
@@ -3203,6 +3331,8 @@ Running 120 tests using 1 worker
     e2e\sharing-flow.spec.ts:81:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns empty for short query 
     e2e\sharing-flow.spec.ts:89:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns stub user in mock mode 
     e2e\sprint-17.spec.ts:40:2 ÔÇ║ Document list ÔÇö shared badge ÔÇ║ app page loads with document list ÔöÇÔöÇ
+    e2e\sprint-17.spec.ts:63:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page renders without error ÔöÇÔöÇ
+    e2e\sprint-17.spec.ts:70:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page has back link to editor 
     e2e\style-tab.spec.ts:8:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Style tab button is visible in the AI panel ÔöÇÔöÇÔöÇÔöÇÔöÇ
     e2e\style-tab.spec.ts:12:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Style tab shows the style sliders panel 
     e2e\style-tab.spec.ts:17:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ all 4 slider labels are visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
@@ -3224,4 +3354,4 @@ Running 120 tests using 1 worker
     e2e\ux-polish.spec.ts:28:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggle button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
     e2e\ux-polish.spec.ts:33:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggles on button click ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
     e2e\ux-polish.spec.ts:45:2 ÔÇ║ UX Polish & Export ÔÇ║ AI tab shows empty state hint before running analysis 
-  32 passed (31.3m)
+  29 passed (31.3m)
