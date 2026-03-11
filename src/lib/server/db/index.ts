@@ -1,5 +1,7 @@
 import * as schema from './schema';
 import { env } from '$env/dynamic/private';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 
 // Try to load native better-sqlite3 and drizzle adapter. If it fails
 // (common on fresh dev environments without build tools / node ABI mismatch),

@@ -1,6 +1,6 @@
 # Sprint 18 — Release Candidate & Final QA
 
-status: planned
+status: in_progress
 progress: 0
 start: 2026-03-10
 end: 2026-03-24

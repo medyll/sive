@@ -4,6 +4,8 @@ import { auth, isMock } from '$lib/server/auth';
 import { db as drizzleDb } from '$lib/server/db';
 import { user_preferences } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 
 let svelteKitHandler: any;
 try {

@@ -1,6 +1,8 @@
 import { env } from '$env/dynamic/private';
 import { getRequestEvent } from '$app/server';
 import type { BetterAuth } from 'better-auth/minimal';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 
 // Attempt to initialize real Better-Auth when DB and adapter are available.
 // If not (e.g., better-sqlite3 native binding missing), export a lightweight stub
