@@ -49,7 +49,7 @@ completed_steps:
 missing_artifacts: []
 
 recommendation: /sprints/sprint-18/S18-04
-last_updated: 2026-03-10
+last_updated: 2026-03-11
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -242,38 +242,7 @@ sprints:
       - id: S7-05
         title: e2e-suggestions-tab
         status: done
-    title: Create sign-in page
-    priority: high
-    status: done
-  - id: task-s1-03-2
-    title: Server sign-in handler
-    priority: high
-    status: done
-  - id: task-s1-03-3
-    title: UI validation & accessibility
-    priority: medium
-    status: done
-  - id: task-s1-05-1
-    title: Write unit tests for auth handler
-    priority: high
-    status: done
-  - id: task-s1-05-2
-    title: Mock DB tests for adapter
-    priority: medium
-    status: done
-  - id: task-s1-06-1
-    title: Add Playwright smoke test for login flow
-    priority: high
-    status: done
-  - id: task-s1-07-1
-    title: Document auth setup in README
-    priority: low
-    status: done
-  - id: task-ui-01
-    title: "[New] Track AI/Chat UI feature — AIPanel, ChatBar, EditorPanel, Spinner, TabBar"
-    priority: medium
-    status: done
-
+  
   qa:
     coverage: "124 unit tests + 6 E2E (ux-polish) + 6 E2E (auth-flow) + 6 E2E (ai-integration) + 8 E2E (persistence) + 5 E2E (document-ux) + 8 E2E (suggestions) + 7 E2E (coherence) + 7 E2E (style)"
     last_run: 2026-03-10
@@ -365,4 +334,6 @@ sprints:
       - id: S18-04
         title: fix-e2e-timeout-failures
         status: in_progress
+        owner: engineering/qa
+        assigned_via: bmad-master next --auto
 
