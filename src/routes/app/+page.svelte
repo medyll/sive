@@ -264,6 +264,9 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
           G
         {/if}
       </a>
+      {#if data.user?.id === 'guest'}
+        <span class="guest-indicator" title="Vous êtes en mode invité">Invité</span>
+      {/if}
     </div>
   </header>
 
