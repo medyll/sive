@@ -28,23 +28,30 @@ const handleBetterAuth: Handle = async ({ event, resolve }) => {
 	if (session) {
 		event.locals.session = session.session;
 		event.locals.user = session.user;
+		// mark as authenticated
+		event.locals.isGuest = false;
+	} else {
+		// No authenticated session: create a lightweight guest identity so UI can act accordingly
+		event.locals.session = null;
+		event.locals.user = { id: 'guest', name: 'Guest', role: 'guest' } as any;
+		event.locals.isGuest = true;
+	}
 
-		// Load user preferences into locals if available
-		if (drizzleDb) {
-			try {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				const typedDb = drizzleDb as any;
-				const prefRow = typedDb.select().from(user_preferences).where(eq(user_preferences.user_id, event.locals.user.id)).get();
-				if (prefRow) {
-					try {
-						event.locals.preferences = JSON.parse(prefRow.prefs);
-					} catch {
-						event.locals.preferences = null;
-					}
+	// Load user preferences into locals if available and user is not guest
+	if (!event.locals.isGuest && drizzleDb) {
+		try {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const typedDb = drizzleDb as any;
+			const prefRow = typedDb.select().from(user_preferences).where(eq(user_preferences.user_id, event.locals.user.id)).get();
+			if (prefRow) {
+				try {
+					event.locals.preferences = JSON.parse(prefRow.prefs);
+				} catch {
+					event.locals.preferences = null;
 				}
-			} catch (e) {
-				// ignore preference loading errors
 			}
+		} catch (e) {
+			// ignore preference loading errors
 		}
 	}
 
