@@ -3,6 +3,8 @@
 Merged on: 2026-03-14
 Source: `bmad/artifacts/architecture.draft.md` merged conceptually with existing architecture document.
 
+NOTE: This is a non-destructive merged version. The original `architecture.md` remains unchanged; confirm to replace.
+
 ## Summary
 
 This merged architecture describes a cookie-only guest-mode MVP with optional future persistence. Key components: client, SvelteKit server hooks, Better-Auth (unchanged), Drizzle persistence, background reconciliation worker, and observability.
@@ -33,4 +35,4 @@ This merged architecture describes a cookie-only guest-mode MVP with optional fu
 
 ---
 
-Merged and saved. Original content backed up in `bmad/artifacts/architecture.previous.md`.
+If you confirm, I will replace `bmad/artifacts/architecture.md` with this merged version and keep the original as `architecture.previous.md`.
