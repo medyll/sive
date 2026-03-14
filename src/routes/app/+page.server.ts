@@ -36,43 +36,50 @@ export const load: PageServerLoad = async ({ locals }) => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const typedDb = db as any;
 
-	// Fetch all share records for this user to find accessible documents
-	const userShares: { document_id: string; role: string }[] = typedDb
-		.select({ document_id: document_shares.document_id, role: document_shares.role })
-		.from(document_shares)
-		.where(eq(document_shares.user_id, userId))
-		.all() ?? [];
+	try {
+		// Fetch all share records for this user to find accessible documents
+		const userShares: { document_id: string; role: string }[] = typedDb
+			.select({ document_id: document_shares.document_id, role: document_shares.role })
+			.from(document_shares)
+			.where(eq(document_shares.user_id, userId))
+			.all() ?? [];
 
-	if (userShares.length === 0) {
-		// First visit — create a default document and owner share
-		const newDoc = {
-			id: crypto.randomUUID(),
-			user_id: userId,
-			title: 'Untitled',
-			content: '',
-			created_at: Date.now(),
-			updated_at: Date.now()
-		};
-		typedDb.insert(documents).values(newDoc).run();
-		createOwnerShare(db, newDoc.id, userId);
-		return { documents: [{ ...newDoc, role: 'owner' }], activeDocumentId: newDoc.id };
+		if (userShares.length === 0) {
+			// First visit — create a default document and owner share
+			const newDoc = {
+				id: crypto.randomUUID(),
+				user_id: userId,
+				title: 'Untitled',
+				content: '',
+				created_at: Date.now(),
+				updated_at: Date.now()
+			};
+			typedDb.insert(documents).values(newDoc).run();
+			createOwnerShare(db, newDoc.id, userId);
+			return { documents: [{ ...newDoc, role: 'owner' }], activeDocumentId: newDoc.id };
+		}
+
+		// Fetch all accessible documents in one pass, annotate with role
+		const shareMap = new Map(userShares.map((s) => [s.document_id, s.role]));
+		const accessibleDocIds = userShares.map((s) => s.document_id);
+
+		// Fetch each document (SQLite doesn't support IN with drizzle easily — fetch individually)
+		const docs = accessibleDocIds
+			.map((docId) => {
+				const rows = typedDb.select().from(documents).where(eq(documents.id, docId)).all();
+				if (!rows || rows.length === 0) return null;
+				return { ...rows[0], role: shareMap.get(docId) ?? 'viewer' };
+			})
+			.filter(Boolean)
+			.sort((a: { updated_at: number }, b: { updated_at: number }) => b.updated_at - a.updated_at);
+
+		return { documents: docs, activeDocumentId: docs[0]?.id ?? null, user: locals.user ?? null, preferences: locals.preferences ?? null };
+	} catch (err) {
+		// If DB tables are missing or another DB error occurs, fall back to guest stub mode
+		// eslint-disable-next-line no-console
+		console.warn('DB access failed in load(): falling back to guest stubs:', err?.message ?? err);
+		return { documents: STUB_DOCUMENTS, activeDocumentId: STUB_DOCUMENTS[0].id, user: locals.user ?? null };
 	}
-
-	// Fetch all accessible documents in one pass, annotate with role
-	const shareMap = new Map(userShares.map((s) => [s.document_id, s.role]));
-	const accessibleDocIds = userShares.map((s) => s.document_id);
-
-	// Fetch each document (SQLite doesn't support IN with drizzle easily — fetch individually)
-	const docs = accessibleDocIds
-		.map((docId) => {
-			const rows = typedDb.select().from(documents).where(eq(documents.id, docId)).all();
-			if (!rows || rows.length === 0) return null;
-			return { ...rows[0], role: shareMap.get(docId) ?? 'viewer' };
-		})
-		.filter(Boolean)
-		.sort((a: { updated_at: number }, b: { updated_at: number }) => b.updated_at - a.updated_at);
-
-	return { documents: docs, activeDocumentId: docs[0]?.id ?? null, user: locals.user ?? null, preferences: locals.preferences ?? null };
 };
 
 export const actions: Actions = {
