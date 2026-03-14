@@ -630,4 +630,15 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       max-width: none;
     }
   }
+.guest-indicator {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-muted, #6b7280);
+  background: rgba(0,0,0,0.04);
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.5rem;
+  align-self: center;
+  display: inline-block;
+}
+
 </style>
