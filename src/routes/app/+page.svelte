@@ -247,6 +247,9 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         content={activeContent}
       />
       <a href="/settings" title="Settings" class="btn-settings">⚙</a>
+      {#if data.user?.id === 'guest'}
+        <a href="/auth" class="btn-login" title="Se connecter">Se connecter</a>
+      {/if}
       <a
         href="/profile"
         class="user-badge"
