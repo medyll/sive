@@ -9,26 +9,21 @@ const require = createRequire(import.meta.url);
 let db: unknown = null;
 let isMock = false;
 
-if (!env.DATABASE_URL) {
-	// For local UI work we allow missing DATABASE_URL — export mock
+// Prefer an explicit DB URL; if missing use an in-memory DB so preview/build can run locally
+const dbUrl = env.DATABASE_URL ?? ':memory:';
+try {
+	// dynamic require to avoid early failures during Vite SSR
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const Database = require('better-sqlite3');
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const { drizzle } = require('drizzle-orm/better-sqlite3');
+	const client = new Database(dbUrl as string);
+	db = drizzle(client, { schema });
+} catch (err) {
+	// native module failed to load or DB creation failed — fall back to mock
+	// eslint-disable-next-line no-console
+	console.warn('better-sqlite3 failed to load or init, running with a mocked DB for dev:', err?.message || err);
 	isMock = true;
-} else {
-	try {
-		// dynamic require to avoid early failures during Vite SSR
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		const Database = require('better-sqlite3');
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		const { drizzle } = require('drizzle-orm/better-sqlite3');
-		const client = new Database(env.DATABASE_URL as string);
-		db = drizzle(client, { schema });
-	} catch (err) {
-		// native module failed to load — fall back to mock
-		// Log a clear message so devs can see why DB is mocked.
-		// Note: avoid console during SSR in production; this is for developer convenience.
-		// eslint-disable-next-line no-console
-		console.warn('better-sqlite3 failed to load, running with a mocked DB for dev:', err?.message || err);
-		isMock = true;
-	}
 }
 
 export { db, isMock };
