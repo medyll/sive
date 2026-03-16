@@ -20,6 +20,8 @@
     onNew?: () => void;
     onRename?: (id: string, title: string) => void;
     onDelete?: (id: string) => void;
+    onDuplicate?: (id: string) => void;
+    onBulkDelete?: (ids: string[]) => void;
   }
 
   let {
@@ -29,7 +31,9 @@
     onSelect,
     onNew,
     onRename,
-    onDelete
+    onDelete,
+    onDuplicate,
+    onBulkDelete
   }: DocumentListProps = $props();
 
   // Hydrate tags from server data whenever documents change
@@ -140,12 +144,109 @@
   function focusOnMount(node: HTMLElement) {
     node.focus();
   }
+
+  // ── Context menu ──────────────────────────────────────────────────────────
+  let menuOpenId = $state<string | null>(null);
+  let menuRef = $state<HTMLElement | null>(null);
+
+  function openMenu(id: string, e: MouseEvent | KeyboardEvent) {
+    e.stopPropagation();
+    menuOpenId = menuOpenId === id ? null : id;
+  }
+
+  function closeMenu() { menuOpenId = null; }
+
+  function menuRename(doc: DocumentItem, e: MouseEvent | KeyboardEvent) {
+    e.stopPropagation();
+    closeMenu();
+    editingId = doc.id;
+    editingTitle = doc.title;
+  }
+
+  function menuDuplicate(id: string, e: MouseEvent | KeyboardEvent) {
+    e.stopPropagation();
+    closeMenu();
+    onDuplicate?.(id);
+  }
+
+  function menuDelete(id: string, e: MouseEvent | KeyboardEvent) {
+    e.stopPropagation();
+    closeMenu();
+    if (confirm('Delete this document?')) onDelete?.(id);
+  }
+
+  // Close menu on outside click
+  $effect(() => {
+    if (!menuOpenId) return;
+    function onOutside(e: MouseEvent) {
+      if (menuRef && !menuRef.contains(e.target as Node)) closeMenu();
+    }
+    document.addEventListener('mousedown', onOutside);
+    return () => document.removeEventListener('mousedown', onOutside);
+  });
+
+  // ── Bulk select ───────────────────────────────────────────────────────────
+  let bulkMode = $state(false);
+  let selectedIds = $state<Set<string>>(new Set());
+
+  let selectedCount = $derived(selectedIds.size);
+  let allSelected = $derived(
+    filteredDocuments.length > 0 && filteredDocuments.every(d => selectedIds.has(d.id))
+  );
+
+  function toggleBulkMode() {
+    bulkMode = !bulkMode;
+    if (!bulkMode) selectedIds = new Set();
+  }
+
+  function toggleSelect(id: string) {
+    const next = new Set(selectedIds);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    selectedIds = next;
+  }
+
+  function toggleSelectAll() {
+    if (allSelected) {
+      selectedIds = new Set();
+    } else {
+      selectedIds = new Set(filteredDocuments.map(d => d.id));
+    }
+  }
+
+  function confirmBulkDelete() {
+    if (selectedCount === 0) return;
+    if (confirm(`Delete ${selectedCount} document${selectedCount > 1 ? 's' : ''}?`)) {
+      onBulkDelete?.([...selectedIds]);
+      selectedIds = new Set();
+      bulkMode = false;
+    }
+  }
 </script>
 
 <aside class="doc-list" aria-label="Document list">
   <div class="doc-list-header">
     <span class="doc-list-title">Documents</span>
-    <button class="btn-new-doc" type="button" onclick={onNew} aria-label="New document">＋</button>
+    {#if bulkMode}
+      <button
+        class="btn-select-all"
+        type="button"
+        onclick={toggleSelectAll}
+        aria-label={allSelected ? 'Deselect all' : 'Select all'}
+        title={allSelected ? 'Deselect all' : 'Select all'}
+      >{allSelected ? '☑' : '☐'}</button>
+      {#if selectedCount > 0}
+        <button
+          class="btn-bulk-delete"
+          type="button"
+          onclick={confirmBulkDelete}
+          aria-label="Delete selected documents"
+        >Delete ({selectedCount})</button>
+      {/if}
+      <button class="btn-bulk-cancel" type="button" onclick={toggleBulkMode} aria-label="Cancel selection">✕</button>
+    {:else}
+      <button class="btn-bulk-mode" type="button" onclick={toggleBulkMode} aria-label="Select documents" title="Select multiple">☐</button>
+      <button class="btn-new-doc" type="button" onclick={onNew} aria-label="New document">＋</button>
+    {/if}
   </div>
 
   <div class="doc-search-row">
@@ -209,15 +310,25 @@
       </li>
     {:else}
       {#each filteredDocuments as doc, i (doc.id)}
-      <li>
+      <li class="doc-list-item" class:doc-list-item--selected={bulkMode && selectedIds.has(doc.id)}>
+        {#if bulkMode}
+          <input
+            class="doc-checkbox"
+            type="checkbox"
+            checked={selectedIds.has(doc.id)}
+            onchange={() => toggleSelect(doc.id)}
+            aria-label="Select {doc.title}"
+            onclick={(e) => e.stopPropagation()}
+          />
+        {/if}
         <div
           class="doc-item"
           class:active={doc.id === activeId}
           class:focused={i === focusedIndex}
           role="option"
           tabindex="0"
-          onclick={() => { focusedIndex = i; onSelect?.(doc.id); }}
-          onkeydown={(e) => e.key === 'Enter' && (focusedIndex = i, onSelect?.(doc.id))}
+          onclick={() => { focusedIndex = i; if (bulkMode) { toggleSelect(doc.id); } else { onSelect?.(doc.id); } }}
+          onkeydown={(e) => e.key === 'Enter' && (focusedIndex = i, bulkMode ? toggleSelect(doc.id) : onSelect?.(doc.id))}
           aria-selected={doc.id === activeId}
         >
           {#if editingId === doc.id}
@@ -247,12 +358,30 @@
           {/if}
           <span class="doc-meta">
             <span class="doc-date">{formatDate(doc.updated_at)}</span>
-            <button
-              class="btn-delete-doc"
-              type="button"
-              aria-label="Delete {doc.title}"
-              onclick={(e) => handleDelete(doc.id, e)}
-            >🗑</button>
+            <!-- Context menu trigger -->
+            <div class="doc-menu-wrap" bind:this={menuOpenId === doc.id ? menuRef : undefined}>
+              <button
+                class="btn-doc-menu"
+                type="button"
+                aria-label="More actions for {doc.title}"
+                aria-expanded={menuOpenId === doc.id}
+                aria-haspopup="menu"
+                onclick={(e) => openMenu(doc.id, e)}
+              >⋯</button>
+              {#if menuOpenId === doc.id}
+                <ul class="doc-context-menu" role="menu" aria-label="Document actions">
+                  <li role="none">
+                    <button role="menuitem" type="button" onclick={(e) => menuRename(doc, e)}>Rename</button>
+                  </li>
+                  <li role="none">
+                    <button role="menuitem" type="button" onclick={(e) => menuDuplicate(doc.id, e)}>Duplicate</button>
+                  </li>
+                  <li role="none">
+                    <button role="menuitem" type="button" class="menu-item-danger" onclick={(e) => menuDelete(doc.id, e)}>Delete</button>
+                  </li>
+                </ul>
+              {/if}
+            </div>
           </span>
           <div class="doc-tags" onclick={(e) => e.stopPropagation()}>
             {#each tagStore.get(doc.id) as tag}
@@ -454,23 +583,134 @@
     color: var(--color-text-muted, #9ca3af);
   }
 
-  .btn-delete-doc {
+  /* ── Bulk mode ── */
+  .doc-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .doc-list-item--selected .doc-item {
+    background: var(--color-primary-light, #ebebff);
+  }
+
+  .doc-checkbox {
+    margin-top: 0.6rem;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: var(--color-primary, #646cff);
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .btn-bulk-mode {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--color-text-muted, #9ca3af);
+    padding: 0.1rem 0.2rem;
+    line-height: 1;
+  }
+
+  .btn-bulk-mode:hover { color: var(--color-text, #1a1a1a); }
+
+  .btn-select-all {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--color-primary, #646cff);
+    padding: 0.1rem 0.2rem;
+    line-height: 1;
+  }
+
+  .btn-bulk-delete {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.45rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ef4444;
+    background: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .btn-bulk-delete:hover { background: #ef4444; color: #fff; }
+
+  .btn-bulk-cancel {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 0.75rem;
-    padding: 0;
-    opacity: 0;
-    transition: opacity 0.15s;
+    color: var(--color-text-muted, #9ca3af);
+    padding: 0.1rem 0.2rem;
     line-height: 1;
   }
 
-  .doc-item:hover .btn-delete-doc,
-  .doc-item.active .btn-delete-doc {
-    opacity: 0.5;
+  /* ── Context menu ── */
+  .doc-menu-wrap {
+    position: relative;
+    display: inline-flex;
   }
 
-  .btn-delete-doc:hover { opacity: 1 !important; }
+  .btn-doc-menu {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0 0.15rem;
+    opacity: 0;
+    transition: opacity 0.15s;
+    line-height: 1;
+    color: var(--color-text-muted, #9ca3af);
+    letter-spacing: 0.05em;
+  }
+
+  .doc-item:hover .btn-doc-menu,
+  .doc-item.active .btn-doc-menu,
+  .btn-doc-menu[aria-expanded="true"] {
+    opacity: 1;
+  }
+
+  .btn-doc-menu:hover { color: var(--color-text, #1a1a1a); }
+
+  .doc-context-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 2px);
+    z-index: 100;
+    background: var(--color-background, #fff);
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 0.35rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    list-style: none;
+    margin: 0;
+    padding: 0.25rem 0;
+    min-width: 8rem;
+    white-space: nowrap;
+  }
+
+  .doc-context-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+    color: var(--color-text, #1a1a1a);
+  }
+
+  .doc-context-menu button:hover {
+    background: var(--color-hover, #f0f0f0);
+  }
+
+  .menu-item-danger { color: #ef4444 !important; }
+  .menu-item-danger:hover { background: #fef2f2 !important; }
 
   /* Skeleton loader */
   .doc-skeleton {

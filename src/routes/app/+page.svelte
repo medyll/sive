@@ -64,6 +64,8 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let renameTitleInput: HTMLInputElement;
   let deleteDocForm: HTMLFormElement;
   let deleteIdInput: HTMLInputElement;
+  let duplicateDocForm: HTMLFormElement;
+  let duplicateIdInput: HTMLInputElement;
 
   function handleSelectDocument(id: string) {
     activeDocumentId = id;

@@ -150,5 +150,40 @@ export const actions: Actions = {
 		typedDb.delete(documents).where(eq(documents.id, id)).run();
 
 		return { success: true };
+	},
+
+	duplicateDocument: async ({ request, locals }) => {
+		const data = await request.formData();
+		const id = data.get('id') as string;
+
+		if (!id) return { success: false, error: 'Missing document id' };
+
+		if (isMock || !db) {
+			return { success: true, id: `stub-doc-${Date.now()}` };
+		}
+
+		const userId = locals.user?.id ?? GUEST_USER_ID;
+
+		// Require at least viewer access to the source document
+		await requireDocumentRole(db, userId, id, 'viewer');
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const typedDb = db as any;
+		const rows = typedDb.select().from(documents).where(eq(documents.id, id)).all();
+		if (!rows || rows.length === 0) return { success: false, error: 'Document not found' };
+
+		const source = rows[0];
+		const newDoc = {
+			id: crypto.randomUUID(),
+			user_id: userId,
+			title: `Copy of ${source.title}`,
+			content: source.content,
+			created_at: Date.now(),
+			updated_at: Date.now()
+		};
+		typedDb.insert(documents).values(newDoc).run();
+		createOwnerShare(db, newDoc.id, userId);
+
+		return { success: true, id: newDoc.id };
 	}
 };

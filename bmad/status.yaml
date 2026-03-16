@@ -71,6 +71,9 @@ recommendation: |
   or an export/print polish pass (PDF export, print stylesheet).
 last_updated: 2026-03-16
 
+active_role: scrum
+next_action: "Start Sprint 25 — AI-assisted document summarisation (one-click summary badge)"
+
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
   - bmad/artifacts/product-brief.md
@@ -83,6 +86,7 @@ artifacts:
   - bmad/artifacts/sprints/sprint-21.md
   - bmad/artifacts/sprints/sprint-22.md
   - bmad/artifacts/sprints/sprint-23.md
+  - bmad/artifacts/sprints/sprint-25.md
 
 sprints:
   - id: sprint-1
@@ -136,7 +140,8 @@ sprints:
       - id: S2-07
         title: e2e-layout-tests
         status: done
-
+
+
   - id: sprint-3
     name: Sprint 3 — Review Mode UI
     status: done
@@ -440,4 +445,30 @@ sprints:
       - id: S23-06
         title: e2e-ai-context
         status: done
+
+  - id: sprint-25
+    name: Sprint 25 — AI-assisted Document Summaries
+    status: planned
+    progress: 0
+    start: 2026-03-17
+    end: 2026-03-31
+    stories:
+      - id: S25-01
+        title: summary-badge-toolbar
+        status: planned
+      - id: S25-02
+        title: api-ai-summary-endpoint
+        status: planned
+      - id: S25-03
+        title: summary-store-cache
+        status: planned
+      - id: S25-04
+        title: export-print-polish
+        status: planned
+      - id: S25-05
+        title: unit-tests-sprint25
+        status: planned
+      - id: S25-06
+        title: e2e-sprint25
+        status: planned
 
