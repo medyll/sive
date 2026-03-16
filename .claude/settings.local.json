@@ -5,7 +5,8 @@
       "Bash(mv:*)",
       "Bash(git:*)",
       "Bash(lsof:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "mcp__plugin_context-mode_context-mode__ctx_search"
     ]
   }
 }

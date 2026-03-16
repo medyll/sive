@@ -51,9 +51,44 @@ Props: report (null = placeholder)
   };
 
   let { report = STUB_REPORT }: ReviewReportProps = $props();
+
+  let reportEl = $state<HTMLElement | null>(null);
+
+  /**
+   * Scroll the first report-item whose section matches the given category into view.
+   * Category values from Highlight map to section ids:
+   *   inconsistency → sec-inconsistencies
+   *   pov           → sec-pov
+   *   style         → sec-style
+   *   rhythm        → sec-style  (grouped under Style & Rhythm)
+   *   voice         → sec-voices
+   */
+  const CATEGORY_TO_SECTION: Record<string, string> = {
+    inconsistency: 'sec-inconsistencies',
+    pov:           'sec-pov',
+    style:         'sec-style',
+    rhythm:        'sec-style',
+    voice:         'sec-voices'
+  };
+
+  export function scrollToItem(category: string): void {
+    if (!reportEl) return;
+    const sectionId = CATEGORY_TO_SECTION[category];
+    if (!sectionId) return;
+    const heading = reportEl.querySelector(`#${sectionId}`);
+    if (heading) {
+      heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Briefly highlight the heading for visual feedback
+      const section = heading.closest('section');
+      if (section) {
+        section.classList.add('highlight-flash');
+        setTimeout(() => section.classList.remove('highlight-flash'), 800);
+      }
+    }
+  }
 </script>
 
-<div class="review-report" aria-label="Audit report">
+<div class="review-report" aria-label="Audit report" bind:this={reportEl}>
   {#if report === null}
     <div class="placeholder">
       <p>Run analysis to generate the report.</p>
@@ -216,6 +251,8 @@ Props: report (null = placeholder)
     color: var(--color-text, #333);
     font-weight: 500;
   }
+
+  :global(.highlight-flash) { outline: 2px solid var(--color-primary, #646cff); outline-offset: 4px; transition: outline 0.4s ease-out; }
 
   .status--unresolved { background: rgba(255, 150, 50, 0.2); color: #b35900; }
   .status--active     { background: rgba(100, 108, 255, 0.15); color: #3a3fb5; }

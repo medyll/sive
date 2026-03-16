@@ -10,6 +10,7 @@
   import ExportButton from '$lib/elements/ExportButton.svelte';
   import Toast from '$lib/elements/Toast.svelte';
 import Onboarding from '$lib/elements/Onboarding.svelte';
+  import KeyboardShortcutsHelp from '$lib/elements/KeyboardShortcutsHelp.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
   import { toastStore } from '$lib/toastStore.svelte';
 
@@ -138,8 +139,10 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     if (e.key === 'Escape') { editingToolbarTitle = false; }
   }
   let aiProcessing = $state(false);
+  let suggestionsReady = $state(false);
   let dragging = $state(false);
   let chatBarOpen = $state(true);
+  let showShortcutsHelp = $state(false);
 
   function persistState(_node: HTMLElement) {
     $effect(() => {
@@ -150,15 +153,57 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   }
 
   function globalKeyboardShortcuts(_node: HTMLElement) {
+    function isTyping(e: KeyboardEvent): boolean {
+      const t = e.target as HTMLElement;
+      return t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable;
+    }
+
     function onKeydown(e: KeyboardEvent) {
+      // Focus mode — always active
       if (e.key === 'F11' || (e.ctrlKey && e.shiftKey && e.key === 'F')) {
         e.preventDefault();
         focusMode = !focusMode;
+        return;
       }
-      // Ctrl+S — immediate save
-      if (e.ctrlKey && e.key === 's') {
+      // Ctrl+S — immediate save (allowed inside editor)
+      if (e.ctrlKey && !e.shiftKey && e.key === 's') {
         e.preventDefault();
         if (activeDocumentId) handleSave(activeDocumentId, activeContent);
+        return;
+      }
+      // Skip remaining shortcuts when typing in an input
+      if (isTyping(e)) return;
+
+      // Ctrl+N — new document
+      if (e.ctrlKey && !e.shiftKey && e.key === 'n') {
+        e.preventDefault();
+        handleNewDocument();
+        return;
+      }
+      // Ctrl+B — toggle sidebar
+      if (e.ctrlKey && !e.shiftKey && e.key === 'b') {
+        e.preventDefault();
+        sidebarOpen = !sidebarOpen;
+        return;
+      }
+      // Ctrl+] — next document
+      if (e.ctrlKey && e.key === ']') {
+        e.preventDefault();
+        const idx = documents.findIndex((d) => d.id === activeDocumentId);
+        if (idx < documents.length - 1) activeDocumentId = documents[idx + 1].id;
+        return;
+      }
+      // Ctrl+[ — previous document
+      if (e.ctrlKey && e.key === '[') {
+        e.preventDefault();
+        const idx = documents.findIndex((d) => d.id === activeDocumentId);
+        if (idx > 0) activeDocumentId = documents[idx - 1].id;
+        return;
+      }
+      // ? — keyboard shortcuts help
+      if (e.key === '?') {
+        e.preventDefault();
+        showShortcutsHelp = !showShortcutsHelp;
       }
     }
     window.addEventListener('keydown', onKeydown);
@@ -413,6 +458,10 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     />
   {/if}
 {/key}
+
+{#if showShortcutsHelp}
+  <KeyboardShortcutsHelp onClose={() => { showShortcutsHelp = false; }} />
+{/if}
 
 <Onboarding />
 
