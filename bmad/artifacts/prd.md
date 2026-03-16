@@ -1,116 +1,72 @@
- # Product Requirements Document (PRD)
+# Product Requirements Document (PRD) — Sive v3.1.0 (RC)
 
- Consolidated PRD — merged draft added on 2026-03-14
+**Status:** `ready_for_architecture` / Release Candidate  
+**Version:** 3.1.0  
+**Date:** 2026-03-14  
+**Stack:** SvelteKit, Better-Auth, Drizzle ORM, Playwright
 
- ---
+---
 
- ## Original PRD (Auth MVP)
+## 1. Purpose & Overview
+Deliver a stable release candidate integrating the **Better-Auth** system with a flexible **guest-mode** onboarding flow. Focus on stability, E2E reliability, and frictionless user conversion.
 
- Status: ready_for_architecture
+## 2. Goals
+* **Authentication Core:** Secure layer for registration, session management, and protected content.
+* **Guest-Mode Flexibility:** Core flows available without mandatory authentication.
+* **RC Stabilization:** Resolve E2E timeouts (S18-04) and ensure 95%+ pass rate.
+* **Conversion Path:** Seamless transition from guest sessions to authenticated accounts.
 
- Overview
- --------
- Deliver a minimal, secure authentication system and foundational content pages so users can register, sign in, and manage their content in the MVP.
+## 3. Success Metrics
 
- Goal
- ----
- Provide a reliable authentication layer (Better-Auth + Drizzle) enabling user accounts, session management, and protected content pages for the MVP.
+| Metric | Target |
+| :--- | :--- |
+| **E2E Stability** | 95%+ pass rate for smoke/regression tests. |
+| **Guest Adoption** | 20% of new sessions using guest mode during canary. |
+| **Auth Reliability** | <1% auth-related errors in staging. |
+| **Abuse Control** | Rate-limited events below established threshold. |
 
- MVP Scope (Must)
- -----------------
- - User sign-up and email/password login (local provider)
- - Session management (persistent sessions, secure cookies)
- - Login UI + server flow and basic user profile page
- - Database schema for users and sessions (drizzle schema)
- - Better-Auth integration using drizzleAdapter
+---
 
- Scope (Should / Could)
- -----------------------
- - OAuth provider support (GitHub) — Should
- - Passwordless / magic link — Could
+## 4. Scope
 
- Non-functional Requirements
- ---------------------------
- - Secure cookies (SameSite, HttpOnly, Secure) and encrypted secret (BETTER_AUTH_SECRET)
- - Unit test coverage for auth logic and adapter
- - E2E smoke test for login flow
+### Auth MVP (Must-Have)
+* **Providers:** Email/Password (local).
+* **Session Management:** Persistent sessions via secure cookies (`SameSite`, `HttpOnly`, `Secure`).
+* **Infrastructure:** Drizzle adapter and `BETTER_AUTH_SECRET` management.
+* **UI/UX:** Login flows, server-side guards, and basic profile page.
 
- Acceptance Criteria
- -------------------
- - Users can register and log in on a fresh dev setup following README instructions
- - Sessions persist across browser restarts (where applicable)
- - Protected routes return 401/redirect for unauthenticated users
- - Unit tests for core auth functions pass in CI
- - E2E test covers sign-up, login, and logout
+### Guest Mode & RC Stabilization
+* **Backend:** * Nullable `event.locals.user`.
+    * Stable `guest_id` cookies for unauthenticated users.
+    * Conversion endpoint to merge guest data into new accounts.
+* **Frontend:** Guest banners/CTAs and conversion flow UI.
+* **Performance:** Targeted fixes for Playwright E2E timeouts.
 
- Success Metrics
- ---------------
- - Auth flow passes CI E2E smoke test on every commit
- - <1% auth-related errors in initial staging usage
+---
 
- Dependencies
- ------------
- - auth:data-model (missing — implement in `src/lib/server/db/schema.ts`)
- - Env vars: BETTER_AUTH_SECRET, optional provider secrets (GITHUB_CLIENT_ID/SECRET)
+## 5. Constraints & Technical Requirements
+* **Database:** Preserve existing schema. Initial guest implementation is **cookie-only**. Use `guests` table via Drizzle migrations only if persistence is required.
+* **Plugin Ordering:** Keep `sveltekitCookies` last in `src/lib/server/auth.ts`.
+* **Security:** * Protect write/permission endpoints (require auth).
+    * Mandatory rate-limiting and CAPTCHA for high-risk endpoints.
+* **Feature Flags:** Control via `ALLOW_GUESTS`.
 
- Next Steps
- ----------
- 1. Run `/architecture` to design the auth data model and document plugin order in `src/lib/server/auth.ts` (recommended).
- 2. After architecture is finalized, run `/sprint-planning` to create sprint stories for implementation.
+---
 
- Annexes & References
- --------------------
- - Architecture placeholder: `bmad/artifacts/architecture.md`
- - Tech spec: `bmad/artifacts/tech-spec.md`
- - Auth implementation notes: `src/lib/server/auth.ts`
+## 6. Risks & Mitigations
+* **Abuse/Spam:** Mitigated by rate-limiting and canary monitoring.
+* **Data Ownership:** UI notification required before binding guest data to permanent accounts.
+* **E2E Flakiness:** Resolution of S18-04 timeouts is mandatory before RC sign-off.
 
- ---
+---
 
- ## Draft additions (guest-mode & RC stabilization)
+## 7. Milestones & Next Actions
+1. **Core Guest Logic:** `guest_id` cookie + nullable `event.locals.user` (2 days).
+2. **Conversion Flow:** Endpoint development and frontend CTA (2 days).
+3. **Testing:** Unit/E2E tests for guest flows; full regression matrix (2 days).
+4. **Canary Rollout:** `ALLOW_GUESTS=true` with 72h monitoring.
 
- Project: Sive — release v3.1.0 (RC)
- Generated: 2026-03-14
- Source: repository scan and `bmad/status.yaml`
-
- ## Purpose
-
- Enable a safe, usable release candidate focusing on stability, final integration tests, and guest-mode flexibility for onboarding. This PRD covers product goals, success metrics, scope, constraints, risks, and next milestones.
-
- ## Goals
-
- - Stabilize release candidate (Sprint 18) and fix outstanding E2E timeouts (S18-04).
- - Make authentication optional for core flows (guest mode) while protecting sensitive actions.
- - Ensure conversion path from guest → authenticated account.
-
- ## Success Metrics
-
- - E2E smoke/regression passing at 95%+ for RC.
- - Guest-mode adoption: 20% of new sessions as guests during canary.
- - Abuse signals (rate-limited events) remain below threshold (TBD).
-
- ## Scope (MVP)
-
- - Backend: make `event.locals.user` nullable; emit a stable `guest_id` cookie when unauthenticated. Protect write/permission endpoints to require explicit auth. Add conversion endpoint to merge guest data with a created account.
- - Frontend: show guest-mode UI affordance (banner/CTA) and clear conversion flow.
- - Tests: unit tests for hooks and guards; Playwright E2E for guest flows and conversion; add rate-limit tests.
-
- ## Constraints
-
- - Preserve existing DB schema unless explicitly approved; initial approach must be cookie-only (no migration). If persistence is required, add `guests` table via Drizzle migrations.
- - Keep Better‑Auth plugin ordering intact (`sveltekitCookies` last).
-
- ## Risks & Mitigations
-
- - Abuse/spam: enable rate-limiting and CAPTCHA for high-risk endpoints. Monitor and rollback via feature flag `ALLOW_GUESTS`.
- - Data ownership confusion: implement a clear conversion flow and notify users before binding data to accounts.
-
- ## Milestones / Next Actions
-
- 1. Implement minimal guest cookie + nullable `event.locals.user` (no DB changes) — engineering (ETA: 2 days).
- 2. Add conversion endpoint + frontend CTA (ETA: 2 days).
- 3. Add unit + E2E tests for guest flows; run full test matrix (ETA: 2 days).
- 4. Canary rollout with `ALLOW_GUESTS=true`, monitor metrics 72h.
-
- ---
-
- Merged and saved. Original content backed up in `bmad/artifacts/prd.previous.md`.
+## 8. Dependencies
+* **Drizzle CLI:** For potential migrations.
+* **Playwright:** For E2E validation.
+* **Env Vars:** `BETTER_AUTH_SECRET`, `GITHUB_CLIENT_ID/SECRET`.

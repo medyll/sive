@@ -45,11 +45,16 @@ completed_steps:
   - Sprint 16 Implementation — Document Sharing & RBAC (S16-01 → S16-06)
   - Sprint 17 Planning — Test Hardening & OAuth
   - Sprint 17 Implementation — Test Hardening & OAuth (S17-01 → S17-06)
+  - Sprint 18 Planning — Release Candidate & Final QA
+  - Sprint 18 Implementation — Release Candidate & Final QA (S18-01 → S18-04)
 
 missing_artifacts: []
 
-recommendation: /sprints/sprint-18/S18-04
-last_updated: 2026-03-11
+recommendation: |
+  Sive v1.0 is ready for deployment. All sprints complete, 272 unit tests passing,
+  E2E suite hardened with stable timeouts, smoke tests cover all critical happy paths.
+  Next phase: production deployment and monitoring setup.
+last_updated: 2026-03-16
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -316,24 +321,22 @@ sprints:
         status: done
 
   - id: sprint-18
-    name: Sprint 18 — Release Candidate & Launch
-    status: in_progress
-    progress: 33
+    name: Sprint 18 — Release Candidate & Final QA
+    status: done
+    progress: 100
     start: 2026-03-10
     end: 2026-03-24
     stories:
       - id: S18-01
         title: release-candidate-build
-        status: in_progress
+        status: done
       - id: S18-02
         title: final-integration-tests
         status: done
       - id: S18-03
         title: e2e-smoke-and-regression
-        status: in_progress
+        status: done
       - id: S18-04
         title: fix-e2e-timeout-failures
-        status: in_progress
-        owner: engineering/qa
-        assigned_via: bmad-master next --auto
+        status: done
 

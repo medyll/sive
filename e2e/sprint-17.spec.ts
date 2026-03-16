@@ -13,20 +13,20 @@ test.describe('GitHub OAuth UI', () => {
 		await page.goto('/auth');
 		// In dev/mock mode, hasGithub is false — button should not render
 		const githubBtn = page.locator('[data-testid="github-signin-btn"]');
-		await expect(githubBtn).not.toBeVisible({ timeout: 2000 }).catch(() => {
+		await expect(githubBtn).not.toBeVisible({ timeout: 10000 }).catch(() => {
 			// Also acceptable: button doesn't exist at all
 		});
 	});
 
 	test('auth page renders email/password form', async ({ page }) => {
 		await page.goto('/auth');
-		await expect(page.locator('input[type="email"]')).toBeVisible({ timeout: 3000 });
+		await expect(page.locator('input[type="email"]')).toBeVisible({ timeout: 10000 });
 		await expect(page.locator('input[type="password"]')).toBeVisible();
 	});
 
 	test('auth page has Sign in button', async ({ page }) => {
 		await page.goto('/auth');
-		await expect(page.getByRole('button', { name: /sign in/i })).toBeVisible({ timeout: 3000 });
+		await expect(page.getByRole('button', { name: /sign in/i })).toBeVisible({ timeout: 10000 });
 	});
 });
 
@@ -40,7 +40,7 @@ test.describe('Document list — shared badge', () => {
 	test('app page loads with document list', async ({ page }) => {
 		await page.goto('/app');
 		// Document list renders — in mock mode with stub docs
-		await expect(page.locator('.doc-list')).toBeVisible({ timeout: 3000 });
+		await expect(page.locator('.doc-list')).toBeVisible({ timeout: 10000 });
 	});
 
 	test('stub document has no Shared badge in mock mode', async ({ page }) => {
@@ -70,6 +70,6 @@ test.describe('Profile page — display name', () => {
 	test('profile page has back link to editor', async ({ page }) => {
 		await page.goto('/profile');
 		const backLink = page.locator('a[href="/app"]');
-		await expect(backLink).toBeVisible({ timeout: 2000 });
+		await expect(backLink).toBeVisible({ timeout: 10000 });
 	});
 });

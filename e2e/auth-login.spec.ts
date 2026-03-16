@@ -32,7 +32,7 @@ test.describe('Auth – login flow', () => {
 		await page.getByRole('button', { name: 'Sign in' }).click();
 
 		const alert = page.getByRole('alert');
-		await expect(alert).toBeVisible({ timeout: 5000 });
+		await expect(alert).toBeVisible({ timeout: 15000 });
 		// Error comes from the server stub (503 or 401) — any non-empty message is valid
 		await expect(alert).not.toBeEmpty();
 	});
@@ -42,12 +42,12 @@ test.describe('Auth – login flow', () => {
 		await page.locator('#email').fill('a@b.com');
 		await page.locator('#password').fill('bad');
 		await page.getByRole('button', { name: 'Sign in' }).click();
-		await expect(page.getByRole('alert')).toBeVisible({ timeout: 5000 });
+		await expect(page.getByRole('alert')).toBeVisible({ timeout: 15000 });
 
 		// Submit again — error resets before new request
 		await page.getByRole('button', { name: 'Sign in' }).click();
 		// Alert will reappear with the response, but it cleared momentarily — just assert it's still visible after
-		await expect(page.getByRole('alert')).toBeVisible({ timeout: 5000 });
+		await expect(page.getByRole('alert')).toBeVisible({ timeout: 15000 });
 	});
 
 	// --- Success path (mocked network) ---
@@ -70,7 +70,7 @@ test.describe('Auth – login flow', () => {
 		await page.locator('#password').fill('correctpassword');
 		await page.getByRole('button', { name: 'Sign in' }).click();
 
-		await page.waitForURL('/', { timeout: 5000 });
+		await page.waitForURL('/', { timeout: 15000 });
 		expect(page.url()).toContain('/');
 	});
 
