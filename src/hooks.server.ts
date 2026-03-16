@@ -16,11 +16,26 @@ try {
 	svelteKitHandler = null;
 }
 
+const SECURITY_HEADERS = {
+	'Content-Security-Policy':
+		"default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none';",
+	'X-Content-Type-Options': 'nosniff',
+	'X-Frame-Options': 'DENY',
+	'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+	'Referrer-Policy': 'strict-origin-when-cross-origin',
+	'X-XSS-Protection': '1; mode=block'
+};
+
 const handleBetterAuth: Handle = async ({ event, resolve }) => {
 	// If auth is unavailable (mock), skip heavy auth handling to avoid runtime errors
 	if (isMock || !svelteKitHandler) {
 		// no session; leave locals empty so UI pages can render during dev
-		return resolve(event);
+		const response = await resolve(event);
+		// Still apply security headers
+		Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
+			response.headers.set(key, value);
+		});
+		return response;
 	}
 
 	const session = await auth.api.getSession({ headers: event.request.headers });
@@ -55,7 +70,14 @@ const handleBetterAuth: Handle = async ({ event, resolve }) => {
 		}
 	}
 
-	return svelteKitHandler({ event, resolve, auth, building });
+	const response = await svelteKitHandler({ event, resolve, auth, building });
+
+	// Apply security headers to response
+	Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
+		response.headers.set(key, value);
+	});
+
+	return response;
 };
 
 export const handle: Handle = handleBetterAuth;

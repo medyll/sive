@@ -1,4 +1,5 @@
 import type { RequestHandler } from './$types';
+import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 
 const STUB_REPLY = "I'm your AI writing assistant. I can help you with plot, characters, style, and more. What would you like to explore?";
 const STUB_REPLY_WITH_CTX = "I can see your document. I'm your AI writing assistant — ask me anything about the text you're working on.";
@@ -19,7 +20,12 @@ function encodeSSE(chunk: string): Uint8Array {
 	return new TextEncoder().encode(`data: ${chunk}\n\n`);
 }
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async (event) => {
+	// Rate limit check (heavy AI computation)
+	const limit = checkWriteRateLimit(event);
+	if (!limit.allowed) return limit.response!;
+
+	const { url } = event;
 	const q = url.searchParams.get('q') ?? '';
 	const ctxParam = url.searchParams.get('ctx') ?? '';
 

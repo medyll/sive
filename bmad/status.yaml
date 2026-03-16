@@ -75,7 +75,7 @@ recommendation: |
 last_updated: 2026-03-16
 
 active_role: scrum
-next_action: "Sprint 28 complete. Ready to plan Sprint 29 — e.g. API rate limiting, search optimization, or mobile polish."
+next_action: "Sprint 30 COMPLETE: Full-Text Search & Advanced Filtering (6 stories, 5 components, 2 API endpoints, 50+ tests). Supports phrase search, result ranking, tag filtering, date range, sorting, history persistence. Ready for Sprint 31."
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:

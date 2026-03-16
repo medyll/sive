@@ -1,4 +1,5 @@
 import type { RequestHandler } from './$types';
+import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 
 const MAX_CTX_CHARS = 2000;
 
@@ -19,7 +20,12 @@ function encodeSSE(chunk: string): Uint8Array {
 	return new TextEncoder().encode(`data: ${chunk}\n\n`);
 }
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async (event) => {
+	// Rate limit check (heavy AI computation)
+	const limit = checkWriteRateLimit(event);
+	if (!limit.allowed) return limit.response!;
+
+	const { url } = event;
 	const ctxParam = url.searchParams.get('ctx') ?? '';
 	const length = (url.searchParams.get('length') ?? 'medium') as 'short' | 'medium' | 'long';
 

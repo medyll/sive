@@ -1,4 +1,5 @@
 import type { RequestHandler } from './$types';
+import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 
 // Mock PDF stub (base64-encoded minimal PDF for dev)
 // In production, this would be generated server-side via a headless renderer
@@ -15,7 +16,12 @@ const STUB_PDF_BASE64 =
 	'MDAwIG4gCnRyYWlsZXI8PC9TaXplIDYvUm9vdCAxIDAgUj4+CnN0YXJ0eHJlZgo0NzMKJSV' +
 	'FT0YK';
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async (event) => {
+	// Rate limit check (PDF rendering is resource-intensive)
+	const limit = checkWriteRateLimit(event);
+	if (!limit.allowed) return limit.response!;
+
+	const { url } = event;
 	const docId = url.searchParams.get('docId') ?? '';
 	const includeSummary = url.searchParams.get('includeSummary') === 'true';
 

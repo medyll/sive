@@ -1,9 +1,16 @@
 import { db, isMock } from '$lib/server/db';
 import { documents, document_shares } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
-import { redirect } from '@sveltejs/kit';
+import { redirect, json } from '@sveltejs/kit';
 import { createOwnerShare } from '$lib/server/shares';
 import { requireDocumentRole } from '$lib/server/rbac';
+import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
+import {
+  validateDocumentTitle,
+  validateDocumentContent,
+  validateDocumentID,
+  validateDocumentFormData
+} from '$lib/server/inputValidation';
 import type { PageServerLoad, Actions } from './$types';
 
 // Guest user id used when auth is unavailable (mock/dev mode)
@@ -83,7 +90,12 @@ export const load: PageServerLoad = async ({ locals }) => {
 };
 
 export const actions: Actions = {
-	createDocument: async ({ locals }) => {
+	createDocument: async (event) => {
+		// Rate limit check
+		const limit = checkWriteRateLimit(event);
+		if (!limit.allowed) return limit.response;
+
+		const { locals } = event;
 		const userId = locals.user?.id ?? GUEST_USER_ID;
 
 		if (isMock || !db) {
@@ -105,13 +117,22 @@ export const actions: Actions = {
 		return { success: true, id: newDoc.id };
 	},
 
-	updateDocument: async ({ request, locals }) => {
-		const data = await request.formData();
-		const id = data.get('id') as string;
-		const content = data.get('content') as string | null;
-		const title = data.get('title') as string | null;
+	updateDocument: async (event) => {
+		// Rate limit check
+		const limit = checkWriteRateLimit(event);
+		if (!limit.allowed) return limit.response;
 
-		if (!id) return { success: false, error: 'Missing document id' };
+		const { request, locals } = event;
+		const data = await request.formData();
+
+		// Validate form data
+		const validation = validateDocumentFormData(data);
+		if (!validation.valid) {
+			return { success: false, error: validation.error };
+		}
+
+		const validatedData = validation.sanitized as { id: string; title: string | null; content: string | null };
+		const { id, title, content } = validatedData;
 
 		if (isMock || !db) {
 			return { success: true };
@@ -132,44 +153,63 @@ export const actions: Actions = {
 		return { success: true };
 	},
 
-	deleteDocument: async ({ request, locals }) => {
+	deleteDocument: async (event) => {
+		// Rate limit check
+		const limit = checkWriteRateLimit(event);
+		if (!limit.allowed) return limit.response;
+
+		const { request, locals } = event;
 		const data = await request.formData();
 		const id = data.get('id') as string;
 
-		if (!id) return { success: false, error: 'Missing document id' };
+		// Validate document ID
+		const idValidation = validateDocumentID(id);
+		if (!idValidation.valid) {
+			return { success: false, error: idValidation.error };
+		}
 
 		if (isMock || !db) {
 			return { success: true };
 		}
 
 		// Require owner role to delete
-		await requireDocumentRole(db, locals.user?.id, id, 'owner');
+		await requireDocumentRole(db, locals.user?.id, idValidation.sanitized as string, 'owner');
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const typedDb = db as any;
-		typedDb.delete(documents).where(eq(documents.id, id)).run();
+		typedDb.delete(documents).where(eq(documents.id, idValidation.sanitized as string)).run();
 
 		return { success: true };
 	},
 
-	duplicateDocument: async ({ request, locals }) => {
+	duplicateDocument: async (event) => {
+		// Rate limit check
+		const limit = checkWriteRateLimit(event);
+		if (!limit.allowed) return limit.response;
+
+		const { request, locals } = event;
 		const data = await request.formData();
 		const id = data.get('id') as string;
 
-		if (!id) return { success: false, error: 'Missing document id' };
+		// Validate document ID
+		const idValidation = validateDocumentID(id);
+		if (!idValidation.valid) {
+			return { success: false, error: idValidation.error };
+		}
 
 		if (isMock || !db) {
 			return { success: true, id: `stub-doc-${Date.now()}` };
 		}
 
 		const userId = locals.user?.id ?? GUEST_USER_ID;
+		const validatedId = idValidation.sanitized as string;
 
 		// Require at least viewer access to the source document
-		await requireDocumentRole(db, userId, id, 'viewer');
+		await requireDocumentRole(db, userId, validatedId, 'viewer');
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const typedDb = db as any;
-		const rows = typedDb.select().from(documents).where(eq(documents.id, id)).all();
+		const rows = typedDb.select().from(documents).where(eq(documents.id, validatedId)).all();
 		if (!rows || rows.length === 0) return { success: false, error: 'Document not found' };
 
 		const source = rows[0];
