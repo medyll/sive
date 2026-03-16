@@ -11,7 +11,47 @@
   import Toast from '$lib/elements/Toast.svelte';
 import Onboarding from '$lib/elements/Onboarding.svelte';
   import KeyboardShortcutsHelp from '$lib/elements/KeyboardShortcutsHelp.svelte';
+  import SummaryPanel from '$lib/elements/SummaryPanel.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
+  import { summaryStore } from '$lib/summaryStore.svelte';
+
+  function isAutoSummaryEnabled(): boolean {
+    if (!browser) return false;
+    try {
+      const s = JSON.parse(localStorage.getItem('settings') ?? '{}');
+      return s.autoSummary === true;
+    } catch {
+      return false;
+    }
+  }
+
+  async function triggerBackgroundSummary(id: string, docContent: string): Promise<void> {
+    const ctx = docContent ? btoa(unescape(encodeURIComponent(docContent.slice(0, 2000)))) : '';
+    const url = `/api/ai/summary?length=medium${ctx ? `&ctx=${ctx}` : ''}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok || !res.body) return;
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let text = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() ?? '';
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const token = line.slice(6);
+          if (token === '[DONE]') { summaryStore.set(id, 'medium', text.trim()); return; }
+          text += token;
+        }
+      }
+    } catch {
+      // silent — background task
+    }
+  }
   import { toastStore } from '$lib/toastStore.svelte';
   import { retryFetch } from '$lib/retryFetch';
 
@@ -29,6 +69,14 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   }
 
   let { data }: Props = $props();
+
+  // Wire user context into harden store for collaborative edit history
+  $effect(() => {
+    hardenStore.setContext({
+      userId: data.user?.id,
+      userName: data.user?.name ?? data.user?.email ?? 'Guest'
+    });
+  });
 
   let splitRatio = $state<number>(
     browser ? parseFloat(localStorage.getItem(SPLIT_KEY) ?? String(DEFAULT_RATIO)) : DEFAULT_RATIO
@@ -86,6 +134,11 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       saveContentInput.value = content;
       saveDocForm.requestSubmit();
       toastStore.success('Document saved');
+      if (isAutoSummaryEnabled()) {
+        toastStore.info('Updating summary…');
+        summaryStore.refreshSummary(id, 'medium');
+        triggerBackgroundSummary(id, content);
+      }
       return;
     }
 
@@ -97,6 +150,11 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         body: new URLSearchParams({ id, content }).toString()
       });
       toastStore.success('Document saved');
+      if (isAutoSummaryEnabled()) {
+        toastStore.info('Updating summary…');
+        summaryStore.refreshSummary(id, 'medium');
+        triggerBackgroundSummary(id, content);
+      }
     } catch {
       toastStore.error('Failed to save document — please try again');
     }
@@ -159,6 +217,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let dragging = $state(false);
   let chatBarOpen = $state(true);
   let showShortcutsHelp = $state(false);
+  let showSummaryPanel = $state(false);
 
   function persistState(_node: HTMLElement) {
     $effect(() => {
@@ -220,6 +279,12 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       if (e.key === '?') {
         e.preventDefault();
         showShortcutsHelp = !showShortcutsHelp;
+        return;
+      }
+      // Ctrl+Alt+S — summary panel
+      if (e.ctrlKey && e.altKey && e.key === 's') {
+        e.preventDefault();
+        showSummaryPanel = !showSummaryPanel;
       }
     }
     window.addEventListener('keydown', onKeydown);
@@ -303,9 +368,19 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         aria-pressed={reviewMode}
       >Review</button>
       <button type="button" onclick={() => { hardenOpen = true; }}>💾 New version</button>
+      <button
+        type="button"
+        class="btn-summary"
+        aria-label="AI Summary (Ctrl+Alt+S)"
+        title="AI Summary (Ctrl+Alt+S)"
+        onclick={() => { showSummaryPanel = !showSummaryPanel; }}
+        aria-pressed={showSummaryPanel}
+      >📄 Summary</button>
       <ExportButton
         title={documents.find(d => d.id === activeDocumentId)?.title ?? 'document'}
         content={activeContent}
+        summary={summaryStore.get(activeDocumentId, 'medium') ?? ''}
+        docId={activeDocumentId}
       />
       <a href="/settings" title="Settings" class="btn-settings">⚙</a>
       {#if data.user?.id === 'guest'}
@@ -477,6 +552,14 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
 
 {#if showShortcutsHelp}
   <KeyboardShortcutsHelp onClose={() => { showShortcutsHelp = false; }} />
+{/if}
+
+{#if showSummaryPanel}
+  <SummaryPanel
+    docId={activeDocumentId}
+    content={activeContent}
+    onClose={() => { showSummaryPanel = false; }}
+  />
 {/if}
 
 <Onboarding />
@@ -695,6 +778,24 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       max-width: none;
     }
   }
+.btn-summary {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.82rem;
+  background: var(--color-surface, #f4f4f4);
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.btn-summary:hover { background: var(--color-hover, #e9e9e9); }
+.btn-summary[aria-pressed="true"] {
+  background: var(--color-primary, #646cff);
+  border-color: var(--color-primary, #646cff);
+  color: #fff;
+}
+
 .guest-indicator {
   margin-left: 0.5rem;
   font-size: 0.8rem;

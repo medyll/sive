@@ -7,7 +7,9 @@
       "Bash(lsof:*)",
       "Bash(ls:*)",
       "mcp__plugin_context-mode_context-mode__ctx_search",
-      "Bash(find d:/boulot/dev/node/sive -name *.sql -path */migrations/*)"
+      "Bash(find d:/boulot/dev/node/sive -name *.sql -path */migrations/*)",
+      "Read(//c/Users/Mydde/.claude/skills/bmad-master/references/roles/**)",
+      "mcp__plugin_context-mode_context-mode__ctx_batch_execute"
     ]
   }
 }

@@ -1,6 +1,6 @@
 # Sprint 25 — AI-assisted Document Summaries
 
-**Status:** planned
+**Status:** done
 **Focus:** Add one-click AI-assisted document summarisation and export/print polish.
 **Dates:** 2026-03-17 → 2026-03-31
 

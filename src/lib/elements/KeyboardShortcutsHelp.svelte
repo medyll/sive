@@ -18,6 +18,7 @@
     { keys: 'Ctrl+Shift+F',   description: 'Toggle focus mode' },
     { keys: 'F11',            description: 'Toggle focus mode' },
     { keys: '?',              description: 'Show / hide this help' },
+    { keys: 'Ctrl+Alt+S',    description: 'Open / close summary panel' },
   ];
 
   function onBackdropClick(e: MouseEvent) {

@@ -3,6 +3,7 @@
 -->
 <script lang="ts">
   import { tagStore } from '$lib/tagStore.svelte.js';
+  import { presenceStore } from '$lib/presenceStore.svelte';
 
   export interface DocumentItem {
     id: string;
@@ -354,6 +355,15 @@
               aria-label="Rename {doc.title}"
               ondblclick={(e) => startEdit(doc, e)}
             >{doc.title}</span>
+            {#if presenceStore.getActiveCount(doc.id) > 0}
+              <span
+                class="doc-activity-badge"
+                class:badge-green={presenceStore.getActivityBadge(doc.id).color === 'green'}
+                class:badge-blue={presenceStore.getActivityBadge(doc.id).color === 'blue'}
+                class:badge-red={presenceStore.getActivityBadge(doc.id).color === 'red'}
+                title="{presenceStore.getActiveCount(doc.id)} people viewing"
+              >{presenceStore.getActiveCount(doc.id)}</span>
+            {/if}
             </div>
           {/if}
           <span class="doc-meta">
@@ -856,5 +866,34 @@
     width: 5rem;
     background: var(--color-background, #fff);
     color: var(--color-text, #1a1a1a);
+  }
+
+  .doc-activity-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.4rem;
+    border-radius: 9999px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.4rem;
+    line-height: 1;
+  }
+
+  .doc-activity-badge.badge-green {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  .doc-activity-badge.badge-blue {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  .doc-activity-badge.badge-red {
+    background: #fee2e2;
+    color: #991b1b;
   }
 </style>

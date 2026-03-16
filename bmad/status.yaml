@@ -57,22 +57,25 @@ completed_steps:
   - Sprint 22 Implementation — SSE Streaming, Tag Store, Tag UI (S22-01 → S22-07)
   - Sprint 23 Planning — AI Context Awareness & Prompt History
   - Sprint 23 Implementation — Doc Context, Prompt History, SSE ctx param (S23-01 → S23-06)
+  - Sprint 25 Planning — AI-assisted Document Summaries
+  - Sprint 25 Implementation — Summary badge, /api/ai/summary SSE, summaryStore cache, export with summary (S25-01 → S25-06)
+  - Sprint 26 Planning — Auto-summary on Save & Print Polish
+  - Sprint 26 Implementation — autoSummary setting, background trigger, print CSS, timestamp in panel (S26-01 → S26-06)
+  - Sprint 27 Planning — PDF Export & Mobile UX Polish
+  - Sprint 27 Implementation — PDF /api/export endpoint, PDF button, 44px tap targets, mobile panels (S27-01 → S27-06)
 
 missing_artifacts: []
 
 recommendation: |
-  Sprint 23 complete. The AI is now context-aware: the Chat tab sends the current
-  document excerpt (up to 2 000 chars) as a base64 `ctx` param to /api/ai/stream,
-  which injects it into the Anthropic system prompt inside a <document> block.
-  A "📄 Use doc as context" toggle (default on) lets users opt out; state persists
-  in localStorage. Prompt history (last 10) is stored in localStorage and recalled
-  via ArrowUp/ArrowDown in the chat input. Next sprint could focus on
-  AI-assisted document summarisation (one-click summary badge in the toolbar),
-  or an export/print polish pass (PDF export, print stylesheet).
+  Sprint 28 complete. Activity badges now show live viewer count per document (green/blue/red).
+  ConflictIndicator warns when 2+ users edit concurrently and displays last-editor info.
+  Presence store enhanced with idle detection (30s) and offline cleanup (2min).
+  HardenSnapshot extended to track userId/userName for collaborative edit history.
+  Next sprint could focus on API rate limiting, full-text search optimization, or mobile UX polish.
 last_updated: 2026-03-16
 
 active_role: scrum
-next_action: "Start Sprint 25 — AI-assisted document summarisation (one-click summary badge)"
+next_action: "Sprint 28 complete. Ready to plan Sprint 29 — e.g. API rate limiting, search optimization, or mobile polish."
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -448,27 +451,105 @@ sprints:
 
   - id: sprint-25
     name: Sprint 25 — AI-assisted Document Summaries
-    status: planned
-    progress: 0
+    status: done
+    progress: 100
+
+  - id: sprint-26
+    name: Sprint 26 — Auto-summary on Save & Print Polish
+    status: done
+    progress: 100
+    start: 2026-03-16
+    end: 2026-03-16
+    stories:
+      - id: S26-01
+        title: autosummary-setting
+        status: done
+      - id: S26-02
+        title: autosummary-trigger-on-save
+        status: done
+      - id: S26-03
+        title: print-stylesheet
+        status: done
+      - id: S26-04
+        title: summary-panel-timestamp
+        status: done
+      - id: S26-05
+        title: unit-tests-sprint26
+        status: done
+      - id: S26-06
+        title: e2e-sprint26
+        status: done
+
+  - id: sprint-27
+    name: Sprint 27 — PDF Export & Mobile UX Polish
+    status: done
+    progress: 100
+    start: 2026-03-16
+    end: 2026-03-16
+    stories:
+      - id: S27-01
+        title: pdf-export-endpoint
+        status: done
+      - id: S27-02
+        title: pdf-button-exportbutton
+        status: done
+      - id: S27-03
+        title: mobile-tap-targets
+        status: done
+      - id: S27-04
+        title: mobile-panel-positioning
+        status: done
+      - id: S27-05
+        title: unit-tests-sprint27
+        status: done
+      - id: S27-06
+        title: e2e-sprint27
+        status: done
+
+  - id: sprint-28
+    name: Sprint 28 — Presence Enhancements & Collaborative UX Polish
+    status: done
+    progress: 100
+    start: 2026-03-16
+    end: 2026-03-16
+    stories:
+      - id: S28-01
+        title: activity-indicator-document-list
+        status: done
+      - id: S28-02
+        title: conflict-indicator-ui
+        status: done
+      - id: S28-03
+        title: idle-timeout-presence-cleanup
+        status: done
+      - id: S28-04
+        title: collaborative-edit-history
+        status: done
+      - id: S28-05
+        title: unit-tests-sprint28
+        status: done
+      - id: S28-06
+        title: e2e-sprint28
+        status: done
     start: 2026-03-17
     end: 2026-03-31
     stories:
       - id: S25-01
         title: summary-badge-toolbar
-        status: planned
+        status: done
       - id: S25-02
         title: api-ai-summary-endpoint
-        status: planned
+        status: done
       - id: S25-03
         title: summary-store-cache
-        status: planned
+        status: done
       - id: S25-04
         title: export-print-polish
-        status: planned
+        status: done
       - id: S25-05
         title: unit-tests-sprint25
-        status: planned
+        status: done
       - id: S25-06
         title: e2e-sprint25
-        status: planned
+        status: done
 

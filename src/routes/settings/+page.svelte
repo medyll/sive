@@ -5,6 +5,7 @@
   let theme: string = 'light';
   let fontSize: string = 'medium';
   let autosave: number = 30;
+  let autoSummary: boolean = false;
 
   onMount(() => {
     try {
@@ -14,6 +15,7 @@
         theme = p.theme ?? theme;
         fontSize = p.fontSize ?? fontSize;
         autosave = p.autosave ?? autosave;
+        autoSummary = p.autoSummary ?? autoSummary;
       }
     } catch (e) {
       // ignore
@@ -21,7 +23,7 @@
   });
 
   function save() {
-    const prefs = { theme, fontSize, autosave };
+    const prefs = { theme, fontSize, autosave, autoSummary };
     try {
       localStorage.setItem('settings', JSON.stringify(prefs));
       toastStore.success('Preferences saved');
@@ -52,6 +54,14 @@
   <div class="mb-4">
     <label class="block font-medium mb-2">Autosave interval (seconds)</label>
     <input type="number" bind:value={autosave} min="0" />
+  </div>
+
+  <div class="mb-4">
+    <label class="block font-medium mb-2">AI Summary</label>
+    <label>
+      <input type="checkbox" bind:checked={autoSummary} />
+      Auto-generate summary on save
+    </label>
   </div>
 
   <button on:click={save} class="btn btn-primary">Save</button>
