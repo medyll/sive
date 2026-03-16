@@ -51,16 +51,24 @@ completed_steps:
   - Sprint 19 Implementation — A11y & Guest Conversion (S19-01 → S19-06)
   - Sprint 20 Planning — Document Search & Power-User UX
   - Sprint 20 Implementation — Search, Arrow Nav & Shortcuts (S20-01 → S20-06)
+  - Sprint 21 Planning — Error Boundaries & Resilience
+  - Sprint 21 Implementation — Offline Banner, AI Cancel, Retry (S21-01 → S21-06)
+  - Sprint 22 Planning — AI Chat Streaming & Document Tags
+  - Sprint 22 Implementation — SSE Streaming, Tag Store, Tag UI (S22-01 → S22-07)
+  - Sprint 23 Planning — AI Context Awareness & Prompt History
+  - Sprint 23 Implementation — Doc Context, Prompt History, SSE ctx param (S23-01 → S23-06)
 
 missing_artifacts: []
 
 recommendation: |
-  Sprint 20 complete. DocumentList now has real-time search filtering, arrow-key
-  navigation, and keyboard-focus tracking. Keyboard shortcuts expanded with
-  Ctrl+N (new doc), Ctrl+B (sidebar), Ctrl+]/[ (cycle docs) and ? (help overlay).
-  The latent `suggestionsReady` ReferenceError bug is fixed. Next sprint could
-  focus on integrating a real AI backend for the stub analysis panels, or adding
-  document tags/folders for better organisation.
+  Sprint 23 complete. The AI is now context-aware: the Chat tab sends the current
+  document excerpt (up to 2 000 chars) as a base64 `ctx` param to /api/ai/stream,
+  which injects it into the Anthropic system prompt inside a <document> block.
+  A "📄 Use doc as context" toggle (default on) lets users opt out; state persists
+  in localStorage. Prompt history (last 10) is stored in localStorage and recalled
+  via ArrowUp/ArrowDown in the chat input. Next sprint could focus on
+  AI-assisted document summarisation (one-click summary badge in the toolbar),
+  or an export/print polish pass (PDF export, print stylesheet).
 last_updated: 2026-03-16
 
 # New v3.1.0 structured fields (Single Source of Truth)
@@ -72,6 +80,9 @@ artifacts:
   - bmad/artifacts/sprints/sprint-16.md
   - bmad/artifacts/sprints/sprint-19.md
   - bmad/artifacts/sprints/sprint-20.md
+  - bmad/artifacts/sprints/sprint-21.md
+  - bmad/artifacts/sprints/sprint-22.md
+  - bmad/artifacts/sprints/sprint-23.md
 
 sprints:
   - id: sprint-1
@@ -373,5 +384,60 @@ sprints:
         status: done
       - id: S18-04
         title: fix-e2e-timeout-failures
+        status: done
+
+  - id: sprint-22
+    name: Sprint 22 — AI Chat Streaming & Document Tags
+    status: done
+    progress: 100
+    start: 2026-03-17
+    end: 2026-03-31
+    stories:
+      - id: S22-01
+        title: streaming-chat-endpoint-sse
+        status: done
+      - id: S22-02
+        title: stream-tokens-chat-bubble
+        status: done
+      - id: S22-03
+        title: suggested-prompts-chips
+        status: done
+      - id: S22-04
+        title: document-tags-column-store
+        status: done
+      - id: S22-05
+        title: tag-input-chips-documentlist
+        status: done
+      - id: S22-06
+        title: filter-sidebar-by-tag
+        status: done
+      - id: S22-07
+        title: unit-tests-sprint22
+        status: done
+
+  - id: sprint-23
+    name: Sprint 23 — AI Context Awareness & Prompt History
+    status: done
+    progress: 100
+    start: 2026-03-16
+    end: 2026-03-16
+    stories:
+      - id: S23-01
+        title: prompt-history-store
+        status: done
+      - id: S23-02
+        title: stream-endpoint-doc-context
+        status: done
+      - id: S23-03
+        title: aipanel-context-toggle
+        status: done
+      - id: S23-04
+        title: prompt-history-recall-arrows
+        status: done
+      - id: S23-05
+        title: unit-tests-sprint23
+        status: done
+      - id: S23-06
+        title: e2e-ai-context
         status: done
 

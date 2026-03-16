@@ -2,11 +2,14 @@
   DocumentList — sidebar listing user documents with create/switch/rename/delete support
 -->
 <script lang="ts">
+  import { tagStore } from '$lib/tagStore.svelte.js';
+
   export interface DocumentItem {
     id: string;
     title: string;
     updated_at: number;
     role?: string;
+    tags?: string;
   }
 
   export interface DocumentListProps {
@@ -29,15 +32,58 @@
     onDelete
   }: DocumentListProps = $props();
 
+  // Hydrate tags from server data whenever documents change
+  $effect(() => {
+    for (const doc of documents) {
+      if (doc.tags) tagStore.hydrate(doc.id, doc.tags);
+    }
+  });
+
   // Search / filter
   let searchQuery = $state('');
+  let activeTagFilter = $state<string | null>(null);
+
   let filteredDocuments = $derived(
-    searchQuery.trim() === ''
-      ? documents
-      : documents.filter((d) =>
-          d.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
-        )
+    documents.filter((d) => {
+      const matchesSearch =
+        searchQuery.trim() === '' ||
+        d.title.toLowerCase().includes(searchQuery.trim().toLowerCase());
+      const matchesTag =
+        activeTagFilter === null ||
+        tagStore.get(d.id).includes(activeTagFilter);
+      return matchesSearch && matchesTag;
+    })
   );
+
+  // All tags across all documents (for the filter bar)
+  let allDocTags = $derived(
+    [...new Set(documents.flatMap((d) => tagStore.get(d.id)))].sort()
+  );
+
+  // Tag editing state
+  let tagEditingDocId = $state<string | null>(null);
+  let tagInputValue = $state('');
+
+  function startTagEdit(docId: string, e: MouseEvent) {
+    e.stopPropagation();
+    tagEditingDocId = docId;
+    tagInputValue = '';
+  }
+
+  function commitTag(docId: string) {
+    if (tagInputValue.trim()) {
+      tagStore.add(docId, tagInputValue.trim());
+    }
+    tagEditingDocId = null;
+    tagInputValue = '';
+  }
+
+  function onTagInputKeydown(e: KeyboardEvent, docId: string) {
+    if (e.key === 'Enter') { e.preventDefault(); commitTag(docId); }
+    if (e.key === 'Escape') { tagEditingDocId = null; tagInputValue = ''; }
+  }
+
+  function focusTagInput(node: HTMLElement) { node.focus(); }
 
   // Arrow-key navigation within the list
   let focusedIndex = $state(-1);
@@ -120,6 +166,28 @@
     {/if}
   </div>
 
+  {#if allDocTags.length > 0}
+    <div class="tag-filter-bar" aria-label="Filter by tag">
+      {#each allDocTags as tag}
+        <button
+          type="button"
+          class="tag-filter-chip"
+          class:tag-filter-chip--active={activeTagFilter === tag}
+          onclick={() => { activeTagFilter = activeTagFilter === tag ? null : tag; }}
+          aria-pressed={activeTagFilter === tag}
+        >{tag}</button>
+      {/each}
+      {#if activeTagFilter}
+        <button
+          type="button"
+          class="btn-tag-filter-clear"
+          aria-label="Clear tag filter"
+          onclick={() => { activeTagFilter = null; }}
+        >✕</button>
+      {/if}
+    </div>
+  {/if}
+
   <!-- svelte-ignore a11y_interactive_supports_focus -->
   <ul class="doc-list-items" role="listbox" aria-label="Documents" onkeydown={onListKeydown}>
     {#if loading}
@@ -186,6 +254,41 @@
               onclick={(e) => handleDelete(doc.id, e)}
             >🗑</button>
           </span>
+          <div class="doc-tags" onclick={(e) => e.stopPropagation()}>
+            {#each tagStore.get(doc.id) as tag}
+              <span class="doc-tag-chip">
+                {tag}
+                <button
+                  type="button"
+                  class="btn-tag-remove"
+                  aria-label="Remove tag {tag}"
+                  onclick={(e) => { e.stopPropagation(); tagStore.remove(doc.id, tag); }}
+                >×</button>
+              </span>
+            {/each}
+            {#if tagStore.get(doc.id).length < 5}
+              {#if tagEditingDocId === doc.id}
+                <input
+                  class="tag-input"
+                  type="text"
+                  placeholder="tag…"
+                  bind:value={tagInputValue}
+                  onblur={() => commitTag(doc.id)}
+                  onkeydown={(e) => onTagInputKeydown(e, doc.id)}
+                  onclick={(e) => e.stopPropagation()}
+                  aria-label="Add tag"
+                  {@attach focusTagInput}
+                />
+              {:else}
+                <button
+                  type="button"
+                  class="btn-tag-add"
+                  aria-label="Add tag to {doc.title}"
+                  onclick={(e) => startTagEdit(doc.id, e)}
+                >＋</button>
+              {/if}
+            {/if}
+          </div>
         </div>
       </li>
     {/each}
@@ -416,4 +519,102 @@
   }
 
   .btn-empty-new:hover { text-decoration: underline; }
+
+  /* ── Tag filter bar ── */
+  .tag-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    padding: 0.35rem 0.75rem;
+    border-bottom: 1px solid var(--color-border, #e0e0e0);
+  }
+
+  .tag-filter-chip {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid var(--color-primary, #646cff);
+    background: transparent;
+    color: var(--color-primary, #646cff);
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+  }
+
+  .tag-filter-chip--active {
+    background: var(--color-primary, #646cff);
+    color: #fff;
+  }
+
+  .btn-tag-filter-clear {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.68rem;
+    color: var(--color-text-muted, #9ca3af);
+    padding: 0.1rem 0.2rem;
+    line-height: 1;
+  }
+
+  /* ── Document tag chips ── */
+  .doc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.2rem;
+    align-items: center;
+  }
+
+  .doc-tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    font-size: 0.65rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 9999px;
+    background: var(--color-primary-light, #ebebff);
+    color: var(--color-primary, #646cff);
+    font-weight: 500;
+  }
+
+  .btn-tag-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.65rem;
+    color: var(--color-primary, #646cff);
+    padding: 0;
+    line-height: 1;
+    opacity: 0.6;
+  }
+
+  .btn-tag-remove:hover { opacity: 1; }
+
+  .btn-tag-add {
+    background: none;
+    border: 1px dashed var(--color-border, #d1d5db);
+    border-radius: 9999px;
+    cursor: pointer;
+    font-size: 0.65rem;
+    color: var(--color-text-muted, #9ca3af);
+    padding: 0.1rem 0.3rem;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.12s;
+  }
+
+  .doc-item:hover .btn-tag-add,
+  .doc-item.active .btn-tag-add {
+    opacity: 1;
+  }
+
+  .tag-input {
+    font-size: 0.7rem;
+    border: 1px solid var(--color-primary, #646cff);
+    border-radius: 9999px;
+    padding: 0.1rem 0.4rem;
+    outline: none;
+    width: 5rem;
+    background: var(--color-background, #fff);
+    color: var(--color-text, #1a1a1a);
+  }
 </style>

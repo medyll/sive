@@ -13,6 +13,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   import KeyboardShortcutsHelp from '$lib/elements/KeyboardShortcutsHelp.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
   import { toastStore } from '$lib/toastStore.svelte';
+  import { retryFetch } from '$lib/retryFetch';
 
   const SPLIT_KEY = 'sive.splitRatio';
   const FOCUS_KEY = 'sive.focusMode';
@@ -72,18 +73,31 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     createDocForm?.requestSubmit();
   }
 
-  function handleSave(id: string, content: string) {
+  async function handleSave(id: string, content: string) {
     // Update local state immediately
     const doc = documents.find((d) => d.id === id);
     if (doc) doc.content = content;
 
-    // Submit to server via hidden form
+    // Submit to server via hidden form (preferred path)
     if (saveDocForm && saveIdInput && saveContentInput) {
       saveIdInput.value = id;
       saveContentInput.value = content;
       saveDocForm.requestSubmit();
+      toastStore.success('Document saved');
+      return;
     }
-    toastStore.success('Document saved');
+
+    // Fallback: direct fetch with retry (e.g. form ref unavailable)
+    try {
+      await retryFetch(`?/saveDocument`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ id, content }).toString()
+      });
+      toastStore.success('Document saved');
+    } catch {
+      toastStore.error('Failed to save document — please try again');
+    }
   }
 
   function handleRename(id: string, title: string) {

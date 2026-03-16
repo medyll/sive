@@ -6,7 +6,8 @@
       "Bash(git:*)",
       "Bash(lsof:*)",
       "Bash(ls:*)",
-      "mcp__plugin_context-mode_context-mode__ctx_search"
+      "mcp__plugin_context-mode_context-mode__ctx_search",
+      "Bash(find d:/boulot/dev/node/sive -name *.sql -path */migrations/*)"
     ]
   }
 }

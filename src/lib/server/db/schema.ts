@@ -15,6 +15,7 @@ export const documents = sqliteTable('documents', {
 	user_id: text('user_id').notNull(),
 	title: text('title').notNull().default('Untitled'),
 	content: text('content').notNull().default(''),
+	tags: text('tags').notNull().default('[]'),
 	created_at: integer('created_at').notNull().$defaultFn(() => Date.now()),
 	updated_at: integer('updated_at').notNull().$defaultFn(() => Date.now())
 });
