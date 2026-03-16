@@ -49,15 +49,18 @@ completed_steps:
   - Sprint 18 Implementation — Release Candidate & Final QA (S18-01 → S18-04)
   - Sprint 19 Planning — Accessibility, UX Polish & Guest Conversion
   - Sprint 19 Implementation — A11y & Guest Conversion (S19-01 → S19-06)
+  - Sprint 20 Planning — Document Search & Power-User UX
+  - Sprint 20 Implementation — Search, Arrow Nav & Shortcuts (S20-01 → S20-06)
 
 missing_artifacts: []
 
 recommendation: |
-  Sprint 19 complete. Word count is live in the editor, highlight→report scroll
-  resolves the long-standing TODO, a11y svelte-ignore suppressions removed,
-  and both guest API endpoints (/api/guest/status, /api/guest/convert) are
-  implemented. Next sprint could focus on production deployment & monitoring,
-  or integrate a real AI backend for the stub analysis panels.
+  Sprint 20 complete. DocumentList now has real-time search filtering, arrow-key
+  navigation, and keyboard-focus tracking. Keyboard shortcuts expanded with
+  Ctrl+N (new doc), Ctrl+B (sidebar), Ctrl+]/[ (cycle docs) and ? (help overlay).
+  The latent `suggestionsReady` ReferenceError bug is fixed. Next sprint could
+  focus on integrating a real AI backend for the stub analysis panels, or adding
+  document tags/folders for better organisation.
 last_updated: 2026-03-16
 
 # New v3.1.0 structured fields (Single Source of Truth)
@@ -68,6 +71,7 @@ artifacts:
   - bmad/artifacts/architecture.md
   - bmad/artifacts/sprints/sprint-16.md
   - bmad/artifacts/sprints/sprint-19.md
+  - bmad/artifacts/sprints/sprint-20.md
 
 sprints:
   - id: sprint-1
@@ -323,6 +327,32 @@ sprints:
         status: done
       - id: S12-07
         title: e2e-ux-polish
+        status: done
+
+  - id: sprint-20
+    name: Sprint 20 — Document Search & Power-User UX
+    status: done
+    progress: 100
+    start: 2026-03-17
+    end: 2026-03-31
+    stories:
+      - id: S20-01
+        title: document-search-filter
+        status: done
+      - id: S20-02
+        title: arrow-key-navigation
+        status: done
+      - id: S20-03
+        title: expand-keyboard-shortcuts
+        status: done
+      - id: S20-04
+        title: keyboard-shortcuts-help-overlay
+        status: done
+      - id: S20-05
+        title: fix-suggestions-ready-bug
+        status: done
+      - id: S20-06
+        title: unit-tests-sprint20
         status: done
 
   - id: sprint-18

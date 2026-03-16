@@ -29,6 +29,33 @@
     onDelete
   }: DocumentListProps = $props();
 
+  // Search / filter
+  let searchQuery = $state('');
+  let filteredDocuments = $derived(
+    searchQuery.trim() === ''
+      ? documents
+      : documents.filter((d) =>
+          d.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
+        )
+  );
+
+  // Arrow-key navigation within the list
+  let focusedIndex = $state(-1);
+
+  function onListKeydown(e: KeyboardEvent) {
+    if (filteredDocuments.length === 0) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      focusedIndex = Math.min(focusedIndex + 1, filteredDocuments.length - 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      focusedIndex = Math.max(focusedIndex - 1, 0);
+    } else if (e.key === 'Enter' && focusedIndex >= 0) {
+      e.preventDefault();
+      onSelect?.(filteredDocuments[focusedIndex].id);
+    }
+  }
+
   // Track which doc is being renamed
   let editingId = $state<string | null>(null);
   let editingTitle = $state('');
@@ -75,7 +102,26 @@
     <button class="btn-new-doc" type="button" onclick={onNew} aria-label="New document">＋</button>
   </div>
 
-  <ul class="doc-list-items" role="list">
+  <div class="doc-search-row">
+    <input
+      class="doc-search-input"
+      type="search"
+      placeholder="Filter…"
+      aria-label="Filter documents"
+      bind:value={searchQuery}
+    />
+    {#if searchQuery}
+      <button
+        class="btn-search-clear"
+        type="button"
+        aria-label="Clear filter"
+        onclick={() => { searchQuery = ''; focusedIndex = -1; }}
+      >✕</button>
+    {/if}
+  </div>
+
+  <!-- svelte-ignore a11y_interactive_supports_focus -->
+  <ul class="doc-list-items" role="listbox" aria-label="Documents" onkeydown={onListKeydown}>
     {#if loading}
       {#each [1, 2, 3] as _}
         <li class="doc-skeleton" aria-hidden="true">
@@ -83,22 +129,28 @@
           <div class="skeleton-date"></div>
         </li>
       {/each}
-    {:else if documents.length === 0}
+    {:else if filteredDocuments.length === 0}
       <li class="doc-empty">
-        <span>No documents yet.</span>
-        <button type="button" class="btn-empty-new" onclick={onNew}>Create one →</button>
+        {#if searchQuery}
+          <span>No results for "{searchQuery}"</span>
+          <button type="button" class="btn-empty-new" onclick={() => { searchQuery = ''; }}>Clear filter</button>
+        {:else}
+          <span>No documents yet.</span>
+          <button type="button" class="btn-empty-new" onclick={onNew}>Create one →</button>
+        {/if}
       </li>
     {:else}
-      {#each documents as doc (doc.id)}
+      {#each filteredDocuments as doc, i (doc.id)}
       <li>
         <div
           class="doc-item"
           class:active={doc.id === activeId}
-          role="button"
+          class:focused={i === focusedIndex}
+          role="option"
           tabindex="0"
-          onclick={() => onSelect?.(doc.id)}
-          onkeydown={(e) => e.key === 'Enter' && onSelect?.(doc.id)}
-          aria-current={doc.id === activeId ? 'true' : undefined}
+          onclick={() => { focusedIndex = i; onSelect?.(doc.id); }}
+          onkeydown={(e) => e.key === 'Enter' && (focusedIndex = i, onSelect?.(doc.id))}
+          aria-selected={doc.id === activeId}
         >
           {#if editingId === doc.id}
             <input
@@ -174,9 +226,54 @@
   .doc-list-header {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--color-border, #e0e0e0);
+    padding: 0.75rem 1rem 0.5rem;
     gap: 0.5rem;
+  }
+
+  .doc-search-row {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0 0.75rem 0.5rem;
+    border-bottom: 1px solid var(--color-border, #e0e0e0);
+  }
+
+  .doc-search-input {
+    flex: 1;
+    font-size: 0.8rem;
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 0.3rem;
+    padding: 0.25rem 0.5rem;
+    background: var(--color-background, #fff);
+    color: var(--color-text, #1a1a1a);
+    outline: none;
+    min-width: 0;
+  }
+
+  .doc-search-input:focus {
+    border-color: var(--color-primary, #646cff);
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.15);
+  }
+
+  /* Hide browser's native clear button — we provide our own */
+  .doc-search-input::-webkit-search-cancel-button { display: none; }
+
+  .btn-search-clear {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.7rem;
+    color: var(--color-text-muted, #9ca3af);
+    padding: 0.1rem 0.2rem;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .btn-search-clear:hover { color: var(--color-text, #1a1a1a); }
+
+  .doc-item.focused {
+    outline: 2px solid var(--color-primary, #646cff);
+    outline-offset: -2px;
   }
 
   .doc-list-title {
