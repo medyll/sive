@@ -1,10 +1,17 @@
 import { browser } from '$app/environment';
 
+export interface CursorPosition {
+	offset: number;
+	selection?: { start: number; end: number } | null;
+}
+
 export interface ActiveUser {
 	userId: string;
 	name?: string;
 	status: 'active' | 'idle' | 'offline';
 	lastSeen: number;
+	cursor?: CursorPosition | null;
+	color?: string;
 }
 
 interface DocPresence {

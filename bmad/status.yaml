@@ -74,8 +74,8 @@ recommendation: |
   Next sprint could focus on API rate limiting, full-text search optimization, or mobile UX polish.
 last_updated: 2026-03-16
 
-active_role: scrum
-next_action: "Sprint 33 COMPLETE: Writing Dashboard — stats engine (words/sentences/paragraphs/streaks), /dashboard SSE-rendered page, 30-day heatmap, WordCountBadge (live), /api/stats, 28 unit tests, 20 E2E tests. Ready for Sprint 34."
+active_role: dev
+next_action: "Sprints 38-41 COMPLETE. S38: versions.ts (max 50 FIFO), diff.ts (LCS line diff + HTML render), VersionHistoryPanel.svelte, /api/versions (GET/POST restore+label). S39: exportFormats.ts (pure-JS ZIP builder, EPUB3+DOCX), /api/export/epub + /api/export/docx. S40: OnboardingTour.svelte (5-step tooltip tour, spotlight overlay, progress dots, localStorage completion flag). S41: writingGoalsStore.svelte.ts (daily target, session tracking, streak), WritingGoalBar.svelte (progress bar, streak badge, inline target editor). All unit+E2E tests written. Ready for Sprint 42."
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:

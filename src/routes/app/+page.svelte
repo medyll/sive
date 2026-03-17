@@ -102,6 +102,39 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     activeContent = documents.find((d) => d.id === activeDocumentId)?.content ?? '';
   });
 
+  // ── Debounced auto-save ───────────────────────────────────────────────────
+  type SaveStatus = 'idle' | 'pending' | 'saving' | 'saved';
+  let saveStatus = $state<SaveStatus>('idle');
+  let saveTimer: ReturnType<typeof setTimeout> | null = null;
+  let savedFadeTimer: ReturnType<typeof setTimeout> | null = null;
+  let pendingSave: { id: string; content: string } | null = null;
+
+  function debouncedSave(id: string, content: string) {
+    pendingSave = { id, content };
+    saveStatus = 'pending';
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => flushSave(), 1500);
+  }
+
+  async function flushSave() {
+    if (!pendingSave) return;
+    const { id, content } = pendingSave;
+    pendingSave = null;
+    saveTimer = null;
+    saveStatus = 'saving';
+    await handleSave(id, content);
+    saveStatus = 'saved';
+    if (savedFadeTimer) clearTimeout(savedFadeTimer);
+    savedFadeTimer = setTimeout(() => (saveStatus = 'idle'), 2000);
+  }
+
+  // Flush on page unload
+  $effect(() => {
+    function onBeforeUnload() { if (pendingSave) flushSave(); }
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  });
+
   // Hidden form references for programmatic submission
   let createDocForm: HTMLFormElement;
   let saveDocForm: HTMLFormElement;
@@ -427,10 +460,15 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         class="panel editor-panel"
         style="width: {focusMode ? '100%' : `calc(${splitRatio * 100}% - 14rem)`}"
       >
+        {#if saveStatus !== 'idle'}
+          <div class="save-indicator" class:fade={saveStatus === 'saved'}>
+            {saveStatus === 'pending' ? '…' : saveStatus === 'saving' ? 'Saving…' : 'Saved ✓'}
+          </div>
+        {/if}
         <EditorPanel
           documentId={activeDocumentId}
           bind:content={activeContent}
-          onSave={handleSave}
+          onSave={debouncedSave}
         />
       </div>
 
@@ -567,6 +605,18 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
 <Toast />
 
 <style>
+  .save-indicator {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    z-index: 10;
+    font-size: 0.75rem;
+    color: var(--muted, #9ca3af);
+    pointer-events: none;
+    transition: opacity 2s ease;
+  }
+  .save-indicator.fade { opacity: 0; }
+
   .app-root {
     display: flex;
     flex-direction: column;
