@@ -75,7 +75,7 @@ recommendation: |
 last_updated: 2026-03-16
 
 active_role: scrum
-next_action: "Sprint 32 COMPLETE: Notification System — SSE stream, in-memory store (50/user), bell badge UI, mark read/all/clear, real-time push, unit tests (22), E2E tests (18). Ready for Sprint 33."
+next_action: "Sprint 33 COMPLETE: Writing Dashboard — stats engine (words/sentences/paragraphs/streaks), /dashboard SSE-rendered page, 30-day heatmap, WordCountBadge (live), /api/stats, 28 unit tests, 20 E2E tests. Ready for Sprint 34."
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
