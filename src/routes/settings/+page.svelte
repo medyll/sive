@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { toastStore } from '$lib/toastStore.svelte';
+  import PluginManager from '$lib/elements/PluginManager.svelte';
+  import { pluginStore } from '$lib/pluginStore.svelte';
+  onMount(() => pluginStore.init());
 
   let theme: string = 'light';
   let fontSize: string = 'medium';
@@ -65,4 +68,9 @@
   </div>
 
   <button on:click={save} class="btn btn-primary">Save</button>
+</section>
+
+<section class="settings-section">
+  <h2>Plugins</h2>
+  <PluginManager />
 </section>

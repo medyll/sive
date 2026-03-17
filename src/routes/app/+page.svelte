@@ -14,6 +14,13 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   import SummaryPanel from '$lib/elements/SummaryPanel.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
   import { summaryStore } from '$lib/summaryStore.svelte';
+  import TemplatePicker from '$lib/elements/TemplatePicker.svelte';
+  import VersionHistoryPanel from '$lib/elements/VersionHistoryPanel.svelte';
+  import WritingGoalBar from '$lib/elements/WritingGoalBar.svelte';
+  import FocusModePanel from '$lib/elements/FocusModePanel.svelte';
+  import InstallPrompt from '$lib/elements/InstallPrompt.svelte';
+  import OnboardingTour from '$lib/elements/OnboardingTour.svelte';
+  import CommandPalette from '$lib/elements/CommandPalette.svelte';
 
   function isAutoSummaryEnabled(): boolean {
     if (!browser) return false;
@@ -89,6 +96,9 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let reviewMode = $state(false);
   let hardenOpen = $state(false);
   let sidebarOpen = $state(true);
+  let templatePickerOpen = $state(false);
+  let versionPanelOpen = $state(false);
+  let focusPanelOpen = $state(false);
 
   // Document state
   let documents = $state(data.documents);
@@ -134,6 +144,50 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     window.addEventListener('beforeunload', onBeforeUnload);
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   });
+
+  // Auto-save version after each explicit save
+  async function saveVersionAfterSave(id: string, content: string) {
+    try {
+      await fetch('/api/versions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'save', docId: id, content, title: documents.find(d => d.id === id)?.title ?? 'Untitled' })
+      });
+    } catch { /* silent */ }
+  }
+
+  // Listen to palette custom events
+  $effect(() => {
+    function onNewFromTemplate() { templatePickerOpen = true; }
+    function onSaveAsTemplate() {
+      const doc = documents.find(d => d.id === activeDocumentId);
+      if (!doc) return;
+      fetch('/api/templates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: doc.title, description: '', content: doc.content, category: 'general' })
+      }).then(() => toastStore.success('Template saved'));
+    }
+    window.addEventListener('palette:newFromTemplate', onNewFromTemplate);
+    window.addEventListener('palette:saveAsTemplate', onSaveAsTemplate);
+    return () => {
+      window.removeEventListener('palette:newFromTemplate', onNewFromTemplate);
+      window.removeEventListener('palette:saveAsTemplate', onSaveAsTemplate);
+    };
+  });
+
+  // Handle template apply
+  async function handleTemplateApply(templateId: string, title: string) {
+    const res = await fetch('/api/templates');
+    if (!res.ok) return;
+    const templates = await res.json();
+    const t = templates.find((x: { id: string; content: string }) => x.id === templateId);
+    if (!t) return;
+    createDocForm?.requestSubmit();
+    // After creation, content will be populated via activeContent
+    setTimeout(() => { activeContent = t.content; }, 200);
+    templatePickerOpen = false;
+  }
 
   // Hidden form references for programmatic submission
   let createDocForm: HTMLFormElement;
@@ -401,6 +455,8 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         aria-pressed={reviewMode}
       >Review</button>
       <button type="button" onclick={() => { hardenOpen = true; }}>💾 New version</button>
+      <button type="button" onclick={() => { versionPanelOpen = !versionPanelOpen; }} aria-pressed={versionPanelOpen} title="Version history">🕐 History</button>
+      <button type="button" onclick={() => { focusPanelOpen = !focusPanelOpen; }} aria-pressed={focusPanelOpen} title="Focus mode / Pomodoro">🍅</button>
       <button
         type="button"
         class="btn-summary"
@@ -446,18 +502,22 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   {:else}
     <div class="workspace" {@attach workspaceRef}>
       {#if !focusMode && sidebarOpen}
-        <DocumentList
-          {documents}
-          activeId={activeDocumentId}
-          onSelect={(id) => { handleSelectDocument(id); if (browser && window.innerWidth < 768) sidebarOpen = false; }}
-          onNew={handleNewDocument}
-          onRename={handleRename}
-          onDelete={handleDelete}
-        />
+        <div class="sidebar" data-tour="document-list">
+          <DocumentList
+            {documents}
+            activeId={activeDocumentId}
+            onSelect={(id) => { handleSelectDocument(id); if (browser && window.innerWidth < 768) sidebarOpen = false; }}
+            onNew={handleNewDocument}
+            onRename={handleRename}
+            onDelete={handleDelete}
+          />
+          <WritingGoalBar currentWordCount={activeContent.trim() ? activeContent.trim().split(/\s+/).length : 0} />
+        </div>
       {/if}
 
       <div
         class="panel editor-panel"
+        data-tour="editor"
         style="width: {focusMode ? '100%' : `calc(${splitRatio * 100}% - 14rem)`}"
       >
         {#if saveStatus !== 'idle'}
@@ -481,8 +541,28 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
           onpointerdown={onPointerDown}
         ></div>
 
-        <div class="panel ai-panel" style="width: {(1 - splitRatio) * 100}%">
-          <AIPanel {aiProcessing} editorContent={activeContent} />
+        <div class="panel ai-panel" data-tour="ai-panel" style="width: {(1 - splitRatio) * 100}%">
+          <AIPanel {aiProcessing} editorContent={activeContent} docId={activeDocumentId} />
+          {#if versionPanelOpen}
+            <div class="version-panel-overlay">
+              <VersionHistoryPanel
+                docId={activeDocumentId}
+                currentContent={activeContent}
+                onrestore={(content, title) => {
+                  activeContent = content;
+                  const doc = documents.find(d => d.id === activeDocumentId);
+                  if (doc) { doc.title = title; documents = [...documents]; }
+                  versionPanelOpen = false;
+                  toastStore.success('Version restored');
+                }}
+              />
+            </div>
+          {/if}
+          {#if focusPanelOpen}
+            <div class="focus-panel-overlay">
+              <FocusModePanel />
+            </div>
+          {/if}
         </div>
       {/if}
     </div>
@@ -604,6 +684,17 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
 
 <Toast />
 
+<CommandPalette />
+
+<OnboardingTour />
+
+<InstallPrompt />
+
+<TemplatePicker
+  bind:open={templatePickerOpen}
+  onapply={handleTemplateApply}
+/>
+
 <style>
   .save-indicator {
     position: absolute;
@@ -616,6 +707,20 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     transition: opacity 2s ease;
   }
   .save-indicator.fade { opacity: 0; }
+  .sidebar { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+  .version-panel-overlay {
+    border-top: 1px solid var(--border, #e5e7eb);
+    padding: 0.75rem;
+    height: 50%;
+    overflow-y: auto;
+    background: var(--surface, #fff);
+  }
+  .focus-panel-overlay {
+    border-top: 1px solid var(--border, #e5e7eb);
+    padding: 0.75rem;
+    overflow-y: auto;
+    background: var(--surface, #fff);
+  }
 
   .app-root {
     display: flex;

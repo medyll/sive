@@ -1,0 +1,20 @@
+{
+  "name": "Sive — Writing App",
+  "short_name": "Sive",
+  "description": "Distraction-free writing with AI assistance",
+  "start_url": "/app",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#7c3aed",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [],
+  "categories": ["productivity", "utilities"],
+  "shortcuts": [
+    { "name": "New Document", "url": "/app?new=1", "description": "Create a new document" },
+    { "name": "Dashboard", "url": "/dashboard", "description": "View writing stats" }
+  ]
+}

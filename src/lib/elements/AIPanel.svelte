@@ -20,6 +20,7 @@
     aiProcessing?: boolean;
     theme?: string;
     editorContent?: string;
+    docId?: string | null;
   }
 
   const TABS = ['Chat', 'Suggestions', 'Coherence', 'Style', 'History'] as const;
@@ -130,6 +131,7 @@
     } finally {
       chatStreaming = false;
       chatController = null;
+      persistChatHistory();
     }
   }
 
@@ -141,8 +143,32 @@
     activeTab = $bindable<string>('Chat'),
     aiProcessing = false,
     theme = 'light',
-    editorContent = ''
+    editorContent = '',
+    docId = null
   }: AIPanelProps = $props();
+
+  // Persist chat history per document
+  const CHAT_PREFIX = 'sive:chat:';
+  $effect(() => {
+    if (!docId) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem(CHAT_PREFIX + docId) ?? '[]');
+      if (Array.isArray(saved) && saved.length > 0) {
+        chatMessages = saved.map((m: { role: string; content?: string; text?: string }) => ({
+          role: m.role as 'user' | 'assistant',
+          text: m.content ?? m.text ?? ''
+        }));
+      } else {
+        chatMessages = [];
+      }
+    } catch { chatMessages = []; }
+  });
+
+  function persistChatHistory() {
+    if (!docId) return;
+    const toSave = chatMessages.slice(-20).map((m) => ({ role: m.role, content: m.text }));
+    localStorage.setItem(CHAT_PREFIX + docId, JSON.stringify(toSave));
+  }
 
   let selectedHardenId = $state<string | undefined>(undefined);
 
