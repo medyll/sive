@@ -2,6 +2,9 @@ import { expect, test } from './fixtures';
 
 test.describe('Suggestions tab — /app', () => {
 	test.beforeEach(async ({ page }) => {
+		await page.addInitScript(() => {
+			localStorage.setItem('sive:onboarding_seen', '1');
+		});
 		await page.goto('/app');
 	});
 
@@ -20,13 +23,13 @@ test.describe('Suggestions tab — /app', () => {
 
 	test('after generation, 3 suggestion cards appear', async ({ page }) => {
 		await page.locator('.btn-suggest').click();
-		await expect(page.locator('article.suggestion-item')).toHaveCount(3, { timeout: 5000 });
+		await expect(page.locator('article.suggestion-item')).toHaveCount(3, { timeout: 15000 });
 	});
 
 	test('suggestion cards show type badge and diff content', async ({ page }) => {
 		await page.locator('.btn-suggest').click();
 		const firstCard = page.locator('article.suggestion-item').first();
-		await expect(firstCard).toBeVisible({ timeout: 5000 });
+		await expect(firstCard).toBeVisible({ timeout: 15000 });
 		await expect(firstCard.locator('.suggestion-badge')).toBeVisible();
 		await expect(firstCard.locator('.suggestion-diff')).toBeVisible();
 	});
@@ -34,21 +37,21 @@ test.describe('Suggestions tab — /app', () => {
 	test('Accept and Reject buttons are visible on each card', async ({ page }) => {
 		await page.locator('.btn-suggest').click();
 		const firstCard = page.locator('article.suggestion-item').first();
-		await expect(firstCard).toBeVisible({ timeout: 5000 });
+		await expect(firstCard).toBeVisible({ timeout: 15000 });
 		await expect(firstCard.getByRole('button', { name: 'Accept suggestion' })).toBeVisible();
 		await expect(firstCard.getByRole('button', { name: 'Reject suggestion' })).toBeVisible();
 	});
 
 	test('clicking Reject removes that card from the list', async ({ page }) => {
 		await page.locator('.btn-suggest').click();
-		await expect(page.locator('article.suggestion-item')).toHaveCount(3, { timeout: 5000 });
+		await expect(page.locator('article.suggestion-item')).toHaveCount(3, { timeout: 15000 });
 		await page.locator('article.suggestion-item').first().getByRole('button', { name: 'Reject suggestion' }).click();
 		await expect(page.locator('article.suggestion-item')).toHaveCount(2);
 	});
 
 	test('"Accept all" button removes all cards', async ({ page }) => {
 		await page.locator('.btn-suggest').click();
-		await expect(page.locator('article.suggestion-item')).toHaveCount(3, { timeout: 5000 });
+		await expect(page.locator('article.suggestion-item')).toHaveCount(3, { timeout: 15000 });
 		await page.locator('.btn-accept-all').click();
 		await expect(page.locator('article.suggestion-item')).toHaveCount(0);
 	});

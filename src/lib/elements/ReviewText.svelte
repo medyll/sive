@@ -63,8 +63,6 @@ at him. Martin noticed her hands were shaking.\n\n\
   <div class="text-content">
     {#each segments as seg}
       {#if seg.highlight}
-        <!-- svelte-ignore a11y_click_events_have_key_events -->
-        <!-- svelte-ignore a11y_no_static_element_interactions -->
         <mark
           class="highlight highlight--{seg.highlight.category}"
           data-category={seg.highlight.category}
@@ -73,7 +71,7 @@ at him. Martin noticed her hands were shaking.\n\n\
           role="button"
           aria-label="Flagged passage: {seg.highlight.category}"
           onclick={() => onHighlightClick?.(seg.highlight!)}
-          onkeydown={(e) => e.key === 'Enter' && onHighlightClick?.(seg.highlight!)}
+          onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && onHighlightClick?.(seg.highlight!)}
         >{seg.text}</mark>
       {:else}
         {seg.text}

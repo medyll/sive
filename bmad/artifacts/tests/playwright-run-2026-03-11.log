@@ -1,0 +1,3170 @@
+npm warn Unknown cli config "--trace". This will stop working in the next major version of npm.
+npm warn Unknown cli config "--workers". This will stop working in the next major version of npm.
+
+> sive@0.0.1 test:e2e
+> playwright test
+
+[WebServer] npm warn Unknown env config "trace". This will stop working in the next major version of npm.
+[WebServer] npm warn Unknown env config "workers". This will stop working in the next major version of npm.
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:44:25 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 42: 
+[WebServer] 43:   // Document state
+[WebServer] 44:   let documents = $state(data.documents);
+[WebServer]                                  ^
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:45:32 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 43:   // Document state
+[WebServer] 44:   let documents = $state(data.documents);
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer]                                         ^
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:47:4 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+[WebServer]             ^
+[WebServer] 48:   );
+[WebServer] 49: 
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:56:6 `createDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 54: 
+[WebServer] 55:   // Hidden form references for programmatic submission
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:57:6 `saveDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 55:   // Hidden form references for programmatic submission
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer]                                       ^
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:58:6 `saveIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer]                                        ^
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:59:6 `saveContentInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer]                                             ^
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:60:6 `renameDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:61:6 `renameIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer]                                          ^
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:62:6 `renameTitleInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer]                                             ^
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:63:6 `deleteDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer] 65: 
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:64:6 `deleteIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer]                                          ^
+[WebServer] 65: 
+[WebServer] 66:   function handleSelectDocument(id: string) {
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/app/+page.svelte:593:4 Unused CSS selector ".main-toolbar button[aria-disabled="true"]"
+[WebServer] https://svelte.dev/e/css_unused_selector
+[WebServer] 591: 
+[WebServer] 592:     /* Hide some toolbar buttons on small screens */
+[WebServer] 593:     .main-toolbar button[aria-disabled="true"] {
+[WebServer]                                                    ^
+[WebServer] 594:       display: none;
+[WebServer] 595:     }
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/settings/+page.svelte:38:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 36: 
+[WebServer] 37:   <div class="mb-4">
+[WebServer] 38:     <label class="block font-medium mb-2">Theme</label>
+[WebServer]                                                            ^
+[WebServer] 39:     <label><input type="radio" bind:group={theme} value="light" /> Light</label>
+[WebServer] 40:     <label class="ml-4"><input type="radio" bind:group={theme} value="dark" /> Dark</label>
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/settings/+page.svelte:44:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 42: 
+[WebServer] 43:   <div class="mb-4">
+[WebServer] 44:     <label class="block font-medium mb-2">Font size</label>
+[WebServer]                                                                ^
+[WebServer] 45:     <select bind:value={fontSize}>
+[WebServer] 46:       <option value="small">Small</option>
+[WebServer] 11:26:27 [vite-plugin-svelte] src/routes/settings/+page.svelte:53:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 51: 
+[WebServer] 52:   <div class="mb-4">
+[WebServer] 53:     <label class="block font-medium mb-2">Autosave interval (seconds)</label>
+[WebServer]                                                                                  ^
+[WebServer] 54:     <input type="number" bind:value={autosave} min="0" />
+[WebServer] 55:   </div>
+[WebServer] 11:26:29 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:61:2 The attribute 'aria-readonly' is not supported by the role 'document'
+[WebServer] https://svelte.dev/e/a11y_role_supports_aria_props
+[WebServer] 59:   role="document"
+[WebServer] 60:   aria-label="Manuscript text ÔÇö read only"
+[WebServer] 61:   aria-readonly="true"
+[WebServer]                           ^
+[WebServer] 62: >
+[WebServer] 63:   <div class="text-content">
+[WebServer] 11:26:29 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:68:8 Non-interactive element `<mark>` cannot have interactive role 'button'
+[WebServer] https://svelte.dev/e/a11y_no_noninteractive_element_to_interactive_role
+[WebServer] 66:         <!-- svelte-ignore a11y_click_events_have_key_events -->
+[WebServer] 67:         <!-- svelte-ignore a11y_no_static_element_interactions -->
+[WebServer] 68:         <mark
+[WebServer]                   ^
+[WebServer] 69:           class="highlight highlight--{seg.highlight.category}"
+[WebServer] 70:           data-category={seg.highlight.category}
+[WebServer] 11:26:29 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:67:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 65:       <h3 id="sec-inconsistencies">Inconsistencies</h3>
+[WebServer] 66:       {#each report.inconsistencies as item}
+[WebServer] 67:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 68:           <strong>{item.entity}</strong>
+[WebServer] 69:           <span class="badge-confidence">{Math.round(item.confidence * 100)}%</span>
+[WebServer] 11:26:29 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:79:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 77:       <h3 id="sec-pov">Point of View</h3>
+[WebServer] 78:       {#each report.pov as item}
+[WebServer] 79:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 80:           <strong>{item.location}</strong>
+[WebServer] 81:           <p>{item.detected_deviation}</p>
+[WebServer] 11:26:29 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:90:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 88:       <h3 id="sec-threads">Narrative Threads</h3>
+[WebServer] 89:       {#each report.threads as item}
+[WebServer] 90:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 91:           <strong>{item.thread_id}</strong>
+[WebServer] 92:           <span class="thread-status status--{item.status}">{item.status}</span>
+[WebServer] 11:26:29 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:114:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 112:       <h3 id="sec-motifs">Themes &amp; Motifs</h3>
+[WebServer] 113:       {#each report.motifs as item}
+[WebServer] 114:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 115:           <strong>{item.motif_id}</strong>
+[WebServer] 116:           <span class="badge-presence">{item.presence}</span>
+[WebServer] 11:26:29 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:126:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 124:       <h3 id="sec-voices">Character Voices</h3>
+[WebServer] 125:       {#each report.voices as item}
+[WebServer] 126:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 127:           <strong>{item.character_id}</strong>
+[WebServer] 128:           <p>{item.register_deviation}</p>
+[WebServer] 11:26:29 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:138:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 136:       <h3 id="sec-style">Style &amp; Rhythm</h3>
+[WebServer] 137:       {#each report.style as item}
+[WebServer] 138:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 139:           <strong>{item.signal_type}</strong>
+[WebServer] 140:           <span class="item-location">{item.location}</span>
+[WebServer] "optionsMiddleware" is imported from external module "@better-auth/core/api" but never used in "node_modules/.pnpm/better-auth@1.4.19_@sveltej_749df91839a5bba8df355eb9e7d8a0ab/node_modules/better-auth/dist/api/index.mjs".
+[WebServer] Unknown output options: codeSplitting. Allowed options: amd, assetFileNames, banner, chunkFileNames, compact, dir, dynamicImportInCjs, entryFileNames, esModule, experimentalMinChunkSize, exports, extend, externalImportAssertions, externalImportAttributes, externalLiveBindings, file, footer, format, freeze, generatedCode, globals, hashCharacters, hoistTransitiveImports, importAttributesKey, indent, inlineDynamicImports, interop, intro, manualChunks, minifyInternalExports, name, noConflict, onlyExplicitManualChunks, outro, paths, plugins, preserveModules, preserveModulesRoot, reexportProtoFromExternal, sanitizeFileName, sourcemap, sourcemapBaseUrl, sourcemapDebugIds, sourcemapExcludeSources, sourcemapFile, sourcemapFileNames, sourcemapIgnoreList, sourcemapPathTransform, strict, systemNullSetters, validate, virtualDirname
+[WebServer] better-auth init failed; using auth stub for dev: require is not defined
+[WebServer] better-sqlite3 failed to load, running with a mocked DB for dev: require is not defined
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:44:25 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 42: 
+[WebServer] 43:   // Document state
+[WebServer] 44:   let documents = $state(data.documents);
+[WebServer]                                  ^
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:45:32 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 43:   // Document state
+[WebServer] 44:   let documents = $state(data.documents);
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer]                                         ^
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:47:4 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+[WebServer]             ^
+[WebServer] 48:   );
+[WebServer] 49: 
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:56:6 `createDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 54: 
+[WebServer] 55:   // Hidden form references for programmatic submission
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:57:6 `saveDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 55:   // Hidden form references for programmatic submission
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer]                                       ^
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:58:6 `saveIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer]                                        ^
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:59:6 `saveContentInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer]                                             ^
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:60:6 `renameDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:61:6 `renameIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer]                                          ^
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:62:6 `renameTitleInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer]                                             ^
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:63:6 `deleteDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer] 65: 
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:64:6 `deleteIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer]                                          ^
+[WebServer] 65: 
+[WebServer] 66:   function handleSelectDocument(id: string) {
+[WebServer] 11:26:42 [vite-plugin-svelte] src/routes/app/+page.svelte:593:4 Unused CSS selector ".main-toolbar button[aria-disabled="true"]"
+[WebServer] https://svelte.dev/e/css_unused_selector
+[WebServer] 591: 
+[WebServer] 592:     /* Hide some toolbar buttons on small screens */
+[WebServer] 593:     .main-toolbar button[aria-disabled="true"] {
+[WebServer]                                                    ^
+[WebServer] 594:       display: none;
+[WebServer] 595:     }
+[WebServer] 11:26:43 [vite-plugin-svelte] src/routes/settings/+page.svelte:38:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 36: 
+[WebServer] 37:   <div class="mb-4">
+[WebServer] 38:     <label class="block font-medium mb-2">Theme</label>
+[WebServer]                                                            ^
+[WebServer] 39:     <label><input type="radio" bind:group={theme} value="light" /> Light</label>
+[WebServer] 40:     <label class="ml-4"><input type="radio" bind:group={theme} value="dark" /> Dark</label>
+[WebServer] 11:26:43 [vite-plugin-svelte] src/routes/settings/+page.svelte:44:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 42: 
+[WebServer] 43:   <div class="mb-4">
+[WebServer] 44:     <label class="block font-medium mb-2">Font size</label>
+[WebServer]                                                                ^
+[WebServer] 45:     <select bind:value={fontSize}>
+[WebServer] 46:       <option value="small">Small</option>
+[WebServer] 11:26:43 [vite-plugin-svelte] src/routes/settings/+page.svelte:53:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 51: 
+[WebServer] 52:   <div class="mb-4">
+[WebServer] 53:     <label class="block font-medium mb-2">Autosave interval (seconds)</label>
+[WebServer]                                                                                  ^
+[WebServer] 54:     <input type="number" bind:value={autosave} min="0" />
+[WebServer] 55:   </div>
+[WebServer] 11:26:43 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:61:2 The attribute 'aria-readonly' is not supported by the role 'document'
+[WebServer] https://svelte.dev/e/a11y_role_supports_aria_props
+[WebServer] 59:   role="document"
+[WebServer] 60:   aria-label="Manuscript text ÔÇö read only"
+[WebServer] 61:   aria-readonly="true"
+[WebServer]                           ^
+[WebServer] 62: >
+[WebServer] 63:   <div class="text-content">
+[WebServer] 11:26:43 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:68:8 Non-interactive element `<mark>` cannot have interactive role 'button'
+[WebServer] https://svelte.dev/e/a11y_no_noninteractive_element_to_interactive_role
+[WebServer] 66:         <!-- svelte-ignore a11y_click_events_have_key_events -->
+[WebServer] 67:         <!-- svelte-ignore a11y_no_static_element_interactions -->
+[WebServer] 68:         <mark
+[WebServer]                   ^
+[WebServer] 69:           class="highlight highlight--{seg.highlight.category}"
+[WebServer] 70:           data-category={seg.highlight.category}
+[WebServer] 11:26:43 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:67:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 65:       <h3 id="sec-inconsistencies">Inconsistencies</h3>
+[WebServer] 66:       {#each report.inconsistencies as item}
+[WebServer] 67:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 68:           <strong>{item.entity}</strong>
+[WebServer] 69:           <span class="badge-confidence">{Math.round(item.confidence * 100)}%</span>
+[WebServer] 11:26:43 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:79:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 77:       <h3 id="sec-pov">Point of View</h3>
+[WebServer] 78:       {#each report.pov as item}
+[WebServer] 79:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 80:           <strong>{item.location}</strong>
+[WebServer] 81:           <p>{item.detected_deviation}</p>
+[WebServer] 11:26:43 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:90:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 88:       <h3 id="sec-threads">Narrative Threads</h3>
+[WebServer] 89:       {#each report.threads as item}
+[WebServer] 90:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 91:           <strong>{item.thread_id}</strong>
+[WebServer] 92:           <span class="thread-status status--{item.status}">{item.status}</span>
+[WebServer] 11:26:43 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:114:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 112:       <h3 id="sec-motifs">Themes &amp; Motifs</h3>
+[WebServer] 113:       {#each report.motifs as item}
+[WebServer] 114:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 115:           <strong>{item.motif_id}</strong>
+[WebServer] 116:           <span class="badge-presence">{item.presence}</span>
+[WebServer] 11:26:43 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:126:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 124:       <h3 id="sec-voices">Character Voices</h3>
+[WebServer] 125:       {#each report.voices as item}
+[WebServer] 126:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 127:           <strong>{item.character_id}</strong>
+[WebServer] 128:           <p>{item.register_deviation}</p>
+[WebServer] 11:26:43 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:138:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 136:       <h3 id="sec-style">Style &amp; Rhythm</h3>
+[WebServer] 137:       {#each report.style as item}
+[WebServer] 138:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 139:           <strong>{item.signal_type}</strong>
+[WebServer] 140:           <span class="item-location">{item.location}</span>
+[WebServer] Unknown output options: codeSplitting. Allowed options: amd, assetFileNames, banner, chunkFileNames, compact, dir, dynamicImportInCjs, entryFileNames, esModule, experimentalMinChunkSize, exports, extend, externalImportAssertions, externalImportAttributes, externalLiveBindings, file, footer, format, freeze, generatedCode, globals, hashCharacters, hoistTransitiveImports, importAttributesKey, indent, inlineDynamicImports, interop, intro, manualChunks, minifyInternalExports, name, noConflict, onlyExplicitManualChunks, outro, paths, plugins, preserveModules, preserveModulesRoot, reexportProtoFromExternal, sanitizeFileName, sourcemap, sourcemapBaseUrl, sourcemapDebugIds, sourcemapExcludeSources, sourcemapFile, sourcemapFileNames, sourcemapIgnoreList, sourcemapPathTransform, strict, systemNullSetters, validate, virtualDirname
+[WebServer] npm warn Unknown env config "trace". This will stop working in the next major version of npm.
+[WebServer] npm warn Unknown env config "workers". This will stop working in the next major version of npm.
+[WebServer] better-auth init failed; using auth stub for dev: require is not defined
+[WebServer] better-sqlite3 failed to load, running with a mocked DB for dev: require is not defined
+
+Running 120 tests using 10 workers
+
+  Ô£ô    2 e2e\auth-login.spec.ts:10:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ sign-in page loads with title and form elements (568ms)
+  Ô£ô    6 e2e\coherence-tab.spec.ts:8:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ Coherence tab button is visible (536ms)
+  Ô£ô    3 e2e\document-persistence.spec.ts:8:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ DocumentList sidebar is visible (601ms)
+  Ô£ô    1 e2e\ai-integration.spec.ts:8:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: "Generate suggestions" button is present (600ms)
+  Ô£ô    8 e2e\document-ux.spec.ts:8:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ toolbar title is visible and clickable to edit (737ms)
+  Ô£ô    9 e2e\demo.test.ts:3:1 ÔÇ║ home page has expected h1 (797ms)
+  Ô£ô   11 e2e\auth-login.spec.ts:17:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ email input is of type email and password input is of type password (346ms)
+  Ô£ô    4 e2e\app-layout.spec.ts:10:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ toolbar is visible with project label and action buttons (913ms)
+  Ô£ô   13 e2e\document-persistence.spec.ts:12:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ at least one document is listed on load (406ms)
+  Ô£ô   15 e2e\document-ux.spec.ts:16:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ sidebar title has aria-label for rename accessibility (245ms)
+  Ô£ô   17 e2e\auth-login.spec.ts:22:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ both inputs are required (HTML5 validation) (164ms)
+  Ô£ô   18 e2e\app-layout.spec.ts:16:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ editor panel and AI panel are side-by-side (199ms)
+  Ô£ô   19 e2e\document-persistence.spec.ts:17:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ editor textarea is visible and editable (207ms)
+  Ô£ô   16 e2e\onboarding.spec.ts:4:3 ÔÇ║ Onboarding flow ÔÇ║ shows onboarding on first visit and can be completed (368ms)
+  Ô£ô   20 e2e\document-ux.spec.ts:21:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ delete button is present for each document item (210ms)
+  Ô£ô   22 e2e\app-layout.spec.ts:21:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ resize handle is visible between panels (166ms)
+  Ô£ô   21 e2e\auth-login.spec.ts:29:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ shows accessible error message on invalid credentials (310ms)
+  Ô£ô   23 e2e\document-persistence.spec.ts:23:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ stub document content is loaded in editor (189ms)
+  Ô£ÿ   26 e2e\app-layout.spec.ts:27:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ all four AI tabs are visible (209ms)
+  Ô£ô   27 e2e\auth-login.spec.ts:40:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ error message disappears on subsequent submission attempt (338ms)
+  Ô£ô   10 e2e\collaboration.spec.ts:12:2 ÔÇ║ Collaboration Features ÔÇ║ presence list displays online users with initials and status (2.9s)
+  Ô£ÿ    5 e2e\auth-flow.spec.ts:4:2 ÔÇ║ Auth flow ÔÇ║ login page renders with email, password fields and GitHub button (5.6s)
+  Ô£ô   32 e2e\auth-flow.spec.ts:11:2 ÔÇ║ Auth flow ÔÇ║ login page has link to signup (126ms)
+  Ô£ô   33 e2e\auth-flow.spec.ts:16:2 ÔÇ║ Auth flow ÔÇ║ signup page renders with email and password fields (138ms)
+  Ô£ÿ   29 e2e\auth-login.spec.ts:55:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ redirects to / on successful sign-in (5.2s)
+  Ô£ô   34 e2e\auth-flow.spec.ts:23:2 ÔÇ║ Auth flow ÔÇ║ signup page has link back to sign in (124ms)
+  Ô£ô   35 e2e\auth-flow.spec.ts:28:2 ÔÇ║ Auth flow ÔÇ║ login page shows dev mode notice in mock environment (117ms)
+  Ô£ô   36 e2e\auth-flow.spec.ts:36:2 ÔÇ║ Auth flow ÔÇ║ login form shows error on submit in mock mode (280ms)
+  Ô£ô   31 e2e\collaboration.spec.ts:50:2 ÔÇ║ Collaboration Features ÔÇ║ cursor position updates trigger broadcasts (5.1s)
+  Ô£ô   39 e2e\collaboration.spec.ts:88:2 ÔÇ║ Collaboration Features ÔÇ║ user status transitions from active to idle (275ms)
+  Ô£ô   40 e2e\collaboration.spec.ts:130:2 ÔÇ║ Collaboration Features ÔÇ║ editing document broadcasts changes to other clients (1.2s)
+  Ô£ô   41 e2e\collaboration.spec.ts:160:2 ÔÇ║ Collaboration Features ÔÇ║ disconnected users are removed from presence list (227ms)
+  Ô£ô   42 e2e\collaboration.spec.ts:198:2 ÔÇ║ Collaboration Features ÔÇ║ edits in one document do not affect other documents (587ms)
+  Ô£ô   43 e2e\collaboration.spec.ts:232:2 ÔÇ║ Collaboration Features ÔÇ║ remote cursors have consistent colors based on client ID (108ms)
+  Ô£ô   44 e2e\collaboration.spec.ts:260:2 ÔÇ║ Collaboration Features ÔÇ║ server sends heartbeat to keep connection alive (108ms)
+  Ô£ÿ   37 e2e\sharing-flow.spec.ts:34:2 ÔÇ║ Document sharing UI ÔÇ║ Share button is visible in the editor toolbar (3.1s)
+  Ô£ô   45 e2e\collaboration.spec.ts:286:2 ÔÇ║ Collaboration Features ÔÇ║ collaboration messages are delivered in order (115ms)
+  Ô£ô   46 e2e\collaboration.spec.ts:315:2 ÔÇ║ Collaboration Features ÔÇ║ presence list shows +N indicator when users exceed max visible (317ms)
+  Ô£ô   47 e2e\collaboration.spec.ts:348:2 ÔÇ║ Collaboration Features ÔÇ║ remote cursors are hidden after 5 seconds of inactivity (143ms)
+  Ô£ô   48 e2e\collaboration.spec.ts:388:2 ÔÇ║ Collaboration Features ÔÇ║ each browser context maintains separate client ID (230ms)
+  Ô£ô   49 e2e\sprint-17.spec.ts:12:2 ÔÇ║ GitHub OAuth UI ÔÇ║ GitHub sign-in button is hidden in mock/dev mode (93ms)
+  Ô£ô   50 e2e\sprint-17.spec.ts:21:2 ÔÇ║ GitHub OAuth UI ÔÇ║ auth page renders email/password form (106ms)
+  Ô£ô   51 e2e\sprint-17.spec.ts:27:2 ÔÇ║ GitHub OAuth UI ÔÇ║ auth page has Sign in button (102ms)
+  Ô£ô   53 e2e\sprint-17.spec.ts:40:2 ÔÇ║ Document list ÔÇö shared badge ÔÇ║ app page loads with document list (129ms)
+  Ô£ô   54 e2e\sprint-17.spec.ts:46:2 ÔÇ║ Document list ÔÇö shared badge ÔÇ║ stub document has no Shared badge in mock mode (140ms)
+  Ô£ô   55 e2e\sprint-17.spec.ts:63:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page renders without error (84ms)
+  Ô£ô   56 e2e\sprint-17.spec.ts:70:2 ÔÇ║ Profile page ÔÇö display name ÔÇ║ profile page has back link to editor (91ms)
+  Ô£ô   57 e2e\style-tab.spec.ts:8:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Style tab button is visible in the AI panel (126ms)
+  Ô£ÿ   38 e2e\auth-login.spec.ts:79:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ form is labelled via aria-labelledby (5.1s)
+  Ô£ô   59 e2e\suggestions-badge.spec.ts:4:1 ÔÇ║ suggestions-ready-badge appears when entering Focus mode (254ms)
+  Ô£ô   60 e2e\suggestions-tab.spec.ts:8:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Suggestions tab button is visible and active by default (121ms)
+  Ô£ô   61 e2e\suggestions-tab.spec.ts:12:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Generate suggestions" button is visible (123ms)
+  Ô£ÿ    7 e2e\harden.spec.ts:8:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking ­ƒÆ¥ New version opens the HardenModal (30.0s)
+  Ô£ÿ   14 e2e\ai-integration.spec.ts:14:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: clicking button shows results or loading state (30.0s)
+  Ô£ÿ   12 e2e\coherence-tab.spec.ts:12:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Coherence tab shows the coherence panel (30.0s)
+  Ô£ÿ   25 e2e\document-ux.spec.ts:26:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ Ctrl+S triggers immediate save (no 2s debounce) (30.0s)
+  Ô£ÿ   24 e2e\review-mode.spec.ts:8:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Review button enters review mode (30.0s)
+  Ô£ÿ   28 e2e\document-persistence.spec.ts:28:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ "New document" button creates a new document entry (30.0s)
+  Ô£ÿ   30 e2e\app-layout.spec.ts:33:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ clicking a tab activates it and shows its content panel (30.0s)
+  Ô£ô   69 e2e\app-layout.spec.ts:39:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Suggestions tab panel is visible by default (158ms)
+  Ô£ÿ   52 e2e\sharing-flow.spec.ts:39:2 ÔÇ║ Document sharing UI ÔÇ║ Clicking Share button opens the ShareModal (30.0s)
+  Ô£ÿ   58 e2e\style-tab.spec.ts:12:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Style tab shows the style sliders panel (30.0s)
+  Ô£ÿ   62 e2e\suggestions-tab.spec.ts:16:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Generate shows "GeneratingÔÇª" loading state (30.0s)
+  Ô£ÿ   63 e2e\harden.spec.ts:13:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ modal has label input and message textarea (30.0s)
+  Ô£ÿ   64 e2e\ai-integration.spec.ts:22:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Coherence tab: "Run coherence check" button is present (30.0s)
+  Ô£ÿ   65 e2e\coherence-tab.spec.ts:17:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ "Run coherence check" button is visible (30.0s)
+  Ô£ÿ   66 e2e\document-ux.spec.ts:36:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ deleting a document removes it from the list (with confirm) (30.0s)
+  Ô£ÿ   67 e2e\review-mode.spec.ts:14:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button has aria-pressed=true when review mode is active (30.0s)
+  Ô£ÿ   68 e2e\document-persistence.spec.ts:39:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ typing in editor shows "SavingÔÇª" status (30.0s)
+  Ô£ô   77 e2e\ux-polish.spec.ts:4:2 ÔÇ║ UX Polish & Export ÔÇ║ export button renders in toolbar (187ms)
+  Ô£ÿ   70 e2e\app-layout.spec.ts:45:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button hides the AI panel and resize handle (30.0s)
+  Ô£ÿ   71 e2e\sharing-flow.spec.ts:46:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal has a title (30.0s)
+  Ô£ÿ   72 e2e\style-tab.spec.ts:17:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ all 4 slider labels are visible (30.0s)
+  Ô£ÿ   73 e2e\suggestions-tab.spec.ts:21:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ after generation, 3 suggestion cards appear (30.0s)
+  Ô£ÿ   74 e2e\harden.spec.ts:19:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ Confirm button is disabled when label is empty (30.0s)
+  Ô£ÿ   75 e2e\ai-integration.spec.ts:27:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Style tab: "Analyse this passage" button is present (30.0s)
+  Ô£ÿ   76 e2e\coherence-tab.spec.ts:22:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Run shows "CheckingÔÇª" loading state (30.0s)
+  Ô£ÿ   78 e2e\review-mode.spec.ts:24:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ review screen shows toolbar, text panel and report panel (30.0s)
+  Ô£ÿ   80 e2e\ux-polish.spec.ts:9:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown shows Markdown and Plain text options (30.0s)
+  Ô£ÿ   79 e2e\document-persistence.spec.ts:46:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ after 2s debounce, "Saved at" status appears (30.0s)
+  Ô£ô   86 e2e\ai-integration.spec.ts:32:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ ChatBar is visible with input and Send button (218ms)
+  Ô£ÿ   81 e2e\app-layout.spec.ts:52:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Exit Focus button restores the AI panel (30.0s)
+  Ô£ô   91 e2e\document-persistence.spec.ts:56:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ toolbar shows active document title (206ms)
+  Ô£ÿ   82 e2e\sharing-flow.spec.ts:52:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed with the X button (30.0s)
+  Ô£ÿ   83 e2e\style-tab.spec.ts:25:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Analyse this passage button is visible (30.0s)
+  Ô£ÿ   84 e2e\suggestions-tab.spec.ts:26:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ suggestion cards show type badge and diff content (30.0s)
+  Ô£ÿ   85 e2e\harden.spec.ts:24:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking Cancel closes the modal without adding an entry (30.0s)
+  Ô£ÿ   87 e2e\coherence-tab.spec.ts:28:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ after check, 5 alert cards are visible (30.0s)
+  Ô£ÿ   88 e2e\ai-integration.spec.ts:37:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ ChatBar: typing and sending shows user message bubble (30.0s)
+  Ô£ÿ   89 e2e\review-mode.spec.ts:31:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ scope selector is visible with default value (30.0s)
+  Ô£ÿ   90 e2e\ux-polish.spec.ts:16:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown closes when clicking Markdown (30.0s)
+  Ô£ÿ   92 e2e\app-layout.spec.ts:59:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button has aria-pressed reflecting focus mode state (30.0s)
+  Ô£ô   99 e2e\ux-polish.spec.ts:28:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggle button is visible (177ms)
+  Ô£ÿ  101 e2e\app-layout.spec.ts:71:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Ctrl+Shift+F keyboard shortcut toggles focus mode (5.2s)
+  Ô£ÿ   93 e2e\sharing-flow.spec.ts:59:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed by clicking the backdrop (30.0s)
+  Ô£ÿ   94 e2e\style-tab.spec.ts:30:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Analyse shows "AnalysingÔÇª" loading state (30.0s)
+  Ô£ô  103 e2e\sharing-flow.spec.ts:68:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/shares returns 401 when unauthenticated (29ms)
+  Ô£ô  104 e2e\sharing-flow.spec.ts:74:2 ÔÇ║ Share API (mock mode) ÔÇ║ POST /api/shares returns mock success or 401 (7ms)
+  Ô£ÿ  105 e2e\sharing-flow.spec.ts:81:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns empty for short query (11ms)
+  Ô£ÿ  107 e2e\sharing-flow.spec.ts:89:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns stub user in mock mode (24ms)
+  Ô£ÿ   95 e2e\suggestions-tab.spec.ts:34:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Accept and Reject buttons are visible on each card (30.0s)
+  Ô£ÿ  102 e2e\app-layout.spec.ts:86:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar overlay is open by default with an input (5.2s)
+  Ô£ÿ   96 e2e\harden.spec.ts:30:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ confirming a Harden adds it to the History tab timeline (30.0s)
+  Ô£ÿ   97 e2e\coherence-tab.spec.ts:34:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ alert cards have entity, discrepancy type, and confidence badge (30.0s)
+  Ô£ÿ   98 e2e\review-mode.spec.ts:38:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Back to writing exits review mode (30.0s)
+  Ô£ÿ  100 e2e\ux-polish.spec.ts:33:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggles on button click (30.0s)
+  Ô£ÿ  106 e2e\style-tab.spec.ts:36:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ after analysis, 3 result cards are visible (30.0s)
+  Ô£ÿ  108 e2e\suggestions-tab.spec.ts:42:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Reject removes that card from the list (30.0s)
+  Ô£ÿ  109 e2e\app-layout.spec.ts:91:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle button collapses and reopens the overlay (30.0s)
+  Ô£ÿ  110 e2e\harden.spec.ts:45:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ History tab shows stub Harden timeline points by default (30.0s)
+  Ô£ÿ  111 e2e\coherence-tab.spec.ts:45:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ High confidence alerts have a red-ish badge (30.0s)
+  Ô£ÿ  112 e2e\review-mode.spec.ts:46:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button aria-pressed returns to false after exiting (30.0s)
+  Ô£ÿ  113 e2e\ux-polish.spec.ts:45:2 ÔÇ║ UX Polish & Export ÔÇ║ AI tab shows empty state hint before running analysis (30.0s)
+  Ô£ÿ  114 e2e\style-tab.spec.ts:42:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ result cards contain location, signal, and suggestion text (30.0s)
+  Ô£ÿ  115 e2e\suggestions-tab.spec.ts:49:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Accept all" button removes all cards (30.0s)
+  Ô£ÿ  116 e2e\app-layout.spec.ts:101:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle has correct aria-expanded attribute (30.0s)
+  Ô£ÿ  117 e2e\harden.spec.ts:51:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ diff controls are visible in History tab (30.0s)
+  Ô£ÿ  118 e2e\review-mode.spec.ts:55:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Run analysis button triggers loading state (30.0s)
+  Ô£ÿ  119 e2e\harden.spec.ts:58:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ View differences is disabled until both versions are selected (30.0s)
+  Ô£ÿ  120 e2e\harden.spec.ts:69:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking View differences shows the diff panel (30.0s)
+
+
+  1) e2e\ai-integration.spec.ts:14:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: clicking button shows results or loading state 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Generate suggestions', exact: true })[22m
+    [2m    - locator resolved to <button type="button" class="btn-suggest svelte-262t7p">Generate suggestions</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      13 |
+      14 | 	test('Suggestions tab: clicking button shows results or loading state', async ({ page }) => {
+    > 15 | 		await page.getByRole('button', { name: 'Generate suggestions', exact: true }).click();
+         | 		                                                                              ^
+      16 | 		// Should show either "GeneratingÔÇª" (loading) or suggestion cards (results)
+      17 | 		const generating = page.getByRole('button', { name: 'GeneratingÔÇª' });
+      18 | 		const suggestions = page.locator('.suggestions-list, [aria-label="AI suggestions"]');
+        at D:\boulot\dev\node\sive\e2e\ai-integration.spec.ts:15:81
+
+    Error Context: test-results\ai-integration-AI-Integrat-98902-ws-results-or-loading-state\error-context.md
+
+  2) e2e\ai-integration.spec.ts:22:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Coherence tab: "Run coherence check" button is present 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Coherence', exact: true })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Coherence</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      21 |
+      22 | 	test('Coherence tab: "Run coherence check" button is present', async ({ page }) => {
+    > 23 | 		await page.getByRole('button', { name: 'Coherence', exact: true }).click();
+         | 		                                                                   ^
+      24 | 		await expect(page.getByRole('button', { name: 'Run coherence check' })).toBeVisible();
+      25 | 	});
+      26 |
+        at D:\boulot\dev\node\sive\e2e\ai-integration.spec.ts:23:70
+
+    Error Context: test-results\ai-integration-AI-Integrat-161ae-nce-check-button-is-present\error-context.md
+
+  3) e2e\ai-integration.spec.ts:27:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Style tab: "Analyse this passage" button is present 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Style', exact: true })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Style</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      26 |
+      27 | 	test('Style tab: "Analyse this passage" button is present', async ({ page }) => {
+    > 28 | 		await page.getByRole('button', { name: 'Style', exact: true }).click();
+         | 		                                                               ^
+      29 | 		await expect(page.getByRole('button', { name: 'Analyse this passage' })).toBeVisible();
+      30 | 	});
+      31 |
+        at D:\boulot\dev\node\sive\e2e\ai-integration.spec.ts:28:66
+
+    Error Context: test-results\ai-integration-AI-Integrat-42ea1-s-passage-button-is-present\error-context.md
+
+  4) e2e\ai-integration.spec.ts:37:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ ChatBar: typing and sending shows user message bubble 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Send' })[22m
+    [2m    - locator resolved to <button type="button" aria-label="Send" class="btn-send svelte-6d56ai">Send</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      38 | 		const input = page.getByRole('textbox', { name: 'Chat input' });
+      39 | 		await input.fill('Hello AI');
+    > 40 | 		await page.getByRole('button', { name: 'Send' }).click();
+         | 		                                                 ^
+      41 | 		// Input should clear
+      42 | 		await expect(input).toHaveValue('');
+      43 | 		// User bubble should appear
+        at D:\boulot\dev\node\sive\e2e\ai-integration.spec.ts:40:52
+
+    Error Context: test-results\ai-integration-AI-Integrat-ff8c2-g-shows-user-message-bubble\error-context.md
+
+  5) e2e\app-layout.spec.ts:27:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ all four AI tabs are visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('button', { name: 'Suggestions' })
+    Expected: visible
+    Error: strict mode violation: getByRole('button', { name: 'Suggestions' }) resolved to 2 elements:
+        1) <button class="tab active svelte-brsl69">Suggestions</button> aka getByRole('button', { name: 'Suggestions', exact: true })
+        2) <button type="button" class="btn-suggest svelte-262t7p">Generate suggestions</button> aka getByRole('button', { name: 'Generate suggestions' })
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for getByRole('button', { name: 'Suggestions' })[22m
+
+
+      27 | 	test('all four AI tabs are visible', async ({ page }) => {
+      28 | 		for (const tab of ['Suggestions', 'Coherence', 'Style', 'History']) {
+    > 29 | 			await expect(page.getByRole('button', { name: tab })).toBeVisible();
+         | 			                                                      ^
+      30 | 		}
+      31 | 	});
+      32 |
+        at D:\boulot\dev\node\sive\e2e\app-layout.spec.ts:29:58
+
+    Error Context: test-results\app-layout-App-layout-ÔÇö-app-all-four-AI-tabs-are-visible\error-context.md
+
+  6) e2e\app-layout.spec.ts:33:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ clicking a tab activates it and shows its content panel 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Coherence' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Coherence</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      32 |
+      33 | 	test('clicking a tab activates it and shows its content panel', async ({ page }) => {
+    > 34 | 		await page.getByRole('button', { name: 'Coherence' }).click();
+         | 		                                                      ^
+      35 | 		await expect(page.getByRole('button', { name: 'Coherence' })).toHaveClass(/active/);
+      36 | 		await expect(page.getByRole('tabpanel', { name: 'Coherence' })).toBeVisible();
+      37 | 	});
+        at D:\boulot\dev\node\sive\e2e\app-layout.spec.ts:34:57
+
+    Error Context: test-results\app-layout-App-layout-ÔÇö-ap-b2bb8-and-shows-its-content-panel\error-context.md
+
+  7) e2e\app-layout.spec.ts:45:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button hides the AI panel and resize handle 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Focus' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Focus</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+
+
+      44 |
+      45 | 	test('Focus button hides the AI panel and resize handle', async ({ page }) => {
+    > 46 | 		await page.getByRole('button', { name: 'Focus' }).click();
+         | 		                                                  ^
+      47 | 		await expect(page.locator('.panel.ai-panel')).not.toBeVisible();
+      48 | 		await expect(page.getByRole('separator', { name: 'Resize panels' })).not.toBeVisible();
+      49 | 		await expect(page.getByRole('button', { name: 'Exit Focus' })).toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\app-layout.spec.ts:46:53
+
+    Error Context: test-results\app-layout-App-layout-ÔÇö-ap-47b20--AI-panel-and-resize-handle\error-context.md
+
+  8) e2e\app-layout.spec.ts:52:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Exit Focus button restores the AI panel ÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Focus' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Focus</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      51 |
+      52 | 	test('Exit Focus button restores the AI panel', async ({ page }) => {
+    > 53 | 		await page.getByRole('button', { name: 'Focus' }).click();
+         | 		                                                  ^
+      54 | 		await page.getByRole('button', { name: 'Exit Focus' }).click();
+      55 | 		await expect(page.locator('.panel.ai-panel')).toBeVisible();
+      56 | 		await expect(page.getByRole('button', { name: 'Focus' })).toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\app-layout.spec.ts:53:53
+
+    Error Context: test-results\app-layout-App-layout-ÔÇö-ap-a386e-utton-restores-the-AI-panel\error-context.md
+
+  9) e2e\app-layout.spec.ts:59:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button has aria-pressed reflecting focus mode state 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Focus' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Focus</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      60 | 		const btn = page.getByRole('button', { name: 'Focus' });
+      61 | 		await expect(btn).toHaveAttribute('aria-pressed', 'false');
+    > 62 | 		await btn.click();
+         | 		          ^
+      63 | 		await expect(page.getByRole('button', { name: 'Exit Focus' })).toHaveAttribute(
+      64 | 			'aria-pressed',
+      65 | 			'true'
+        at D:\boulot\dev\node\sive\e2e\app-layout.spec.ts:62:13
+
+    Error Context: test-results\app-layout-App-layout-ÔÇö-ap-34cac-reflecting-focus-mode-state\error-context.md
+
+  10) e2e\app-layout.spec.ts:71:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Ctrl+Shift+F keyboard shortcut toggles focus mode 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).not.[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator:  locator('.panel.ai-panel')
+    Expected: not visible
+    Received: visible
+    Timeout:  5000ms
+
+    Call log:
+    [2m  - Expect "not toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('.panel.ai-panel')[22m
+    [2m    9 ├ù locator resolved to <div class="panel ai-panel svelte-2j7mc4">ÔÇª</div>[22m
+    [2m      - unexpected value "visible"[22m
+
+
+      77 | 			});
+      78 | 		await dispatchShortcut();
+    > 79 | 		await expect(page.locator('.panel.ai-panel')).not.toBeVisible();
+         | 		                                                  ^
+      80 | 		await dispatchShortcut();
+      81 | 		await expect(page.locator('.panel.ai-panel')).toBeVisible();
+      82 | 	});
+        at D:\boulot\dev\node\sive\e2e\app-layout.spec.ts:79:53
+
+    Error Context: test-results\app-layout-App-layout-ÔÇö-ap-facf7-shortcut-toggles-focus-mode\error-context.md
+
+  11) e2e\app-layout.spec.ts:86:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar overlay is open by default with an input 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByPlaceholder('Type a command or questionÔÇª')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for getByPlaceholder('Type a command or questionÔÇª')[22m
+
+
+      86 | 	test('ChatBar overlay is open by default with an input', async ({ page }) => {
+      87 | 		await expect(page.locator('#chat-bar-content')).toBeVisible();
+    > 88 | 		await expect(page.getByPlaceholder('Type a command or questionÔÇª')).toBeVisible();
+         | 		                                                                   ^
+      89 | 	});
+      90 |
+      91 | 	test('ChatBar toggle button collapses and reopens the overlay', async ({ page }) => {
+        at D:\boulot\dev\node\sive\e2e\app-layout.spec.ts:88:70
+
+    Error Context: test-results\app-layout-App-layout-ÔÇö-ap-1d7a6-en-by-default-with-an-input\error-context.md
+
+  12) e2e\app-layout.spec.ts:91:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle button collapses and reopens the overlay 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.chat-toggle')[22m
+    [2m    - locator resolved to <button type="button" aria-expanded="true" aria-controls="chat-bar-content" class="chat-toggle svelte-2j7mc4">Ôû╝</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      92 | 		const toggle = page.locator('.chat-toggle');
+      93 | 		// collapse
+    > 94 | 		await toggle.click();
+         | 		             ^
+      95 | 		await expect(page.locator('#chat-bar-content')).not.toBeVisible();
+      96 | 		// reopen
+      97 | 		await toggle.click();
+        at D:\boulot\dev\node\sive\e2e\app-layout.spec.ts:94:16
+
+    Error Context: test-results\app-layout-App-layout-ÔÇö-ap-92f07-ses-and-reopens-the-overlay\error-context.md
+
+  13) e2e\app-layout.spec.ts:101:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle has correct aria-expanded attribute 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.chat-toggle')[22m
+    [2m    - locator resolved to <button type="button" aria-expanded="true" aria-controls="chat-bar-content" class="chat-toggle svelte-2j7mc4">Ôû╝</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      102 | 		const toggle = page.locator('.chat-toggle');
+      103 | 		await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    > 104 | 		await toggle.click();
+          | 		             ^
+      105 | 		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      106 | 	});
+      107 | });
+        at D:\boulot\dev\node\sive\e2e\app-layout.spec.ts:104:16
+
+    Error Context: test-results\app-layout-App-layout-ÔÇö-ap-567bd-ect-aria-expanded-attribute\error-context.md
+
+  14) e2e\auth-flow.spec.ts:4:2 ÔÇ║ Auth flow ÔÇ║ login page renders with email, password fields and GitHub button 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('button', { name: /Continue with GitHub/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Continue with GitHub/i })[22m
+
+
+       6 | 		await expect(page.getByLabel('Email')).toBeVisible();
+       7 | 		await expect(page.getByLabel('Password')).toBeVisible();
+    >  8 | 		await expect(page.getByRole('button', { name: /Continue with GitHub/i })).toBeVisible();
+         | 		                                                                          ^
+       9 | 	});
+      10 |
+      11 | 	test('login page has link to signup', async ({ page }) => {
+        at D:\boulot\dev\node\sive\e2e\auth-flow.spec.ts:8:77
+
+    Error Context: test-results\auth-flow-Auth-flow-login--79e57-rd-fields-and-GitHub-button\error-context.md
+
+  15) e2e\auth-login.spec.ts:55:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ redirects to / on successful sign-in ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    TimeoutError: page.waitForURL: Timeout 5000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "/" until "load"
+    ============================================================
+
+      71 | 		await page.getByRole('button', { name: 'Sign in' }).click();
+      72 |
+    > 73 | 		await page.waitForURL('/', { timeout: 5000 });
+         | 		           ^
+      74 | 		expect(page.url()).toContain('/');
+      75 | 	});
+      76 |
+        at D:\boulot\dev\node\sive\e2e\auth-login.spec.ts:73:14
+
+    Error Context: test-results\auth-login-Auth-ÔÇô-login-fl-6f353-ts-to-on-successful-sign-in\error-context.md
+
+  16) e2e\auth-login.spec.ts:79:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ form is labelled via aria-labelledby ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('form[aria-labelledby="login-title"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('form[aria-labelledby="login-title"]')[22m
+
+
+      79 | 	test('form is labelled via aria-labelledby', async ({ page }) => {
+      80 | 		const form = page.locator('form[aria-labelledby="login-title"]');
+    > 81 | 		await expect(form).toBeVisible();
+         | 		                   ^
+      82 | 	});
+      83 | });
+      84 |
+        at D:\boulot\dev\node\sive\e2e\auth-login.spec.ts:81:22
+
+    Error Context: test-results\auth-login-Auth-ÔÇô-login-fl-02790-abelled-via-aria-labelledby\error-context.md
+
+  17) e2e\coherence-tab.spec.ts:12:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Coherence tab shows the coherence panel 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Coherence' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Coherence</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      11 |
+      12 | 	test('clicking Coherence tab shows the coherence panel', async ({ page }) => {
+    > 13 | 		await page.getByRole('button', { name: 'Coherence' }).click();
+         | 		                                                      ^
+      14 | 		await expect(page.locator('#tab-content-coherence')).toBeVisible();
+      15 | 	});
+      16 |
+        at D:\boulot\dev\node\sive\e2e\coherence-tab.spec.ts:13:57
+
+    Error Context: test-results\coherence-tab-Coherence-ta-d6bb6-b-shows-the-coherence-panel\error-context.md
+
+  18) e2e\coherence-tab.spec.ts:17:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ "Run coherence check" button is visible 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Coherence' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Coherence</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      16 |
+      17 | 	test('"Run coherence check" button is visible', async ({ page }) => {
+    > 18 | 		await page.getByRole('button', { name: 'Coherence' }).click();
+         | 		                                                      ^
+      19 | 		await expect(page.locator('.btn-coherence')).toBeVisible();
+      20 | 	});
+      21 |
+        at D:\boulot\dev\node\sive\e2e\coherence-tab.spec.ts:18:57
+
+    Error Context: test-results\coherence-tab-Coherence-ta-813de-nce-check-button-is-visible\error-context.md
+
+  19) e2e\coherence-tab.spec.ts:22:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Run shows "CheckingÔÇª" loading state 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Coherence' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Coherence</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      21 |
+      22 | 	test('clicking Run shows "CheckingÔÇª" loading state', async ({ page }) => {
+    > 23 | 		await page.getByRole('button', { name: 'Coherence' }).click();
+         | 		                                                      ^
+      24 | 		await page.locator('.btn-coherence').click();
+      25 | 		await expect(page.locator('.btn-coherence')).toHaveText('CheckingÔÇª');
+      26 | 	});
+        at D:\boulot\dev\node\sive\e2e\coherence-tab.spec.ts:23:57
+
+    Error Context: test-results\coherence-tab-Coherence-ta-84dc6-ows-CheckingÔÇª-loading-state\error-context.md
+
+  20) e2e\coherence-tab.spec.ts:28:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ after check, 5 alert cards are visible 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Coherence' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Coherence</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      27 |
+      28 | 	test('after check, 5 alert cards are visible', async ({ page }) => {
+    > 29 | 		await page.getByRole('button', { name: 'Coherence' }).click();
+         | 		                                                      ^
+      30 | 		await page.locator('.btn-coherence').click();
+      31 | 		await expect(page.locator('article.coherence-alert')).toHaveCount(5, { timeout: 5000 });
+      32 | 	});
+        at D:\boulot\dev\node\sive\e2e\coherence-tab.spec.ts:29:57
+
+    Error Context: test-results\coherence-tab-Coherence-ta-1f253-k-5-alert-cards-are-visible\error-context.md
+
+  21) e2e\coherence-tab.spec.ts:34:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ alert cards have entity, discrepancy type, and confidence badge 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Coherence' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Coherence</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      33 |
+      34 | 	test('alert cards have entity, discrepancy type, and confidence badge', async ({ page }) => {
+    > 35 | 		await page.getByRole('button', { name: 'Coherence' }).click();
+         | 		                                                      ^
+      36 | 		await page.locator('.btn-coherence').click();
+      37 | 		const firstCard = page.locator('article.coherence-alert').first();
+      38 | 		await expect(firstCard).toBeVisible({ timeout: 5000 });
+        at D:\boulot\dev\node\sive\e2e\coherence-tab.spec.ts:35:57
+
+    Error Context: test-results\coherence-tab-Coherence-ta-ada15-y-type-and-confidence-badge\error-context.md
+
+  22) e2e\coherence-tab.spec.ts:45:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ High confidence alerts have a red-ish badge 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Coherence' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Coherence</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      44 |
+      45 | 	test('High confidence alerts have a red-ish badge', async ({ page }) => {
+    > 46 | 		await page.getByRole('button', { name: 'Coherence' }).click();
+         | 		                                                      ^
+      47 | 		await page.locator('.btn-coherence').click();
+      48 | 		await expect(page.locator('article.coherence-alert').first()).toBeVisible({ timeout: 5000 });
+      49 | 		const highBadge = page.locator('.alert-confidence').first();
+        at D:\boulot\dev\node\sive\e2e\coherence-tab.spec.ts:46:57
+
+    Error Context: test-results\coherence-tab-Coherence-ta-af531-alerts-have-a-red-ish-badge\error-context.md
+
+  23) e2e\document-persistence.spec.ts:28:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ "New document" button creates a new document entry 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'New document' })[22m
+    [2m    - locator resolved to <button type="button" aria-label="New document" class="btn-new-doc svelte-g0dh4u">´╝ï</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      30 | 		await expect(newBtn).toBeVisible();
+      31 | 		const countBefore = await page.locator('.doc-item').count();
+    > 32 | 		await newBtn.click();
+         | 		             ^
+      33 | 		// Allow form submission to complete
+      34 | 		await page.waitForTimeout(500);
+      35 | 		const countAfter = await page.locator('.doc-item').count();
+        at D:\boulot\dev\node\sive\e2e\document-persistence.spec.ts:32:16
+
+    Error Context: test-results\document-persistence-Docum-5f180-reates-a-new-document-entry\error-context.md
+
+  24) e2e\document-persistence.spec.ts:39:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ typing in editor shows "SavingÔÇª" status 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('textbox', { name: 'Document editor' })[22m
+    [2m    - locator resolved to <textarea aria-label="Document editor" placeholder="Start writingÔÇª" class="editor-textarea svelte-v6jod0">Once upon a time, in a land far awayÔÇª</textarea>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="onboard-card svelte-168gdau">ÔÇª</div> from <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="onboard-card svelte-168gdau">ÔÇª</div> from <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="onboard-card svelte-168gdau">ÔÇª</div> from <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      39 | 	test('typing in editor shows "SavingÔÇª" status', async ({ page }) => {
+      40 | 		const editor = page.getByRole('textbox', { name: 'Document editor' });
+    > 41 | 		await editor.click();
+         | 		             ^
+      42 | 		await editor.fill('Hello Sprint 8');
+      43 | 		await expect(page.getByText('SavingÔÇª')).toBeVisible();
+      44 | 	});
+        at D:\boulot\dev\node\sive\e2e\document-persistence.spec.ts:41:16
+
+    Error Context: test-results\document-persistence-Docum-b033e-editor-shows-SavingÔÇª-status\error-context.md
+
+  25) e2e\document-persistence.spec.ts:46:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ after 2s debounce, "Saved at" status appears 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('textbox', { name: 'Document editor' })[22m
+    [2m    - locator resolved to <textarea aria-label="Document editor" placeholder="Start writingÔÇª" class="editor-textarea svelte-v6jod0">Once upon a time, in a land far awayÔÇª</textarea>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="onboard-card svelte-168gdau">ÔÇª</div> from <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="onboard-card svelte-168gdau">ÔÇª</div> from <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="onboard-card svelte-168gdau">ÔÇª</div> from <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      47 | 		// In mock mode, updateDocument returns success immediately
+      48 | 		const editor = page.getByRole('textbox', { name: 'Document editor' });
+    > 49 | 		await editor.click();
+         | 		             ^
+      50 | 		await editor.fill('Hello Sprint 8 ÔÇö saved');
+      51 | 		// Wait for debounce + form action round-trip
+      52 | 		await page.waitForTimeout(3000);
+        at D:\boulot\dev\node\sive\e2e\document-persistence.spec.ts:49:16
+
+    Error Context: test-results\document-persistence-Docum-4d9c3-nce-Saved-at-status-appears\error-context.md
+
+  26) e2e\document-ux.spec.ts:26:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ Ctrl+S triggers immediate save (no 2s debounce) 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('textbox', { name: 'Document editor' })[22m
+    [2m    - locator resolved to <textarea aria-label="Document editor" placeholder="Start writingÔÇª" class="editor-textarea svelte-v6jod0">Once upon a time, in a land far awayÔÇª</textarea>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="onboard-card svelte-168gdau">ÔÇª</div> from <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="onboard-card svelte-168gdau">ÔÇª</div> from <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="onboard-card svelte-168gdau">ÔÇª</div> from <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      26 | 	test('Ctrl+S triggers immediate save (no 2s debounce)', async ({ page }) => {
+      27 | 		const editor = page.getByRole('textbox', { name: 'Document editor' });
+    > 28 | 		await editor.click();
+         | 		             ^
+      29 | 		await editor.type(' test');
+      30 | 		await page.keyboard.press('Control+s');
+      31 | 		// After Ctrl+S, save status should appear promptly
+        at D:\boulot\dev\node\sive\e2e\document-ux.spec.ts:28:16
+
+    Error Context: test-results\document-ux-Document-UX-ÔÇö--20ffb-ediate-save-no-2s-debounce-\error-context.md
+
+  27) e2e\document-ux.spec.ts:36:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ deleting a document removes it from the list (with confirm) 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.hover: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.doc-item').first()[22m
+    [2m    - locator resolved to <div tabindex="0" role="button" aria-current="true" class="doc-item svelte-g0dh4u active">ÔÇª</div>[22m
+    [2m  - attempting hover action[22m
+    [2m    2 ├ù waiting for element to be visible and stable[22m
+    [2m      - element is visible and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying hover action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible and stable[22m
+    [2m      - element is visible and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying hover action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible and stable[22m
+    [2m       - element is visible and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying hover action[22m
+    [2m       - waiting 500ms[22m
+
+
+      44 | 		// Hover to reveal delete button then click it
+      45 | 		const firstItem = items.first();
+    > 46 | 		await firstItem.hover();
+         | 		                ^
+      47 | 		const deleteBtn = firstItem.getByRole('button', { name: /Delete/ });
+      48 | 		await deleteBtn.click();
+      49 |
+        at D:\boulot\dev\node\sive\e2e\document-ux.spec.ts:46:19
+
+    Error Context: test-results\document-ux-Document-UX-ÔÇö--3513e-from-the-list-with-confirm-\error-context.md
+
+  28) e2e\harden.spec.ts:8:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking ­ƒÆ¥ New version opens the HardenModal ÔöÇÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: '­ƒÆ¥ New version' })[22m
+    [2m    - locator resolved to <button type="button" class="svelte-2j7mc4">­ƒÆ¥ New version</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    56 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+       7 |
+       8 | 	test('clicking ­ƒÆ¥ New version opens the HardenModal', async ({ page }) => {
+    >  9 | 		await page.getByRole('button', { name: '­ƒÆ¥ New version' }).click();
+         | 		                                                           ^
+      10 | 		await expect(page.getByRole('dialog')).toBeVisible();
+      11 | 	});
+      12 |
+        at D:\boulot\dev\node\sive\e2e\harden.spec.ts:9:62
+
+    Error Context: test-results\harden-Harden-flow-ÔÇö-app-c-647cc-rsion-opens-the-HardenModal\error-context.md
+
+  29) e2e\harden.spec.ts:13:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ modal has label input and message textarea ÔöÇÔöÇÔöÇÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: '­ƒÆ¥ New version' })[22m
+    [2m    - locator resolved to <button type="button" class="svelte-2j7mc4">­ƒÆ¥ New version</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      12 |
+      13 | 	test('modal has label input and message textarea', async ({ page }) => {
+    > 14 | 		await page.getByRole('button', { name: '­ƒÆ¥ New version' }).click();
+         | 		                                                           ^
+      15 | 		await expect(page.getByRole('textbox', { name: /version label/i })).toBeVisible();
+      16 | 		await expect(page.getByRole('textbox', { name: /description/i })).toBeVisible();
+      17 | 	});
+        at D:\boulot\dev\node\sive\e2e\harden.spec.ts:14:62
+
+    Error Context: test-results\harden-Harden-flow-ÔÇö-app-m-b7cfb--input-and-message-textarea\error-context.md
+
+  30) e2e\harden.spec.ts:19:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ Confirm button is disabled when label is empty 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: '­ƒÆ¥ New version' })[22m
+    [2m    - locator resolved to <button type="button" class="svelte-2j7mc4">­ƒÆ¥ New version</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      18 |
+      19 | 	test('Confirm button is disabled when label is empty', async ({ page }) => {
+    > 20 | 		await page.getByRole('button', { name: '­ƒÆ¥ New version' }).click();
+         | 		                                                           ^
+      21 | 		await expect(page.getByRole('button', { name: 'Confirm' })).toBeDisabled();
+      22 | 	});
+      23 |
+        at D:\boulot\dev\node\sive\e2e\harden.spec.ts:20:62
+
+    Error Context: test-results\harden-Harden-flow-ÔÇö-app-C-359bd-isabled-when-label-is-empty\error-context.md
+
+  31) e2e\harden.spec.ts:24:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking Cancel closes the modal without adding an entry 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: '­ƒÆ¥ New version' })[22m
+    [2m    - locator resolved to <button type="button" class="svelte-2j7mc4">­ƒÆ¥ New version</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      23 |
+      24 | 	test('clicking Cancel closes the modal without adding an entry', async ({ page }) => {
+    > 25 | 		await page.getByRole('button', { name: '­ƒÆ¥ New version' }).click();
+         | 		                                                           ^
+      26 | 		await page.getByRole('button', { name: 'Cancel' }).click();
+      27 | 		await expect(page.getByRole('dialog')).not.toBeVisible();
+      28 | 	});
+        at D:\boulot\dev\node\sive\e2e\harden.spec.ts:25:62
+
+    Error Context: test-results\harden-Harden-flow-ÔÇö-app-c-69ac5-dal-without-adding-an-entry\error-context.md
+
+  32) e2e\harden.spec.ts:30:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ confirming a Harden adds it to the History tab timeline 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: '­ƒÆ¥ New version' })[22m
+    [2m    - locator resolved to <button type="button" class="svelte-2j7mc4">­ƒÆ¥ New version</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      30 | 	test('confirming a Harden adds it to the History tab timeline', async ({ page }) => {
+      31 | 		// Open modal and create a new version
+    > 32 | 		await page.getByRole('button', { name: '­ƒÆ¥ New version' }).click();
+         | 		                                                           ^
+      33 | 		await page.getByRole('textbox', { name: /version label/i }).fill('test_sprint4');
+      34 | 		await page.getByRole('textbox', { name: /description/i }).fill('Sprint 4 E2E test version');
+      35 | 		await page.getByRole('button', { name: 'Confirm' }).click();
+        at D:\boulot\dev\node\sive\e2e\harden.spec.ts:32:62
+
+    Error Context: test-results\harden-Harden-flow-ÔÇö-app-c-8fb37-to-the-History-tab-timeline\error-context.md
+
+  33) e2e\harden.spec.ts:45:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ History tab shows stub Harden timeline points by default 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'History' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">History</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      44 |
+      45 | 	test('History tab shows stub Harden timeline points by default', async ({ page }) => {
+    > 46 | 		await page.getByRole('button', { name: 'History' }).click();
+         | 		                                                    ^
+      47 | 		await expect(page.getByRole('button', { name: /incipit/ })).toBeVisible();
+      48 | 		await expect(page.getByRole('button', { name: /end_act_1/ })).toBeVisible();
+      49 | 	});
+        at D:\boulot\dev\node\sive\e2e\harden.spec.ts:46:55
+
+    Error Context: test-results\harden-Harden-flow-ÔÇö-app-H-f889a--timeline-points-by-default\error-context.md
+
+  34) e2e\harden.spec.ts:51:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ diff controls are visible in History tab ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'History' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">History</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+
+
+      50 |
+      51 | 	test('diff controls are visible in History tab', async ({ page }) => {
+    > 52 | 		await page.getByRole('button', { name: 'History' }).click();
+         | 		                                                    ^
+      53 | 		await expect(page.getByRole('button', { name: 'View differences' })).toBeVisible();
+      54 | 		await expect(page.getByRole('combobox', { name: 'Version A' })).toBeVisible();
+      55 | 		await expect(page.getByRole('combobox', { name: 'Version B' })).toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\harden.spec.ts:52:55
+
+    Error Context: test-results\harden-Harden-flow-ÔÇö-app-d-f0f64--are-visible-in-History-tab\error-context.md
+
+  35) e2e\harden.spec.ts:58:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ View differences is disabled until both versions are selected 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'History' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">History</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      57 |
+      58 | 	test('View differences is disabled until both versions are selected', async ({ page }) => {
+    > 59 | 		await page.getByRole('button', { name: 'History' }).click();
+         | 		                                                    ^
+      60 | 		await expect(page.getByRole('button', { name: 'View differences' })).toBeDisabled();
+      61 |
+      62 | 		await page.getByRole('combobox', { name: 'Version A' }).selectOption('h001');
+        at D:\boulot\dev\node\sive\e2e\harden.spec.ts:59:55
+
+    Error Context: test-results\harden-Harden-flow-ÔÇö-app-V-d31bd--both-versions-are-selected\error-context.md
+
+  36) e2e\harden.spec.ts:69:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking View differences shows the diff panel 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'History' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">History</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+
+
+      68 |
+      69 | 	test('clicking View differences shows the diff panel', async ({ page }) => {
+    > 70 | 		await page.getByRole('button', { name: 'History' }).click();
+         | 		                                                    ^
+      71 | 		await page.getByRole('combobox', { name: 'Version A' }).selectOption('h001');
+      72 | 		await page.getByRole('combobox', { name: 'Version B' }).selectOption('h002');
+      73 | 		await page.getByRole('button', { name: 'View differences' }).click();
+        at D:\boulot\dev\node\sive\e2e\harden.spec.ts:70:55
+
+    Error Context: test-results\harden-Harden-flow-ÔÇö-app-c-80265-rences-shows-the-diff-panel\error-context.md
+
+  37) e2e\review-mode.spec.ts:8:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Review button enters review mode ÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Review' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Review</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+       7 |
+       8 | 	test('clicking Review button enters review mode', async ({ page }) => {
+    >  9 | 		await page.getByRole('button', { name: 'Review' }).click();
+         | 		                                                   ^
+      10 | 		await expect(page.locator('.review-screen')).toBeVisible();
+      11 | 		await expect(page.locator('.panel.editor-panel')).not.toBeVisible();
+      12 | 	});
+        at D:\boulot\dev\node\sive\e2e\review-mode.spec.ts:9:54
+
+    Error Context: test-results\review-mode-Review-Mode-ÔÇö--951c6-w-button-enters-review-mode\error-context.md
+
+  38) e2e\review-mode.spec.ts:14:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button has aria-pressed=true when review mode is active 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Review' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Review</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      15 | 		const btn = page.getByRole('button', { name: 'Review' });
+      16 | 		await expect(btn).toHaveAttribute('aria-pressed', 'false');
+    > 17 | 		await btn.click();
+         | 		          ^
+      18 | 		await expect(page.getByRole('button', { name: 'Review' })).toHaveAttribute(
+      19 | 			'aria-pressed',
+      20 | 			'true'
+        at D:\boulot\dev\node\sive\e2e\review-mode.spec.ts:17:13
+
+    Error Context: test-results\review-mode-Review-Mode-ÔÇö--37737--when-review-mode-is-active\error-context.md
+
+  39) e2e\review-mode.spec.ts:24:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ review screen shows toolbar, text panel and report panel 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Review' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Review</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      23 |
+      24 | 	test('review screen shows toolbar, text panel and report panel', async ({ page }) => {
+    > 25 | 		await page.getByRole('button', { name: 'Review' }).click();
+         | 		                                                   ^
+      26 | 		await expect(page.locator('.review-toolbar')).toBeVisible();
+      27 | 		await expect(page.locator('.review-text')).toBeVisible();
+      28 | 		await expect(page.locator('.review-report')).toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\review-mode.spec.ts:25:54
+
+    Error Context: test-results\review-mode-Review-Mode-ÔÇö--aa6ca-text-panel-and-report-panel\error-context.md
+
+  40) e2e\review-mode.spec.ts:31:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ scope selector is visible with default value 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Review' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Review</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      30 |
+      31 | 	test('scope selector is visible with default value', async ({ page }) => {
+    > 32 | 		await page.getByRole('button', { name: 'Review' }).click();
+         | 		                                                   ^
+      33 | 		const select = page.getByRole('combobox', { name: /scope/i });
+      34 | 		await expect(select).toBeVisible();
+      35 | 		await expect(select).toHaveValue('current chapter');
+        at D:\boulot\dev\node\sive\e2e\review-mode.spec.ts:32:54
+
+    Error Context: test-results\review-mode-Review-Mode-ÔÇö--f0b26--visible-with-default-value\error-context.md
+
+  41) e2e\review-mode.spec.ts:38:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Back to writing exits review mode 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Review' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Review</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      37 |
+      38 | 	test('clicking Back to writing exits review mode', async ({ page }) => {
+    > 39 | 		await page.getByRole('button', { name: 'Review' }).click();
+         | 		                                                   ^
+      40 | 		await expect(page.locator('.review-screen')).toBeVisible();
+      41 | 		await page.getByRole('button', { name: 'Back to writing' }).click();
+      42 | 		await expect(page.locator('.review-screen')).not.toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\review-mode.spec.ts:39:54
+
+    Error Context: test-results\review-mode-Review-Mode-ÔÇö--a636c-o-writing-exits-review-mode\error-context.md
+
+  42) e2e\review-mode.spec.ts:46:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button aria-pressed returns to false after exiting 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Review' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Review</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      45 |
+      46 | 	test('Review button aria-pressed returns to false after exiting', async ({ page }) => {
+    > 47 | 		await page.getByRole('button', { name: 'Review' }).click();
+         | 		                                                   ^
+      48 | 		await page.getByRole('button', { name: 'Back to writing' }).click();
+      49 | 		await expect(page.getByRole('button', { name: 'Review' })).toHaveAttribute(
+      50 | 			'aria-pressed',
+        at D:\boulot\dev\node\sive\e2e\review-mode.spec.ts:47:54
+
+    Error Context: test-results\review-mode-Review-Mode-ÔÇö--0c4e7-urns-to-false-after-exiting\error-context.md
+
+  43) e2e\review-mode.spec.ts:55:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Run analysis button triggers loading state 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Review' })[22m
+    [2m    - locator resolved to <button type="button" aria-pressed="false" class="svelte-2j7mc4">Review</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      54 |
+      55 | 	test('Run analysis button triggers loading state', async ({ page }) => {
+    > 56 | 		await page.getByRole('button', { name: 'Review' }).click();
+         | 		                                                   ^
+      57 | 		const runBtn = page.locator('.btn-run');
+      58 | 		await runBtn.click();
+      59 | 		// Immediately after click, button becomes busy before the 2s stub finishes
+        at D:\boulot\dev\node\sive\e2e\review-mode.spec.ts:56:54
+
+    Error Context: test-results\review-mode-Review-Mode-ÔÇö--1b4fc-tton-triggers-loading-state\error-context.md
+
+  44) e2e\sharing-flow.spec.ts:34:2 ÔÇ║ Document sharing UI ÔÇ║ Share button is visible in the editor toolbar 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('[data-testid="share-btn"]')
+    Expected: visible
+    Timeout: 3000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 3000ms[22m
+    [2m  - waiting for locator('[data-testid="share-btn"]')[22m
+
+
+      34 | 	test('Share button is visible in the editor toolbar', async ({ page }) => {
+      35 | 		const shareBtn = page.locator('[data-testid="share-btn"]');
+    > 36 | 		await expect(shareBtn).toBeVisible({ timeout: 3000 });
+         | 		                       ^
+      37 | 	});
+      38 |
+      39 | 	test('Clicking Share button opens the ShareModal', async ({ page }) => {
+        at D:\boulot\dev\node\sive\e2e\sharing-flow.spec.ts:36:26
+
+    Error Context: test-results\sharing-flow-Document-shar-1c6d0-sible-in-the-editor-toolbar\error-context.md
+
+  45) e2e\sharing-flow.spec.ts:39:2 ÔÇ║ Document sharing UI ÔÇ║ Clicking Share button opens the ShareModal 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('[data-testid="share-btn"]')[22m
+
+
+      39 | 	test('Clicking Share button opens the ShareModal', async ({ page }) => {
+      40 | 		const shareBtn = page.locator('[data-testid="share-btn"]');
+    > 41 | 		await shareBtn.click();
+         | 		               ^
+      42 | 		const modal = page.locator('[data-testid="share-modal"]');
+      43 | 		await expect(modal).toBeVisible({ timeout: 2000 });
+      44 | 	});
+        at D:\boulot\dev\node\sive\e2e\sharing-flow.spec.ts:41:18
+
+    Error Context: test-results\sharing-flow-Document-shar-dc410-button-opens-the-ShareModal\error-context.md
+
+  46) e2e\sharing-flow.spec.ts:46:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal has a title ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('[data-testid="share-btn"]')[22m
+
+
+      45 |
+      46 | 	test('ShareModal has a title', async ({ page }) => {
+    > 47 | 		await page.locator('[data-testid="share-btn"]').click();
+         | 		                                                ^
+      48 | 		await expect(page.locator('[data-testid="share-modal"]')).toBeVisible();
+      49 | 		await expect(page.getByRole('dialog')).toContainText('Share document');
+      50 | 	});
+        at D:\boulot\dev\node\sive\e2e\sharing-flow.spec.ts:47:51
+
+    Error Context: test-results\sharing-flow-Document-sharing-UI-ShareModal-has-a-title\error-context.md
+
+  47) e2e\sharing-flow.spec.ts:52:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed with the X button 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('[data-testid="share-btn"]')[22m
+
+
+      51 |
+      52 | 	test('ShareModal can be closed with the X button', async ({ page }) => {
+    > 53 | 		await page.locator('[data-testid="share-btn"]').click();
+         | 		                                                ^
+      54 | 		await expect(page.locator('[data-testid="share-modal"]')).toBeVisible();
+      55 | 		await page.locator('button[aria-label="Close"]').click();
+      56 | 		await expect(page.locator('[data-testid="share-modal"]')).not.toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\sharing-flow.spec.ts:53:51
+
+    Error Context: test-results\sharing-flow-Document-shar-54142-be-closed-with-the-X-button\error-context.md
+
+  48) e2e\sharing-flow.spec.ts:59:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed by clicking the backdrop 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('[data-testid="share-btn"]')[22m
+
+
+      58 |
+      59 | 	test('ShareModal can be closed by clicking the backdrop', async ({ page }) => {
+    > 60 | 		await page.locator('[data-testid="share-btn"]').click();
+         | 		                                                ^
+      61 | 		await expect(page.locator('[data-testid="share-modal"]')).toBeVisible();
+      62 | 		await page.locator('[data-testid="share-modal-backdrop"]').click({ position: { x: 5, y: 5 } });
+      63 | 		await expect(page.locator('[data-testid="share-modal"]')).not.toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\sharing-flow.spec.ts:60:51
+
+    Error Context: test-results\sharing-flow-Document-shar-dbc85-ed-by-clicking-the-backdrop\error-context.md
+
+  49) e2e\sharing-flow.spec.ts:81:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns empty for short query 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m200[39m
+    Received: [31m401[39m
+
+      81 | 	test('GET /api/users/search returns empty for short query', async ({ request }) => {
+      82 | 		const res = await request.get('/api/users/search?q=a');
+    > 83 | 		expect(res.status()).toBe(200);
+         | 		                     ^
+      84 | 		const data = await res.json();
+      85 | 		expect(data).toHaveProperty('users');
+      86 | 		expect(Array.isArray(data.users)).toBe(true);
+        at D:\boulot\dev\node\sive\e2e\sharing-flow.spec.ts:83:24
+
+  50) e2e\sharing-flow.spec.ts:89:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns stub user in mock mode 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m200[39m
+    Received: [31m401[39m
+
+      89 | 	test('GET /api/users/search returns stub user in mock mode', async ({ request }) => {
+      90 | 		const res = await request.get('/api/users/search?q=alice');
+    > 91 | 		expect(res.status()).toBe(200);
+         | 		                     ^
+      92 | 		const data = await res.json();
+      93 | 		expect(data.users.length).toBeGreaterThanOrEqual(0); // stub may or may not match
+      94 | 	});
+        at D:\boulot\dev\node\sive\e2e\sharing-flow.spec.ts:91:24
+
+  51) e2e\style-tab.spec.ts:12:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Style tab shows the style sliders panel 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Style' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Style</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      11 |
+      12 | 	test('clicking Style tab shows the style sliders panel', async ({ page }) => {
+    > 13 | 		await page.getByRole('button', { name: 'Style' }).click();
+         | 		                                                  ^
+      14 | 		await expect(page.locator('[role="region"][aria-label="Style settings"]')).toBeVisible();
+      15 | 	});
+      16 |
+        at D:\boulot\dev\node\sive\e2e\style-tab.spec.ts:13:53
+
+    Error Context: test-results\style-tab-Style-tab-ÔÇö-app--44f34-ows-the-style-sliders-panel\error-context.md
+
+  52) e2e\style-tab.spec.ts:17:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ all 4 slider labels are visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Style' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Style</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      16 |
+      17 | 	test('all 4 slider labels are visible', async ({ page }) => {
+    > 18 | 		await page.getByRole('button', { name: 'Style' }).click();
+         | 		                                                  ^
+      19 | 		await expect(page.getByText('Cynicism')).toBeVisible();
+      20 | 		await expect(page.getByText('Syntactic complexity')).toBeVisible();
+      21 | 		await expect(page.getByText('Rhythm')).toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\style-tab.spec.ts:18:53
+
+    Error Context: test-results\style-tab-Style-tab-ÔÇö-app-all-4-slider-labels-are-visible\error-context.md
+
+  53) e2e\style-tab.spec.ts:25:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Analyse this passage button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Style' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Style</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      24 |
+      25 | 	test('Analyse this passage button is visible', async ({ page }) => {
+    > 26 | 		await page.getByRole('button', { name: 'Style' }).click();
+         | 		                                                  ^
+      27 | 		await expect(page.locator('.btn-analyse')).toBeVisible();
+      28 | 	});
+      29 |
+        at D:\boulot\dev\node\sive\e2e\style-tab.spec.ts:26:53
+
+    Error Context: test-results\style-tab-Style-tab-ÔÇö-app--a8625-s-passage-button-is-visible\error-context.md
+
+  54) e2e\style-tab.spec.ts:30:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Analyse shows "AnalysingÔÇª" loading state 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Style' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Style</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      29 |
+      30 | 	test('clicking Analyse shows "AnalysingÔÇª" loading state', async ({ page }) => {
+    > 31 | 		await page.getByRole('button', { name: 'Style' }).click();
+         | 		                                                  ^
+      32 | 		await page.locator('.btn-analyse').click();
+      33 | 		await expect(page.locator('.btn-analyse')).toHaveText('AnalysingÔÇª');
+      34 | 	});
+        at D:\boulot\dev\node\sive\e2e\style-tab.spec.ts:31:53
+
+    Error Context: test-results\style-tab-Style-tab-ÔÇö-app--6d97c-ws-AnalysingÔÇª-loading-state\error-context.md
+
+  55) e2e\style-tab.spec.ts:36:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ after analysis, 3 result cards are visible ÔöÇÔöÇÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Style' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Style</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      35 |
+      36 | 	test('after analysis, 3 result cards are visible', async ({ page }) => {
+    > 37 | 		await page.getByRole('button', { name: 'Style' }).click();
+         | 		                                                  ^
+      38 | 		await page.locator('.btn-analyse').click();
+      39 | 		await expect(page.locator('article.style-signal')).toHaveCount(3, { timeout: 5000 });
+      40 | 	});
+        at D:\boulot\dev\node\sive\e2e\style-tab.spec.ts:37:53
+
+    Error Context: test-results\style-tab-Style-tab-ÔÇö-app--9a092--3-result-cards-are-visible\error-context.md
+
+  56) e2e\style-tab.spec.ts:42:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ result cards contain location, signal, and suggestion text 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Style' })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Style</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      41 |
+      42 | 	test('result cards contain location, signal, and suggestion text', async ({ page }) => {
+    > 43 | 		await page.getByRole('button', { name: 'Style' }).click();
+         | 		                                                  ^
+      44 | 		await page.locator('.btn-analyse').click();
+      45 | 		const firstCard = page.locator('article.style-signal').first();
+      46 | 		await expect(firstCard).toBeVisible({ timeout: 5000 });
+        at D:\boulot\dev\node\sive\e2e\style-tab.spec.ts:43:53
+
+    Error Context: test-results\style-tab-Style-tab-ÔÇö-app--77965--signal-and-suggestion-text\error-context.md
+
+  57) e2e\suggestions-tab.spec.ts:16:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Generate shows "GeneratingÔÇª" loading state 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.btn-suggest')[22m
+    [2m    - locator resolved to <button type="button" class="btn-suggest svelte-262t7p">Generate suggestions</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      15 |
+      16 | 	test('clicking Generate shows "GeneratingÔÇª" loading state', async ({ page }) => {
+    > 17 | 		await page.locator('.btn-suggest').click();
+         | 		                                   ^
+      18 | 		await expect(page.locator('.btn-suggest')).toHaveText('GeneratingÔÇª');
+      19 | 	});
+      20 |
+        at D:\boulot\dev\node\sive\e2e\suggestions-tab.spec.ts:17:38
+
+    Error Context: test-results\suggestions-tab-Suggestion-165e1-s-GeneratingÔÇª-loading-state\error-context.md
+
+  58) e2e\suggestions-tab.spec.ts:21:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ after generation, 3 suggestion cards appear 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.btn-suggest')[22m
+    [2m    - locator resolved to <button type="button" class="btn-suggest svelte-262t7p">Generate suggestions</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      20 |
+      21 | 	test('after generation, 3 suggestion cards appear', async ({ page }) => {
+    > 22 | 		await page.locator('.btn-suggest').click();
+         | 		                                   ^
+      23 | 		await expect(page.locator('article.suggestion-item')).toHaveCount(3, { timeout: 5000 });
+      24 | 	});
+      25 |
+        at D:\boulot\dev\node\sive\e2e\suggestions-tab.spec.ts:22:38
+
+    Error Context: test-results\suggestions-tab-Suggestion-2a725-n-3-suggestion-cards-appear\error-context.md
+
+  59) e2e\suggestions-tab.spec.ts:26:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ suggestion cards show type badge and diff content 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.btn-suggest')[22m
+    [2m    - locator resolved to <button type="button" class="btn-suggest svelte-262t7p">Generate suggestions</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+
+
+      25 |
+      26 | 	test('suggestion cards show type badge and diff content', async ({ page }) => {
+    > 27 | 		await page.locator('.btn-suggest').click();
+         | 		                                   ^
+      28 | 		const firstCard = page.locator('article.suggestion-item').first();
+      29 | 		await expect(firstCard).toBeVisible({ timeout: 5000 });
+      30 | 		await expect(firstCard.locator('.suggestion-badge')).toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\suggestions-tab.spec.ts:27:38
+
+    Error Context: test-results\suggestions-tab-Suggestion-c0b23-type-badge-and-diff-content\error-context.md
+
+  60) e2e\suggestions-tab.spec.ts:34:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Accept and Reject buttons are visible on each card 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.btn-suggest')[22m
+    [2m    - locator resolved to <button type="button" class="btn-suggest svelte-262t7p">Generate suggestions</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      33 |
+      34 | 	test('Accept and Reject buttons are visible on each card', async ({ page }) => {
+    > 35 | 		await page.locator('.btn-suggest').click();
+         | 		                                   ^
+      36 | 		const firstCard = page.locator('article.suggestion-item').first();
+      37 | 		await expect(firstCard).toBeVisible({ timeout: 5000 });
+      38 | 		await expect(firstCard.getByRole('button', { name: 'Accept suggestion' })).toBeVisible();
+        at D:\boulot\dev\node\sive\e2e\suggestions-tab.spec.ts:35:38
+
+    Error Context: test-results\suggestions-tab-Suggestion-9b4e0-ns-are-visible-on-each-card\error-context.md
+
+  61) e2e\suggestions-tab.spec.ts:42:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Reject removes that card from the list 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.btn-suggest')[22m
+    [2m    - locator resolved to <button type="button" class="btn-suggest svelte-262t7p">Generate suggestions</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      41 |
+      42 | 	test('clicking Reject removes that card from the list', async ({ page }) => {
+    > 43 | 		await page.locator('.btn-suggest').click();
+         | 		                                   ^
+      44 | 		await expect(page.locator('article.suggestion-item')).toHaveCount(3, { timeout: 5000 });
+      45 | 		await page.locator('article.suggestion-item').first().getByRole('button', { name: 'Reject suggestion' }).click();
+      46 | 		await expect(page.locator('article.suggestion-item')).toHaveCount(2);
+        at D:\boulot\dev\node\sive\e2e\suggestions-tab.spec.ts:43:38
+
+    Error Context: test-results\suggestions-tab-Suggestion-e60a5-ves-that-card-from-the-list\error-context.md
+
+  62) e2e\suggestions-tab.spec.ts:49:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Accept all" button removes all cards 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('.btn-suggest')[22m
+    [2m    - locator resolved to <button type="button" class="btn-suggest svelte-262t7p">Generate suggestions</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      48 |
+      49 | 	test('"Accept all" button removes all cards', async ({ page }) => {
+    > 50 | 		await page.locator('.btn-suggest').click();
+         | 		                                   ^
+      51 | 		await expect(page.locator('article.suggestion-item')).toHaveCount(3, { timeout: 5000 });
+      52 | 		await page.locator('.btn-accept-all').click();
+      53 | 		await expect(page.locator('article.suggestion-item')).toHaveCount(0);
+        at D:\boulot\dev\node\sive\e2e\suggestions-tab.spec.ts:50:38
+
+    Error Context: test-results\suggestions-tab-Suggestion-a3650-ll-button-removes-all-cards\error-context.md
+
+  63) e2e\ux-polish.spec.ts:9:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown shows Markdown and Plain text options 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: /Export/i })[22m
+    [2m    - locator resolved to <button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Export document" class="btn-export svelte-19wo06r">Ô¼ç Export</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+       9 | 	test('export dropdown shows Markdown and Plain text options', async ({ page }) => {
+      10 | 		await page.goto('/app');
+    > 11 | 		await page.getByRole('button', { name: /Export/i }).click();
+         | 		                                                    ^
+      12 | 		await expect(page.getByRole('menuitem', { name: /Markdown/i })).toBeVisible();
+      13 | 		await expect(page.getByRole('menuitem', { name: /Plain text/i })).toBeVisible();
+      14 | 	});
+        at D:\boulot\dev\node\sive\e2e\ux-polish.spec.ts:11:55
+
+    Error Context: test-results\ux-polish-UX-Polish-Export-c812f-down-and-Plain-text-options\error-context.md
+
+  64) e2e\ux-polish.spec.ts:16:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown closes when clicking Markdown 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: /Export/i })[22m
+    [2m    - locator resolved to <button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Export document" class="btn-export svelte-19wo06r">Ô¼ç Export</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      16 | 	test('export dropdown closes when clicking Markdown', async ({ page }) => {
+      17 | 		await page.goto('/app');
+    > 18 | 		await page.getByRole('button', { name: /Export/i }).click();
+         | 		                                                    ^
+      19 | 		// Trigger download ÔÇö don't assert file, just that it doesn't throw
+      20 | 		const [download] = await Promise.all([
+      21 | 			page.waitForEvent('download', { timeout: 5000 }).catch(() => null),
+        at D:\boulot\dev\node\sive\e2e\ux-polish.spec.ts:18:55
+
+    Error Context: test-results\ux-polish-UX-Polish-Export-9a1f7-oses-when-clicking-Markdown\error-context.md
+
+  65) e2e\ux-polish.spec.ts:33:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggles on button click ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Hide sidebar' })[22m
+    [2m    - locator resolved to <button type="button" aria-label="Hide sidebar" class="btn-sidebar-toggle svelte-2j7mc4">Ôÿ░</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+
+
+      36 | 		await expect(page.locator('.doc-list')).toBeVisible();
+      37 | 		// Hide sidebar
+    > 38 | 		await page.getByRole('button', { name: 'Hide sidebar' }).click();
+         | 		                                                         ^
+      39 | 		await expect(page.locator('.doc-list')).not.toBeVisible();
+      40 | 		// Show sidebar
+      41 | 		await page.getByRole('button', { name: 'Show sidebar' }).click();
+        at D:\boulot\dev\node\sive\e2e\ux-polish.spec.ts:38:60
+
+    Error Context: test-results\ux-polish-UX-Polish-Export-sidebar-toggles-on-button-click\error-context.md
+
+  66) e2e\ux-polish.spec.ts:45:2 ÔÇ║ UX Polish & Export ÔÇ║ AI tab shows empty state hint before running analysis 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: 'Coherence', exact: true })[22m
+    [2m    - locator resolved to <button class="tab  svelte-brsl69">Coherence</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    57 ├ù waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div role="dialog" aria-modal="true" aria-label="Onboarding" class="onboard-overlay svelte-168gdau">ÔÇª</div> intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+
+
+      46 | 		await page.goto('/app');
+      47 | 		// Coherence tab
+    > 48 | 		await page.getByRole('button', { name: 'Coherence', exact: true }).click();
+         | 		                                                                   ^
+      49 | 		await expect(page.locator('.tab-empty')).toBeVisible();
+      50 | 		// Style tab
+      51 | 		await page.getByRole('button', { name: 'Style', exact: true }).click();
+        at D:\boulot\dev\node\sive\e2e\ux-polish.spec.ts:48:70
+
+    Error Context: test-results\ux-polish-UX-Polish-Export-94bc0-int-before-running-analysis\error-context.md
+
+  66 failed
+    e2e\ai-integration.spec.ts:14:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Suggestions tab: clicking button shows results or loading state 
+    e2e\ai-integration.spec.ts:22:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Coherence tab: "Run coherence check" button is present 
+    e2e\ai-integration.spec.ts:27:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ Style tab: "Analyse this passage" button is present 
+    e2e\ai-integration.spec.ts:37:2 ÔÇ║ AI Integration ÔÇö /app ÔÇ║ ChatBar: typing and sending shows user message bubble 
+    e2e\app-layout.spec.ts:27:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ all four AI tabs are visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\app-layout.spec.ts:33:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ clicking a tab activates it and shows its content panel 
+    e2e\app-layout.spec.ts:45:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button hides the AI panel and resize handle 
+    e2e\app-layout.spec.ts:52:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Exit Focus button restores the AI panel ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\app-layout.spec.ts:59:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button has aria-pressed reflecting focus mode state 
+    e2e\app-layout.spec.ts:71:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Ctrl+Shift+F keyboard shortcut toggles focus mode 
+    e2e\app-layout.spec.ts:86:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar overlay is open by default with an input 
+    e2e\app-layout.spec.ts:91:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle button collapses and reopens the overlay 
+    e2e\app-layout.spec.ts:101:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle has correct aria-expanded attribute 
+    e2e\auth-flow.spec.ts:4:2 ÔÇ║ Auth flow ÔÇ║ login page renders with email, password fields and GitHub button 
+    e2e\auth-login.spec.ts:55:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ redirects to / on successful sign-in ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\auth-login.spec.ts:79:2 ÔÇ║ Auth ÔÇô login flow ÔÇ║ form is labelled via aria-labelledby ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\coherence-tab.spec.ts:12:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Coherence tab shows the coherence panel 
+    e2e\coherence-tab.spec.ts:17:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ "Run coherence check" button is visible 
+    e2e\coherence-tab.spec.ts:22:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ clicking Run shows "CheckingÔÇª" loading state 
+    e2e\coherence-tab.spec.ts:28:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ after check, 5 alert cards are visible ÔöÇ
+    e2e\coherence-tab.spec.ts:34:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ alert cards have entity, discrepancy type, and confidence badge 
+    e2e\coherence-tab.spec.ts:45:2 ÔÇ║ Coherence tab ÔÇö /app ÔÇ║ High confidence alerts have a red-ish badge 
+    e2e\document-persistence.spec.ts:28:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ "New document" button creates a new document entry 
+    e2e\document-persistence.spec.ts:39:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ typing in editor shows "SavingÔÇª" status 
+    e2e\document-persistence.spec.ts:46:2 ÔÇ║ Document persistence ÔÇö /app ÔÇ║ after 2s debounce, "Saved at" status appears 
+    e2e\document-ux.spec.ts:26:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ Ctrl+S triggers immediate save (no 2s debounce) 
+    e2e\document-ux.spec.ts:36:2 ÔÇ║ Document UX ÔÇö rename, delete, Ctrl+S ÔÇ║ deleting a document removes it from the list (with confirm) 
+    e2e\harden.spec.ts:8:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking ­ƒÆ¥ New version opens the HardenModal ÔöÇÔöÇÔöÇÔöÇ
+    e2e\harden.spec.ts:13:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ modal has label input and message textarea ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\harden.spec.ts:19:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ Confirm button is disabled when label is empty ÔöÇÔöÇ
+    e2e\harden.spec.ts:24:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking Cancel closes the modal without adding an entry 
+    e2e\harden.spec.ts:30:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ confirming a Harden adds it to the History tab timeline 
+    e2e\harden.spec.ts:45:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ History tab shows stub Harden timeline points by default 
+    e2e\harden.spec.ts:51:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ diff controls are visible in History tab ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\harden.spec.ts:58:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ View differences is disabled until both versions are selected 
+    e2e\harden.spec.ts:69:2 ÔÇ║ Harden flow ÔÇö /app ÔÇ║ clicking View differences shows the diff panel ÔöÇÔöÇ
+    e2e\review-mode.spec.ts:8:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Review button enters review mode ÔöÇÔöÇÔöÇ
+    e2e\review-mode.spec.ts:14:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button has aria-pressed=true when review mode is active 
+    e2e\review-mode.spec.ts:24:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ review screen shows toolbar, text panel and report panel 
+    e2e\review-mode.spec.ts:31:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ scope selector is visible with default value 
+    e2e\review-mode.spec.ts:38:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ clicking Back to writing exits review mode ÔöÇ
+    e2e\review-mode.spec.ts:46:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Review button aria-pressed returns to false after exiting 
+    e2e\review-mode.spec.ts:55:2 ÔÇ║ Review Mode ÔÇö /app ÔÇ║ Run analysis button triggers loading state ÔöÇ
+    e2e\sharing-flow.spec.ts:34:2 ÔÇ║ Document sharing UI ÔÇ║ Share button is visible in the editor toolbar 
+    e2e\sharing-flow.spec.ts:39:2 ÔÇ║ Document sharing UI ÔÇ║ Clicking Share button opens the ShareModal 
+    e2e\sharing-flow.spec.ts:46:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal has a title ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\sharing-flow.spec.ts:52:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed with the X button 
+    e2e\sharing-flow.spec.ts:59:2 ÔÇ║ Document sharing UI ÔÇ║ ShareModal can be closed by clicking the backdrop 
+    e2e\sharing-flow.spec.ts:81:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns empty for short query 
+    e2e\sharing-flow.spec.ts:89:2 ÔÇ║ Share API (mock mode) ÔÇ║ GET /api/users/search returns stub user in mock mode 
+    e2e\style-tab.spec.ts:12:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Style tab shows the style sliders panel 
+    e2e\style-tab.spec.ts:17:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ all 4 slider labels are visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\style-tab.spec.ts:25:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ Analyse this passage button is visible ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\style-tab.spec.ts:30:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ clicking Analyse shows "AnalysingÔÇª" loading state 
+    e2e\style-tab.spec.ts:36:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ after analysis, 3 result cards are visible ÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\style-tab.spec.ts:42:2 ÔÇ║ Style tab ÔÇö /app ÔÇ║ result cards contain location, signal, and suggestion text 
+    e2e\suggestions-tab.spec.ts:16:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Generate shows "GeneratingÔÇª" loading state 
+    e2e\suggestions-tab.spec.ts:21:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ after generation, 3 suggestion cards appear 
+    e2e\suggestions-tab.spec.ts:26:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ suggestion cards show type badge and diff content 
+    e2e\suggestions-tab.spec.ts:34:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ Accept and Reject buttons are visible on each card 
+    e2e\suggestions-tab.spec.ts:42:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ clicking Reject removes that card from the list 
+    e2e\suggestions-tab.spec.ts:49:2 ÔÇ║ Suggestions tab ÔÇö /app ÔÇ║ "Accept all" button removes all cards 
+    e2e\ux-polish.spec.ts:9:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown shows Markdown and Plain text options 
+    e2e\ux-polish.spec.ts:16:2 ÔÇ║ UX Polish & Export ÔÇ║ export dropdown closes when clicking Markdown 
+    e2e\ux-polish.spec.ts:33:2 ÔÇ║ UX Polish & Export ÔÇ║ sidebar toggles on button click ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+    e2e\ux-polish.spec.ts:45:2 ÔÇ║ UX Polish & Export ÔÇ║ AI tab shows empty state hint before running analysis 
+  54 passed (5.4m)

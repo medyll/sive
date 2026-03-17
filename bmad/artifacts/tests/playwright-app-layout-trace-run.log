@@ -1,0 +1,15 @@
+
+Running 13 tests using 1 worker
+
+  Ô£ÿ   1 e2e\app-layout.spec.ts:10:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ toolbar is visible with project label and action buttons (5.4s)
+  Ô£ÿ   2 e2e\app-layout.spec.ts:16:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ editor panel and AI panel are side-by-side (5.2s)
+  Ô£ÿ   3 e2e\app-layout.spec.ts:21:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ resize handle is visible between panels (5.2s)
+  Ô£ÿ   4 e2e\app-layout.spec.ts:27:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ all four AI tabs are visible (5.2s)
+  Ô£ÿ   5 e2e\app-layout.spec.ts:33:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ clicking a tab activates it and shows its content panel (30.1s)
+  Ô£ÿ   6 e2e\app-layout.spec.ts:39:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Suggestions tab panel is visible by default (5.2s)
+  Ô£ÿ   7 e2e\app-layout.spec.ts:45:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button hides the AI panel and resize handle (30.0s)
+  Ô£ÿ   8 e2e\app-layout.spec.ts:52:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Exit Focus button restores the AI panel (30.0s)
+  Ô£ÿ   9 e2e\app-layout.spec.ts:59:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Focus button has aria-pressed reflecting focus mode state (5.2s)
+  Ô£ÿ  10 e2e\app-layout.spec.ts:71:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ Ctrl+Shift+F keyboard shortcut toggles focus mode (5.2s)
+  Ô£ÿ  11 e2e\app-layout.spec.ts:86:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar overlay is open by default with an input (5.2s)
+  Ô£ÿ  12 e2e\app-layout.spec.ts:91:2 ÔÇ║ App layout ÔÇö /app ÔÇ║ ChatBar toggle button collapses and reopens the overlay (16.9s)

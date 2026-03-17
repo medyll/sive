@@ -5,7 +5,7 @@ Props: onExitReview
 <script lang="ts">
   import ReviewToolbar, { type ReviewScope } from './ReviewToolbar.svelte';
   import ReviewText, { type Highlight } from './ReviewText.svelte';
-  import ReviewReport from './ReviewReport.svelte';
+  import ReviewReport, { type ReviewReportProps } from './ReviewReport.svelte';
 
   export interface ReviewScreenProps {
     onExitReview?: () => void;
@@ -15,6 +15,8 @@ Props: onExitReview
 
   let scope = $state<ReviewScope>('current chapter');
   let analysisRunning = $state(false);
+
+  let reportComponent = $state<{ scrollToItem: (category: string) => void } | null>(null);
 
   // Stub highlights wired to the stub text in ReviewText
   const STUB_HIGHLIGHTS: Highlight[] = [
@@ -30,8 +32,7 @@ Props: onExitReview
   }
 
   function handleHighlightClick(highlight: Highlight) {
-    // TODO: scroll to corresponding report item in Sprint 4+
-    console.log('[review] highlight clicked:', highlight.id, highlight.category);
+    reportComponent?.scrollToItem(highlight.category);
   }
 </script>
 
@@ -53,7 +54,7 @@ Props: onExitReview
     </div>
 
     <div class="review-report-panel">
-      <ReviewReport />
+      <ReviewReport bind:this={reportComponent} />
     </div>
   </div>
 </div>

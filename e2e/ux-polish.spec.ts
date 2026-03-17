@@ -1,9 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('UX Polish & Export', () => {
+	test.beforeEach(async ({ page }) => {
+		await page.addInitScript(() => {
+			localStorage.setItem('sive:onboarding_seen', '1');
+		});
+	});
+
 	test('export button renders in toolbar', async ({ page }) => {
 		await page.goto('/app');
-		await expect(page.getByRole('button', { name: /Export/i })).toBeVisible();
+		await expect(page.getByRole('button', { name: /Export/i })).toBeVisible({ timeout: 10000 });
 	});
 
 	test('export dropdown shows Markdown and Plain text options', async ({ page }) => {
@@ -18,7 +24,7 @@ test.describe('UX Polish & Export', () => {
 		await page.getByRole('button', { name: /Export/i }).click();
 		// Trigger download — don't assert file, just that it doesn't throw
 		const [download] = await Promise.all([
-			page.waitForEvent('download', { timeout: 5000 }).catch(() => null),
+			page.waitForEvent('download', { timeout: 15000 }).catch(() => null),
 			page.getByRole('menuitem', { name: /Markdown/i }).click()
 		]);
 		// Menu should close

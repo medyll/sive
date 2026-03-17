@@ -84,7 +84,7 @@
     ></textarea>
 
     <div class="modal-actions">
-      <button type="button" class="btn-cancel" onclick={onCancel}>Cancel</button>
+      <button type="button" class="btn-cancel" onclick={handleCancel}>Cancel</button>
       <button
         type="button"
         class="btn-confirm"

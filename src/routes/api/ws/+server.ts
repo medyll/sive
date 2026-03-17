@@ -1,44 +1,87 @@
-/**
- * WebSocket API endpoint for real-time document collaboration
- * URL: /api/ws?documentId=<id>&clientId=<id>&userId=<id>
- */
-
 import { getWebSocketServer } from '$lib/server/ws';
 import type { RequestHandler } from '@sveltejs/kit';
+import { nanoid } from 'nanoid';
 
 /**
- * Upgrade HTTP connection to WebSocket
- * Requires query parameters: documentId, clientId, userId
+ * WebSocket API endpoint for real-time document collaboration
+ * Handles WebSocket upgrade, client registration, and message routing
  */
-export const GET: RequestHandler = async ({ request, url }) => {
-	// Check for WebSocket upgrade header
-	const upgrade = request.headers.get('upgrade');
-	if (!upgrade || upgrade !== 'websocket') {
-		return new Response('Expected WebSocket upgrade', { status: 400 });
+
+export const GET: RequestHandler = async ({ request, url, locals }) => {
+	// Check for WebSocket upgrade request
+	if (request.headers.get('upgrade') !== 'websocket') {
+		return new Response('Expected WebSocket', { status: 400 });
 	}
 
-	// Validate required parameters
+	// Validate authentication
+	const session = locals.session;
+	if (!session || !session.user) {
+		return new Response('Unauthorized', { status: 401 });
+	}
+
+	const userId = session.user.id || session.user.email || 'anonymous';
 	const documentId = url.searchParams.get('documentId');
-	const clientId = url.searchParams.get('clientId');
-	const userId = url.searchParams.get('userId');
 
-	if (!documentId || !clientId || !userId) {
-		return new Response('Missing required parameters: documentId, clientId, userId', {
-			status: 400
-		});
+	if (!documentId) {
+		return new Response('Missing documentId parameter', { status: 400 });
 	}
 
-	// Get or create WebSocket server instance
+	// Generate unique client ID
+	const clientId = nanoid();
+
+	// Get WebSocket server instance
 	const wsServer = getWebSocketServer();
 
-	// In a real implementation, this would need proper WebSocket library integration
-	// This is a placeholder that shows the intended structure
-	// Note: Native SvelteKit WebSocket support is limited; you may need to:
-	// 1. Use a library like 'ws' with a custom server
-	// 2. Or use a service like Vercel/Netlify WebSocket adapters
-	// 3. Or implement via a separate Node.js server
+	// SvelteKit doesn't have built-in WebSocket upgrade
+	// This would need to be implemented at the adapter level or with a middleware
+	// For now, we'll return a proper error that indicates the limitation
 
-	return new Response('WebSocket support requires custom server configuration', {
-		status: 501
-	});
+	return new Response(
+		JSON.stringify({
+			error: 'WebSocket endpoint requires adapter support',
+			note: 'WebSocket connections need to be handled at the server adapter level (Node.js, Deno, etc.)',
+			suggestion: 'Use a WebSocket library like ws or socket.io'
+		}),
+		{
+			status: 501,
+			headers: { 'Content-Type': 'application/json' }
+		}
+	);
 };
+
+/**
+ * Alternative implementation notes:
+ *
+ * For production, consider using:
+ * 1. **ws library** - Low-level WebSocket server
+ * 2. **Socket.io** - Full-featured WebSocket library with fallbacks
+ * 3. **SvelteKit adapter with WebSocket support** (e.g., adapter-node with ws)
+ *
+ * Example with ws library:
+ * ```typescript
+ * import { WebSocketServer as WsServer } from 'ws';
+ *
+ * const wss = new WsServer({ noServer: true });
+ *
+ * server.on('upgrade', (request, socket, head) => {
+ *   if (request.url === '/api/ws') {
+ *     wss.handleUpgrade(request, socket, head, (ws) => {
+ *       // Handle WebSocket connection
+ *       const clientId = nanoid();
+ *       const wsServer = getWebSocketServer();
+ *       wsServer.registerClient(clientId, userId, documentId, (data) => {
+ *         ws.send(data);
+ *       });
+ *
+ *       ws.on('message', (data) => {
+ *         wsServer.handleMessage(clientId, data.toString());
+ *       });
+ *
+ *       ws.on('close', () => {
+ *         wsServer.unregisterClient(clientId);
+ *       });
+ *     });
+ *   }
+ * });
+ * ```
+ */

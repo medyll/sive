@@ -1,0 +1,36 @@
+project: sive
+last_updated: "2026-03-16"
+
+current_sprint: 21
+current_sprint_status: complete
+
+completed_sprints:
+  - sprint: 13
+    focus: Settings page, onboarding modal, server preferences persistence
+  - sprint: 14
+    focus: Real-time collaboration foundation (WebSocket, presence, cursor sync, conflict detection)
+  - sprint: 15
+    focus: WebSocket API endpoint, editor UI wiring, deployment setup (integration)
+  - sprint: 16
+    focus: Auth MVP (Better-Auth email/password, session management, profile page)
+  - sprint: 17
+    focus: Guest mode foundation (cookie-based guest_id, ALLOW_GUESTS flag, route guards)
+  - sprint: 18
+    focus: RC stabilisation (E2E timeout fixes, guest banners, conversion flow UI)
+  - sprint: 19
+    focus: Accessibility, UX polish, word count, guest API endpoints
+  - sprint: 20
+    focus: Document search, arrow-key navigation, keyboard shortcuts, help overlay
+  - sprint: 21
+    focus: Error boundaries & resilience (offline banner, AI abort/cancel, warning toast, +error.svelte, retryFetch)
+
+test_status:
+  unit: "272+ tests (0 failures)"
+  e2e: "12+ tests"
+
+next_recommendation: >
+  Sprint 22 candidates:
+  - Performance (lazy-load routes, debounce heavy editor ops, memoize derived computations)
+  - Mobile/responsive polish (breakpoints, touch targets, swipe gestures)
+  - Notification/feedback improvements (undo actions, toast action buttons)
+  - AI panel streaming responses (SSE/ReadableStream for progressive rendering)

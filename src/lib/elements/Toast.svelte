@@ -49,6 +49,7 @@
   .toast--success { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
   .toast--error   { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
   .toast--info    { background: #eff6ff; color: #1e40af; border: 1px solid #93c5fd; }
+  .toast--warning { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
 
   .toast-msg { flex: 1; }
 

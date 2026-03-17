@@ -24,18 +24,15 @@ export interface CollaborationMessage {
 
 export class WebSocketServer {
 	private clients: Map<string, ClientConnection> = new Map();
-	private documentSubscriptions: Map<string, Set<string>> = new Map(); // documentId -> clientIds
+	private documentSubscriptions: Map<string, Set<string>> = new Map();
 	private heartbeatInterval: NodeJS.Timeout | null = null;
-	private readonly HEARTBEAT_INTERVAL = 30000; // 30 seconds
-	private readonly HEARTBEAT_TIMEOUT = 60000; // 60 seconds
+	private readonly HEARTBEAT_INTERVAL = 30000;
+	private readonly HEARTBEAT_TIMEOUT = 60000;
 
 	constructor() {
 		this.startHeartbeat();
 	}
 
-	/**
-	 * Register a new client connection
-	 */
 	registerClient(
 		clientId: string,
 		userId: string,
@@ -52,13 +49,11 @@ export class WebSocketServer {
 
 		this.clients.set(clientId, client);
 
-		// Add to document subscription
 		if (!this.documentSubscriptions.has(documentId)) {
 			this.documentSubscriptions.set(documentId, new Set());
 		}
 		this.documentSubscriptions.get(documentId)!.add(clientId);
 
-		// Broadcast presence update
 		this.broadcastToDocument(documentId, {
 			type: 'presence',
 			clientId,
@@ -75,16 +70,12 @@ export class WebSocketServer {
 		return client;
 	}
 
-	/**
-	 * Unregister a client connection
-	 */
 	unregisterClient(clientId: string): void {
 		const client = this.clients.get(clientId);
 		if (!client) return;
 
 		this.clients.delete(clientId);
 
-		// Remove from document subscription
 		const subscribers = this.documentSubscriptions.get(client.documentId);
 		if (subscribers) {
 			subscribers.delete(clientId);
@@ -93,7 +84,6 @@ export class WebSocketServer {
 			}
 		}
 
-		// Broadcast presence update
 		this.broadcastToDocument(client.documentId, {
 			type: 'presence',
 			clientId,
@@ -108,9 +98,6 @@ export class WebSocketServer {
 		});
 	}
 
-	/**
-	 * Broadcast message to all clients in a document
-	 */
 	broadcastToDocument(documentId: string, message: CollaborationMessage): void {
 		const subscribers = this.documentSubscriptions.get(documentId);
 		if (!subscribers) return;
@@ -129,9 +116,6 @@ export class WebSocketServer {
 		});
 	}
 
-	/**
-	 * Handle incoming message from client
-	 */
 	handleMessage(clientId: string, rawMessage: string): void {
 		const client = this.clients.get(clientId);
 		if (!client) return;
@@ -139,10 +123,8 @@ export class WebSocketServer {
 		try {
 			const message = JSON.parse(rawMessage) as CollaborationMessage;
 
-			// Update heartbeat on any message
 			client.lastHeartbeat = Date.now();
 
-			// Process message based on type
 			switch (message.type) {
 				case 'cursor':
 					this.broadcastToDocument(client.documentId, {
@@ -182,9 +164,6 @@ export class WebSocketServer {
 		}
 	}
 
-	/**
-	 * Start heartbeat timer to detect dead connections
-	 */
 	private startHeartbeat(): void {
 		this.heartbeatInterval = setInterval(() => {
 			const now = Date.now();
@@ -194,7 +173,6 @@ export class WebSocketServer {
 				if (now - client.lastHeartbeat > this.HEARTBEAT_TIMEOUT) {
 					deadClients.push(clientId);
 				} else if (now - client.lastHeartbeat > this.HEARTBEAT_INTERVAL / 2) {
-					// Send heartbeat ping
 					try {
 						client.send(
 							JSON.stringify({
@@ -208,14 +186,10 @@ export class WebSocketServer {
 				}
 			});
 
-			// Clean up dead clients
 			deadClients.forEach((clientId) => this.unregisterClient(clientId));
 		}, this.HEARTBEAT_INTERVAL);
 	}
 
-	/**
-	 * Get list of online users for a document
-	 */
 	getDocumentPresence(documentId: string): Array<{ userId: string; clientId: string }> {
 		const subscribers = this.documentSubscriptions.get(documentId);
 		if (!subscribers) return [];
@@ -234,9 +208,6 @@ export class WebSocketServer {
 		return presence;
 	}
 
-	/**
-	 * Shutdown the server
-	 */
 	shutdown(): void {
 		if (this.heartbeatInterval) {
 			clearInterval(this.heartbeatInterval);
@@ -246,7 +217,6 @@ export class WebSocketServer {
 	}
 }
 
-// Singleton instance
 let wsServer: WebSocketServer | null = null;
 
 export function getWebSocketServer(): WebSocketServer {

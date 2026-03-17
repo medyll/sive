@@ -4,6 +4,8 @@ export interface HardenSnapshot {
 	timestamp: string;
 	message: string;
 	wordCount: number;
+	userId?: string;
+	userName?: string;
 	diffFromPrevious?: {
 		wordDelta: number;
 		chaptersModified: string[];

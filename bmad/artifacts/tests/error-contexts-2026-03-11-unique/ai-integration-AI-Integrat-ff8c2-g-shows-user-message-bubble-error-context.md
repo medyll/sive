@@ -1,0 +1,67 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - button "Chapter 1" [ref=e6] [cursor=pointer]
+      - generic [ref=e7]:
+        - button "Hide sidebar" [ref=e8] [cursor=pointer]: ☰
+        - button "Focus" [ref=e9]
+        - button "Review" [ref=e10]
+        - button "💾 New version" [ref=e11]
+        - button "Export document" [ref=e13] [cursor=pointer]: ⬇ Export
+        - link "⚙" [ref=e14] [cursor=pointer]:
+          - /url: /settings
+        - link "Profile" [ref=e15] [cursor=pointer]:
+          - /url: /profile
+          - text: G
+    - generic [ref=e16]:
+      - complementary "Document list" [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]: Documents
+          - button "New document" [ref=e20] [cursor=pointer]: ＋
+        - list [ref=e21]:
+          - listitem [ref=e22]:
+            - button "Rename Chapter 1 Mar 11 Delete Chapter 1" [ref=e23] [cursor=pointer]:
+              - button "Rename Chapter 1" [ref=e25]: Chapter 1
+              - generic [ref=e26]:
+                - generic [ref=e27]: Mar 11
+                - button "Delete Chapter 1" [ref=e28]: 🗑
+      - textbox "Document editor" [ref=e32]:
+        - /placeholder: Start writing…
+        - text: Once upon a time, in a land far away…
+      - separator "Resize panels" [ref=e33]
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - button "Suggestions" [ref=e37] [cursor=pointer]
+          - button "Coherence" [ref=e38] [cursor=pointer]
+          - button "Style" [ref=e39] [cursor=pointer]
+          - button "History" [ref=e40] [cursor=pointer]
+        - tabpanel "Suggestions" [ref=e42]:
+          - button "Generate suggestions" [ref=e44] [cursor=pointer]
+          - paragraph [ref=e45]: Click "Generate suggestions" to analyse your text.
+    - generic [ref=e46]:
+      - button "▼" [expanded] [ref=e47] [cursor=pointer]
+      - generic [ref=e48]:
+        - button "Toggle voice input" [disabled] [ref=e49] [cursor=pointer]: 🎤
+        - generic [ref=e51]:
+          - textbox "Chat input" [active] [ref=e52]:
+            - /placeholder: Ask the AI…
+            - text: Hello AI
+          - button "Send" [ref=e53] [cursor=pointer]
+        - button "Upload image" [disabled] [ref=e54] [cursor=pointer]: 🖼
+  - dialog "Onboarding" [ref=e55]:
+    - generic [ref=e56]:
+      - heading "Welcome" [level=2] [ref=e57]
+      - paragraph [ref=e58]: Welcome to Sive — a focused writing app. This quick tour will show the main features.
+      - generic [ref=e59]:
+        - button "1" [ref=e60] [cursor=pointer]
+        - button "2" [ref=e61] [cursor=pointer]
+        - button "3" [ref=e62] [cursor=pointer]
+        - button "4" [ref=e63] [cursor=pointer]
+      - generic [ref=e64]:
+        - button "Back" [disabled] [ref=e65] [cursor=pointer]
+        - button "Next" [ref=e66] [cursor=pointer]
+      - button "Skip onboarding" [ref=e67] [cursor=pointer]: Skip
+```

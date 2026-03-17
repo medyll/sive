@@ -53,4 +53,14 @@ Key files to inspect
 - `package.json`
 
 If details are missing for a requested change, ask the repo owner for sample env values, a local DB snapshot, or explicit approval before modifying DB or auth plumbing.
+## Example prompts
+- "Run unit tests for the auth routes and summarize failures with file links."
+- "How do I add a new Drizzle migration for a schema change? Provide the exact commands."
+- "Fix the failing Playwright test `auth-flow.spec.ts` and suggest a PR description."
+
+## Recommended agent customizations
+- Create an `applyTo` rule for frontend Svelte work to enforce Svelte v5 runes and no module-scope side effects.
+- Create an `applyTo` rule for DB/auth changes that requires a migration plan and regenerating `auth.schema.ts` when `schema.ts` is edited.
+
+If you'd like, I can create those `applyTo` instruction files now.
 

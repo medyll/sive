@@ -1,0 +1,393 @@
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:44:25 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 42: 
+[WebServer] 43:   // Document state
+[WebServer] 44:   let documents = $state(data.documents);
+[WebServer]                                  ^
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:45:32 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 43:   // Document state
+[WebServer] 44:   let documents = $state(data.documents);
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer]                                         ^
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:47:4 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+[WebServer]             ^
+[WebServer] 48:   );
+[WebServer] 49: 
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:56:6 `createDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 54: 
+[WebServer] 55:   // Hidden form references for programmatic submission
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:57:6 `saveDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 55:   // Hidden form references for programmatic submission
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer]                                       ^
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:58:6 `saveIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer]                                        ^
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:59:6 `saveContentInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer]                                             ^
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:60:6 `renameDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:61:6 `renameIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer]                                          ^
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:62:6 `renameTitleInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer]                                             ^
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:63:6 `deleteDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer] 65: 
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:64:6 `deleteIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer]                                          ^
+[WebServer] 65: 
+[WebServer] 66:   function handleSelectDocument(id: string) {
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/app/+page.svelte:593:4 Unused CSS selector ".main-toolbar button[aria-disabled="true"]"
+[WebServer] https://svelte.dev/e/css_unused_selector
+[WebServer] 591: 
+[WebServer] 592:     /* Hide some toolbar buttons on small screens */
+[WebServer] 593:     .main-toolbar button[aria-disabled="true"] {
+[WebServer]                                                    ^
+[WebServer] 594:       display: none;
+[WebServer] 595:     }
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/settings/+page.svelte:38:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 36: 
+[WebServer] 37:   <div class="mb-4">
+[WebServer] 38:     <label class="block font-medium mb-2">Theme</label>
+[WebServer]                                                            ^
+[WebServer] 39:     <label><input type="radio" bind:group={theme} value="light" /> Light</label>
+[WebServer] 40:     <label class="ml-4"><input type="radio" bind:group={theme} value="dark" /> Dark</label>
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/settings/+page.svelte:44:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 42: 
+[WebServer] 43:   <div class="mb-4">
+[WebServer] 44:     <label class="block font-medium mb-2">Font size</label>
+[WebServer]                                                                ^
+[WebServer] 45:     <select bind:value={fontSize}>
+[WebServer] 46:       <option value="small">Small</option>
+[WebServer] 23:37:50 [vite-plugin-svelte] src/routes/settings/+page.svelte:53:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 51: 
+[WebServer] 52:   <div class="mb-4">
+[WebServer] 53:     <label class="block font-medium mb-2">Autosave interval (seconds)</label>
+[WebServer]                                                                                  ^
+[WebServer] 54:     <input type="number" bind:value={autosave} min="0" />
+[WebServer] 55:   </div>
+[WebServer] 23:37:50 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:61:2 The attribute 'aria-readonly' is not supported by the role 'document'
+[WebServer] https://svelte.dev/e/a11y_role_supports_aria_props
+[WebServer] 59:   role="document"
+[WebServer] 60:   aria-label="Manuscript text ÔÇö read only"
+[WebServer] 61:   aria-readonly="true"
+[WebServer]                           ^
+[WebServer] 62: >
+[WebServer] 63:   <div class="text-content">
+[WebServer] 23:37:50 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:68:8 Non-interactive element `<mark>` cannot have interactive role 'button'
+[WebServer] https://svelte.dev/e/a11y_no_noninteractive_element_to_interactive_role
+[WebServer] 66:         <!-- svelte-ignore a11y_click_events_have_key_events -->
+[WebServer] 67:         <!-- svelte-ignore a11y_no_static_element_interactions -->
+[WebServer] 68:         <mark
+[WebServer]                   ^
+[WebServer] 69:           class="highlight highlight--{seg.highlight.category}"
+[WebServer] 70:           data-category={seg.highlight.category}
+[WebServer] 23:37:50 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:67:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 65:       <h3 id="sec-inconsistencies">Inconsistencies</h3>
+[WebServer] 66:       {#each report.inconsistencies as item}
+[WebServer] 67:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 68:           <strong>{item.entity}</strong>
+[WebServer] 69:           <span class="badge-confidence">{Math.round(item.confidence * 100)}%</span>
+[WebServer] 23:37:50 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:79:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 77:       <h3 id="sec-pov">Point of View</h3>
+[WebServer] 78:       {#each report.pov as item}
+[WebServer] 79:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 80:           <strong>{item.location}</strong>
+[WebServer] 81:           <p>{item.detected_deviation}</p>
+[WebServer] 23:37:50 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:90:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 88:       <h3 id="sec-threads">Narrative Threads</h3>
+[WebServer] 89:       {#each report.threads as item}
+[WebServer] 90:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 91:           <strong>{item.thread_id}</strong>
+[WebServer] 92:           <span class="thread-status status--{item.status}">{item.status}</span>
+[WebServer] 23:37:50 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:114:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 112:       <h3 id="sec-motifs">Themes &amp; Motifs</h3>
+[WebServer] 113:       {#each report.motifs as item}
+[WebServer] 114:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 115:           <strong>{item.motif_id}</strong>
+[WebServer] 116:           <span class="badge-presence">{item.presence}</span>
+[WebServer] 23:37:50 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:126:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 124:       <h3 id="sec-voices">Character Voices</h3>
+[WebServer] 125:       {#each report.voices as item}
+[WebServer] 126:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 127:           <strong>{item.character_id}</strong>
+[WebServer] 128:           <p>{item.register_deviation}</p>
+[WebServer] 23:37:50 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:138:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 136:       <h3 id="sec-style">Style &amp; Rhythm</h3>
+[WebServer] 137:       {#each report.style as item}
+[WebServer] 138:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 139:           <strong>{item.signal_type}</strong>
+[WebServer] 140:           <span class="item-location">{item.location}</span>
+[WebServer] "optionsMiddleware" is imported from external module "@better-auth/core/api" but never used in "node_modules/.pnpm/better-auth@1.4.19_@sveltej_749df91839a5bba8df355eb9e7d8a0ab/node_modules/better-auth/dist/api/index.mjs".
+[WebServer] Unknown output options: codeSplitting. Allowed options: amd, assetFileNames, banner, chunkFileNames, compact, dir, dynamicImportInCjs, entryFileNames, esModule, experimentalMinChunkSize, exports, extend, externalImportAssertions, externalImportAttributes, externalLiveBindings, file, footer, format, freeze, generatedCode, globals, hashCharacters, hoistTransitiveImports, importAttributesKey, indent, inlineDynamicImports, interop, intro, manualChunks, minifyInternalExports, name, noConflict, onlyExplicitManualChunks, outro, paths, plugins, preserveModules, preserveModulesRoot, reexportProtoFromExternal, sanitizeFileName, sourcemap, sourcemapBaseUrl, sourcemapDebugIds, sourcemapExcludeSources, sourcemapFile, sourcemapFileNames, sourcemapIgnoreList, sourcemapPathTransform, strict, systemNullSetters, validate, virtualDirname
+[WebServer] 2026-03-13T22:37:53.201Z WARN [Better Auth]: Social provider github is missing clientId or clientSecret
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:44:25 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 42: 
+[WebServer] 43:   // Document state
+[WebServer] 44:   let documents = $state(data.documents);
+[WebServer]                                  ^
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:45:32 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 43:   // Document state
+[WebServer] 44:   let documents = $state(data.documents);
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer]                                         ^
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:47:4 This reference only captures the initial value of `data`. Did you mean to reference it inside a derived instead?
+[WebServer] https://svelte.dev/e/state_referenced_locally
+[WebServer] 45:   let activeDocumentId = $state(data.activeDocumentId);
+[WebServer] 46:   let activeContent = $state(
+[WebServer] 47:     data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+[WebServer]             ^
+[WebServer] 48:   );
+[WebServer] 49: 
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:56:6 `createDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 54: 
+[WebServer] 55:   // Hidden form references for programmatic submission
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:57:6 `saveDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 55:   // Hidden form references for programmatic submission
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer]                                       ^
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:58:6 `saveIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 56:   let createDocForm: HTMLFormElement;
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer]                                        ^
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:59:6 `saveContentInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 57:   let saveDocForm: HTMLFormElement;
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer]                                             ^
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:60:6 `renameDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 58:   let saveIdInput: HTMLInputElement;
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:61:6 `renameIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 59:   let saveContentInput: HTMLInputElement;
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer]                                          ^
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:62:6 `renameTitleInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 60:   let renameDocForm: HTMLFormElement;
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer]                                             ^
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:63:6 `deleteDocForm` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 61:   let renameIdInput: HTMLInputElement;
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer]                                         ^
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer] 65: 
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:64:6 `deleteIdInput` is updated, but is not declared with `$state(...)`. Changing its value will not correctly trigger updates
+[WebServer] https://svelte.dev/e/non_reactive_update
+[WebServer] 62:   let renameTitleInput: HTMLInputElement;
+[WebServer] 63:   let deleteDocForm: HTMLFormElement;
+[WebServer] 64:   let deleteIdInput: HTMLInputElement;
+[WebServer]                                          ^
+[WebServer] 65: 
+[WebServer] 66:   function handleSelectDocument(id: string) {
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/app/+page.svelte:593:4 Unused CSS selector ".main-toolbar button[aria-disabled="true"]"
+[WebServer] https://svelte.dev/e/css_unused_selector
+[WebServer] 591: 
+[WebServer] 592:     /* Hide some toolbar buttons on small screens */
+[WebServer] 593:     .main-toolbar button[aria-disabled="true"] {
+[WebServer]                                                    ^
+[WebServer] 594:       display: none;
+[WebServer] 595:     }
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/settings/+page.svelte:38:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 36: 
+[WebServer] 37:   <div class="mb-4">
+[WebServer] 38:     <label class="block font-medium mb-2">Theme</label>
+[WebServer]                                                            ^
+[WebServer] 39:     <label><input type="radio" bind:group={theme} value="light" /> Light</label>
+[WebServer] 40:     <label class="ml-4"><input type="radio" bind:group={theme} value="dark" /> Dark</label>
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/settings/+page.svelte:44:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 42: 
+[WebServer] 43:   <div class="mb-4">
+[WebServer] 44:     <label class="block font-medium mb-2">Font size</label>
+[WebServer]                                                                ^
+[WebServer] 45:     <select bind:value={fontSize}>
+[WebServer] 46:       <option value="small">Small</option>
+[WebServer] 23:37:53 [vite-plugin-svelte] src/routes/settings/+page.svelte:53:4 A form label must be associated with a control
+[WebServer] https://svelte.dev/e/a11y_label_has_associated_control
+[WebServer] 51: 
+[WebServer] 52:   <div class="mb-4">
+[WebServer] 53:     <label class="block font-medium mb-2">Autosave interval (seconds)</label>
+[WebServer]                                                                                  ^
+[WebServer] 54:     <input type="number" bind:value={autosave} min="0" />
+[WebServer] 55:   </div>
+[WebServer] 23:37:53 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:61:2 The attribute 'aria-readonly' is not supported by the role 'document'
+[WebServer] https://svelte.dev/e/a11y_role_supports_aria_props
+[WebServer] 59:   role="document"
+[WebServer] 60:   aria-label="Manuscript text ÔÇö read only"
+[WebServer] 61:   aria-readonly="true"
+[WebServer]                           ^
+[WebServer] 62: >
+[WebServer] 63:   <div class="text-content">
+[WebServer] 23:37:53 [vite-plugin-svelte] src/lib/elements/ReviewText.svelte:68:8 Non-interactive element `<mark>` cannot have interactive role 'button'
+[WebServer] https://svelte.dev/e/a11y_no_noninteractive_element_to_interactive_role
+[WebServer] 66:         <!-- svelte-ignore a11y_click_events_have_key_events -->
+[WebServer] 67:         <!-- svelte-ignore a11y_no_static_element_interactions -->
+[WebServer] 68:         <mark
+[WebServer]                   ^
+[WebServer] 69:           class="highlight highlight--{seg.highlight.category}"
+[WebServer] 70:           data-category={seg.highlight.category}
+[WebServer] 23:37:53 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:67:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 65:       <h3 id="sec-inconsistencies">Inconsistencies</h3>
+[WebServer] 66:       {#each report.inconsistencies as item}
+[WebServer] 67:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 68:           <strong>{item.entity}</strong>
+[WebServer] 69:           <span class="badge-confidence">{Math.round(item.confidence * 100)}%</span>
+[WebServer] 23:37:53 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:79:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 77:       <h3 id="sec-pov">Point of View</h3>
+[WebServer] 78:       {#each report.pov as item}
+[WebServer] 79:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 80:           <strong>{item.location}</strong>
+[WebServer] 81:           <p>{item.detected_deviation}</p>
+[WebServer] 23:37:53 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:90:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 88:       <h3 id="sec-threads">Narrative Threads</h3>
+[WebServer] 89:       {#each report.threads as item}
+[WebServer] 90:         <article class="report-item" role="article">
+[WebServer]                                                        ^
+[WebServer] 91:           <strong>{item.thread_id}</strong>
+[WebServer] 92:           <span class="thread-status status--{item.status}">{item.status}</span>
+[WebServer] 23:37:53 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:114:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 112:       <h3 id="sec-motifs">Themes &amp; Motifs</h3>
+[WebServer] 113:       {#each report.motifs as item}
+[WebServer] 114:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 115:           <strong>{item.motif_id}</strong>
+[WebServer] 116:           <span class="badge-presence">{item.presence}</span>
+[WebServer] 23:37:53 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:126:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 124:       <h3 id="sec-voices">Character Voices</h3>
+[WebServer] 125:       {#each report.voices as item}
+[WebServer] 126:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 127:           <strong>{item.character_id}</strong>
+[WebServer] 128:           <p>{item.register_deviation}</p>
+[WebServer] 23:37:53 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:138:37 Redundant role 'article'
+[WebServer] https://svelte.dev/e/a11y_no_redundant_roles
+[WebServer] 136:       <h3 id="sec-style">Style &amp; Rhythm</h3>
+[WebServer] 137:       {#each report.style as item}
+[WebServer] 138:         <article class="report-item" role="article">
+[WebServer]                                                         ^
+[WebServer] 139:           <strong>{item.signal_type}</strong>
+[WebServer] 140:           <span class="item-location">{item.location}</span>
+[WebServer] Unknown output options: codeSplitting. Allowed options: amd, assetFileNames, banner, chunkFileNames, compact, dir, dynamicImportInCjs, entryFileNames, esModule, experimentalMinChunkSize, exports, extend, externalImportAssertions, externalImportAttributes, externalLiveBindings, file, footer, format, freeze, generatedCode, globals, hashCharacters, hoistTransitiveImports, importAttributesKey, indent, inlineDynamicImports, interop, intro, manualChunks, minifyInternalExports, name, noConflict, onlyExplicitManualChunks, outro, paths, plugins, preserveModules, preserveModulesRoot, reexportProtoFromExternal, sanitizeFileName, sourcemap, sourcemapBaseUrl, sourcemapDebugIds, sourcemapExcludeSources, sourcemapFile, sourcemapFileNames, sourcemapIgnoreList, sourcemapPathTransform, strict, systemNullSetters, validate, virtualDirname
+[WebServer] 2026-03-13T22:37:57.163Z WARN [Better Auth]: Social provider github is missing clientId or clientSecret
+Error: No tests found.
+Make sure that arguments are regular expressions matching test files.
+You may need to escape symbols like "$" or "*" and quote the arguments.
+

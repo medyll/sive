@@ -10,8 +10,57 @@
   import ExportButton from '$lib/elements/ExportButton.svelte';
   import Toast from '$lib/elements/Toast.svelte';
 import Onboarding from '$lib/elements/Onboarding.svelte';
+  import KeyboardShortcutsHelp from '$lib/elements/KeyboardShortcutsHelp.svelte';
+  import SummaryPanel from '$lib/elements/SummaryPanel.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
+  import { summaryStore } from '$lib/summaryStore.svelte';
+  import TemplatePicker from '$lib/elements/TemplatePicker.svelte';
+  import VersionHistoryPanel from '$lib/elements/VersionHistoryPanel.svelte';
+  import WritingGoalBar from '$lib/elements/WritingGoalBar.svelte';
+  import FocusModePanel from '$lib/elements/FocusModePanel.svelte';
+  import InstallPrompt from '$lib/elements/InstallPrompt.svelte';
+  import OnboardingTour from '$lib/elements/OnboardingTour.svelte';
+  import CommandPalette from '$lib/elements/CommandPalette.svelte';
+
+  function isAutoSummaryEnabled(): boolean {
+    if (!browser) return false;
+    try {
+      const s = JSON.parse(localStorage.getItem('settings') ?? '{}');
+      return s.autoSummary === true;
+    } catch {
+      return false;
+    }
+  }
+
+  async function triggerBackgroundSummary(id: string, docContent: string): Promise<void> {
+    const ctx = docContent ? btoa(unescape(encodeURIComponent(docContent.slice(0, 2000)))) : '';
+    const url = `/api/ai/summary?length=medium${ctx ? `&ctx=${ctx}` : ''}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok || !res.body) return;
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let text = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() ?? '';
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const token = line.slice(6);
+          if (token === '[DONE]') { summaryStore.set(id, 'medium', text.trim()); return; }
+          text += token;
+        }
+      }
+    } catch {
+      // silent — background task
+    }
+  }
   import { toastStore } from '$lib/toastStore.svelte';
+  import { retryFetch } from '$lib/retryFetch';
 
   const SPLIT_KEY = 'sive.splitRatio';
   const FOCUS_KEY = 'sive.focusMode';
@@ -28,6 +77,14 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
 
   let { data }: Props = $props();
 
+  // Wire user context into harden store for collaborative edit history
+  $effect(() => {
+    hardenStore.setContext({
+      userId: data.user?.id,
+      userName: data.user?.name ?? data.user?.email ?? 'Guest'
+    });
+  });
+
   let splitRatio = $state<number>(
     browser ? parseFloat(localStorage.getItem(SPLIT_KEY) ?? String(DEFAULT_RATIO)) : DEFAULT_RATIO
   );
@@ -39,6 +96,9 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let reviewMode = $state(false);
   let hardenOpen = $state(false);
   let sidebarOpen = $state(true);
+  let templatePickerOpen = $state(false);
+  let versionPanelOpen = $state(false);
+  let focusPanelOpen = $state(false);
 
   // Document state
   let documents = $state(data.documents);
@@ -52,6 +112,83 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     activeContent = documents.find((d) => d.id === activeDocumentId)?.content ?? '';
   });
 
+  // ── Debounced auto-save ───────────────────────────────────────────────────
+  type SaveStatus = 'idle' | 'pending' | 'saving' | 'saved';
+  let saveStatus = $state<SaveStatus>('idle');
+  let saveTimer: ReturnType<typeof setTimeout> | null = null;
+  let savedFadeTimer: ReturnType<typeof setTimeout> | null = null;
+  let pendingSave: { id: string; content: string } | null = null;
+
+  function debouncedSave(id: string, content: string) {
+    pendingSave = { id, content };
+    saveStatus = 'pending';
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => flushSave(), 1500);
+  }
+
+  async function flushSave() {
+    if (!pendingSave) return;
+    const { id, content } = pendingSave;
+    pendingSave = null;
+    saveTimer = null;
+    saveStatus = 'saving';
+    await handleSave(id, content);
+    saveStatus = 'saved';
+    if (savedFadeTimer) clearTimeout(savedFadeTimer);
+    savedFadeTimer = setTimeout(() => (saveStatus = 'idle'), 2000);
+  }
+
+  // Flush on page unload
+  $effect(() => {
+    function onBeforeUnload() { if (pendingSave) flushSave(); }
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  });
+
+  // Auto-save version after each explicit save
+  async function saveVersionAfterSave(id: string, content: string) {
+    try {
+      await fetch('/api/versions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'save', docId: id, content, title: documents.find(d => d.id === id)?.title ?? 'Untitled' })
+      });
+    } catch { /* silent */ }
+  }
+
+  // Listen to palette custom events
+  $effect(() => {
+    function onNewFromTemplate() { templatePickerOpen = true; }
+    function onSaveAsTemplate() {
+      const doc = documents.find(d => d.id === activeDocumentId);
+      if (!doc) return;
+      fetch('/api/templates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: doc.title, description: '', content: doc.content, category: 'general' })
+      }).then(() => toastStore.success('Template saved'));
+    }
+    window.addEventListener('palette:newFromTemplate', onNewFromTemplate);
+    window.addEventListener('palette:saveAsTemplate', onSaveAsTemplate);
+    return () => {
+      window.removeEventListener('palette:newFromTemplate', onNewFromTemplate);
+      window.removeEventListener('palette:saveAsTemplate', onSaveAsTemplate);
+    };
+  });
+
+  // Handle template apply
+  async function handleTemplateApply(templateId: string, title: string) {
+    const res = await fetch('/api/templates');
+    if (!res.ok) return;
+    const templates = await res.json();
+    const t = templates.find((x: { id: string; content: string }) => x.id === templateId);
+    if (!t) return;
+    createDocForm?.requestSubmit();
+    // After creation, content will be populated via activeContent
+    setTimeout(() => { activeContent = t.content; }, 200);
+    templatePickerOpen = false;
+  }
+
   // Hidden form references for programmatic submission
   let createDocForm: HTMLFormElement;
   let saveDocForm: HTMLFormElement;
@@ -62,6 +199,8 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let renameTitleInput: HTMLInputElement;
   let deleteDocForm: HTMLFormElement;
   let deleteIdInput: HTMLInputElement;
+  let duplicateDocForm: HTMLFormElement;
+  let duplicateIdInput: HTMLInputElement;
 
   function handleSelectDocument(id: string) {
     activeDocumentId = id;
@@ -71,18 +210,41 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     createDocForm?.requestSubmit();
   }
 
-  function handleSave(id: string, content: string) {
+  async function handleSave(id: string, content: string) {
     // Update local state immediately
     const doc = documents.find((d) => d.id === id);
     if (doc) doc.content = content;
 
-    // Submit to server via hidden form
+    // Submit to server via hidden form (preferred path)
     if (saveDocForm && saveIdInput && saveContentInput) {
       saveIdInput.value = id;
       saveContentInput.value = content;
       saveDocForm.requestSubmit();
+      toastStore.success('Document saved');
+      if (isAutoSummaryEnabled()) {
+        toastStore.info('Updating summary…');
+        summaryStore.refreshSummary(id, 'medium');
+        triggerBackgroundSummary(id, content);
+      }
+      return;
     }
-    toastStore.success('Document saved');
+
+    // Fallback: direct fetch with retry (e.g. form ref unavailable)
+    try {
+      await retryFetch(`?/saveDocument`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ id, content }).toString()
+      });
+      toastStore.success('Document saved');
+      if (isAutoSummaryEnabled()) {
+        toastStore.info('Updating summary…');
+        summaryStore.refreshSummary(id, 'medium');
+        triggerBackgroundSummary(id, content);
+      }
+    } catch {
+      toastStore.error('Failed to save document — please try again');
+    }
   }
 
   function handleRename(id: string, title: string) {
@@ -138,8 +300,11 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     if (e.key === 'Escape') { editingToolbarTitle = false; }
   }
   let aiProcessing = $state(false);
+  let suggestionsReady = $state(false);
   let dragging = $state(false);
   let chatBarOpen = $state(true);
+  let showShortcutsHelp = $state(false);
+  let showSummaryPanel = $state(false);
 
   function persistState(_node: HTMLElement) {
     $effect(() => {
@@ -150,15 +315,63 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   }
 
   function globalKeyboardShortcuts(_node: HTMLElement) {
+    function isTyping(e: KeyboardEvent): boolean {
+      const t = e.target as HTMLElement;
+      return t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable;
+    }
+
     function onKeydown(e: KeyboardEvent) {
+      // Focus mode — always active
       if (e.key === 'F11' || (e.ctrlKey && e.shiftKey && e.key === 'F')) {
         e.preventDefault();
         focusMode = !focusMode;
+        return;
       }
-      // Ctrl+S — immediate save
-      if (e.ctrlKey && e.key === 's') {
+      // Ctrl+S — immediate save (allowed inside editor)
+      if (e.ctrlKey && !e.shiftKey && e.key === 's') {
         e.preventDefault();
         if (activeDocumentId) handleSave(activeDocumentId, activeContent);
+        return;
+      }
+      // Skip remaining shortcuts when typing in an input
+      if (isTyping(e)) return;
+
+      // Ctrl+N — new document
+      if (e.ctrlKey && !e.shiftKey && e.key === 'n') {
+        e.preventDefault();
+        handleNewDocument();
+        return;
+      }
+      // Ctrl+B — toggle sidebar
+      if (e.ctrlKey && !e.shiftKey && e.key === 'b') {
+        e.preventDefault();
+        sidebarOpen = !sidebarOpen;
+        return;
+      }
+      // Ctrl+] — next document
+      if (e.ctrlKey && e.key === ']') {
+        e.preventDefault();
+        const idx = documents.findIndex((d) => d.id === activeDocumentId);
+        if (idx < documents.length - 1) activeDocumentId = documents[idx + 1].id;
+        return;
+      }
+      // Ctrl+[ — previous document
+      if (e.ctrlKey && e.key === '[') {
+        e.preventDefault();
+        const idx = documents.findIndex((d) => d.id === activeDocumentId);
+        if (idx > 0) activeDocumentId = documents[idx - 1].id;
+        return;
+      }
+      // ? — keyboard shortcuts help
+      if (e.key === '?') {
+        e.preventDefault();
+        showShortcutsHelp = !showShortcutsHelp;
+        return;
+      }
+      // Ctrl+Alt+S — summary panel
+      if (e.ctrlKey && e.altKey && e.key === 's') {
+        e.preventDefault();
+        showSummaryPanel = !showSummaryPanel;
       }
     }
     window.addEventListener('keydown', onKeydown);
@@ -242,11 +455,26 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         aria-pressed={reviewMode}
       >Review</button>
       <button type="button" onclick={() => { hardenOpen = true; }}>💾 New version</button>
+      <button type="button" onclick={() => { versionPanelOpen = !versionPanelOpen; }} aria-pressed={versionPanelOpen} title="Version history">🕐 History</button>
+      <button type="button" onclick={() => { focusPanelOpen = !focusPanelOpen; }} aria-pressed={focusPanelOpen} title="Focus mode / Pomodoro">🍅</button>
+      <button
+        type="button"
+        class="btn-summary"
+        aria-label="AI Summary (Ctrl+Alt+S)"
+        title="AI Summary (Ctrl+Alt+S)"
+        onclick={() => { showSummaryPanel = !showSummaryPanel; }}
+        aria-pressed={showSummaryPanel}
+      >📄 Summary</button>
       <ExportButton
         title={documents.find(d => d.id === activeDocumentId)?.title ?? 'document'}
         content={activeContent}
+        summary={summaryStore.get(activeDocumentId, 'medium') ?? ''}
+        docId={activeDocumentId}
       />
       <a href="/settings" title="Settings" class="btn-settings">⚙</a>
+      {#if data.user?.id === 'guest'}
+        <a href="/auth" class="btn-login" title="Se connecter">Se connecter</a>
+      {/if}
       <a
         href="/profile"
         class="user-badge"
@@ -261,6 +489,9 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
           G
         {/if}
       </a>
+      {#if data.user?.id === 'guest'}
+        <span class="guest-indicator" title="Vous êtes en mode invité">Invité</span>
+      {/if}
     </div>
   </header>
 
@@ -271,24 +502,33 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   {:else}
     <div class="workspace" {@attach workspaceRef}>
       {#if !focusMode && sidebarOpen}
-        <DocumentList
-          {documents}
-          activeId={activeDocumentId}
-          onSelect={(id) => { handleSelectDocument(id); if (browser && window.innerWidth < 768) sidebarOpen = false; }}
-          onNew={handleNewDocument}
-          onRename={handleRename}
-          onDelete={handleDelete}
-        />
+        <div class="sidebar" data-tour="document-list">
+          <DocumentList
+            {documents}
+            activeId={activeDocumentId}
+            onSelect={(id) => { handleSelectDocument(id); if (browser && window.innerWidth < 768) sidebarOpen = false; }}
+            onNew={handleNewDocument}
+            onRename={handleRename}
+            onDelete={handleDelete}
+          />
+          <WritingGoalBar currentWordCount={activeContent.trim() ? activeContent.trim().split(/\s+/).length : 0} />
+        </div>
       {/if}
 
       <div
         class="panel editor-panel"
+        data-tour="editor"
         style="width: {focusMode ? '100%' : `calc(${splitRatio * 100}% - 14rem)`}"
       >
+        {#if saveStatus !== 'idle'}
+          <div class="save-indicator" class:fade={saveStatus === 'saved'}>
+            {saveStatus === 'pending' ? '…' : saveStatus === 'saving' ? 'Saving…' : 'Saved ✓'}
+          </div>
+        {/if}
         <EditorPanel
           documentId={activeDocumentId}
           bind:content={activeContent}
-          onSave={handleSave}
+          onSave={debouncedSave}
         />
       </div>
 
@@ -301,8 +541,28 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
           onpointerdown={onPointerDown}
         ></div>
 
-        <div class="panel ai-panel" style="width: {(1 - splitRatio) * 100}%">
-          <AIPanel {aiProcessing} editorContent={activeContent} />
+        <div class="panel ai-panel" data-tour="ai-panel" style="width: {(1 - splitRatio) * 100}%">
+          <AIPanel {aiProcessing} editorContent={activeContent} docId={activeDocumentId} />
+          {#if versionPanelOpen}
+            <div class="version-panel-overlay">
+              <VersionHistoryPanel
+                docId={activeDocumentId}
+                currentContent={activeContent}
+                onrestore={(content, title) => {
+                  activeContent = content;
+                  const doc = documents.find(d => d.id === activeDocumentId);
+                  if (doc) { doc.title = title; documents = [...documents]; }
+                  versionPanelOpen = false;
+                  toastStore.success('Version restored');
+                }}
+              />
+            </div>
+          {/if}
+          {#if focusPanelOpen}
+            <div class="focus-panel-overlay">
+              <FocusModePanel />
+            </div>
+          {/if}
         </div>
       {/if}
     </div>
@@ -408,11 +668,60 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   {/if}
 {/key}
 
+{#if showShortcutsHelp}
+  <KeyboardShortcutsHelp onClose={() => { showShortcutsHelp = false; }} />
+{/if}
+
+{#if showSummaryPanel}
+  <SummaryPanel
+    docId={activeDocumentId}
+    content={activeContent}
+    onClose={() => { showSummaryPanel = false; }}
+  />
+{/if}
+
 <Onboarding />
 
 <Toast />
 
+<CommandPalette />
+
+<OnboardingTour />
+
+<InstallPrompt />
+
+<TemplatePicker
+  bind:open={templatePickerOpen}
+  onapply={handleTemplateApply}
+/>
+
 <style>
+  .save-indicator {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    z-index: 10;
+    font-size: 0.75rem;
+    color: var(--muted, #9ca3af);
+    pointer-events: none;
+    transition: opacity 2s ease;
+  }
+  .save-indicator.fade { opacity: 0; }
+  .sidebar { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+  .version-panel-overlay {
+    border-top: 1px solid var(--border, #e5e7eb);
+    padding: 0.75rem;
+    height: 50%;
+    overflow-y: auto;
+    background: var(--surface, #fff);
+  }
+  .focus-panel-overlay {
+    border-top: 1px solid var(--border, #e5e7eb);
+    padding: 0.75rem;
+    overflow-y: auto;
+    background: var(--surface, #fff);
+  }
+
   .app-root {
     display: flex;
     flex-direction: column;
@@ -624,4 +933,33 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       max-width: none;
     }
   }
+.btn-summary {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.82rem;
+  background: var(--color-surface, #f4f4f4);
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.btn-summary:hover { background: var(--color-hover, #e9e9e9); }
+.btn-summary[aria-pressed="true"] {
+  background: var(--color-primary, #646cff);
+  border-color: var(--color-primary, #646cff);
+  color: #fff;
+}
+
+.guest-indicator {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-muted, #6b7280);
+  background: rgba(0,0,0,0.04);
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.5rem;
+  align-self: center;
+  display: inline-block;
+}
+
 </style>

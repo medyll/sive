@@ -1,85 +1,64 @@
-# Architecture Document — Auth-focused
+# System Architecture — Sive v3.1.0 (Guest Mode & RC)
 
-This document describes the architecture decisions for the Auth MVP and the concrete next steps to implement auth safely and predictably.
+**Date:** 2026-03-14  
+**Status:** Final Candidate  
+**Goal:** Define system architecture and data flow to support optional authentication (guest mode) via cookies with optional future DB persistence.
 
-## Summary
+---
 
-- Goal: Implement a minimal, secure authentication layer using Better-Auth with a Drizzle/SQLite adapter and server-side session handling.
-- Primary files: `src/lib/server/db/auth.schema.ts`, `src/lib/server/db/index.ts`, `src/lib/server/auth.ts`, and SvelteKit protected routes under `src/routes/*`.
+## 1. High-Level Components
+* **Client (Svelte):** UI banners/CTAs for guests, conversion/signup modal, conditional disabling of write-only actions.
+* **SvelteKit Server:** `hooks.server.ts` for session resolution and guest cookie management; new `/api/guest/*` endpoints.
+* **Auth Subsystem:** Better-Auth (unchanged). Manages authenticated sessions via `sveltekitCookies`.
+* **Persistence:** Drizzle + SQLite. MVP requires no new tables; schema ready for future `guests` table.
+* **Observability:** Prometheus/StatsD metrics for tracking guest creation and conversion events.
 
-## Data Model (Auth)
+---
 
-The Drizzle schema includes the following tables (implemented in `src/lib/server/db/auth.schema.ts`):
+## 2. Data Flow (Cookie-only MVP)
+1. **Interception:** `hooks.server.ts` calls `auth.api.getSession(headers)`.
+2. **Session Exists:** `event.locals.user` is populated (standard flow).
+3. **Session Absent + `ALLOW_GUESTS=true`:**
+    * Check for `guest_id` cookie.
+    * If missing: generate UUIDv4, set cookie (Secure, HttpOnly, SameSite=Lax, path=/, expires ~30d).
+    * Assign to `event.locals.guestId`.
+4. **Request Handling:** Route handlers check `locals.user` and `locals.guestId`. Sensitive write operations return `401/403` for guests.
+5. **Conversion:** `POST /api/guest/convert` validates the guest cookie, performs user registration, and optionally triggers ownership transfer jobs.
 
-- users
-  - id (PK, uuid)
-  - email (string, unique)
-  - name (string)
-  - password_hash (string)
-  - created_at (timestamp ms)
+---
 
-- sessions
-  - id (PK, uuid)
-  - user_id (FK -> users.id)
-  - session_token (string)
-  - expires_at (timestamp ms)
+## 3. Persistence & Evolution (Future)
+* **Schema:** `guests` table (id UUID primary key, created_at, last_seen, metadata JSON).
+* **Relations:** Nullable `owner_guest_id` column added to resource tables (documents, settings).
+* **Migrations:** Use `drizzle-kit` for `db:generate` and `db:push/migrate`. Update ORM types and run `npm run auth:schema` if required.
 
-- accounts (for social/OAuth)
-  - id (PK, uuid)
-  - user_id (FK -> users.id)
-  - provider (string e.g., "github")
-  - provider_account_id (string)
-  - access_token, refresh_token, expires_at
+---
 
-Notes:
-- Prefer a single source of truth for user identifiers (users.id) and use provider accounts only to map external identities.
-- Passwords must be stored as a salted hash (bcrypt/argon2) in `password_hash`.
+## 4. Route Guard Strategy
+* **Public:** Accessible to everyone (guests included).
+* **Authenticated:** Requires `event.locals.user`; returns redirect/401 if missing.
+* **Mixed:** Allows guests but restricts sensitive UI; server rejects mutations (POST/PATCH/DELETE) with 403 for guest IDs.
 
-## Better-Auth Integration
+---
 
-- Use `betterAuth({ database: drizzleAdapter(db, { provider: 'sqlite' }), ... })` as demonstrated in `src/lib/server/auth.ts`.
-- Ensure the `sveltekitCookies(getRequestEvent)` plugin is the last plugin in the `plugins` array (this is required by hooks that rely on cookie injection).
-- Enable `emailAndPassword` provider for MVP; register GitHub as an optional social provider behind feature flag.
+## 5. Security & Rollout
+* **Anti-abuse:** Rate-limit by `guest_id` and IP. Implement CAPTCHA for suspicious anonymous traffic.
+* **Deployment:** `ALLOW_GUESTS` environment variable (default `false`). 72h Canary rollout monitoring session error rates and guest creation spikes.
+* **Rollback:** Instant disable via `ALLOW_GUESTS=false`. Conversion operations must remain idempotent and safe for retries.
 
-## Plugin Order and Hooks
+---
 
-1. Configure adapters and providers.
-2. Register authentication plugins (e.g., logging, rate-limiting) if any.
-3. Add `sveltekitCookies(getRequestEvent)` as the last plugin to ensure cookies are available to downstream handlers.
+## 6. Implementation Checklist
+* [ ] `src/hooks.server.ts`: Guest cookie logic (must preserve `auth.api.getSession` behavior).
+* [ ] `src/lib/server/auth.ts`: Verify plugin execution order.
+* [ ] `src/routes/*`: Update guards in `settings`, `profile`, and `app`.
+* [ ] `src/routes/api/guest/`: Add `convert` and `status` endpoints.
+* [ ] `e2e/guest-flow.spec.ts`: Playwright E2E tests for the guest lifecycle.
 
-Example order (in `auth.ts`):
-- loggingPlugin
-- rateLimitPlugin
-- sveltekitCookies(getRequestEvent)
+---
 
-Document this ordering clearly in `src/lib/server/auth.ts` (inline comments already present) and add a unit test that validates `auth.api.getSession()` is available in hooks when running with a real DB.
-
-## Migrations & Local Dev
-
-- Use Drizzle Kit for migrations: run `npm run db:generate` to create migration from schema and `npm run db:push` / `npm run db:migrate` to apply.
-- For local development, `src/lib/server/db/index.ts` falls back to a mocked DB when `DATABASE_URL` is not set; this preserves UI work without requiring native better-sqlite3 bindings.
-- Add a short `README` note under `src/lib/server/db/README.md` describing how to set `DATABASE_URL` and run migrations locally.
-
-## Protected Routes & Session Handling
-
-- Protect server routes using `auth.api.getSession()` in `+page.server.ts` or `hooks.server.ts`.
-- Ensure server-only code (DB access and secrets) remains in `.server.ts` files.
-
-## Testing
-
-- Unit tests: cover hashing, session creation, and adapter integration (mock the DB layer when necessary).
-- E2E: Playwright test for sign-up, login, session persistence, and logout (already included in sprint items).
-
-## Security Considerations
-
-- Use `HttpOnly`, `Secure`, and `SameSite=Strict` cookies for session cookies.
-- Rotate `BETTER_AUTH_SECRET` in staging/production and document the process.
-- Rate-limit sign-in endpoints to reduce brute-force risk.
-
-## Next Actions
-
-1. Finalize migrations and run `npm run db:migrate` in a test environment.
-2. Implement server routes for sign-up/login and protect sample content pages.
-3. Create follow-up stories in BMAD: `S1-02` (auth architecture doc) is completed; add implementation stories for adapter and UI.
-
-Generated by bmad-master on 2026-02-28
+## 7. Key Metrics
+* `guests_created` (Counter)
+* `guests_converted` (Counter)
+* `guest_actions_blocked` (Counter)
+* `conversion_latency` (Histogram)

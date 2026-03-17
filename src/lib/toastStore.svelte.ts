@@ -1,6 +1,6 @@
 // Singleton toast store — add/dismiss transient notifications
 
-export type ToastType = 'success' | 'error' | 'info';
+export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 export interface ToastItem {
 	id: number;
@@ -26,6 +26,7 @@ function createToastStore() {
 	function success(message: string) { add(message, 'success'); }
 	function error(message: string) { add(message, 'error', 5000); }
 	function info(message: string) { add(message, 'info'); }
+	function warning(message: string) { add(message, 'warning', 4500); }
 
 	return {
 		get items() { return items; },
@@ -33,7 +34,8 @@ function createToastStore() {
 		dismiss,
 		success,
 		error,
-		info
+		info,
+		warning
 	};
 }
 

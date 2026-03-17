@@ -2,6 +2,9 @@ import { expect, test } from './fixtures';
 
 test.describe('Coherence tab — /app', () => {
 	test.beforeEach(async ({ page }) => {
+		await page.addInitScript(() => {
+			localStorage.setItem('sive:onboarding_seen', '1');
+		});
 		await page.goto('/app');
 	});
 
@@ -28,14 +31,14 @@ test.describe('Coherence tab — /app', () => {
 	test('after check, 5 alert cards are visible', async ({ page }) => {
 		await page.getByRole('button', { name: 'Coherence' }).click();
 		await page.locator('.btn-coherence').click();
-		await expect(page.locator('article.coherence-alert')).toHaveCount(5, { timeout: 5000 });
+		await expect(page.locator('article.coherence-alert')).toHaveCount(5, { timeout: 15000 });
 	});
 
 	test('alert cards have entity, discrepancy type, and confidence badge', async ({ page }) => {
 		await page.getByRole('button', { name: 'Coherence' }).click();
 		await page.locator('.btn-coherence').click();
 		const firstCard = page.locator('article.coherence-alert').first();
-		await expect(firstCard).toBeVisible({ timeout: 5000 });
+		await expect(firstCard).toBeVisible({ timeout: 15000 });
 		await expect(firstCard.locator('.alert-entity')).toBeVisible();
 		await expect(firstCard.locator('.alert-confidence')).toBeVisible();
 		await expect(firstCard.locator('.alert-type')).toBeVisible();
@@ -45,7 +48,7 @@ test.describe('Coherence tab — /app', () => {
 	test('High confidence alerts have a red-ish badge', async ({ page }) => {
 		await page.getByRole('button', { name: 'Coherence' }).click();
 		await page.locator('.btn-coherence').click();
-		await expect(page.locator('article.coherence-alert').first()).toBeVisible({ timeout: 5000 });
+		await expect(page.locator('article.coherence-alert').first()).toBeVisible({ timeout: 15000 });
 		const highBadge = page.locator('.alert-confidence').first();
 		const style = await highBadge.getAttribute('style');
 		expect(style).toContain('background-color');

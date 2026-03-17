@@ -59,6 +59,22 @@
     {/if}
 
     {#if !data.isMock && data.user}
+      <form method="POST" action="?/updateName" use:enhance class="name-form">
+        <label for="profile-name" class="name-label">Display name</label>
+        <div class="name-row">
+          <input
+            id="profile-name"
+            name="name"
+            type="text"
+            class="name-input"
+            value={data.user.name ?? ''}
+            placeholder="Your name"
+            data-testid="display-name-input"
+          />
+          <button type="submit" class="btn-save-name" data-testid="save-name-btn">Save</button>
+        </div>
+      </form>
+
       <form method="POST" action="?/signOut" use:enhance class="signout-form">
         <button type="submit" class="btn-signout">Sign out</button>
       </form>
@@ -70,6 +86,43 @@
 </main>
 
 <style>
+  .name-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .name-label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--color-text, #333);
+  }
+
+  .name-row {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .name-input {
+    flex: 1;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+  }
+
+  .btn-save-name {
+    padding: 0.45rem 0.85rem;
+    background: var(--color-primary, #646cff);
+    color: #fff;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
   .profile-page {
     min-height: 100vh;
     display: flex;

@@ -24,6 +24,14 @@
   let lastSaved = $state<string | null>(null);
   let isDirty = $state(false);
 
+  /** Count words — split on whitespace, filter empty tokens. */
+  function countWords(text: string): number {
+    return text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+  }
+
+  let wordCount = $derived(countWords(content));
+  let charCount = $derived(content.length);
+
   function handleInput(e: Event) {
     content = (e.target as HTMLTextAreaElement).value;
     isDirty = true;
@@ -48,10 +56,13 @@
 
 <div class="editor-wrap" data-theme={theme}>
   <div class="editor-status" aria-live="polite">
+    <span class="word-count" aria-label="{wordCount} words, {charCount} characters">
+      {wordCount} {wordCount === 1 ? 'word' : 'words'} · {charCount} chars
+    </span>
     {#if isDirty}
-      <span class="status-saving">Saving…</span>
+      <span class="status-saving">· Saving…</span>
     {:else if lastSaved}
-      <span class="status-saved">Saved at {lastSaved}</span>
+      <span class="status-saved">· Saved at {lastSaved}</span>
     {/if}
   </div>
   <textarea
@@ -82,6 +93,7 @@
     flex-shrink: 0;
   }
 
+  .word-count    { color: var(--color-text-muted, #9ca3af); }
   .status-saving { color: #f97316; }
   .status-saved  { color: #22c55e; }
 

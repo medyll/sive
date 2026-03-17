@@ -1,4 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
 import { auth, isMock } from '$lib/server/auth';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -7,7 +8,10 @@ export const load: PageServerLoad = async ({ locals }) => {
 	if (!isMock && locals.user) {
 		throw redirect(302, '/app');
 	}
-	return { isMock };
+	return {
+		isMock,
+		hasGithub: !isMock && Boolean(env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET)
+	};
 };
 
 export const actions: Actions = {

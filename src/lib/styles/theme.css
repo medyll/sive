@@ -46,4 +46,109 @@ body { margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Robot
 .tab { transition:background .12s,color .12s }
 .tab.active { background: var(--primary); color: #fff }
 
+/* ─── Mobile accessibility ─────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Toolbar buttons */
+  .main-toolbar button {
+    padding: 0.5rem 0.75rem;
+    min-height: 44px;
+  }
+
+  /* Export button should be touch-friendly */
+  .btn-export {
+    padding: 0.5rem 0.75rem !important;
+    min-height: 44px !important;
+  }
+
+  /* Summary panel repositions on mobile */
+  .summary-panel {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 1rem !important;
+    right: auto !important;
+    left: 1rem !important;
+    width: calc(100vw - 2rem) !important;
+    max-width: 90vw !important;
+  }
+
+  /* Export menu positions above the button on mobile */
+  .export-menu {
+    position: fixed !important;
+    top: auto !important;
+    bottom: calc(100% + 4px) !important;
+    right: 1rem !important;
+    left: auto !important;
+  }
+}
+
 .meta { color: var(--muted); }
+
+/* ─── Print stylesheet ─────────────────────────────────────────────────────── */
+@media print {
+  /* Hide all interactive chrome */
+  .main-toolbar,
+  .doc-list,
+  .resize-handle,
+  .ai-panel,
+  .chat-overlay,
+  .badge,
+  .summary-panel,
+  .summary-backdrop,
+  .harden-modal,
+  [data-toast],
+  nav,
+  aside {
+    display: none !important;
+  }
+
+  /* Editor fills the page */
+  .app-root,
+  .workspace,
+  .panel.editor-panel {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.7;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    page-break-after: avoid;
+    color: #000;
+  }
+
+  h1 { font-size: 22pt; margin-bottom: 0.5em; }
+  h2 { font-size: 16pt; margin-top: 1.4em; }
+  h3 { font-size: 13pt; margin-top: 1.2em; }
+
+  /* Summary preface (when exported with summary) */
+  .print-summary-preface {
+    border-left: 3pt solid #999;
+    padding-left: 1em;
+    margin-bottom: 2em;
+    font-style: italic;
+    color: #333;
+    page-break-after: always;
+  }
+
+  /* Page breaks */
+  p { orphans: 3; widows: 3; }
+  pre, blockquote { page-break-inside: avoid; }
+
+  /* Links */
+  a[href]::after { content: ' (' attr(href) ')'; font-size: 9pt; color: #555; }
+}

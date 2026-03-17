@@ -39,12 +39,43 @@ completed_steps:
   - Sprint 13 Planning — Settings & Onboarding
   - Sprint 13 Implementation — Settings & Onboarding (S13-01 → S13-06)
   - Sprint 14 Planning — Real-time Collaboration Foundation
-  - Sprint 14 In Progress — Real-time Collaboration (S14-01)
+  - Sprint 14 Implementation — Real-time Collaboration (S14-01 → S14-06)
+  - Sprint 15 Implementation — Real-time Collaboration (S15-01 → S15-06)
+  - Sprint 16 Planning — Document Sharing & RBAC
+  - Sprint 16 Implementation — Document Sharing & RBAC (S16-01 → S16-06)
+  - Sprint 17 Planning — Test Hardening & OAuth
+  - Sprint 17 Implementation — Test Hardening & OAuth (S17-01 → S17-06)
+  - Sprint 18 Planning — Release Candidate & Final QA
+  - Sprint 18 Implementation — Release Candidate & Final QA (S18-01 → S18-04)
+  - Sprint 19 Planning — Accessibility, UX Polish & Guest Conversion
+  - Sprint 19 Implementation — A11y & Guest Conversion (S19-01 → S19-06)
+  - Sprint 20 Planning — Document Search & Power-User UX
+  - Sprint 20 Implementation — Search, Arrow Nav & Shortcuts (S20-01 → S20-06)
+  - Sprint 21 Planning — Error Boundaries & Resilience
+  - Sprint 21 Implementation — Offline Banner, AI Cancel, Retry (S21-01 → S21-06)
+  - Sprint 22 Planning — AI Chat Streaming & Document Tags
+  - Sprint 22 Implementation — SSE Streaming, Tag Store, Tag UI (S22-01 → S22-07)
+  - Sprint 23 Planning — AI Context Awareness & Prompt History
+  - Sprint 23 Implementation — Doc Context, Prompt History, SSE ctx param (S23-01 → S23-06)
+  - Sprint 25 Planning — AI-assisted Document Summaries
+  - Sprint 25 Implementation — Summary badge, /api/ai/summary SSE, summaryStore cache, export with summary (S25-01 → S25-06)
+  - Sprint 26 Planning — Auto-summary on Save & Print Polish
+  - Sprint 26 Implementation — autoSummary setting, background trigger, print CSS, timestamp in panel (S26-01 → S26-06)
+  - Sprint 27 Planning — PDF Export & Mobile UX Polish
+  - Sprint 27 Implementation — PDF /api/export endpoint, PDF button, 44px tap targets, mobile panels (S27-01 → S27-06)
 
 missing_artifacts: []
 
-recommendation: /dev-story S14-04
-last_updated: 2026-03-08
+recommendation: |
+  Sprint 28 complete. Activity badges now show live viewer count per document (green/blue/red).
+  ConflictIndicator warns when 2+ users edit concurrently and displays last-editor info.
+  Presence store enhanced with idle detection (30s) and offline cleanup (2min).
+  HardenSnapshot extended to track userId/userName for collaborative edit history.
+  Next sprint could focus on API rate limiting, full-text search optimization, or mobile UX polish.
+last_updated: 2026-03-16
+
+active_role: dev
+next_action: "Sprint 48 COMPLETE — Finishing touches. S38: versions.ts (max 50 FIFO), diff.ts (LCS line diff + HTML render), VersionHistoryPanel.svelte, /api/versions (GET/POST restore+label). S39: exportFormats.ts (pure-JS ZIP builder, EPUB3+DOCX), /api/export/epub + /api/export/docx. S40: OnboardingTour.svelte (5-step tooltip tour, spotlight overlay, progress dots, localStorage completion flag). S41: writingGoalsStore + WritingGoalBar. S42: pluginStore (max 10, localStorage, mounts to commandRegistry), PluginManager.svelte (add/toggle/remove, inline script editor). S43: sharing.ts (token, TTL, revoke), /api/share GET+POST+DELETE, /s/[token] read-only page. S44: focusStore (Pomodoro timer, ambient sounds, localStorage), FocusModePanel.svelte. S45: docChatStore (multi-turn, per-doc localStorage history, SSE streaming), /api/ai/chat SSE endpoint. S46: manifest.webmanifest, sw.js, InstallPrompt.svelte, app.html. S47 WIRING: TemplatePicker mounted + palette:newFromTemplate/saveAsTemplate events handled; VersionHistoryPanel in AI panel overlay (🕐 History button); FocusModePanel in AI panel overlay (🍅 button); WritingGoalBar in sidebar; OnboardingTour + InstallPrompt + CommandPalette mounted at root; AIPanel gets docId prop + per-doc chat history (localStorage); PluginManager in Settings page. E2E tests written. S48: /offline page (retry button, cached doc note), /s/[token] full doc render (markdown→HTML, meta noindex), /api/share/content GET endpoint, static/icons/icon-{192,512}.png generated via pure-JS PNG encoder (scripts/generate-icons.mjs). Project feature-complete. Ready for Sprint 49 (CI/CD + deployment)."
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -52,6 +83,13 @@ artifacts:
   - bmad/artifacts/prd.md
   - bmad/artifacts/tech-spec.md
   - bmad/artifacts/architecture.md
+  - bmad/artifacts/sprints/sprint-16.md
+  - bmad/artifacts/sprints/sprint-19.md
+  - bmad/artifacts/sprints/sprint-20.md
+  - bmad/artifacts/sprints/sprint-21.md
+  - bmad/artifacts/sprints/sprint-22.md
+  - bmad/artifacts/sprints/sprint-23.md
+  - bmad/artifacts/sprints/sprint-25.md
 
 sprints:
   - id: sprint-1
@@ -105,7 +143,8 @@ sprints:
       - id: S2-07
         title: e2e-layout-tests
         status: done
-
+
+
   - id: sprint-3
     name: Sprint 3 — Review Mode UI
     status: done
@@ -236,41 +275,11 @@ sprints:
       - id: S7-05
         title: e2e-suggestions-tab
         status: done
-    title: Create sign-in page
-    priority: high
-    status: done
-  - id: task-s1-03-2
-    title: Server sign-in handler
-    priority: high
-    status: done
-  - id: task-s1-03-3
-    title: UI validation & accessibility
-    priority: medium
-    status: done
-  - id: task-s1-05-1
-    title: Write unit tests for auth handler
-    priority: high
-    status: done
-  - id: task-s1-05-2
-    title: Mock DB tests for adapter
-    priority: medium
-    status: done
-  - id: task-s1-06-1
-    title: Add Playwright smoke test for login flow
-    priority: high
-    status: done
-  - id: task-s1-07-1
-    title: Document auth setup in README
-    priority: low
-    status: done
-  - id: task-ui-01
-    title: "[New] Track AI/Chat UI feature — AIPanel, ChatBar, EditorPanel, Spinner, TabBar"
-    priority: medium
-    status: done
-
+  
   qa:
     coverage: "124 unit tests + 6 E2E (ux-polish) + 6 E2E (auth-flow) + 6 E2E (ai-integration) + 8 E2E (persistence) + 5 E2E (document-ux) + 8 E2E (suggestions) + 7 E2E (coherence) + 7 E2E (style)"
-    last_run: 2026-03-01
+    last_run: 2026-03-10
+    last_results: "unit tests: 38 files, 272 passed (vitest)"
 
   recommendation: /next
   last_updated: 2026-03-01
@@ -339,51 +348,208 @@ sprints:
         title: e2e-ux-polish
         status: done
 
-  - id: sprint-13
-    name: Sprint 13 — Settings & Onboarding
+  - id: sprint-20
+    name: Sprint 20 — Document Search & Power-User UX
     status: done
     progress: 100
+    start: 2026-03-17
+    end: 2026-03-31
     stories:
-      - id: S13-01
-        title: settings-page-skeleton
+      - id: S20-01
+        title: document-search-filter
         status: done
-      - id: S13-02
-        title: onboarding-modal-checklist
+      - id: S20-02
+        title: arrow-key-navigation
         status: done
-      - id: S13-03
-        title: preferences-persistence-server
+      - id: S20-03
+        title: expand-keyboard-shortcuts
         status: done
-      - id: S13-04
-        title: profile-settings-link
+      - id: S20-04
+        title: keyboard-shortcuts-help-overlay
         status: done
-      - id: S13-05
-        title: unit-tests-settings-onboarding
+      - id: S20-05
+        title: fix-suggestions-ready-bug
         status: done
-      - id: S13-06
-        title: e2e-onboarding-flow
+      - id: S20-06
+        title: unit-tests-sprint20
         status: done
 
-  - id: sprint-14
-    name: Sprint 14 — Real-time Collaboration Foundation
-    status: in_progress
-    progress: 50
+  - id: sprint-18
+    name: Sprint 18 — Release Candidate & Final QA
+    status: done
+    progress: 100
+    start: 2026-03-10
+    end: 2026-03-24
     stories:
-      - id: S14-01
-        title: websocket-server-setup
+      - id: S18-01
+        title: release-candidate-build
         status: done
-      - id: S14-02
-        title: presence-indicators
+      - id: S18-02
+        title: final-integration-tests
         status: done
-      - id: S14-03
-        title: real-time-cursor-sync
+      - id: S18-03
+        title: e2e-smoke-and-regression
         status: done
-      - id: S14-04
-        title: conflict-detection
-        status: pending
-      - id: S14-05
-        title: unit-tests-collaboration
-        status: pending
-      - id: S14-06
-        title: e2e-collaboration-flow
-        status: pending
+      - id: S18-04
+        title: fix-e2e-timeout-failures
+        status: done
+
+  - id: sprint-22
+    name: Sprint 22 — AI Chat Streaming & Document Tags
+    status: done
+    progress: 100
+    start: 2026-03-17
+    end: 2026-03-31
+    stories:
+      - id: S22-01
+        title: streaming-chat-endpoint-sse
+        status: done
+      - id: S22-02
+        title: stream-tokens-chat-bubble
+        status: done
+      - id: S22-03
+        title: suggested-prompts-chips
+        status: done
+      - id: S22-04
+        title: document-tags-column-store
+        status: done
+      - id: S22-05
+        title: tag-input-chips-documentlist
+        status: done
+      - id: S22-06
+        title: filter-sidebar-by-tag
+        status: done
+      - id: S22-07
+        title: unit-tests-sprint22
+        status: done
+
+  - id: sprint-23
+    name: Sprint 23 — AI Context Awareness & Prompt History
+    status: done
+    progress: 100
+    start: 2026-03-16
+    end: 2026-03-16
+    stories:
+      - id: S23-01
+        title: prompt-history-store
+        status: done
+      - id: S23-02
+        title: stream-endpoint-doc-context
+        status: done
+      - id: S23-03
+        title: aipanel-context-toggle
+        status: done
+      - id: S23-04
+        title: prompt-history-recall-arrows
+        status: done
+      - id: S23-05
+        title: unit-tests-sprint23
+        status: done
+      - id: S23-06
+        title: e2e-ai-context
+        status: done
+
+  - id: sprint-25
+    name: Sprint 25 — AI-assisted Document Summaries
+    status: done
+    progress: 100
+
+  - id: sprint-26
+    name: Sprint 26 — Auto-summary on Save & Print Polish
+    status: done
+    progress: 100
+    start: 2026-03-16
+    end: 2026-03-16
+    stories:
+      - id: S26-01
+        title: autosummary-setting
+        status: done
+      - id: S26-02
+        title: autosummary-trigger-on-save
+        status: done
+      - id: S26-03
+        title: print-stylesheet
+        status: done
+      - id: S26-04
+        title: summary-panel-timestamp
+        status: done
+      - id: S26-05
+        title: unit-tests-sprint26
+        status: done
+      - id: S26-06
+        title: e2e-sprint26
+        status: done
+
+  - id: sprint-27
+    name: Sprint 27 — PDF Export & Mobile UX Polish
+    status: done
+    progress: 100
+    start: 2026-03-16
+    end: 2026-03-16
+    stories:
+      - id: S27-01
+        title: pdf-export-endpoint
+        status: done
+      - id: S27-02
+        title: pdf-button-exportbutton
+        status: done
+      - id: S27-03
+        title: mobile-tap-targets
+        status: done
+      - id: S27-04
+        title: mobile-panel-positioning
+        status: done
+      - id: S27-05
+        title: unit-tests-sprint27
+        status: done
+      - id: S27-06
+        title: e2e-sprint27
+        status: done
+
+  - id: sprint-28
+    name: Sprint 28 — Presence Enhancements & Collaborative UX Polish
+    status: done
+    progress: 100
+    start: 2026-03-16
+    end: 2026-03-16
+    stories:
+      - id: S28-01
+        title: activity-indicator-document-list
+        status: done
+      - id: S28-02
+        title: conflict-indicator-ui
+        status: done
+      - id: S28-03
+        title: idle-timeout-presence-cleanup
+        status: done
+      - id: S28-04
+        title: collaborative-edit-history
+        status: done
+      - id: S28-05
+        title: unit-tests-sprint28
+        status: done
+      - id: S28-06
+        title: e2e-sprint28
+        status: done
+    start: 2026-03-17
+    end: 2026-03-31
+    stories:
+      - id: S25-01
+        title: summary-badge-toolbar
+        status: done
+      - id: S25-02
+        title: api-ai-summary-endpoint
+        status: done
+      - id: S25-03
+        title: summary-store-cache
+        status: done
+      - id: S25-04
+        title: export-print-polish
+        status: done
+      - id: S25-05
+        title: unit-tests-sprint25
+        status: done
+      - id: S25-06
+        title: e2e-sprint25
+        status: done
 
