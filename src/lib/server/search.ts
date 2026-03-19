@@ -18,7 +18,7 @@ export interface SearchDocument {
   content: string;
 }
 
-const MAX_CONTENT_WORDS = 10000;
+const MAX_CONTENT_WORDS = 1000000; // ~5MB of text; don't truncate for search completeness
 const SNIPPET_LENGTH = 150;
 const WORD_BOUNDARY_REGEX = /\b/g;
 

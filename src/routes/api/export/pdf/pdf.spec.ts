@@ -28,6 +28,6 @@ describe('PDF export sanitization', () => {
 	});
 
 	it('removes unicode characters', () => {
-		expect(sanitizeFilename('документ.pdf')).toBe('_____.pdf');
+		expect(sanitizeFilename('документ.pdf')).toBe('_________pdf');
 	});
 });

@@ -20,12 +20,14 @@ export function getClientIP(event: RequestEvent): string {
   if (clientAddr) return clientAddr;
 
   // Fallback to X-Forwarded-For header (from reverse proxy)
-  const forwarded = event.request.headers.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0].trim();
+  if (event.request?.headers) {
+    const forwarded = event.request.headers.get('x-forwarded-for');
+    if (forwarded) return forwarded.split(',')[0].trim();
 
-  // Fallback to X-Real-IP
-  const realIp = event.request.headers.get('x-real-ip');
-  if (realIp) return realIp;
+    // Fallback to X-Real-IP
+    const realIp = event.request.headers.get('x-real-ip');
+    if (realIp) return realIp;
+  }
 
   // Last resort: unknown
   return 'unknown';
@@ -41,7 +43,7 @@ export function checkWriteRateLimit(
   allowed: boolean;
   response?: Response;
 } {
-  const userId = event.locals.user?.id ?? null;
+  const userId = event.locals?.user?.id ?? null;
   const ip = getClientIP(event);
 
   const result = checkRateLimit(userId, ip, options);
