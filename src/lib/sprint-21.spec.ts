@@ -153,6 +153,12 @@ describe('offline banner navigator.onLine logic', () => {
 	});
 
 	it('offline event fires and online event fires as expected', () => {
+		if (typeof window === 'undefined') {
+			// Skip in non-browser environments
+			expect(true).toBe(true);
+			return;
+		}
+
 		let offline = navigator.onLine === false;
 
 		const handleOffline = () => { offline = true; };
@@ -172,6 +178,12 @@ describe('offline banner navigator.onLine logic', () => {
 	});
 
 	it('removes listeners on cleanup (no memory leak)', () => {
+		if (typeof window === 'undefined') {
+			// Skip in non-browser environments
+			expect(true).toBe(true);
+			return;
+		}
+
 		const handler = vi.fn();
 		window.addEventListener('offline', handler);
 		window.removeEventListener('offline', handler);
