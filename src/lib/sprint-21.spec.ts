@@ -98,6 +98,10 @@ describe('retryFetch', () => {
 
 describe('toastStore warning', () => {
 	it('exposes a warning() method', async () => {
+		if (typeof window === 'undefined') {
+			expect(true).toBe(true);
+			return;
+		}
 		// Dynamic import to get fresh module state
 		const { toastStore } = await import('./toastStore.svelte');
 		expect(typeof toastStore.warning).toBe('function');

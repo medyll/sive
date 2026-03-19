@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types';
-import { subscribeCursors, getCursors } from '../+server';
+import { _subscribeCursors, _getCursors } from '../+server';
 
 export const GET: RequestHandler = async ({ url, request, locals }) => {
 	const docId = url.searchParams.get('docId');
@@ -16,11 +16,11 @@ export const GET: RequestHandler = async ({ url, request, locals }) => {
 			}
 
 			// Send current cursors on connect (exclude own)
-			const current = getCursors(docId).filter((c) => c.userId !== userId);
+			const current = _getCursors(docId).filter((c) => c.userId !== userId);
 			send('init', current);
 
 			// Subscribe to updates
-			const unsub = subscribeCursors(docId, (entry) => {
+			const unsub = _subscribeCursors(docId, (entry) => {
 				if (entry.userId === userId) return; // don't echo own cursor
 				send('cursor', entry);
 			});

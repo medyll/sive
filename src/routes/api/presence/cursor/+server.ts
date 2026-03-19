@@ -14,13 +14,13 @@ interface CursorEntry {
 const cursorStore = new Map<string, Map<string, CursorEntry>>();
 const subscribers = new Map<string, Set<(data: CursorEntry) => void>>();
 
-export function subscribeCursors(docId: string, fn: (data: CursorEntry) => void) {
+export function _subscribeCursors(docId: string, fn: (data: CursorEntry) => void) {
 	if (!subscribers.has(docId)) subscribers.set(docId, new Set());
 	subscribers.get(docId)!.add(fn);
 	return () => subscribers.get(docId)?.delete(fn);
 }
 
-export function getCursors(docId: string): CursorEntry[] {
+export function _getCursors(docId: string): CursorEntry[] {
 	const map = cursorStore.get(docId);
 	if (!map) return [];
 	const now = Date.now();

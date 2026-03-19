@@ -17,7 +17,9 @@
     if (!browser) return;
     try {
       const seen = localStorage.getItem('sive:onboarding_seen');
-      if (!seen) open = true;
+      const tourSeen = localStorage.getItem('sive:tour:completed');
+      // Only show if neither onboarding nor tour has been completed
+      if (!seen && !tourSeen) open = true;
     } catch (e) {
       // ignore localStorage errors
     }

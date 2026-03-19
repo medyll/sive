@@ -680,7 +680,8 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   />
 {/if}
 
-<Onboarding />
+<!-- Disabled in favor of OnboardingTour (better UX with spotlight) -->
+<!-- <Onboarding /> -->
 
 <Toast />
 

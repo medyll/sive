@@ -37,6 +37,8 @@
     onBulkDelete
   }: DocumentListProps = $props();
 
+  let menus = {}; // Store references by ID
+
   // Hydrate tags from server data whenever documents change
   $effect(() => {
     for (const doc of documents) {
@@ -369,7 +371,7 @@
           <span class="doc-meta">
             <span class="doc-date">{formatDate(doc.updated_at)}</span>
             <!-- Context menu trigger -->
-            <div class="doc-menu-wrap" bind:this={menuOpenId === doc.id ? menuRef : undefined}>
+            <div class="doc-menu-wrap" bind:this={menus[doc.id]}>
               <button
                 class="btn-doc-menu"
                 type="button"

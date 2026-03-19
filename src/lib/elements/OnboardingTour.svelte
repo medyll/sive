@@ -41,7 +41,9 @@
 
 	const STORAGE_KEY = 'sive:tour:completed';
 
-	let active = $state(!localStorage.getItem(STORAGE_KEY));
+	let active = $state(
+		typeof window !== 'undefined' ? !localStorage.getItem(STORAGE_KEY) : true
+	);
 	let stepIndex = $state(0);
 	let tooltipStyle = $state('');
 
@@ -54,31 +56,41 @@
 
 	function positionTooltip() {
 		const el = document.querySelector(step.target);
-		if (!el) { tooltipStyle = 'top:50%;left:50%;transform:translate(-50%,-50%)'; return; }
+		if (!el) {
+			tooltipStyle = 'top:50%;left:50%;transform:translate(-50%,-50%)';
+			return;
+		}
 		const r = el.getBoundingClientRect();
 		const gap = 12;
 		const positions: Record<string, string> = {
 			right: `top:${r.top + r.height / 2}px;left:${r.right + gap}px;transform:translateY(-50%)`,
-			left:  `top:${r.top + r.height / 2}px;left:${r.left - gap}px;transform:translate(-100%,-50%)`,
-			bottom:`top:${r.bottom + gap}px;left:${r.left + r.width / 2}px;transform:translateX(-50%)`,
-			top:   `top:${r.top - gap}px;left:${r.left + r.width / 2}px;transform:translate(-50%,-100%)`
+			left: `top:${r.top + r.height / 2}px;left:${r.left - gap}px;transform:translate(-100%,-50%)`,
+			bottom: `top:${r.bottom + gap}px;left:${r.left + r.width / 2}px;transform:translateX(-50%)`,
+			top: `top:${r.top - gap}px;left:${r.left + r.width / 2}px;transform:translate(-50%,-100%)`
 		};
 		tooltipStyle = positions[step.position] ?? positions.bottom;
 	}
 
-	function next() {
-		if (isLast) { complete(); return; }
-		stepIndex++;
-	}
-
-	function prev() { if (stepIndex > 0) stepIndex--; }
-
-	function complete() {
+	const complete = () => {
 		localStorage.setItem(STORAGE_KEY, '1');
 		active = false;
-	}
+	};
 
-	function skip() { complete(); }
+	const next = () => {
+		if (isLast) {
+			complete();
+			return;
+		}
+		stepIndex++;
+	};
+
+	const prev = () => {
+		if (stepIndex > 0) stepIndex--;
+	};
+
+	const skip = () => {
+		complete();
+	};
 </script>
 
 {#if active && step}
@@ -109,7 +121,7 @@
 		</div>
 		<!-- Progress dots -->
 		<div class="tour-dots" aria-hidden="true">
-			{#each STEPS as _, i}
+			{#each Array.from({ length: STEPS.length }, (_, i) => i) as i (i)}
 				<span class="dot" class:active={i === stepIndex}></span>
 			{/each}
 		</div>
@@ -140,14 +152,58 @@
 		align-items: center;
 		margin-bottom: 0.5rem;
 	}
-	.tour-step { font-size: 0.7rem; color: var(--muted, #9ca3af); }
-	.tour-skip { background: none; border: none; cursor: pointer; font-size: 0.75rem; color: var(--muted, #9ca3af); }
-	.tour-title { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 600; }
-	.tour-body { margin: 0 0 1rem; color: var(--text-secondary, #4b5563); line-height: 1.5; }
-	.tour-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
-	.tour-actions button { padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid var(--border, #e5e7eb); cursor: pointer; background: none; font-size: 0.8rem; }
-	.tour-actions button.primary { background: var(--accent, #7c3aed); color: #fff; border-color: transparent; }
-	.tour-dots { display: flex; gap: 0.3rem; justify-content: center; margin-top: 0.75rem; }
-	.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border, #e5e7eb); }
-	.dot.active { background: var(--accent, #7c3aed); }
+	.tour-step {
+		font-size: 0.7rem;
+		color: var(--muted, #9ca3af);
+	}
+	.tour-skip {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 0.75rem;
+		color: var(--muted, #9ca3af);
+	}
+	.tour-title {
+		margin: 0 0 0.5rem;
+		font-size: 1rem;
+		font-weight: 600;
+	}
+	.tour-body {
+		margin: 0 0 1rem;
+		color: var(--text-secondary, #4b5563);
+		line-height: 1.5;
+	}
+	.tour-actions {
+		display: flex;
+		gap: 0.5rem;
+		justify-content: flex-end;
+	}
+	.tour-actions button {
+		padding: 0.4rem 0.8rem;
+		border-radius: 6px;
+		border: 1px solid var(--border, #e5e7eb);
+		cursor: pointer;
+		background: none;
+		font-size: 0.8rem;
+	}
+	.tour-actions button.primary {
+		background: var(--accent, #7c3aed);
+		color: #fff;
+		border-color: transparent;
+	}
+	.tour-dots {
+		display: flex;
+		gap: 0.3rem;
+		justify-content: center;
+		margin-top: 0.75rem;
+	}
+	.dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--border, #e5e7eb);
+	}
+	.dot.active {
+		background: var(--accent, #7c3aed);
+	}
 </style>

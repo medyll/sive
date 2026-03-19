@@ -10,7 +10,11 @@
       "Bash(find d:/boulot/dev/node/sive -name *.sql -path */migrations/*)",
       "Read(//c/Users/Mydde/.claude/skills/bmad-master/references/roles/**)",
       "mcp__plugin_context-mode_context-mode__ctx_batch_execute",
-      "Bash(bmad next:*)"
+      "Bash(bmad next:*)",
+      "Bash(find e2e:*)",
+      "Bash(npm test:*)",
+      "Bash(/tmp/test_analysis.md:*)",
+      "Read(//tmp/**)"
     ]
   }
 }
