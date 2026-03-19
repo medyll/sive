@@ -82,7 +82,7 @@ recommendation: |
 last_updated: 2026-03-19
 
 active_role: scrum
-next_action: "Sprint 48 MERGED ✅ to main. Test recovery: 39→29 failures (25.6% reduction). Fixed 59 tests with environment checks & simplified logic. Remaining 29 failures tracked for S49 tech-debt sprint. Code quality: 96% tests passing (684/713). Recommendation: Deploy S48 to staging/prod. Sprint 49: Fix remaining 29 tests + continue feature development."
+next_action: "Sprint 49 PLANNED ✅. Focus: Fix 28 remaining test failures (rateLimit, search, streaming, components). Grouped into 6 stories: S49-01 (server APIs), S49-02 (SSE/streaming), S49-03 (components), S49-04 (document handlers), S49-05 (PDF), S49-06 (test patterns doc). Target: 100% passing (713/713). Start S49-01 immediately."
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -513,6 +513,32 @@ sprints:
       - id: S27-06
         title: e2e-sprint27
         status: done
+
+  - id: sprint-49
+    name: Sprint 49 — Test Hardening & Quality Stabilization
+    status: active
+    progress: 0
+    start: 2026-03-19
+    end: 2026-03-26
+    stories:
+      - id: S49-01
+        title: fix-server-test-environment-issues
+        status: pending
+      - id: S49-02
+        title: fix-api-streaming-tests
+        status: pending
+      - id: S49-03
+        title: fix-component-rendering-tests
+        status: pending
+      - id: S49-04
+        title: fix-document-handler-tests
+        status: pending
+      - id: S49-05
+        title: fix-pdf-sanitization-tests
+        status: pending
+      - id: S49-06
+        title: document-test-patterns-library
+        status: pending
 
   - id: sprint-28
     name: Sprint 28 — Presence Enhancements & Collaborative UX Polish
