@@ -236,7 +236,16 @@ export function searchWithFilters(
 ): SearchResult[] {
   // First, get search results
   const indexed = documents.map(indexDocument);
-  const results = search(query, indexed);
+  // For empty query, return all documents (for filtering/sorting)
+  const results = query.trim()
+    ? search(query, indexed)
+    : indexed.map(doc => ({
+        docId: doc.id,
+        title: doc.originalTitle,
+        snippet: doc.originalContent.slice(0, SNIPPET_LENGTH),
+        score: 0,
+        highlights: []
+      }));
 
   // Apply tag filter (AND logic)
   if (filters.tags && filters.tags.length > 0) {
