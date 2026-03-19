@@ -63,7 +63,7 @@
         <button class="btn btn-primary" on:click={next}>{step === steps.length - 1 ? 'Done' : 'Next'}</button>
       </div>
 
-      <button class="onboard-skip" on:click={finish} aria-label="Skip onboarding">Skip</button>
+      <button class="onboard-skip" on:click={finish} aria-label="Skip onboarding" data-testid="onboard-skip">Skip</button>
     </div>
   </div>
 {/if}

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 // Simple visual / functional test for the suggestions-ready-badge mock
 test('suggestions-ready-badge appears when entering Focus mode', async ({ page }) => {
