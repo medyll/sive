@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import { goalsStore } from '$lib/writingGoalsStore.svelte';
 
 	interface Props {
@@ -8,7 +9,8 @@
 	let { currentWordCount = 0 }: Props = $props();
 
 	$effect(() => {
-		if (currentWordCount > 0) goalsStore.recordWords(currentWordCount);
+		const count = currentWordCount; // track only the prop
+		if (count > 0) untrack(() => goalsStore.recordWords(count)); // store writes don't re-trigger
 	});
 
 	let editing = $state(false);

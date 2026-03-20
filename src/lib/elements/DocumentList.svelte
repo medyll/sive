@@ -37,7 +37,7 @@
     onBulkDelete
   }: DocumentListProps = $props();
 
-  let menus = {}; // Store references by ID
+  let menus = $state<Record<string, HTMLElement>>({}); // Store references by ID
 
   // Hydrate tags from server data whenever documents change
   $effect(() => {

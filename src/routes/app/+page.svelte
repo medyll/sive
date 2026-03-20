@@ -103,14 +103,25 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   // Document state
   let documents = $state(data.documents);
   let activeDocumentId = $state(data.activeDocumentId);
-  let activeContent = $derived(
-    documents.find((d) => d.id === activeDocumentId)?.content ?? ''
+  let activeContent = $state(
+    data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
   );
 
-  // Sync with server data changes
+  // Sync activeContent only when switching documents (not on content edits)
   $effect(() => {
-    documents = data.documents;
-    activeDocumentId = data.activeDocumentId;
+    const id = activeDocumentId; // tracked
+    const snap = $state.snapshot(documents); // untracked snapshot — avoids loop
+    activeContent = snap.find((d) => d.id === id)?.content ?? '';
+  });
+
+  // Sync with server data changes (navigation)
+  $effect(() => {
+    const incoming = data.documents;
+    const incomingId = data.activeDocumentId;
+    documents = incoming;
+    if (incomingId !== activeDocumentId) {
+      activeDocumentId = incomingId;
+    }
   });
 
   // ── Debounced auto-save ───────────────────────────────────────────────────
@@ -303,7 +314,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let aiProcessing = $state(false);
   let suggestionsReady = $state(false);
   let dragging = $state(false);
-  let chatBarOpen = $state(true);
+  let chatBarOpen = $state(false);
   let showShortcutsHelp = $state(false);
   let showSummaryPanel = $state(false);
 
@@ -455,8 +466,10 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         onclick={() => { reviewMode = !reviewMode; }}
         aria-pressed={reviewMode}
       >Review</button>
-      <button type="button" onclick={() => { hardenOpen = true; }}>💾 New version</button>
-      <button type="button" onclick={() => { versionPanelOpen = !versionPanelOpen; }} aria-pressed={versionPanelOpen} title="Version history">🕐 History</button>
+      {#if data.user?.id !== 'guest'}
+        <button type="button" onclick={() => { hardenOpen = true; }}>💾 New version</button>
+        <button type="button" onclick={() => { versionPanelOpen = !versionPanelOpen; }} aria-pressed={versionPanelOpen} title="Version history">🕐 History</button>
+      {/if}
       <button type="button" onclick={() => { focusPanelOpen = !focusPanelOpen; }} aria-pressed={focusPanelOpen} title="Focus mode / Pomodoro">🍅</button>
       <button
         type="button"

@@ -3,15 +3,11 @@
 	let dismissed = $state(false);
 
 	$effect(() => {
+		// SW is registered automatically by SvelteKit (src/service-worker.ts)
 		window.addEventListener('beforeinstallprompt', (e) => {
 			e.preventDefault();
 			deferredPrompt = e as typeof deferredPrompt;
 		});
-
-		// Register service worker
-		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/sw.js').catch(() => {/* ignore */});
-		}
 	});
 
 	async function install() {
