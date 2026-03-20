@@ -62,7 +62,7 @@ describe('search engine', () => {
       const indexed = sampleDocs.map(indexDocument);
       const resultsLower = search('gatsby', indexed);
       const resultsUpper = search('GATSBY', indexed);
-      const resultsMixed = search('gAtBy', indexed);
+      const resultsMixed = search('gAtSbY', indexed);
 
       expect(resultsLower.length).toBe(1);
       expect(resultsUpper.length).toBe(1);

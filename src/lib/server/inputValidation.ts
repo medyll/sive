@@ -152,6 +152,12 @@ export function validateDocumentID(id: unknown): ValidationResult {
     return { valid: false, error: 'Document ID must be a string' };
   }
 
+  // In mock/dev mode we use stub IDs (e.g. stub-doc-1) which are not UUIDs.
+  // Allow those to keep mock flows simple.
+  if (id.startsWith('stub-doc-')) {
+    return { valid: true, sanitized: id };
+  }
+
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (!uuidRegex.test(id)) {
     return { valid: false, error: 'Invalid document ID format' };

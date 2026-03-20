@@ -14,23 +14,23 @@ describe('rateLimit', () => {
   describe('token bucket algorithm', () => {
     it('should allow requests within user limit', () => {
       for (let i = 0; i < 100; i++) {
-        const result = checkRateLimit('user123', '192.168.1.1');
+        const result = checkRateLimit('user123', '203.0.113.50');
         expect(result.allowed).toBe(true);
       }
 
       // 101st request should fail
-      const result = checkRateLimit('user123', '192.168.1.1');
+      const result = checkRateLimit('user123', '203.0.113.50');
       expect(result.allowed).toBe(false);
       expect(result.retryAfter).toBeGreaterThan(0);
     });
 
     it('should allow requests within IP limit', () => {
-      for (let i = 0; i < 300; i++) {
+      for (let i = 0; i < 150; i++) {
         const result = checkRateLimit(null, '203.0.113.50');
         expect(result.allowed).toBe(true);
       }
 
-      // 301st request should fail
+      // 151st request should fail
       const result = checkRateLimit(null, '203.0.113.50');
       expect(result.allowed).toBe(false);
     });

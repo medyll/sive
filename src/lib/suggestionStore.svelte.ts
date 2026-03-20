@@ -67,23 +67,43 @@ async function streamSuggestion(ctx: string, mode: SuggestionMode, selection = '
 
 		const reader = response.body.getReader();
 		const decoder = new TextDecoder();
+		let buffer = '';
+		let suggestionText = '';
 
 		while (true) {
 			const { done, value } = await reader.read();
 			if (done) break;
 
 			const chunk = decoder.decode(value, { stream: true });
-			const lines = chunk.split('\n');
+			buffer += chunk;
+
+			const lines = buffer.split('\n');
+			buffer = lines.pop() ?? '';
 
 			for (const line of lines) {
-				if (!line.startsWith('data: ')) continue;
-				const token = line.slice(6);
+				const trimmed = line.trim();
+				if (!trimmed.startsWith('data: ')) continue;
+				const token = trimmed.slice(6);
 				if (token === '[DONE]') {
 					state.pending = false;
 					return;
 				}
-				state.suggestion += token;
+				console.error('[suggestionStore] token:', JSON.stringify(token));
+				suggestionText += token;
+				state.suggestion = suggestionText;
 			}
+		}
+
+		// Flush any decoder state and handle any remaining line after stream ends
+		buffer += decoder.decode();
+		if (buffer.startsWith('data: ')) {
+			const token = buffer.slice(6);
+			if (token === '[DONE]') {
+				state.pending = false;
+				return;
+			}
+			suggestionText += token;
+			state.suggestion = suggestionText;
 		}
 	} catch (err) {
 		if ((err as Error).name === 'AbortError') return; // dismissed

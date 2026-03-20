@@ -26,7 +26,7 @@ const WORD_BOUNDARY_REGEX = /\b/g;
  * Build search index from document
  * Returns indexed document with searchable text (title + truncated content)
  */
-export function indexDocument(doc: SearchDocument): {
+export function indexDocument(doc: SearchableDocument): {
   id: string;
   titleLower: string;
   contentLower: string;
@@ -35,10 +35,14 @@ export function indexDocument(doc: SearchDocument): {
 } {
   const contentTruncated = truncateContent(doc.content, MAX_CONTENT_WORDS);
 
+  // Include tags in the searchable content so that searches can match tag terms.
+  const tagsText = Array.isArray(doc.tags) ? doc.tags.join(' ') : '';
+  const searchableContent = `${contentTruncated} ${tagsText}`.trim();
+
   return {
     id: doc.id,
     titleLower: doc.title.toLowerCase(),
-    contentLower: contentTruncated.toLowerCase(),
+    contentLower: searchableContent.toLowerCase(),
     originalTitle: doc.title,
     originalContent: doc.content
   };

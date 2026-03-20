@@ -332,8 +332,7 @@
           tabindex="0"
           onclick={() => { focusedIndex = i; if (bulkMode) { toggleSelect(doc.id); } else { onSelect?.(doc.id); } }}
           onkeydown={(e) => e.key === 'Enter' && (focusedIndex = i, bulkMode ? toggleSelect(doc.id) : onSelect?.(doc.id))}
-          aria-selected={doc.id === activeId}
-        >
+          aria-selected={doc.id === activeId}          aria-current={doc.id === activeId}        >
           {#if editingId === doc.id}
             <input
               class="doc-title-input"

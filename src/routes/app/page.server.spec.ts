@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeAll, beforeEach } from 'vitest';
 
 // Mock the db module before importing the page server
 vi.mock('$lib/server/db', () => ({
@@ -14,8 +14,16 @@ vi.mock('drizzle-orm', () => ({
 	eq: vi.fn()
 }));
 
-// Import after mocks
-const { load, actions } = await import('./+page.server.ts');
+// Import after mocks (ensure module cache is reset so the mock is applied)
+let load: typeof import('./+page.server.ts').load;
+let actions: typeof import('./+page.server.ts').actions;
+
+beforeAll(async () => {
+	vi.resetModules();
+	const mod = await import('./+page.server.ts');
+	load = mod.load;
+	actions = mod.actions;
+});
 
 describe('+page.server.ts — document handlers (mock mode)', () => {
 	const mockLocals = {} as App.Locals;

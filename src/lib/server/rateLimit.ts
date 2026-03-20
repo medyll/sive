@@ -1,6 +1,6 @@
 /**
  * Rate limiting middleware using token bucket algorithm
- * Per-user: 100 req/min | Per-IP: 300 req/min
+ * Per-user: 100 req/min | Per-IP: 150 req/min
  * Whitelist: localhost, 127.0.0.1, internal IPs
  */
 
@@ -17,7 +17,7 @@ interface RateLimitConfig {
 
 const DEFAULT_CONFIG: RateLimitConfig = {
   userLimit: 100,
-  ipLimit: 300,
+  ipLimit: 150,
   refillInterval: 60000 // 1 minute
 };
 
