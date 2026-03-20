@@ -275,8 +275,7 @@
       {#each allDocTags as tag}
         <button
           type="button"
-          class="tag-filter-chip"
-          class:tag-filter-chip--active={activeTagFilter === tag}
+          class={['tag-filter-chip', activeTagFilter === tag && 'tag-filter-chip--active'].filter(Boolean).join(' ')}
           onclick={() => { activeTagFilter = activeTagFilter === tag ? null : tag; }}
           aria-pressed={activeTagFilter === tag}
         >{tag}</button>
@@ -313,7 +312,7 @@
       </li>
     {:else}
       {#each filteredDocuments as doc, i (doc.id)}
-      <li class="doc-list-item" class:doc-list-item--selected={bulkMode && selectedIds.has(doc.id)}>
+      <li class={['doc-list-item', bulkMode && selectedIds.has(doc.id) && 'doc-list-item--selected'].filter(Boolean).join(' ')}>
         {#if bulkMode}
           <input
             class="doc-checkbox"
@@ -325,9 +324,7 @@
           />
         {/if}
         <div
-          class="doc-item"
-          class:active={doc.id === activeId}
-          class:focused={i === focusedIndex}
+          class={['doc-item', doc.id === activeId && 'active', i === focusedIndex && 'focused'].filter(Boolean).join(' ')}
           role="option"
           tabindex="0"
           onclick={() => { focusedIndex = i; if (bulkMode) { toggleSelect(doc.id); } else { onSelect?.(doc.id); } }}
@@ -358,10 +355,7 @@
             >{doc.title}</span>
             {#if presenceStore.getActiveCount(doc.id) > 0}
               <span
-                class="doc-activity-badge"
-                class:badge-green={presenceStore.getActivityBadge(doc.id).color === 'green'}
-                class:badge-blue={presenceStore.getActivityBadge(doc.id).color === 'blue'}
-                class:badge-red={presenceStore.getActivityBadge(doc.id).color === 'red'}
+                class={['doc-activity-badge', presenceStore.getActivityBadge(doc.id).color === 'green' && 'badge-green', presenceStore.getActivityBadge(doc.id).color === 'blue' && 'badge-blue', presenceStore.getActivityBadge(doc.id).color === 'red' && 'badge-red'].filter(Boolean).join(' ')}
                 title="{presenceStore.getActiveCount(doc.id)} people viewing"
               >{presenceStore.getActiveCount(doc.id)}</span>
             {/if}

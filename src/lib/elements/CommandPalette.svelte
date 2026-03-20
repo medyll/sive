@@ -109,8 +109,7 @@
 						{@const flatIdx = paletteState.results.indexOf(cmd)}
 						<li
 							id={cmdId(cmd)}
-							class="result-item"
-							class:selected={flatIdx === paletteState.selectedIndex}
+												class={['result-item', flatIdx === paletteState.selectedIndex && 'selected'].filter(Boolean).join(' ')}
 							role="option"
 							aria-selected={flatIdx === paletteState.selectedIndex}
 						>

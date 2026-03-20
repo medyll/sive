@@ -50,20 +50,19 @@
       <div class="onboard-steps">
         {#each steps as s, i}
           <button
-            class="onboard-step"
-            class:active={i === step}
+            class={['onboard-step', i === step && 'active'].filter(Boolean).join(' ')}
             aria-current={i === step}
-            on:click={() => (step = i)}
+            onclick={() => (step = i)}
           >{i + 1}</button>
         {/each}
       </div>
 
       <div class="onboard-actions">
-        <button class="btn" on:click={prev} disabled={step === 0}>Back</button>
-        <button class="btn btn-primary" on:click={next}>{step === steps.length - 1 ? 'Done' : 'Next'}</button>
+        <button class="btn" onclick={prev} disabled={step === 0}>Back</button>
+        <button class="btn btn-primary" onclick={next}>{step === steps.length - 1 ? 'Done' : 'Next'}</button>
       </div>
 
-      <button class="onboard-skip" on:click={finish} aria-label="Skip onboarding" data-testid="onboard-skip">Skip</button>
+      <button class="onboard-skip" onclick={finish} aria-label="Skip onboarding" data-testid="onboard-skip">Skip</button>
     </div>
   </div>
 {/if}

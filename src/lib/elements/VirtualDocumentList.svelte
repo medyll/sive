@@ -134,8 +134,7 @@
 				{@const absIdx = firstIdx + i}
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<div
-					class="row"
-					class:active={doc.id === activeId}
+					class={['row', doc.id === activeId && 'active'].filter(Boolean).join(' ')}
 					role="option"
 					aria-selected={doc.id === activeId}
 					aria-posinset={absIdx + 1}

@@ -67,7 +67,7 @@
     </label>
   </div>
 
-  <button on:click={save} class="btn btn-primary">Save</button>
+  <button onclick={save} class="btn btn-primary">Save</button>
 </section>
 
 <section class="settings-section">

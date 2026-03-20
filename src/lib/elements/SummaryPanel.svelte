@@ -127,8 +127,7 @@
         {#each (['short', 'medium', 'long'] as SummaryLength[]) as len}
           <button
             type="button"
-            class="tab"
-            class:active={selectedLength === len}
+            class={['tab', selectedLength === len && 'active'].filter(Boolean).join(' ')}
             onclick={() => { selectedLength = len; generate(); }}
           >{len}</button>
         {/each}

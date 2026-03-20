@@ -522,7 +522,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         style="width: {focusMode ? '100%' : `calc(${splitRatio * 100}% - 14rem)`}"
       >
         {#if saveStatus !== 'idle'}
-          <div class="save-indicator" class:fade={saveStatus === 'saved'}>
+          <div class={['save-indicator', saveStatus === 'saved' && 'fade'].filter(Boolean).join(' ')}>
             {saveStatus === 'pending' ? '…' : saveStatus === 'saving' ? 'Saving…' : 'Saved ✓'}
           </div>
         {/if}

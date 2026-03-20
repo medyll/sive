@@ -12,76 +12,54 @@
   // [ai-spinner]    : AI processing indicator shown in the right panel
   // [chat-bar]      : floating chat bar overlay
   // [suggestions-ready-badge] : badge shown in focus mode (not implemented in mock)
-  // Minimal UI mockup for the application route based on bmad/references/PROJECT.md
-  // - Left: editor area (resizable)
-  // - Right: contextual tabs (Suggestions, Coherence, Style, History)
-  // - Floating chat bar for voice/image uploads
   import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
-  // import theme styles from lib
   import '$lib/styles/theme.css';
 
-  const selectedTab = writable<'suggestions' | 'coherence' | 'style' | 'history'>('suggestions');
-  const ratio = writable(0.55); // default left/right ratio (0..1)
-  const isProcessing = writable(false); // AI spinner
-  const focusMode = writable(false); // when true, right panel is hidden and badge shown
-  
-  function onResizerKeyDown(e: KeyboardEvent) {
-    const step = 0.05;
-    if (e.key === 'ArrowLeft') {
-      ratio.update(r => Math.max(0.15, r - step));
-      e.preventDefault();
-    } else if (e.key === 'ArrowRight') {
-      ratio.update(r => Math.min(0.85, r + step));
-      e.preventDefault();
-    }
-  }
+  type Tab = 'suggestions' | 'coherence' | 'style' | 'history';
+
+  let selectedTab = $state<Tab>('suggestions');
+  let ratio = $state(0.55);
+  let isProcessing = $state(false);
+  let focusMode = $state(false);
+
+  const leftPercent = $derived(`${ratio * 100}%`);
+  const rightPercent = $derived(`${(1 - ratio) * 100}%`);
 
   let container: HTMLElement | null = null;
   let leftPane: HTMLElement | null = null;
   let rightPane: HTMLElement | null = null;
   let dragging = false;
 
-  // reactive CSS percentages derived from ratio
-  let leftPercent = '55%';
-  let rightPercent = '45%';
-  $: leftPercent = `${$ratio * 100}%`;
-  $: rightPercent = `${(1 - $ratio) * 100}%`;
+  function onResizerKeyDown(e: KeyboardEvent) {
+    const step = 0.05;
+    if (e.key === 'ArrowLeft') { ratio = Math.max(0.15, ratio - step); e.preventDefault(); }
+    else if (e.key === 'ArrowRight') { ratio = Math.min(0.85, ratio + step); e.preventDefault(); }
+  }
 
-  // Simple drag handler to resize panes
   function onPointerDown(e: PointerEvent) {
     dragging = true;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }
 
   function onPointerMove(e: PointerEvent) {
-    if (!dragging || !container || !leftPane || !rightPane) return;
+    if (!dragging || !container) return;
     const rect = container.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const newRatio = Math.min(0.85, Math.max(0.15, x / rect.width));
-    ratio.set(newRatio);
+    ratio = Math.min(0.85, Math.max(0.15, (e.clientX - rect.left) / rect.width));
   }
 
-  function onPointerUp(e: PointerEvent) {
-    dragging = false;
-  }
+  function onPointerUp() { dragging = false; }
 
-  // Demo triggers for spinner and tab auto-switch
   function triggerAnalysis() {
-    isProcessing.set(true);
-    // simulate AI processing
-    setTimeout(() => {
-      isProcessing.set(false);
-      selectedTab.set('suggestions');
-    }, 1400);
+    isProcessing = true;
+    setTimeout(() => { isProcessing = false; selectedTab = 'suggestions'; }, 1400);
   }
 
   onMount(() => {
-    window.addEventListener('pointermove', onPointerMove as any);
-    window.addEventListener('pointerup', onPointerUp as any);
+    window.addEventListener('pointermove', onPointerMove as EventListener);
+    window.addEventListener('pointerup', onPointerUp);
     return () => {
-      window.removeEventListener('pointermove', onPointerMove as any);
-      window.removeEventListener('pointerup', onPointerUp as any);
+      window.removeEventListener('pointermove', onPointerMove as EventListener);
+      window.removeEventListener('pointerup', onPointerUp);
     };
   });
 </script>
@@ -121,7 +99,7 @@
   <header>
     <div style="flex:1">AI-Assisted Writer — Mockup</div>
     <div style="display:flex; gap:8px; align-items:center;">
-      <button class="chat-button" on:click={() => focusMode.update(v => !v)}>{ $focusMode ? 'Exit Focus' : 'Focus' }</button>
+      <button class="chat-button" onclick={() => (focusMode = !focusMode)}>{ focusMode ? 'Exit Focus' : 'Focus' }</button>
       <div class="meta">Focus mode: F11 • Ratio persisted per profile (mock)</div>
     </div>
   </header>
@@ -130,9 +108,9 @@
   <div bind:this={container} class="workspace">
     <!-- left pane -->
     <!-- [left-panel] LEFT PANEL — Editor -->
-    <div id="editor-panel" bind:this={leftPane} class="pane left" style="width: {$focusMode ? '100%' : leftPercent};">
+    <div id="editor-panel" bind:this={leftPane} class="pane left" style="width: {focusMode ? '100%' : leftPercent};">
       <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
-        <button class="chat-button" on:click={triggerAnalysis}>Run Analysis</button>
+        <button class="chat-button" onclick={triggerAnalysis}>Run Analysis</button>
         <div class="meta">Editor — resizable (drag the gutter)</div>
       </div>
       <!-- [editor-panel] -->
@@ -146,40 +124,40 @@
       type="button"
       aria-controls="editor-panel ai-panel"
       aria-label="Resize panels"
-      on:pointerdown={onPointerDown}
-      on:keydown={onResizerKeyDown}
+      onpointerdown={onPointerDown}
+      onkeydown={onResizerKeyDown}
       style="width:8px;"
     ></button>
 
     <!-- right pane -->
     <!-- [right-panel] RIGHT PANEL — AI & Tools (also [ai-panel]) -->
-    {#if !$focusMode}
+    {#if !focusMode}
       <div id="ai-panel" bind:this={rightPane} class="pane right" style="width: {rightPercent}; min-width:280px;">
       <!-- [right-panel-tab-bar] -->
       <div class="tabs" role="tablist" aria-label="AI tools tabs">
-        <button class="tab" type="button" role="tab" aria-selected={$selectedTab === 'suggestions'} class:active={$selectedTab === 'suggestions'} on:click={() => selectedTab.set('suggestions')}>Suggestions</button>
-        <button class="tab" type="button" role="tab" aria-selected={$selectedTab === 'coherence'} class:active={$selectedTab === 'coherence'} on:click={() => selectedTab.set('coherence')}>Coherence</button>
-        <button class="tab" type="button" role="tab" aria-selected={$selectedTab === 'style'} class:active={$selectedTab === 'style'} on:click={() => selectedTab.set('style')}>Style</button>
-        <button class="tab" type="button" role="tab" aria-selected={$selectedTab === 'history'} class:active={$selectedTab === 'history'} on:click={() => selectedTab.set('history')}>History</button>
+        <button class="tab" type="button" role="tab" aria-selected={selectedTab === 'suggestions'} class={['tab', selectedTab === 'suggestions' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'suggestions')}>Suggestions</button>
+        <button class="tab" type="button" role="tab" aria-selected={selectedTab === 'coherence'} class={['tab', selectedTab === 'coherence' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'coherence')}>Coherence</button>
+        <button class="tab" type="button" role="tab" aria-selected={selectedTab === 'style'} class={['tab', selectedTab === 'style' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'style')}>Style</button>
+        <button class="tab" type="button" role="tab" aria-selected={selectedTab === 'history'} class={['tab', selectedTab === 'history' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'history')}>History</button>
       </div>
 
       <!-- [tab-content-suggestions|coherence|style|history] -->
       <div class="tab-content">
-        {#if $selectedTab === 'suggestions'}
+        {#if selectedTab === 'suggestions'}
           <h3>AI Suggestions</h3>
           <p class="meta">Diff-based proposals, inline accept/ignore controls (mock).</p>
           <ul>
             <li><strong>Replace:</strong> "grey Peugeot" → "grey Peugeot 308"</li>
             <li><strong>Insert:</strong> Add a sensory detail in second paragraph.</li>
           </ul>
-        {:else if $selectedTab === 'coherence'}
+        {:else if selectedTab === 'coherence'}
           <h3>Coherence</h3>
           <p class="meta">Physical logic and consistency signals with confidence values.</p>
           <ul>
             <li>Travel time mismatch — <strong>High</strong></li>
             <li>Seasonal clothing inconsistency — <strong>Medium</strong></li>
           </ul>
-        {:else if $selectedTab === 'style'}
+        {:else if selectedTab === 'style'}
           <h3>Style</h3>
           <p class="meta">Tone sliders, tics detection and flow metrics (mock).</p>
           <div>Rhythm: <progress value="70" max="100"></progress></div>
@@ -197,7 +175,7 @@
 
     <!-- AI spinner indicator ([ai-spinner]) -->
     <!-- [ai-spinner] -->
-    {#if $isProcessing}
+    {#if isProcessing}
       <div class="spinner" role="status" aria-live="polite">
         <div class="dot" aria-hidden="true"></div>
         <div class="meta">AI processing…</div>
@@ -214,7 +192,7 @@
   </div>
 
   <!-- [suggestions-ready-badge] : shown when focus mode is active (mock) -->
-  {#if $focusMode}
+  {#if focusMode}
     <div class="suggestions-ready-badge" role="status" aria-live="polite">
       <span class="badge-dot" aria-hidden="true"></span>
       <span class="badge-text">Suggestions ready</span>

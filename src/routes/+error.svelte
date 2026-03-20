@@ -3,14 +3,14 @@
   Rendered whenever a load() throws or returns an error response.
 -->
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
 </script>
 
 <div class="error-page">
   <div class="error-card">
     <h1 class="error-title">Something went wrong</h1>
-    <p class="error-message">{$page.error?.message ?? 'An unexpected error occurred.'}</p>
-    <p class="error-status" aria-label="HTTP status code">{$page.status}</p>
+    <p class="error-message">{page.error?.message ?? 'An unexpected error occurred.'}</p>
+    <p class="error-status" aria-label="HTTP status code">{page.status}</p>
     <div class="error-actions">
       <button type="button" class="btn-back" onclick={() => history.back()}>
         ← Go back

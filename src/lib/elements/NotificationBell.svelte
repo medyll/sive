@@ -54,8 +54,7 @@
 <div class="bell-wrapper">
 	<!-- Bell button -->
 	<button
-		class="bell-button"
-		class:has-unread={notificationState.unreadCount > 0}
+		class={['bell-button', notificationState.unreadCount > 0 && 'has-unread'].filter(Boolean).join(' ')}
 		onclick={toggle}
 		aria-label={`Notifications${notificationState.unreadCount > 0 ? ` — ${notificationState.unreadCount} unread` : ''}`}
 		aria-expanded={panelOpen}
@@ -102,7 +101,7 @@
 					</li>
 				{:else}
 					{#each notificationState.notifications as n (n.id)}
-						<li class="notification-item" class:unread={!n.read}>
+						<li class={['notification-item', !n.read && 'unread'].filter(Boolean).join(' ')}>
 							<button
 								class="notification-btn"
 								onclick={() => handleNotificationClick(n)}

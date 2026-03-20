@@ -87,8 +87,7 @@
 			<button
 				role="tab"
 				aria-selected={activeTab === 'builtin'}
-				class="tab"
-				class:active={activeTab === 'builtin'}
+				class={['tab', activeTab === 'builtin' && 'active'].filter(Boolean).join(' ')}
 				onclick={() => (activeTab = 'builtin')}
 			>
 				Built-in
@@ -96,8 +95,7 @@
 			<button
 				role="tab"
 				aria-selected={activeTab === 'user'}
-				class="tab"
-				class:active={activeTab === 'user'}
+				class={['tab', activeTab === 'user' && 'active'].filter(Boolean).join(' ')}
 				onclick={() => (activeTab = 'user')}
 			>
 				My Templates

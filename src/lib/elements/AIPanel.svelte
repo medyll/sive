@@ -286,8 +286,7 @@
         <div class="chat-context-bar">
           <button
             type="button"
-            class="btn-ctx-toggle"
-            class:btn-ctx-toggle--active={useDocContext && !!editorContent}
+            class={['btn-ctx-toggle', useDocContext && !!editorContent && 'btn-ctx-toggle--active'].filter(Boolean).join(' ')}
             aria-pressed={useDocContext}
             title={useDocContext ? 'Document context on — click to disable' : 'Document context off — click to enable'}
             onclick={toggleDocContext}
@@ -347,8 +346,7 @@
         <div class="analyse-bar">
           <button
             type="button"
-            class="btn-suggest"
-            class:btn--cancel={suggesting}
+            class={['btn-suggest', suggesting && 'btn--cancel'].filter(Boolean).join(' ')}
             onclick={handleGenerateSuggestions}
           >
             {suggesting ? 'Cancel' : 'Generate suggestions'}
@@ -380,8 +378,7 @@
         <div class="analyse-bar">
           <button
             type="button"
-            class="btn-coherence"
-            class:btn--cancel={checking}
+            class={['btn-coherence', checking && 'btn--cancel'].filter(Boolean).join(' ')}
             onclick={handleCoherenceCheck}
           >
             {checking ? 'Cancel' : 'Run coherence check'}
@@ -411,8 +408,7 @@
         <div class="analyse-bar">
           <button
             type="button"
-            class="btn-analyse"
-            class:btn--cancel={analysing}
+            class={['btn-analyse', analysing && 'btn--cancel'].filter(Boolean).join(' ')}
             onclick={handleAnalyse}
           >
             {analysing ? 'Cancel' : 'Analyse this passage'}

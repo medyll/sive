@@ -44,8 +44,7 @@
   {:else}
     {#each snapshots as snap (snap.id)}
       <button
-        class="timeline-point"
-        class:selected={snap.id === selectedId}
+        class={['timeline-point', snap.id === selectedId && 'selected'].filter(Boolean).join(' ')}
         type="button"
         aria-current={snap.id === selectedId ? 'true' : undefined}
         onclick={() => handleSelect(snap.id)}

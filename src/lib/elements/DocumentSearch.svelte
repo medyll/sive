@@ -158,14 +158,13 @@
 				<ul class="results-list">
 					{#each results as result (result.docId)}
 						<li
-							class="result-item"
-							class:selected={result.docId === selectedResult}
+							class={['result-item', result.docId === selectedResult && 'selected'].filter(Boolean).join(' ')}
 							role="option"
 							aria-selected={result.docId === selectedResult}
 						>
 							<button
 								class="result-button"
-								onClick={() => handleSelectResult(result.docId)}
+								onclick={() => handleSelectResult(result.docId)}
 							>
 								<div class="result-header">
 									<h3 class="result-title">{result.title}</h3>
@@ -182,7 +181,7 @@
 								{#if result.tags && result.tags.length > 0}
 									<div class="result-tags">
 										{#each result.tags.slice(0, 3) as tag, i}
-											<span class="tag" class:color={getTagColor(i)}>
+											<span class={['tag', getTagColor(i)].filter(Boolean).join(' ')}>
 												{tag}
 											</span>
 										{/each}

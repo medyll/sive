@@ -122,7 +122,7 @@
 		<!-- Progress dots -->
 		<div class="tour-dots" aria-hidden="true">
 			{#each Array.from({ length: STEPS.length }, (_, i) => i) as i (i)}
-				<span class="dot" class:active={i === stepIndex}></span>
+				<span class={['dot', i === stepIndex && 'active'].filter(Boolean).join(' ')}></span>
 			{/each}
 		</div>
 	</div>

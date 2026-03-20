@@ -23,7 +23,7 @@
 	const pct = $derived(Math.round(goalsStore.progress * 100));
 </script>
 
-<div class="goal-bar" class:met={goalsStore.goalMet}>
+<div class={['goal-bar', goalsStore.goalMet && 'met'].filter(Boolean).join(' ')}>
 	<div class="goal-track">
 		<div class="goal-fill" style="width:{pct}%"></div>
 	</div>

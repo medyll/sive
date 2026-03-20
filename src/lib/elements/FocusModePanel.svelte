@@ -15,7 +15,7 @@
 <div class="focus-panel">
 	<section class="pomodoro">
 		<h4>Pomodoro Timer</h4>
-		<div class="timer-display" class:break={focusStore.state.isBreak}>
+		<div class={['timer-display', focusStore.state.isBreak && 'break'].filter(Boolean).join(' ')}>
 			<span class="time">{focusStore.formattedTime}</span>
 			<span class="phase">{focusStore.state.pomodoroActive ? (focusStore.state.isBreak ? 'Break' : 'Focus') : 'Ready'}</span>
 		</div>
@@ -40,8 +40,7 @@
 		<div class="sound-grid">
 			{#each SOUNDS as s}
 				<button
-					class="sound-btn"
-					class:active={focusStore.state.ambient === s}
+					class={['sound-btn', focusStore.state.ambient === s && 'active'].filter(Boolean).join(' ')}
 					onclick={() => focusStore.setAmbient(s)}
 				>
 					{AMBIENT_LABELS[s]}

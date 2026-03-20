@@ -1,38 +1,38 @@
 <!--
-Template for TabBar component
+TabBar.svelte
+Horizontal tab navigation bar with theme support.
+@role ui-nav
+@prop {string[]} [tabs] - List of tab labels
+@prop {string} [activeTab] - Currently active tab label
+@prop {Theme['id']} [theme] - Visual theme id
+@prop {(tab: string) => void} [onChange] - Callback when a tab is selected
 -->
 <script lang="ts">
   import type { Theme } from '$lib/types/types';
 
-  export interface TabBarProps {
+  interface Props {
+    /** List of tab labels */
     tabs?: string[];
+    /** Currently active tab label */
     activeTab?: string;
+    /** Visual theme id */
     theme?: Theme['id'];
+    /** Callback when a tab is selected */
     onChange?: (tab: string) => void;
   }
 
-  import { createEventDispatcher } from 'svelte';
-  const dispatch = createEventDispatcher();
-
-  export let tabs: string[] = [];
-  export let activeTab: string = '';
-  export let theme: Theme['id'] = 'light';
-  export let onChange: ((tab: string) => void) | undefined;
+  let { tabs = [], activeTab = '', theme = 'light', onChange }: Props = $props();
 
   let rootEl: HTMLDivElement | null = null;
 
   function setActiveTab(tab: string) {
-    if (typeof onChange === 'function') onChange(tab);
-    // also dispatch a Svelte event for consumers using on:change
-    dispatch('change', tab);
-    // and dispatch a global window event for test harnesses or non-svelte consumers
+    onChange?.(tab);
     try {
       if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
         console.debug('[TabBar] dispatching window event', tab);
         window.dispatchEvent(new CustomEvent('tabbar-change', { detail: tab }));
       }
     } catch (err) { console.debug('[TabBar] window dispatch failed', err) }
-    // also dispatch on the root element so tests that hold a container can listen
     try {
       if (rootEl && typeof rootEl.dispatchEvent === 'function') {
         console.debug('[TabBar] dispatching rootEl event', tab);

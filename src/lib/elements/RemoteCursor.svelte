@@ -68,9 +68,7 @@
 <div class="remote-cursors" data-testid="remote-cursors">
 	{#each positionedCursors as cursor (cursor.clientId)}
 		<div
-			class="cursor-overlay"
-			class:visible={cursor.isVisible}
-			class:recent={cursor.isRecent}
+			class={['cursor-overlay', cursor.isVisible && 'visible', cursor.isRecent && 'recent'].filter(Boolean).join(' ')}
 			style="
 				top: {cursor.top}px;
 				left: {cursor.left}px;

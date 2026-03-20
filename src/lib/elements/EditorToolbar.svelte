@@ -4,15 +4,23 @@
 	import type { OnlineUser } from './PresenceList.svelte';
 	import { onMount } from 'svelte';
 
-	export let users: OnlineUser[] = [];
-	export let currentUserId: string | null = null;
-	export let documentId: string = '';
-	export let documentTitle: string = 'Untitled Document';
-	export let isOwner: boolean = false;
+	interface Props {
+		/** Online users for presence display */
+		users?: OnlineUser[];
+		/** Current user's id */
+		currentUserId?: string | null;
+		/** Document id */
+		documentId?: string;
+		/** Document title */
+		documentTitle?: string;
+		/** Whether current user is the document owner */
+		isOwner?: boolean;
+	}
 
-	let showShareModal = false;
+	let { users = $bindable([]), currentUserId = null, documentId = '', documentTitle = 'Untitled Document', isOwner = false }: Props = $props();
 
-	let isFocusMode = false;
+	let showShareModal = $state(false);
+	let isFocusMode = $state(false);
 
 	function toggleFocusMode() {
 		isFocusMode = !isFocusMode;
@@ -66,9 +74,8 @@
 
 		<!-- Focus Mode Toggle -->
 		<button
-			class="toolbar-button"
-			class:active={isFocusMode}
-			on:click={toggleFocusMode}
+			class={['toolbar-button', isFocusMode && 'active'].filter(Boolean).join(' ')}
+			onclick={toggleFocusMode}
 			title="Toggle focus mode (Esc)"
 			data-testid="focus-mode-btn"
 		>
@@ -79,7 +86,7 @@
 		<!-- Share Button -->
 		<button
 			class="toolbar-button"
-			on:click={() => (showShareModal = true)}
+			onclick={() => (showShareModal = true)}
 			title="Share document"
 			data-testid="share-btn"
 			disabled={!documentId}
@@ -91,7 +98,7 @@
 		<!-- Export Button -->
 		<button
 			class="toolbar-button"
-			on:click={handleExport}
+			onclick={handleExport}
 			title="Export document"
 			data-testid="export-btn"
 		>

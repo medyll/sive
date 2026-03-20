@@ -57,8 +57,7 @@
 	<div class="presence-avatars">
 		{#each visibleUsers as user (user.clientId)}
 			<div
-				class="presence-avatar"
-				class:current={isCurrentUser(user.userId)}
+							class={['presence-avatar', isCurrentUser(user.userId) && 'current'].filter(Boolean).join(' ')}
 				data-testid="presence-avatar-{user.userId}"
 				title="{user.name || user.userId} — {getStatusLabel(user.status)}"
 			>

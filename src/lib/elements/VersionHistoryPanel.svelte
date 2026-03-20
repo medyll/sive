@@ -108,7 +108,7 @@
 	{:else}
 		<ul class="version-list">
 			{#each versions as v (v.id)}
-				<li class="version-item" class:active={selected?.id === v.id}>
+				<li class={['version-item', selected?.id === v.id && 'active'].filter(Boolean).join(' ')}>
 					<button class="version-btn" onclick={() => selectVersion(v)}>
 						<span class="v-time">{relativeTime(v.createdAt)}</span>
 						<span class="v-words">{v.wordCount} words</span>
