@@ -103,13 +103,14 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   // Document state
   let documents = $state(data.documents);
   let activeDocumentId = $state(data.activeDocumentId);
-  let activeContent = $state(
-    data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
+  let activeContent = $derived(
+    documents.find((d) => d.id === activeDocumentId)?.content ?? ''
   );
 
-  // Sync activeContent when switching documents
+  // Sync with server data changes
   $effect(() => {
-    activeContent = documents.find((d) => d.id === activeDocumentId)?.content ?? '';
+    documents = data.documents;
+    activeDocumentId = data.activeDocumentId;
   });
 
   // ── Debounced auto-save ───────────────────────────────────────────────────
@@ -306,13 +307,13 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let showShortcutsHelp = $state(false);
   let showSummaryPanel = $state(false);
 
-  function persistState(_node: HTMLElement) {
-    $effect(() => {
+  // Persist UI state to localStorage
+  $effect(() => {
+    if (browser) {
       localStorage.setItem(SPLIT_KEY, `${splitRatio}`);
       localStorage.setItem(FOCUS_KEY, `${focusMode}`);
-    });
-    return {};
-  }
+    }
+  });
 
   function globalKeyboardShortcuts(_node: HTMLElement) {
     function isTyping(e: KeyboardEvent): boolean {
@@ -412,7 +413,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   }
 </script>
 
-<div class="app-root" {@attach persistState} {@attach globalKeyboardShortcuts}>
+<div class="app-root" use:globalKeyboardShortcuts>
   <header class="main-toolbar">
     <div class="project-label">
       {#if editingToolbarTitle}

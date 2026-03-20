@@ -11,11 +11,15 @@
 		lastUpdated?: number;
 	}
 
-	export let cursors: CursorState[] = [];
-	export let lineHeight: number = 20;
-	export let charWidth: number = 8;
-	export let editorHeight: number = 600;
-	export let editorWidth: number = 800;
+	interface Props {
+		cursors?: CursorState[];
+		lineHeight?: number;
+		charWidth?: number;
+		editorHeight?: number;
+		editorWidth?: number;
+	}
+
+	let { cursors = [], lineHeight = 20, charWidth = 8, editorHeight = 600, editorWidth = 800 }: Props = $props();
 
 	interface PositionedCursor extends CursorState {
 		top: number;
@@ -23,15 +27,17 @@
 		isRecent: boolean;
 	}
 
-	$: positionedCursors = cursors
-		.filter((c) => c.isVisible)
-		.filter((c) => !c.lastUpdated || Date.now() - c.lastUpdated < 5000)
-		.map((cursor) => ({
-			...cursor,
-			top: (cursor.line - 1) * lineHeight,
-			left: cursor.column * charWidth,
-			isRecent: true
-		})) as PositionedCursor[];
+	let positionedCursors = $derived(
+		cursors
+			.filter((c) => c.isVisible)
+			.filter((c) => !c.lastUpdated || Date.now() - c.lastUpdated < 5000)
+			.map((cursor) => ({
+				...cursor,
+				top: (cursor.line - 1) * lineHeight,
+				left: cursor.column * charWidth,
+				isRecent: true
+			})) as PositionedCursor[]
+	);
 
 	onMount(() => {
 		// Listen for cursor updates

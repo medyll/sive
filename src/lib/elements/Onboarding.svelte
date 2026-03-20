@@ -3,8 +3,8 @@
   import { browser } from '$app/environment';
   import { toastStore } from '$lib/toastStore.svelte';
 
-  let open = false;
-  let step = 0;
+  let open = $state(false);
+  let step = $state(0);
 
   const steps = [
     { title: 'Welcome', body: 'Welcome to Sive — a focused writing app. This quick tour will show the main features.' },

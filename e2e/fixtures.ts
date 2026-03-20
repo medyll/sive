@@ -1,4 +1,4 @@
-import { test as baseTest, Browser } from '@playwright/test';
+import { test as baseTest, expect } from '@playwright/test';
 
 export const test = baseTest.extend({
   // Auto-dismiss onboarding modal by setting localStorage before any page loads
@@ -17,7 +17,15 @@ export const test = baseTest.extend({
 
     await use(page);
     await page.close();
+  },
+
+  // Helper fixture for navigation
+  goto: async ({ page }, use) => {
+    const goto = async (path: string) => {
+      return page.goto(path);
+    };
+    await use(goto);
   }
 });
 
-export { expect } from '@playwright/test';
+export { expect };

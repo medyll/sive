@@ -15,6 +15,13 @@
       "when": 1772895240936,
       "tag": "0001_aberrant_reptil",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1774021303624,
+      "tag": "0002_last_black_cat",
+      "breakpoints": true
     }
   ]
 }

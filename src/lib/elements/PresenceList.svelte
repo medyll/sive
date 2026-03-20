@@ -7,12 +7,16 @@
 		lastSeen?: number;
 	}
 
-	export let users: OnlineUser[] = [];
-	export let currentUserId: string | null = null;
-	export let maxVisible: number = 5;
+	interface Props {
+		users?: OnlineUser[];
+		currentUserId?: string | null;
+		maxVisible?: number;
+	}
 
-	$: visibleUsers = users.slice(0, maxVisible);
-	$: hiddenCount = Math.max(0, users.length - maxVisible);
+	let { users = [], currentUserId = null, maxVisible = 5 }: Props = $props();
+
+	let visibleUsers = $derived(users.slice(0, maxVisible));
+	let hiddenCount = $derived(Math.max(0, users.length - maxVisible));
 
 	function getInitials(userId: string): string {
 		return userId.slice(0, 2).toUpperCase();
