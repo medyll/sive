@@ -42,10 +42,12 @@ Horizontal tab navigation bar with theme support.
   }
 </script>
 
-<div class="tab-bar" bind:this={rootEl} data-theme={theme}>
+<div class="tab-bar" bind:this={rootEl} data-theme={theme} role="tablist">
   {#each tabs as tab (tab)}
     <button
       class={"tab " + (tab === activeTab ? 'active' : '')}
+      role="tab"
+      aria-selected={tab === activeTab}
       onclick={() => setActiveTab(tab)}
     >
       {tab}

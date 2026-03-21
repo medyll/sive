@@ -20,21 +20,23 @@ test.describe('AI Integration — /app', () => {
 	});
 
 	test('Coherence tab: "Run coherence check" button is present', async ({ page }) => {
-		await page.getByRole('button', { name: 'Coherence', exact: true }).click();
+		await page.getByRole('tab', { name: 'Coherence', exact: true }).click();
 		await expect(page.getByRole('button', { name: 'Run coherence check' })).toBeVisible();
 	});
 
 	test('Style tab: "Analyse this passage" button is present', async ({ page }) => {
-		await page.getByRole('button', { name: 'Style', exact: true }).click();
+		await page.getByRole('tab', { name: 'Style', exact: true }).click();
 		await expect(page.getByRole('button', { name: 'Analyse this passage' })).toBeVisible();
 	});
 
 	test('ChatBar is visible with input and Send button', async ({ page }) => {
+		await page.getByRole('tab', { name: 'Chat', exact: true }).click();
 		await expect(page.getByRole('textbox', { name: 'Chat input' })).toBeVisible();
 		await expect(page.getByRole('button', { name: 'Send' })).toBeVisible();
 	});
 
 	test('ChatBar: typing and sending shows user message bubble', async ({ page }) => {
+		await page.getByRole('tab', { name: 'Chat', exact: true }).click();
 		const input = page.getByRole('textbox', { name: 'Chat input' });
 		await input.fill('Hello AI');
 		await page.getByRole('button', { name: 'Send' }).click();

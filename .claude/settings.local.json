@@ -14,7 +14,9 @@
       "Bash(find e2e:*)",
       "Bash(npm test:*)",
       "Bash(/tmp/test_analysis.md:*)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(npm rebuild:*)",
+      "Bash(pnpm rebuild:*)"
     ]
   }
 }

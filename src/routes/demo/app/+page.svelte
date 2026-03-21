@@ -135,10 +135,10 @@
       <div id="ai-panel" bind:this={rightPane} class="pane right" style="width: {rightPercent}; min-width:280px;">
       <!-- [right-panel-tab-bar] -->
       <div class="tabs" role="tablist" aria-label="AI tools tabs">
-        <button class="tab" type="button" role="tab" aria-selected={selectedTab === 'suggestions'} class={['tab', selectedTab === 'suggestions' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'suggestions')}>Suggestions</button>
-        <button class="tab" type="button" role="tab" aria-selected={selectedTab === 'coherence'} class={['tab', selectedTab === 'coherence' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'coherence')}>Coherence</button>
-        <button class="tab" type="button" role="tab" aria-selected={selectedTab === 'style'} class={['tab', selectedTab === 'style' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'style')}>Style</button>
-        <button class="tab" type="button" role="tab" aria-selected={selectedTab === 'history'} class={['tab', selectedTab === 'history' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'history')}>History</button>
+        <button type="button" role="tab" aria-selected={selectedTab === 'suggestions'} class={['tab', selectedTab === 'suggestions' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'suggestions')}>Suggestions</button>
+        <button type="button" role="tab" aria-selected={selectedTab === 'coherence'} class={['tab', selectedTab === 'coherence' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'coherence')}>Coherence</button>
+        <button type="button" role="tab" aria-selected={selectedTab === 'style'} class={['tab', selectedTab === 'style' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'style')}>Style</button>
+        <button type="button" role="tab" aria-selected={selectedTab === 'history'} class={['tab', selectedTab === 'history' && 'active'].filter(Boolean).join(' ')} onclick={() => (selectedTab = 'history')}>History</button>
       </div>
 
       <!-- [tab-content-suggestions|coherence|style|history] -->

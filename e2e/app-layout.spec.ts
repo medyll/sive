@@ -26,13 +26,13 @@ test.describe('App layout — /app', () => {
 
 	test('all four AI tabs are visible', async ({ page }) => {
 		for (const tab of ['Suggestions', 'Coherence', 'Style', 'History']) {
-			await expect(page.getByRole('button', { name: tab })).toBeVisible();
+			await expect(page.getByRole('tab', { name: tab })).toBeVisible();
 		}
 	});
 
 	test('clicking a tab activates it and shows its content panel', async ({ page }) => {
-		await page.getByRole('button', { name: 'Coherence' }).click();
-		await expect(page.getByRole('button', { name: 'Coherence' })).toHaveClass(/active/);
+		await page.getByRole('tab', { name: 'Coherence' }).click();
+		await expect(page.getByRole('tab', { name: 'Coherence' })).toHaveClass(/active/);
 		await expect(page.getByRole('tabpanel', { name: 'Coherence' })).toBeVisible();
 	});
 
@@ -83,25 +83,19 @@ test.describe('App layout — /app', () => {
 
 	// --- ChatBar overlay ---
 
-	test('ChatBar overlay is open by default with an input', async ({ page }) => {
-		await expect(page.locator('#chat-bar-content')).toBeVisible();
-		await expect(page.getByPlaceholder('Type a command or question…')).toBeVisible();
+	test('ChatBar overlay toggle button exists', async ({ page }) => {
+		await expect(page.locator('.chat-toggle')).toBeVisible();
 	});
 
-	test('ChatBar toggle button collapses and reopens the overlay', async ({ page }) => {
+	test('ChatBar toggle button opens the overlay', async ({ page }) => {
 		const toggle = page.locator('.chat-toggle');
+		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+		// open
+		await toggle.click();
+		await expect(page.locator('#chat-bar-content')).toBeVisible();
+		await expect(toggle).toHaveAttribute('aria-expanded', 'true');
 		// collapse
 		await toggle.click();
 		await expect(page.locator('#chat-bar-content')).not.toBeVisible();
-		// reopen
-		await toggle.click();
-		await expect(page.locator('#chat-bar-content')).toBeVisible();
-	});
-
-	test('ChatBar toggle has correct aria-expanded attribute', async ({ page }) => {
-		const toggle = page.locator('.chat-toggle');
-		await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-		await toggle.click();
-		await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 	});
 });

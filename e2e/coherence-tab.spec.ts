@@ -9,33 +9,33 @@ test.describe('Coherence tab — /app', () => {
 	});
 
 	test('Coherence tab button is visible', async ({ page }) => {
-		await expect(page.getByRole('button', { name: 'Coherence' })).toBeVisible();
+		await expect(page.getByRole('tab', { name: 'Coherence' })).toBeVisible();
 	});
 
 	test('clicking Coherence tab shows the coherence panel', async ({ page }) => {
-		await page.getByRole('button', { name: 'Coherence' }).click();
+		await page.getByRole('tab', { name: 'Coherence' }).click();
 		await expect(page.locator('#tab-content-coherence')).toBeVisible();
 	});
 
 	test('"Run coherence check" button is visible', async ({ page }) => {
-		await page.getByRole('button', { name: 'Coherence' }).click();
+		await page.getByRole('tab', { name: 'Coherence' }).click();
 		await expect(page.locator('.btn-coherence')).toBeVisible();
 	});
 
 	test('clicking Run shows "Checking…" loading state', async ({ page }) => {
-		await page.getByRole('button', { name: 'Coherence' }).click();
+		await page.getByRole('tab', { name: 'Coherence' }).click();
 		await page.locator('.btn-coherence').click();
 		await expect(page.locator('.btn-coherence')).toHaveText('Checking…');
 	});
 
 	test('after check, 5 alert cards are visible', async ({ page }) => {
-		await page.getByRole('button', { name: 'Coherence' }).click();
+		await page.getByRole('tab', { name: 'Coherence' }).click();
 		await page.locator('.btn-coherence').click();
 		await expect(page.locator('article.coherence-alert')).toHaveCount(5, { timeout: 15000 });
 	});
 
 	test('alert cards have entity, discrepancy type, and confidence badge', async ({ page }) => {
-		await page.getByRole('button', { name: 'Coherence' }).click();
+		await page.getByRole('tab', { name: 'Coherence' }).click();
 		await page.locator('.btn-coherence').click();
 		const firstCard = page.locator('article.coherence-alert').first();
 		await expect(firstCard).toBeVisible({ timeout: 15000 });
@@ -46,7 +46,7 @@ test.describe('Coherence tab — /app', () => {
 	});
 
 	test('High confidence alerts have a red-ish badge', async ({ page }) => {
-		await page.getByRole('button', { name: 'Coherence' }).click();
+		await page.getByRole('tab', { name: 'Coherence' }).click();
 		await page.locator('.btn-coherence').click();
 		await expect(page.locator('article.coherence-alert').first()).toBeVisible({ timeout: 15000 });
 		const highBadge = page.locator('.alert-confidence').first();

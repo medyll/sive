@@ -140,7 +140,7 @@
   }
 
   let {
-    activeTab = $bindable<string>('Chat'),
+    activeTab = $bindable<string>('Suggestions'),
     aiProcessing = false,
     theme = 'light',
     editorContent = '',
@@ -349,7 +349,7 @@
             class={['btn-suggest', suggesting && 'btn--cancel'].filter(Boolean).join(' ')}
             onclick={handleGenerateSuggestions}
           >
-            {suggesting ? 'Cancel' : 'Generate suggestions'}
+            {suggesting ? 'Generating…' : 'Generate suggestions'}
           </button>
         </div>
         {#if suggestionsStore.items.length > 0}
@@ -381,7 +381,7 @@
             class={['btn-coherence', checking && 'btn--cancel'].filter(Boolean).join(' ')}
             onclick={handleCoherenceCheck}
           >
-            {checking ? 'Cancel' : 'Run coherence check'}
+            {checking ? 'Checking…' : 'Run coherence check'}
           </button>
         </div>
         {#if coherenceAlerts.length > 0}
@@ -411,7 +411,7 @@
             class={['btn-analyse', analysing && 'btn--cancel'].filter(Boolean).join(' ')}
             onclick={handleAnalyse}
           >
-            {analysing ? 'Cancel' : 'Analyse this passage'}
+            {analysing ? 'Analysing…' : 'Analyse this passage'}
           </button>
         </div>
         {#if signals.length > 0}

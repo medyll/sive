@@ -21,6 +21,8 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   import InstallPrompt from '$lib/elements/InstallPrompt.svelte';
   import OnboardingTour from '$lib/elements/OnboardingTour.svelte';
   import CommandPalette from '$lib/elements/CommandPalette.svelte';
+  import ShareModal from '$lib/elements/ShareModal.svelte';
+  import NotificationBell from '$lib/elements/NotificationBell.svelte';
 
   function isAutoSummaryEnabled(): boolean {
     if (!browser) return false;
@@ -99,6 +101,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let templatePickerOpen = $state(false);
   let versionPanelOpen = $state(false);
   let focusPanelOpen = $state(false);
+  let shareOpen = $state(false);
 
   // Document state
   let documents = $state(data.documents);
@@ -479,12 +482,20 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         onclick={() => { showSummaryPanel = !showSummaryPanel; }}
         aria-pressed={showSummaryPanel}
       >📄 Summary</button>
+      <button
+        type="button"
+        class="btn-share"
+        data-testid="share-btn"
+        aria-label="Share document"
+        onclick={() => { shareOpen = true; }}
+      >🔗 Share</button>
       <ExportButton
         title={documents.find(d => d.id === activeDocumentId)?.title ?? 'document'}
         content={activeContent}
         summary={summaryStore.get(activeDocumentId, 'medium') ?? ''}
         docId={activeDocumentId}
       />
+      <NotificationBell />
       <a href="/settings" title="Settings" class="btn-settings">⚙</a>
       {#if data.user?.id === 'guest'}
         <a href="/auth" class="btn-login" title="Se connecter">Se connecter</a>
@@ -672,6 +683,14 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     {/if}
   {/if}
 </div>
+
+{#if shareOpen}
+  <ShareModal
+    documentId={activeDocumentId ?? ''}
+    isOwner={true}
+    onClose={() => { shareOpen = false; }}
+  />
+{/if}
 
 {#key hardenOpen}
   {#if hardenOpen}

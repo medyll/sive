@@ -51,10 +51,10 @@ test.describe('UX Polish & Export', () => {
 	test('AI tab shows empty state hint before running analysis', async ({ page }) => {
 		await page.goto('/app');
 		// Coherence tab
-		await page.getByRole('button', { name: 'Coherence', exact: true }).click();
+		await page.getByRole('tab', { name: 'Coherence', exact: true }).click();
 		await expect(page.locator('.tab-empty')).toBeVisible();
 		// Style tab
-		await page.getByRole('button', { name: 'Style', exact: true }).click();
+		await page.getByRole('tab', { name: 'Style', exact: true }).click();
 		await expect(page.locator('.tab-empty')).toBeVisible();
 	});
 });
