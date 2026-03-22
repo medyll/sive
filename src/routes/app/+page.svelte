@@ -23,8 +23,6 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   import CommandPalette from '$lib/elements/CommandPalette.svelte';
   import ShareModal from '$lib/elements/ShareModal.svelte';
   import NotificationBell from '$lib/elements/NotificationBell.svelte';
-  import WhatsNewBanner from '$lib/elements/WhatsNewBanner.svelte';
-  import FeatureTooltip from '$lib/elements/FeatureTooltip.svelte';
 
   function isAutoSummaryEnabled(): boolean {
     if (!browser) return false;
@@ -287,28 +285,6 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     }
   }
 
-  function handleDuplicate(id: string) {
-    const src = documents.find((d) => d.id === id);
-    if (!src) return;
-    const newTitle = `${src.title} (copy)`;
-    if (duplicateDocForm && duplicateIdInput) {
-      duplicateIdInput.value = id;
-      duplicateDocForm.requestSubmit();
-    }
-    // Optimistic local stub — server form will replace with real id on success
-    const stubId = `dup-${Date.now()}`;
-    const newDoc = { id: stubId, title: newTitle, content: src.content, updated_at: Date.now() };
-    documents = [...documents, newDoc];
-    activeDocumentId = stubId;
-    toastStore.success('Document duplicated');
-  }
-
-  function handleBulkDelete(ids: string[]) {
-    for (const id of ids) {
-      handleDelete(id);
-    }
-  }
-
   function handleHarden(label: string, message: string) {
     hardenStore.add({
       id: nextHardenId(hardenStore.snapshots.length),
@@ -433,30 +409,10 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     }
     node.addEventListener('pointermove', onPointerMove);
     node.addEventListener('pointerup', onPointerUp);
-
-    // Swipe sidebar: touch right to open, left to close
-    let touchStartX = 0;
-    let touchStartY = 0;
-    function onTouchStart(e: TouchEvent) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    }
-    function onTouchEnd(e: TouchEvent) {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      const dy = e.changedTouches[0].clientY - touchStartY;
-      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return; // too short or vertical
-      if (dx > 0 && !sidebarOpen) sidebarOpen = true;
-      else if (dx < 0 && sidebarOpen) sidebarOpen = false;
-    }
-    node.addEventListener('touchstart', onTouchStart, { passive: true });
-    node.addEventListener('touchend', onTouchEnd, { passive: true });
-
     return {
       destroy() {
         node.removeEventListener('pointermove', onPointerMove);
         node.removeEventListener('pointerup', onPointerUp);
-        node.removeEventListener('touchstart', onTouchStart);
-        node.removeEventListener('touchend', onTouchEnd);
       }
     };
   }
@@ -472,7 +428,6 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
 </script>
 
 <div class="app-root" use:globalKeyboardShortcuts>
-  <WhatsNewBanner />
   <header class="main-toolbar">
     <div class="project-label">
       {#if editingToolbarTitle}
@@ -527,16 +482,13 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         onclick={() => { showSummaryPanel = !showSummaryPanel; }}
         aria-pressed={showSummaryPanel}
       >📄 Summary</button>
-      <span style="position:relative;display:inline-flex;align-items:center;gap:0.2rem;">
-        <button
-          type="button"
-          class="btn-share"
-          data-testid="share-btn"
-          aria-label="Share document"
-          onclick={() => { shareOpen = true; }}
-        >🔗 Share</button>
-        <FeatureTooltip id="share-btn" title="Share Document" description="Share this document with others via a link or invite collaborators." position="bottom" />
-      </span>
+      <button
+        type="button"
+        class="btn-share"
+        data-testid="share-btn"
+        aria-label="Share document"
+        onclick={() => { shareOpen = true; }}
+      >🔗 Share</button>
       <ExportButton
         title={documents.find(d => d.id === activeDocumentId)?.title ?? 'document'}
         content={activeContent}
@@ -583,8 +535,6 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
             onNew={handleNewDocument}
             onRename={handleRename}
             onDelete={handleDelete}
-            onDuplicate={handleDuplicate}
-            onBulkDelete={handleBulkDelete}
           />
           <WritingGoalBar currentWordCount={activeContent.trim() ? activeContent.trim().split(/\s+/).length : 0} />
         </div>
@@ -701,27 +651,6 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       <input type="hidden" name="id" bind:this={deleteIdInput} />
     </form>
 
-    <form
-      method="POST"
-      action="?/duplicateDocument"
-      bind:this={duplicateDocForm}
-      use:enhance={({ formData: _fd, cancel: _cancel }) => {
-        return async ({ result }) => {
-          if (result.type === 'success' && result.data?.id) {
-            // Replace the optimistic stub with the real document
-            const stubIdx = documents.findIndex(d => d.id.startsWith('dup-'));
-            if (stubIdx >= 0) {
-              documents[stubIdx].id = result.data.id as string;
-              activeDocumentId = result.data.id as string;
-            }
-          }
-        };
-      }}
-      style="display:none"
-    >
-      <input type="hidden" name="id" bind:this={duplicateIdInput} />
-    </form>
-
     <!-- Floating chat bar overlay -->
     <div class="chat-overlay" id="chat-bar">
       <button
@@ -753,26 +682,6 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       ></div>
     {/if}
   {/if}
-
-  <!-- Mobile bottom nav — visible on screens ≤ 640px -->
-  <nav class="bottom-nav" aria-label="Mobile navigation" data-testid="bottom-nav">
-    <button type="button" class="bottom-nav-item" onclick={() => { sidebarOpen = true; }} aria-label="Documents">
-      <span class="bottom-nav-icon">📄</span>
-      <span class="bottom-nav-label">Docs</span>
-    </button>
-    <button type="button" class="bottom-nav-item" onclick={() => { sidebarOpen = false; }} aria-label="Editor">
-      <span class="bottom-nav-icon">✏️</span>
-      <span class="bottom-nav-label">Editor</span>
-    </button>
-    <button type="button" class="bottom-nav-item" onclick={() => { sidebarOpen = false; }} aria-label="AI Panel">
-      <span class="bottom-nav-icon">🤖</span>
-      <span class="bottom-nav-label">AI</span>
-    </button>
-    <a href="/settings" class="bottom-nav-item" aria-label="Settings">
-      <span class="bottom-nav-icon">⚙️</span>
-      <span class="bottom-nav-label">Settings</span>
-    </a>
-  </nav>
 </div>
 
 {#if shareOpen}
@@ -1058,61 +967,6 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       max-width: none;
     }
   }
-/* ── Bottom nav (mobile ≤ 640px) ── */
-.bottom-nav {
-  display: none;
-}
-
-@media (max-width: 640px) {
-  .bottom-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 56px;
-    background: var(--color-background, #fff);
-    border-top: 1px solid var(--color-border, #e0e0e0);
-    z-index: 200;
-    justify-content: space-around;
-    align-items: stretch;
-  }
-
-  /* Push workspace content above bottom nav */
-  .app-root {
-    padding-bottom: 56px;
-  }
-
-  /* Touch targets ≥ 44px on mobile */
-  :global(.sidebar button),
-  :global(.main-toolbar button),
-  :global(.doc-list button) {
-    min-height: 44px;
-  }
-}
-
-.bottom-nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  gap: 2px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--color-text-muted, #9ca3af);
-  text-decoration: none;
-  font-size: 0.65rem;
-  min-height: 44px;
-  transition: color 0.15s;
-}
-
-.bottom-nav-item:hover { color: var(--color-primary, #646cff); }
-
-.bottom-nav-icon { font-size: 1.2rem; line-height: 1; }
-.bottom-nav-label { font-size: 0.62rem; }
-
 .btn-summary {
   padding: 0.35rem 0.65rem;
   font-size: 0.82rem;

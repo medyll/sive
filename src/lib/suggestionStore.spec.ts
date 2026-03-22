@@ -154,9 +154,7 @@ describe('suggestionStore', () => {
 			} as unknown as Response);
 
 			requestSuggestionNow('ctx', 'complete');
-			await vi.waitFor(() => {
-				if (suggestionState.pending) throw new Error('still pending');
-			}, { timeout: 1000 });
+			await vi.waitFor(() => !suggestionState.pending, { timeout: 1000 });
 
 			expect(suggestionState.suggestion).toContain('Hello');
 

@@ -538,14 +538,6 @@
     padding: 0.5rem 0;
     overflow-y: auto;
     flex: 1;
-    /* Performance: skip rendering off-screen items */
-    max-height: 100%;
-  }
-
-  /* Virtualize-lite: content-visibility for large lists */
-  .doc-list-item {
-    content-visibility: auto;
-    contain-intrinsic-size: 0 60px;
   }
 
   .doc-item {
