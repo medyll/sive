@@ -39,13 +39,6 @@
 
   let menus = $state<Record<string, HTMLElement>>({}); // Store references by ID
 
-  // Hydrate tags from server data whenever documents change
-  $effect(() => {
-    for (const doc of documents) {
-      if (doc.tags) tagStore.hydrate(doc.id, doc.tags);
-    }
-  });
-
   // Search / filter
   let searchQuery = $state('');
   let activeTagFilter = $state<string | null>(null);
