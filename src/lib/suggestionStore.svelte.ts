@@ -88,7 +88,6 @@ async function streamSuggestion(ctx: string, mode: SuggestionMode, selection = '
 					state.pending = false;
 					return;
 				}
-				console.error('[suggestionStore] token:', JSON.stringify(token));
 				suggestionText += token;
 				state.suggestion = suggestionText;
 			}
