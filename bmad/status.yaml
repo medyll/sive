@@ -81,8 +81,8 @@ recommendation: |
   Technical debt: Document test patterns for follow-up testing improvements
 last_updated: 2026-03-19
 
-active_role: scrum
-next_action: "S50 READY FOR gpt5-mini. 5 stories: S50-01 (search, 5 tests), S50-02 (rateLimit, 2 tests), S50-03 (browser config, 3 tests), S50-04 (integration, 3 tests), S50-05 (streaming, 1 test). Plan: sprint-50.md. Target: 100% passing. Fallback: Deploy S49 (98.46% ready). Token-efficient brief plan created."
+active_role: designer
+next_action: "Implement S49-07 (redesign-documentlist-css): convert DocumentList.svelte styles to Tailwind classes where practical, modernize scoped CSS and variables, and update tests/snapshots. Deliver: updated component + passing unit tests."
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -538,6 +538,9 @@ sprints:
         status: pending
       - id: S49-06
         title: document-test-patterns-library
+        status: pending
+      - id: S49-07
+        title: redesign-documentlist-css
         status: pending
 
   - id: sprint-28

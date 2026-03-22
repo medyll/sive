@@ -219,8 +219,8 @@
   }
 </script>
 
-<aside class="doc-list" aria-label="Document list">
-  <div class="doc-list-header">
+<aside class="doc-list flex-shrink-0 w-56 bg-[var(--color-surface,#f9f9f9)] border-r border-[var(--color-border,#e0e0e0)] h-full flex flex-col" aria-label="Document list">
+  <div class="doc-list-header flex items-center gap-2 px-3 py-2">
     <span class="doc-list-title">Documents</span>
     {#if bulkMode}
       <button
@@ -245,9 +245,9 @@
     {/if}
   </div>
 
-  <div class="doc-search-row">
+  <div class="doc-search-row flex items-center gap-2 px-3 pb-2 border-b">
     <input
-      class="doc-search-input"
+      class="doc-search-input flex-1 text-sm border rounded px-2 py-1 bg-[var(--color-background,#fff)] text-[var(--color-text,#1a1a1a)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#646cff)]"
       type="search"
       placeholder="Filter…"
       aria-label="Filter documents"
@@ -285,7 +285,7 @@
   {/if}
 
   <!-- svelte-ignore a11y_interactive_supports_focus -->
-  <ul class="doc-list-items" role="listbox" aria-label="Documents" onkeydown={onListKeydown}>
+  <ul class="doc-list-items overflow-auto p-2 space-y-1" role="listbox" aria-label="Documents" onkeydown={onListKeydown}>
     {#if loading}
       {#each [1, 2, 3] as _}
         <li class="doc-skeleton" aria-hidden="true">
@@ -317,7 +317,7 @@
           />
         {/if}
         <div
-          class={['doc-item', doc.id === activeId && 'active', i === focusedIndex && 'focused'].filter(Boolean).join(' ')}
+          class={['doc-item','px-3','py-2','rounded','flex','flex-col', doc.id === activeId && 'active', i === focusedIndex && 'focused'].filter(Boolean).join(' ')}
           role="option"
           tabindex="0"
           onclick={() => { focusedIndex = i; if (bulkMode) { toggleSelect(doc.id); } else { onSelect?.(doc.id); } }}
@@ -424,464 +424,38 @@
 </aside>
 
 <style>
-  .doc-title-row {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    min-width: 0;
-    flex: 1;
-  }
+:root{
+  --color-border:#e0e0e0;
+  --color-surface:#f9f9f9;
+  --color-background:#fff;
+  --color-text:#1a1a1a;
+  --color-text-muted:#9ca3af;
+  --color-primary:#646cff;
+  --color-primary-light:#ebebff;
+  --color-hover:#f0f0f0;
+}
 
-  .doc-shared-badge {
-    font-size: 0.65rem;
-    padding: 0.1rem 0.35rem;
-    border-radius: 0.2rem;
-    background: #bee3f8;
-    color: #2b6cb0;
-    font-weight: 600;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
+/* Lightweight overrides kept for accessibility and small components */
+.doc-title-row{display:flex;align-items:center;gap:0.35rem;min-width:0;flex:1}
+.doc-shared-badge{font-size:0.65rem;padding:0.1rem 0.35rem;border-radius:0.2rem;background:#bee3f8;color:#2b6cb0;font-weight:600;flex-shrink:0;white-space:nowrap}
 
-  .doc-list {
-    display: flex;
-    flex-direction: column;
-    width: 14rem;
-    border-right: 1px solid var(--color-border, #e0e0e0);
-    height: 100%;
-    background: var(--color-surface, #f9f9f9);
-    flex-shrink: 0;
-  }
+.doc-item.focused{outline:2px solid var(--color-primary);outline-offset:-2px}
+.doc-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
 
-  .doc-list-header {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem 0.5rem;
-    gap: 0.5rem;
-  }
+.doc-date,.doc-activity-badge{font-size:0.7rem;color:var(--color-text-muted)}
+.doc-activity-badge{font-weight:600;padding:0.15rem 0.4rem;border-radius:9999px;display:inline-flex;align-items:center;justify-content:center;min-width:1.4rem}
 
-  .doc-search-row {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0 0.75rem 0.5rem;
-    border-bottom: 1px solid var(--color-border, #e0e0e0);
-  }
+/* Context menu */
+.doc-context-menu{position:absolute;right:0;top:calc(100% + 2px);z-index:100;background:var(--color-background);border:1px solid var(--color-border);border-radius:0.35rem;box-shadow:0 4px 12px rgba(0,0,0,0.1);list-style:none;margin:0;padding:0.25rem 0;min-width:8rem;white-space:nowrap}
+.doc-context-menu button{display:block;width:100%;text-align:left;background:none;border:none;padding:0.35rem 0.85rem;font-size:0.82rem;cursor:pointer;color:var(--color-text)}
+.menu-item-danger{color:#ef4444 !important}
 
-  .doc-search-input {
-    flex: 1;
-    font-size: 0.8rem;
-    border: 1px solid var(--color-border, #e0e0e0);
-    border-radius: 0.3rem;
-    padding: 0.25rem 0.5rem;
-    background: var(--color-background, #fff);
-    color: var(--color-text, #1a1a1a);
-    outline: none;
-    min-width: 0;
-  }
+/* Tags */
+.tag-filter-bar,.doc-tags{display:flex;gap:0.3rem;flex-wrap:wrap;padding:0.35rem 0.75rem;border-bottom:1px solid var(--color-border)}
+.doc-tag-chip{font-size:0.65rem;padding:0.1rem 0.35rem;border-radius:9999px;background:var(--color-primary-light);color:var(--color-primary);font-weight:500;display:inline-flex;align-items:center;gap:0.15rem}
+.tag-input{font-size:0.7rem;border-radius:9999px;padding:0.1rem 0.4rem;background:var(--color-background);color:var(--color-text);border:1px solid transparent}
 
-  .doc-search-input:focus {
-    border-color: var(--color-primary, #646cff);
-    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.15);
-  }
-
-  /* Hide browser's native clear button — we provide our own */
-  .doc-search-input::-webkit-search-cancel-button { display: none; }
-
-  .btn-search-clear {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.7rem;
-    color: var(--color-text-muted, #9ca3af);
-    padding: 0.1rem 0.2rem;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-
-  .btn-search-clear:hover { color: var(--color-text, #1a1a1a); }
-
-  .doc-item.focused {
-    outline: 2px solid var(--color-primary, #646cff);
-    outline-offset: -2px;
-  }
-
-  .doc-list-title {
-    flex: 1;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted, #9ca3af);
-  }
-
-  .btn-new-doc {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.1rem;
-    color: var(--color-primary, #646cff);
-    padding: 0.1rem 0.25rem;
-    line-height: 1;
-  }
-
-  .doc-list-items {
-    list-style: none;
-    margin: 0;
-    padding: 0.5rem 0;
-    overflow-y: auto;
-    flex: 1;
-  }
-
-  .doc-item {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    gap: 0.15rem;
-    transition: background 0.1s;
-  }
-
-  .doc-item:hover { background: var(--color-hover, #f0f0f0); }
-  .doc-item.active { background: var(--color-primary-light, #ebebff); }
-
-  .doc-title {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text, #1a1a1a);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .doc-title-input {
-    font-size: 0.9rem;
-    font-weight: 500;
-    border: 1px solid var(--color-primary, #646cff);
-    border-radius: 3px;
-    padding: 0.1rem 0.25rem;
-    width: 100%;
-    background: #fff;
-    outline: none;
-  }
-
-  .doc-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.25rem;
-  }
-
-  .doc-date {
-    font-size: 0.7rem;
-    color: var(--color-text-muted, #9ca3af);
-  }
-
-  /* ── Bulk mode ── */
-  .doc-list-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
-
-  .doc-list-item--selected .doc-item {
-    background: var(--color-primary-light, #ebebff);
-  }
-
-  .doc-checkbox {
-    margin-top: 0.6rem;
-    margin-left: 0.5rem;
-    flex-shrink: 0;
-    cursor: pointer;
-    accent-color: var(--color-primary, #646cff);
-    width: 1rem;
-    height: 1rem;
-  }
-
-  .btn-bulk-mode {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    color: var(--color-text-muted, #9ca3af);
-    padding: 0.1rem 0.2rem;
-    line-height: 1;
-  }
-
-  .btn-bulk-mode:hover { color: var(--color-text, #1a1a1a); }
-
-  .btn-select-all {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    color: var(--color-primary, #646cff);
-    padding: 0.1rem 0.2rem;
-    line-height: 1;
-  }
-
-  .btn-bulk-delete {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.45rem;
-    border-radius: 0.25rem;
-    border: 1px solid #ef4444;
-    background: none;
-    color: #ef4444;
-    cursor: pointer;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .btn-bulk-delete:hover { background: #ef4444; color: #fff; }
-
-  .btn-bulk-cancel {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.75rem;
-    color: var(--color-text-muted, #9ca3af);
-    padding: 0.1rem 0.2rem;
-    line-height: 1;
-  }
-
-  /* ── Context menu ── */
-  .doc-menu-wrap {
-    position: relative;
-    display: inline-flex;
-  }
-
-  .btn-doc-menu {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    padding: 0 0.15rem;
-    opacity: 0;
-    transition: opacity 0.15s;
-    line-height: 1;
-    color: var(--color-text-muted, #9ca3af);
-    letter-spacing: 0.05em;
-  }
-
-  .doc-item:hover .btn-doc-menu,
-  .doc-item.active .btn-doc-menu,
-  .btn-doc-menu[aria-expanded="true"] {
-    opacity: 1;
-  }
-
-  .btn-doc-menu:hover { color: var(--color-text, #1a1a1a); }
-
-  .doc-context-menu {
-    position: absolute;
-    right: 0;
-    top: calc(100% + 2px);
-    z-index: 100;
-    background: var(--color-background, #fff);
-    border: 1px solid var(--color-border, #e0e0e0);
-    border-radius: 0.35rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    list-style: none;
-    margin: 0;
-    padding: 0.25rem 0;
-    min-width: 8rem;
-    white-space: nowrap;
-  }
-
-  .doc-context-menu button {
-    display: block;
-    width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    padding: 0.35rem 0.85rem;
-    font-size: 0.82rem;
-    cursor: pointer;
-    color: var(--color-text, #1a1a1a);
-  }
-
-  .doc-context-menu button:hover {
-    background: var(--color-hover, #f0f0f0);
-  }
-
-  .menu-item-danger { color: #ef4444 !important; }
-  .menu-item-danger:hover { background: #fef2f2 !important; }
-
-  /* Skeleton loader */
-  .doc-skeleton {
-    list-style: none;
-    padding: 0.5rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .skeleton-title, .skeleton-date {
-    border-radius: 4px;
-    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.4s infinite;
-  }
-
-  .skeleton-title { height: 0.85rem; width: 70%; }
-  .skeleton-date  { height: 0.65rem; width: 35%; }
-
-  @keyframes shimmer {
-    from { background-position: 200% 0; }
-    to   { background-position: -200% 0; }
-  }
-
-  /* Empty state */
-  .doc-empty {
-    list-style: none;
-    padding: 2rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    color: var(--color-text-muted, #9ca3af);
-    font-size: 0.85rem;
-  }
-
-  .btn-empty-new {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-primary, #646cff);
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0;
-  }
-
-  .btn-empty-new:hover { text-decoration: underline; }
-
-  /* ── Tag filter bar ── */
-  .tag-filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    padding: 0.35rem 0.75rem;
-    border-bottom: 1px solid var(--color-border, #e0e0e0);
-  }
-
-  .tag-filter-chip {
-    font-size: 0.68rem;
-    padding: 0.15rem 0.5rem;
-    border-radius: 9999px;
-    border: 1px solid var(--color-primary, #646cff);
-    background: transparent;
-    color: var(--color-primary, #646cff);
-    cursor: pointer;
-    transition: background 0.12s, color 0.12s;
-  }
-
-  .tag-filter-chip--active {
-    background: var(--color-primary, #646cff);
-    color: #fff;
-  }
-
-  .btn-tag-filter-clear {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.68rem;
-    color: var(--color-text-muted, #9ca3af);
-    padding: 0.1rem 0.2rem;
-    line-height: 1;
-  }
-
-  /* ── Document tag chips ── */
-  .doc-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-    margin-top: 0.2rem;
-    align-items: center;
-  }
-
-  .doc-tag-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.15rem;
-    font-size: 0.65rem;
-    padding: 0.1rem 0.35rem;
-    border-radius: 9999px;
-    background: var(--color-primary-light, #ebebff);
-    color: var(--color-primary, #646cff);
-    font-weight: 500;
-  }
-
-  .btn-tag-remove {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 0.65rem;
-    color: var(--color-primary, #646cff);
-    padding: 0;
-    line-height: 1;
-    opacity: 0.6;
-  }
-
-  .btn-tag-remove:hover { opacity: 1; }
-
-  .btn-tag-add {
-    background: none;
-    border: 1px dashed var(--color-border, #d1d5db);
-    border-radius: 9999px;
-    cursor: pointer;
-    font-size: 0.65rem;
-    color: var(--color-text-muted, #9ca3af);
-    padding: 0.1rem 0.3rem;
-    line-height: 1;
-    opacity: 0;
-    transition: opacity 0.12s;
-  }
-
-  .doc-item:hover .btn-tag-add,
-  .doc-item.active .btn-tag-add {
-    opacity: 1;
-  }
-
-  .tag-input {
-    font-size: 0.7rem;
-    border: 1px solid var(--color-primary, #646cff);
-    border-radius: 9999px;
-    padding: 0.1rem 0.4rem;
-    outline: none;
-    width: 5rem;
-    background: var(--color-background, #fff);
-    color: var(--color-text, #1a1a1a);
-  }
-
-  .doc-activity-badge {
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 0.15rem 0.4rem;
-    border-radius: 9999px;
-    flex-shrink: 0;
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.4rem;
-    line-height: 1;
-  }
-
-  .doc-activity-badge.badge-green {
-    background: #dcfce7;
-    color: #166534;
-  }
-
-  .doc-activity-badge.badge-blue {
-    background: #dbeafe;
-    color: #1e40af;
-  }
-
-  .doc-activity-badge.badge-red {
-    background: #fee2e2;
-    color: #991b1b;
-  }
+/* Skeleton */
+.doc-skeleton .skeleton-title,.doc-skeleton .skeleton-date{border-radius:4px;background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
 </style>
