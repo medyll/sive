@@ -16,7 +16,14 @@
       "Bash(/tmp/test_analysis.md:*)",
       "Read(//tmp/**)",
       "Bash(npm rebuild:*)",
-      "Bash(pnpm rebuild:*)"
+      "Bash(pnpm rebuild:*)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_network_requests",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "mcp__plugin_playwright_playwright__browser_close",
+      "mcp__plugin_context-mode_context-mode__ctx_execute_file"
     ]
   }
 }

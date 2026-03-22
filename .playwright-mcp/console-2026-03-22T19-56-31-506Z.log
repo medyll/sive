@@ -1,0 +1,9 @@
+[  475405ms] [ERROR] updated at
+    at Object.hydrate (http://localhost:5173/src/lib/tagStore.svelte.ts:56:7)
+    at $effect (http://localhost:5173/src/lib/elements/DocumentList.svelte:78:27)
+    at initialize (http://localhost:5173/node_modules/.pnpm/@sveltejs+kit@2.55.0_@svelt_26900940f10dfbe60596b82901457bab/node_modules/@sveltejs/kit/src/runtime/client/client.js?v=882c3688:611:9)
+    at _hydrate (http://localhost:5173/node_modules/.pnpm/@sveltejs+kit@2.55.0_@svelt_26900940f10dfbe60596b82901457bab/node_modules/@sveltejs/kit/src/runtime/client/client.js?v=882c3688:2951:8)
+    at async Module.start (http://localhost:5173/node_modules/.pnpm/@sveltejs+kit@2.55.0_@svelt_26900940f10dfbe60596b82901457bab/node_modules/@sveltejs/kit/src/runtime/client/client.js?v=882c3688:371:3) @ http://localhost:5173/node_modules/.vite/deps/runtime-n5nSB-sA.js?v=882c3688:2094
+[  475541ms] effect_update_depth_exceeded
+Maximum update depth exceeded. This typically indicates that an effect reads and writes the same piece of state
+https://svelte.dev/e/effect_update_depth_exceeded

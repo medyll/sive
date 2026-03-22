@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
+  import { browser, dev } from '$app/environment';
+  import { untrack } from 'svelte';
   import { enhance } from '$app/forms';
   import EditorPanel from '$lib/elements/EditorPanel.svelte';
   import AIPanel from '$lib/elements/AIPanel.svelte';
@@ -112,19 +113,21 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
 
   // Sync activeContent only when switching documents (not on content edits)
   $effect(() => {
-    const id = activeDocumentId; // tracked
-    const snap = $state.snapshot(documents); // untracked snapshot — avoids loop
-    activeContent = snap.find((d) => d.id === id)?.content ?? '';
+    const id = activeDocumentId;
+    const docs = documents;
+    untrack(() => {
+      activeContent = docs.find((d) => d.id === id)?.content ?? '';
+    });
   });
 
   // Sync with server data changes (navigation)
   $effect(() => {
     const incoming = data.documents;
     const incomingId = data.activeDocumentId;
-    documents = incoming;
-    if (incomingId !== activeDocumentId) {
+    untrack(() => {
+      documents = incoming;
       activeDocumentId = incomingId;
-    }
+    });
   });
 
   // ── Debounced auto-save ───────────────────────────────────────────────────
