@@ -1,20 +1,15 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
+
+// $app/environment is a SvelteKit virtual module — mock it so the browser runner can import summaryStore
+vi.mock('$app/environment', () => ({ browser: true }));
+
 import SummaryPanel from './SummaryPanel.svelte';
 
-// Mock fetch to return a stubbed SSE stream
+// Mock fetch to return a stubbed SSE response (plain string body — avoids ReadableStream async hang in Playwright)
 function makeSseStream(tokens: string[]): Response {
-	const encoder = new TextEncoder();
-	const stream = new ReadableStream({
-		async start(controller) {
-			for (const t of tokens) {
-				controller.enqueue(encoder.encode(`data: ${t}\n\n`));
-			}
-			controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-			controller.close();
-		}
-	});
-	return new Response(stream, { status: 200 });
+	const body = tokens.map((t) => `data: ${t}\n\n`).join('') + 'data: [DONE]\n\n';
+	return new Response(body, { status: 200 });
 }
 
 beforeEach(() => {
