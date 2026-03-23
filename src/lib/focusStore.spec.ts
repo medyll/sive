@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterAll } from 'vitest';
 
 const store: Record<string, string> = {};
 vi.stubGlobal('localStorage', {
@@ -9,6 +9,8 @@ vi.stubGlobal('localStorage', {
 vi.stubGlobal('window', { dispatchEvent: vi.fn() });
 
 const { focusStore, AMBIENT_LABELS } = await import('./focusStore.svelte');
+
+afterAll(() => vi.unstubAllGlobals());
 
 describe('focusStore', () => {
 	it('default pomodoroMinutes is 25', () => {

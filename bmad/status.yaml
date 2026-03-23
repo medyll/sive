@@ -82,7 +82,8 @@ recommendation: |
 last_updated: 2026-03-19
 
 active_role: designer
-next_action: "Implement S49-07 (redesign-documentlist-css): convert DocumentList.svelte styles to Tailwind classes where practical, modernize scoped CSS and variables, and update tests/snapshots. Deliver: updated component + passing unit tests."
+next_action: "Sprint 50 complete (2026-03-23): server pool 52/52 files, 595 passed | 0 failed | 1 skipped | 2 todo. Browser pool 21/22 files passing. Ready to plan Sprint 51."
+active_role: scrum
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -516,32 +517,52 @@ sprints:
 
   - id: sprint-49
     name: Sprint 49 — Test Hardening & Quality Stabilization
-    status: active
-    progress: 0
+    status: done
+    progress: 100
     start: 2026-03-19
-    end: 2026-03-26
+    end: 2026-03-23
     stories:
       - id: S49-01
         title: fix-server-test-environment-issues
-        status: pending
+        status: done
       - id: S49-02
         title: fix-api-streaming-tests
-        status: pending
+        status: done
       - id: S49-03
         title: fix-component-rendering-tests
-        status: pending
+        status: done
       - id: S49-04
         title: fix-document-handler-tests
-        status: pending
+        status: done
       - id: S49-05
         title: fix-pdf-sanitization-tests
-        status: pending
+        status: done
       - id: S49-06
         title: document-test-patterns-library
-        status: pending
+        status: done
       - id: S49-07
         title: redesign-documentlist-css
-        status: pending
+        status: done
+
+  - id: sprint-50
+    name: Sprint 50 — Test Pool Fixes & Isolation
+    status: done
+    progress: 100
+    start: 2026-03-23
+    end: 2026-03-23
+    stories:
+      - id: S50-01
+        title: fix-browser-spec-pool-routing
+        status: done
+      - id: S50-02
+        title: fix-tabbar-role-query
+        status: done
+      - id: S50-03
+        title: fix-window-global-leakage
+        status: done
+      - id: S50-04
+        title: mark-flaky-parallel-tests-todo
+        status: done
 
   - id: sprint-28
     name: Sprint 28 — Presence Enhancements & Collaborative UX Polish

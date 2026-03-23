@@ -9,19 +9,19 @@ describe('TabBar', () => {
 	it('renders all tabs from the tabs prop', async () => {
 		render(TabBar, { tabs: TABS, activeTab: 'Suggestions' });
 		for (const tab of TABS) {
-			await expect.element(page.getByRole('button', { name: tab })).toBeVisible();
+			await expect.element(page.getByRole('tab', { name: tab })).toBeVisible();
 		}
 	});
 
 	it('active tab has the "active" class', async () => {
 		render(TabBar, { tabs: TABS, activeTab: 'Coherence' });
-		const activeBtn = page.getByRole('button', { name: 'Coherence' });
+		const activeBtn = page.getByRole('tab', { name: 'Coherence' });
 		await expect.element(activeBtn).toHaveClass(/active/);
 	});
 
 	it('inactive tabs do not have the "active" class', async () => {
 		render(TabBar, { tabs: TABS, activeTab: 'Suggestions' });
-		const inactiveBtn = page.getByRole('button', { name: 'Coherence' });
+		const inactiveBtn = page.getByRole('tab', { name: 'Coherence' });
 		await expect.element(inactiveBtn).not.toHaveClass(/active/);
 	});
 
@@ -35,7 +35,7 @@ describe('TabBar', () => {
 				lastTab = e.detail;
 			});
 		}
-		await page.getByRole('button', { name: 'Style' }).click();
+		await page.getByRole('tab', { name: 'Style' }).click();
 		// allow microtask queue for any async handlers
 		await new Promise((r) => setTimeout(r, 10));
 		expect(lastTab).toBe('Style');
@@ -50,7 +50,7 @@ describe('TabBar', () => {
 				lastTab = e.detail;
 			});
 		}
-		await page.getByRole('button', { name: 'Suggestions' }).click();
+		await page.getByRole('tab', { name: 'Suggestions' }).click();
 		await new Promise((r) => setTimeout(r, 10));
 		expect(lastTab).toBe('Suggestions');
 	});
