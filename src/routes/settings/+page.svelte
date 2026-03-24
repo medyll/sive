@@ -4,11 +4,12 @@
   import PluginManager from '$lib/elements/PluginManager.svelte';
   import { pluginStore } from '$lib/pluginStore.svelte';
   import { goalsStore } from '$lib/writingGoalsStore.svelte';
+  import { themeStore } from '$lib/themeStore.svelte';
   onMount(() => pluginStore.init());
 
   let dailyTarget = $state(goalsStore.goals.dailyTarget);
 
-  let theme: string = 'light';
+  let theme: string = themeStore.theme;
   let fontSize: string = 'medium';
   let autosave: number = 30;
   let autoSummary: boolean = false;
@@ -33,6 +34,7 @@
     try {
       localStorage.setItem('settings', JSON.stringify(prefs));
       goalsStore.setDailyTarget(dailyTarget);
+      themeStore.setTheme(theme as 'light' | 'dark');
       toastStore.success('Preferences saved');
     } catch (e) {
       toastStore.error('Failed to save preferences');

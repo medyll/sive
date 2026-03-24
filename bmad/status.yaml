@@ -82,7 +82,7 @@ recommendation: |
 last_updated: 2026-03-19
 
 active_role: designer
-next_action: "Sprint 52 complete (2026-03-24): POST /api/notifications, onShared→push, notification:navigate handler, writing goal in Settings, doc:search command, 4 unit tests + 5 E2E. Ready to plan Sprint 53."
+next_action: "Sprint 53 complete (2026-03-24): themeStore, dark mode CSS vars, settings wired, 6/6 unit tests pass, e2e/sprint53.spec.ts (4 scenarios). Ready to plan Sprint 54."
 active_role: scrum
 
 # New v3.1.0 structured fields (Single Source of Truth)

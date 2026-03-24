@@ -1,3 +1,40 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+/* ── Light mode (default) ───────────────────────────────────────────────── */
+:root {
+  --color-background: #ffffff;
+  --color-surface: #f9fafb;
+  --color-text: #1a1a1a;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-hover: #f3f4f6;
+  --color-primary: #646cff;
+  --color-primary-hover: #535bf2;
+  --accent: #7c3aed;
+  --border: #e5e7eb;
+  --muted: #9ca3af;
+  --surface: #ffffff;
+}
+
+/* ── Dark mode ──────────────────────────────────────────────────────────── */
+html.dark {
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-muted: #94a3b8;
+  --color-border: #334155;
+  --color-hover: #1e293b;
+  --color-primary: #818cf8;
+  --color-primary-hover: #6366f1;
+  --accent: #a78bfa;
+  --border: #334155;
+  --muted: #94a3b8;
+  --surface: #1e293b;
+}
+
+html.dark body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
