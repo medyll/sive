@@ -24,6 +24,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   import CommandPalette from '$lib/elements/CommandPalette.svelte';
   import ShareModal from '$lib/elements/ShareModal.svelte';
   import NotificationBell from '$lib/elements/NotificationBell.svelte';
+  import { openPalette } from '$lib/commandPaletteStore.svelte';
 
   function isAutoSummaryEnabled(): boolean {
     if (!browser) return false;
@@ -339,6 +340,12 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     }
 
     function onKeydown(e: KeyboardEvent) {
+      // Ctrl+K — command palette
+      if (e.ctrlKey && e.key === 'k') {
+        e.preventDefault();
+        openPalette();
+        return;
+      }
       // Focus mode — always active
       if (e.key === 'F11' || (e.ctrlKey && e.shiftKey && e.key === 'F')) {
         e.preventDefault();

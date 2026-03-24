@@ -82,7 +82,7 @@ recommendation: |
 last_updated: 2026-03-19
 
 active_role: designer
-next_action: "Sprint 50 complete (2026-03-23): server pool 52/52 files, 595 passed | 0 failed | 1 skipped | 2 todo. Browser pool 21/22 files passing. Ready to plan Sprint 51."
+next_action: "Sprint 51 in progress (2026-03-24): S51-01 fixed by user, S51-02 Ctrl+K wired, S51-03/04 already mounted, S51-05 14/14 tests pass. Remaining: S51-06 E2E smoke (Ctrl+K, notification bell, writing goal bar). Then plan Sprint 52."
 active_role: scrum
 
 # New v3.1.0 structured fields (Single Source of Truth)
