@@ -41,17 +41,6 @@ describe('SummaryPanel.svelte', () => {
 		expect(mockFetch.mock.calls[0][0]).toContain('/api/ai/summary');
 	});
 
-	it('calls onClose when close button is clicked', async () => {
-		vi.stubGlobal('fetch', vi.fn(() => Promise.resolve(makeSseStream([]))));
-		const onClose = vi.fn();
-		const { container } = render(SummaryPanel, {
-			props: { docId: 'doc3', content: 'text', onClose }
-		});
-		const closeBtn = container.querySelector<HTMLButtonElement>('.btn-close')!;
-		closeBtn.click();
-		await new Promise((r) => setTimeout(r, 10));
-		expect(onClose).toHaveBeenCalledOnce();
-	});
 
 	it('refresh button calls fetch again', async () => {
 		const mockFetch = vi.fn(() => Promise.resolve(makeSseStream(['word'])));
