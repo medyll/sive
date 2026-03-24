@@ -21,6 +21,18 @@
 
 	let showShareModal = $state(false);
 	let isFocusMode = $state(false);
+	let swReady = $state(false);
+	let isOnline = $state(true);
+
+	onMount(() => {
+		isOnline = navigator.onLine;
+		window.addEventListener('online', () => { isOnline = true; });
+		window.addEventListener('offline', () => { isOnline = false; });
+
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.ready.then(() => { swReady = true; });
+		}
+	});
 
 	function toggleFocusMode() {
 		isFocusMode = !isFocusMode;
@@ -63,7 +75,9 @@
 	</div>
 
 	<div class="toolbar-center">
-		<!-- Placeholder for additional controls -->
+		{#if swReady && !isOnline}
+			<span class="offline-ready-chip" title="App cached — works offline">✓ Offline ready</span>
+		{/if}
 	</div>
 
 	<div class="toolbar-right">
@@ -184,6 +198,17 @@
 	.toolbar-button:hover {
 		background: var(--color-hover, #f5f5f5);
 		color: var(--color-text, #333);
+	}
+
+	.offline-ready-chip {
+		font-size: 0.72rem;
+		font-weight: 600;
+		color: #16a34a;
+		background: #dcfce7;
+		border: 1px solid #bbf7d0;
+		border-radius: 9999px;
+		padding: 0.2rem 0.6rem;
+		white-space: nowrap;
 	}
 
 	.toolbar-button.active {

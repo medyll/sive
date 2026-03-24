@@ -130,6 +130,24 @@ export function requestSuggestionNow(ctx: string, mode: SuggestionMode, selectio
 }
 
 /**
+ * Accept next word only — returns the accepted word, leaves remainder in state
+ */
+export function acceptNextWord(): string {
+	const text = state.suggestion;
+	if (!text) return '';
+	const match = text.match(/^(\S+\s*)/);
+	if (!match) return acceptSuggestion();
+	const word = match[1];
+	state.suggestion = text.slice(word.length);
+	if (!state.suggestion) {
+		cancel();
+		state.pending = false;
+		state.error = null;
+	}
+	return word;
+}
+
+/**
  * Accept suggestion — returns the text, then clears state
  */
 export function acceptSuggestion(): string {

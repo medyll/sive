@@ -1,0 +1,783 @@
+17:43:38 [vite-plugin-svelte] src/lib/elements/DocumentList.svelte:384:10 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+https://svelte.dev/e/a11y_click_events_have_key_events
+17:43:38 [vite-plugin-svelte] src/lib/elements/DocumentList.svelte:384:10 `<div>` with a click handler must have an ARIA role
+https://svelte.dev/e/a11y_no_static_element_interactions
+17:43:38 [vite-plugin-svelte] src/lib/elements/ShareModal.svelte:133:19 `a11y-no-static-element-interactions` is no longer valid ÔÇö please use `a11y_no_static_element_interactions` instead
+https://svelte.dev/e/legacy_code
+17:43:38 [vite-plugin-svelte] src/lib/elements/ShareModal.svelte:134:0 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+https://svelte.dev/e/a11y_click_events_have_key_events
+17:43:38 [vite-plugin-svelte] src/lib/elements/ShareModal.svelte:134:0 `<div>` with a click handler must have an ARIA role
+https://svelte.dev/e/a11y_no_static_element_interactions
+17:43:38 [vite-plugin-svelte] src/lib/elements/ShareModal.svelte:160:9 Visible, non-interactive elements with a click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as `<button type="button">` or `<a>` might be more appropriate
+https://svelte.dev/e/a11y_click_events_have_key_events
+17:43:38 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:102:37 Redundant role 'article'
+https://svelte.dev/e/a11y_no_redundant_roles
+17:43:38 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:114:37 Redundant role 'article'
+https://svelte.dev/e/a11y_no_redundant_roles
+17:43:38 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:125:37 Redundant role 'article'
+https://svelte.dev/e/a11y_no_redundant_roles
+17:43:38 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:149:37 Redundant role 'article'
+https://svelte.dev/e/a11y_no_redundant_roles
+17:43:38 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:161:37 Redundant role 'article'
+https://svelte.dev/e/a11y_no_redundant_roles
+17:43:38 [vite-plugin-svelte] src/lib/elements/ReviewReport.svelte:173:37 Redundant role 'article'
+https://svelte.dev/e/a11y_no_redundant_roles
+[server] src/lib/sprint52.spec.ts > S52-04 ÔÇö doc:search command > doc:search is registered in the command registry
+[server] src/lib/sprint52.spec.ts > S52-04 ÔÇö doc:search command > doc:search dispatches palette:focusSearch event
+[server] src/lib/sprint52.spec.ts > S52-03 ÔÇö writing goal target > setDailyTarget persists to localStorage
+[server] src/lib/sprint52.spec.ts > S52-01 ÔÇö notification push payload > push() creates a notification with correct fields
+[server] src/lib/themeStore.spec.ts > themeStore > defaults to light when no preference saved
+[server] src/lib/themeStore.spec.ts > themeStore > loads dark from localStorage
+[server] src/lib/themeStore.spec.ts > themeStore > setTheme(dark) adds .dark class to <html>
+[server] src/lib/themeStore.spec.ts > themeStore > setTheme(light) removes .dark class
+[server] src/lib/themeStore.spec.ts > themeStore > setTheme persists to localStorage
+[server] src/lib/themeStore.spec.ts > themeStore > setTheme dispatches theme:change event
+[server] src/routes/api/ai/stream/stream.spec.ts > GET /api/ai/stream > returns text/event-stream content type
+[server] src/routes/api/ai/stream/stream.spec.ts > GET /api/ai/stream > streams stub reply when no API key
+[server] src/routes/api/ai/stream/stream.spec.ts > GET /api/ai/stream > stub reply contains meaningful content
+[server] src/routes/api/ai/stream/stream.spec.ts > GET /api/ai/stream > handles malformed base64 gracefully (no crash)
+[server] src/routes/api/ai/stream/stream.spec.ts > GET /api/ai/stream > streams real tokens when API key is set
+[server] src/lib/sprint56.spec.ts > S56 ÔÇö Settings & Palette Polish > themeStore.setTheme applies dark class to html element
+[server] src/lib/sprint56.spec.ts > S56 ÔÇö Settings & Palette Polish > themeStore.setTheme removes dark class on light
+[server] src/lib/sprint56.spec.ts > S56 ÔÇö Settings & Palette Polish > commandRegistry shortcut field present on registered commands
+[server] src/lib/sprint56.spec.ts > S56 ÔÇö Settings & Palette Polish > palette recentIds stored and retrieved from localStorage
+[server] src/routes/app/page.server.spec.ts > +page.server.ts ÔÇö document handlers (mock mode) > load() > returns stub documents when isMock=true
+[server] src/routes/app/page.server.spec.ts > +page.server.ts ÔÇö document handlers (mock mode) > load() > returns an activeDocumentId
+[server] src/routes/app/page.server.spec.ts > +page.server.ts ÔÇö document handlers (mock mode) > load() > stub document has content
+[server] src/routes/app/page.server.spec.ts > +page.server.ts ÔÇö document handlers (mock mode) > load() > returns user=null when no user in mock mode
+[server] src/routes/app/page.server.spec.ts > +page.server.ts ÔÇö document handlers (mock mode) > load() > returns the user when present in mock mode
+[server] src/routes/app/page.server.spec.ts > +page.server.ts ÔÇö document handlers (mock mode) > actions.createDocument() > returns success in mock mode
+[server] src/routes/app/page.server.spec.ts > +page.server.ts ÔÇö document handlers (mock mode) > actions.createDocument() > returns a stub id in mock mode
+[server] src/routes/app/page.server.spec.ts > +page.server.ts ÔÇö document handlers (mock mode) > actions.updateDocument() > returns success in mock mode
+[server] src/routes/app/page.server.spec.ts > +page.server.ts ÔÇö document handlers (mock mode) > actions.updateDocument() > returns error when id is missing
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > token bucket algorithm > should allow requests within user limit
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > token bucket algorithm > should allow requests within IP limit
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > token bucket algorithm > should respect IP limit even with different users
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > token bucket algorithm > should apply stricter of user or IP limit
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > whitelist & internal IPs > should whitelist localhost
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > whitelist & internal IPs > should whitelist ::1 (IPv6 localhost)
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > whitelist & internal IPs > should whitelist private IP ranges
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > whitelist & internal IPs > should NOT whitelist public IPs
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > retry-after header > should return retry-after on limit exceeded
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > retry-after header > should generate correct retry-after headers
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > retry-after header > should not return headers when allowed
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > token refill > should refill tokens after timeout
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > custom config > should accept custom limits
+[server] src/lib/server/rateLimit.spec.ts > rateLimit > bucket stats > should track bucket statistics
+[server] src/lib/sprint-21.spec.ts > retryFetch > returns response immediately on success
+[server] src/lib/sprint-21.spec.ts > retryFetch > retries on 500 and succeeds on second attempt
+[server] src/lib/sprint-21.spec.ts > retryFetch > retries up to maxAttempts then returns last 500
+[server] src/lib/sprint-21.spec.ts > retryFetch > retries on network error then succeeds
+[server] src/lib/sprint-21.spec.ts > retryFetch > throws after all network-error attempts exhausted
+[server] src/lib/sprint-21.spec.ts > retryFetch > does not retry on AbortError
+[server] src/lib/sprint-21.spec.ts > retryFetch > respects AbortSignal immediately when already aborted
+[server] src/lib/sprint-21.spec.ts > retryFetch > passes custom maxAttempts
+[server] src/lib/sprint-21.spec.ts > toastStore warning > exposes a warning() method
+[server] src/lib/sprint-21.spec.ts > toastStore warning > warning() adds a toast with type "warning"
+[server] src/lib/sprint-21.spec.ts > toastStore warning > warning toast is auto-dismissed after timeout
+[server] src/lib/sprint-21.spec.ts > offline banner navigator.onLine logic > detects offline state via navigator.onLine=false
+[server] src/lib/sprint-21.spec.ts > offline banner navigator.onLine logic > detects online state via navigator.onLine=true
+[server] src/lib/sprint-21.spec.ts > offline banner navigator.onLine logic > offline event fires and online event fires as expected
+[server] src/lib/sprint-21.spec.ts > offline banner navigator.onLine logic > removes listeners on cleanup (no memory leak)
+[server] src/lib/sprint-21.spec.ts > AbortController cancel pattern (AIPanel) > abort() causes fetch to throw AbortError
+[server] src/lib/sprint-21.spec.ts > AbortController cancel pattern (AIPanel) > catches AbortError without triggering warning toast
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > getClientIP > should get IP from getClientAddress()
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > getClientIP > should get IP from X-Forwarded-For header
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > getClientIP > should get IP from X-Real-IP header
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > getClientIP > should return "unknown" as fallback
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > checkWriteRateLimit > should allow requests within limit
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > checkWriteRateLimit > should return 429 when user limit exceeded
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > checkWriteRateLimit > should include Retry-After header in 429 response
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > checkWriteRateLimit > should whitelist internal IPs
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > checkWriteRateLimit > should accept custom limits
+[server] src/lib/server/rateLimitMiddleware.spec.ts > rateLimitMiddleware > checkWriteRateLimit > should handle anonymous requests (no user)
+[server] src/routes/auth/tests/server.spec.ts > POST /auth handler > returns 400 when email is missing
+[server] src/routes/auth/tests/server.spec.ts > POST /auth handler > returns 400 when password is missing
+[server] src/routes/auth/tests/server.spec.ts > POST /auth handler > returns 400 when both email and password are missing
+[server] src/routes/auth/tests/server.spec.ts > POST /auth handler > returns 503 when auth.api.signInEmail is not available
+[server] src/routes/auth/tests/server.spec.ts > POST /auth handler > returns 200 with ok:true on successful sign-in
+[server] src/routes/auth/tests/server.spec.ts > POST /auth handler > calls signInEmail with the provided credentials
+[server] src/routes/auth/tests/server.spec.ts > POST /auth handler > returns 401 with error message when sign-in throws
+[server] src/routes/auth/tests/server.spec.ts > POST /auth handler > returns 401 with fallback message when thrown error has no message
+[server] src/routes/auth/auth-page.spec.ts > auth page server ÔÇö hasGithub flag > returns hasGithub: false when env vars are absent
+[server] src/routes/auth/auth-page.spec.ts > auth page server ÔÇö hasGithub flag > returns hasGithub: true when both env vars are set
+[server] src/routes/auth/auth-page.spec.ts > auth page server ÔÇö hasGithub flag > returns isMock from server module
+[server] src/routes/auth/auth-page.spec.ts > auth page server ÔÇö hasGithub flag > github action returns fail when isMock
+[server] src/lib/searchStore.spec.ts > searchStore > query management > should initialize with empty query
+[server] src/lib/searchStore.spec.ts > searchStore > query management > should update query via setQuery
+[server] src/lib/searchStore.spec.ts > searchStore > query management > should debounce search execution
+[server] src/lib/searchStore.spec.ts > searchStore > query management > should persist query to localStorage
+[server] src/lib/searchStore.spec.ts > searchStore > query management > should restore query from localStorage on init
+[server] src/lib/searchStore.spec.ts > searchStore > filters > should initialize with empty filters
+[server] src/lib/searchStore.spec.ts > searchStore > filters > should update filters via setFilters
+[server] src/lib/searchStore.spec.ts > searchStore > filters > should merge partial filter updates
+[server] src/lib/searchStore.spec.ts > searchStore > filters > should persist filters to localStorage
+[server] src/lib/searchStore.spec.ts > searchStore > filters > should clear all filters
+[server] src/lib/searchStore.spec.ts > searchStore > search history > should initialize with empty history
+[server] src/lib/searchStore.spec.ts > searchStore > search history > should add queries to history on search execution
+[server] src/lib/searchStore.spec.ts > searchStore > search history > should limit history to 20 items
+[server] src/lib/searchStore.spec.ts > searchStore > search history > should avoid duplicate queries in history
+[server] src/lib/searchStore.spec.ts > searchStore > search history > should clear history
+[server] src/lib/searchStore.spec.ts > searchStore > search history > should remove history from localStorage on clear
+[server] src/lib/searchStore.spec.ts > searchStore > result selection > should select a result
+[server] src/lib/searchStore.spec.ts > searchStore > result selection > should deselect result with null
+[server] src/lib/searchStore.spec.ts > searchStore > clear operations > should clear entire search state
+[server] src/lib/searchStore.spec.ts > searchStore > clear operations > should remove query from localStorage on clear
+[server] src/lib/searchStore.spec.ts > searchStore > derived stores > isSearchActive should be true when query is not empty
+[server] src/lib/searchStore.spec.ts > searchStore > derived stores > isSearchActive should be false when query is empty
+[server] src/lib/searchStore.spec.ts > searchStore > derived stores > resultCount should reflect number of results
+[server] src/lib/searchStore.spec.ts > searchStore > error handling > should initialize with no error
+[server] src/lib/searchStore.spec.ts > searchStore > error handling > should clear error on new search
+[server] src/lib/searchStore.spec.ts > searchStore > state consistency > should maintain consistent state across operations
+[server] src/lib/searchStore.spec.ts > searchStore > state consistency > should handle rapid filter updates
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentTitle > should accept valid titles
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentTitle > should reject empty titles
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentTitle > should reject non-string titles
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentTitle > should enforce 255 character limit
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentTitle > should reject titles with null bytes
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentTitle > should reject titles with script tags
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentTitle > should reject titles with event handlers
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentTitle > should reject titles with javascript: protocol
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentTitle > should trim whitespace from valid titles
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentContent > should accept valid content
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentContent > should accept long content up to 1MB
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentContent > should reject content exceeding 1MB
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentContent > should reject non-string content
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentContent > should reject content with null bytes
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentContent > should preserve document content as-is (user prose)
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAIPrompt > should accept valid prompts
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAIPrompt > should reject empty prompts
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAIPrompt > should enforce 5000 character limit
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAIPrompt > should reject non-string prompts
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAIPrompt > should reject prompts with injection patterns
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAIPrompt > should reject prompts with excessively long tokens
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAIPrompt > should trim whitespace from valid prompts
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAIPrompt > should allow valid multi-sentence prompts
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAPIResponse > should accept valid response with expected keys
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAPIResponse > should reject response missing required keys
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAPIResponse > should reject non-object responses
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAPIResponse > should reject null responses
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateAPIResponse > should accept response with extra keys
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentID > should accept valid UUID format
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentID > should accept uppercase UUID
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentID > should reject non-string IDs
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentID > should reject invalid UUID format
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentID > should reject malformed UUIDs
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentFormData > should accept valid form data
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentFormData > should reject missing document ID
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentFormData > should validate title if provided
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentFormData > should validate content if provided
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > validateDocumentFormData > should allow null title and content
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > Injection Pattern Detection > should detect vbscript: protocol
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > Injection Pattern Detection > should detect CSS expression()
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > Injection Pattern Detection > should detect eval()
+[server] src/lib/server/inputValidation.spec.ts > inputValidation > Injection Pattern Detection > should detect onerror handler
+[server] src/lib/server/ws.spec.ts > WebSocketServer > registers client and broadcasts presence
+[server] src/lib/server/ws.spec.ts > WebSocketServer > unregisters client and broadcasts leave
+[server] src/lib/server/ws.spec.ts > WebSocketServer > broadcasts to document subscribers
+[server] src/lib/server/ws.spec.ts > WebSocketServer > returns document presence
+[server] src/lib/server/ws.spec.ts > WebSocketServer > handles messages from clients
+[server] src/lib/server/ws.spec.ts > WebSocketServer > manages multiple documents
+[server] src/lib/server/ws.spec.ts > WebSocketServer > clears on shutdown
+[server] src/lib/server/ws.spec.ts > WebSocketServer > responds to heartbeat
+[server] src/lib/server/ws.spec.ts > WebSocketServer > broadcasts edits
+[server] src/lib/server/search.spec.ts > search engine > indexDocument > should index document with title and content
+[server] src/lib/server/search.spec.ts > search engine > indexDocument > should preserve original title and content
+[server] src/lib/server/search.spec.ts > search engine > basic search > should find document by title
+[server] src/lib/server/search.spec.ts > search engine > basic search > should find document by content
+[server] src/lib/server/search.spec.ts > search engine > basic search > should be case-insensitive
+[server] src/lib/server/search.spec.ts > search engine > basic search > should return empty results for non-matching query
+[server] src/lib/server/search.spec.ts > search engine > basic search > should return empty results for empty query
+[server] src/lib/server/search.spec.ts > search engine > result ranking > should rank title matches higher than content matches
+[server] src/lib/server/search.spec.ts > search engine > result ranking > should score multiple matches higher
+[server] src/lib/server/search.spec.ts > search engine > result ranking > should score early matches higher
+[server] src/lib/server/search.spec.ts > search engine > phrase search > should find exact phrase with quotes
+[server] src/lib/server/search.spec.ts > search engine > phrase search > should not match out-of-order phrase words
+[server] src/lib/server/search.spec.ts > search engine > phrase search > should score phrase matches higher than substring matches
+[server] src/lib/server/search.spec.ts > search engine > snippet extraction > should extract snippet around match
+[server] src/lib/server/search.spec.ts > search engine > snippet extraction > should highlight matches in snippet
+[server] src/lib/server/search.spec.ts > search engine > snippet extraction > should add ellipsis for truncated content
+[server] src/lib/server/search.spec.ts > search engine > searchWithFilters > should filter by single tag
+[server] src/lib/server/search.spec.ts > search engine > searchWithFilters > should filter by multiple tags (AND logic)
+[server] src/lib/server/search.spec.ts > search engine > searchWithFilters > should filter by date range
+[server] src/lib/server/search.spec.ts > search engine > searchWithFilters > should sort by date (descending)
+[server] src/lib/server/search.spec.ts > search engine > searchWithFilters > should sort by title (ascending)
+[server] src/lib/server/search.spec.ts > search engine > searchWithFilters > should combine search, filter, and sort
+[server] src/lib/server/search.spec.ts > search engine > performance > should search 100 documents in reasonable time
+[server] src/lib/server/search.spec.ts > search engine > edge cases > should handle empty document list
+[server] src/lib/server/search.spec.ts > search engine > edge cases > should handle documents with empty content
+[server] src/lib/server/search.spec.ts > search engine > edge cases > should handle special characters in search query
+[server] src/lib/server/search.spec.ts > search engine > edge cases > should handle very long documents
+[server] src/routes/api/ai/server.spec.ts > /api/ai endpoint > no API key ÔåÆ stub fallback > action=suggestions returns stub suggestions
+[server] src/routes/api/ai/server.spec.ts > /api/ai endpoint > no API key ÔåÆ stub fallback > action=coherence returns stub alerts
+[server] src/routes/api/ai/server.spec.ts > /api/ai endpoint > no API key ÔåÆ stub fallback > action=style returns stub signals
+[server] src/routes/api/ai/server.spec.ts > /api/ai endpoint > no API key ÔåÆ stub fallback > action=chat returns stub reply message
+[server] src/routes/api/ai/server.spec.ts > /api/ai endpoint > no API key ÔåÆ stub fallback > unknown action returns 400
+[server] src/routes/api/ai/server.spec.ts > /api/ai endpoint > with API key ÔåÆ real SDK call (mocked) > action=suggestions calls SDK and returns parsed array
+[server] src/routes/api/ai/server.spec.ts > /api/ai endpoint > with API key ÔåÆ real SDK call (mocked) > action=coherence calls SDK and returns parsed array
+[server] src/routes/api/ai/server.spec.ts > /api/ai endpoint > with API key ÔåÆ real SDK call (mocked) > action=style calls SDK and returns parsed array
+[server] src/lib/server/templates.spec.ts > getBuiltIn > returns 6 built-in templates
+[server] src/lib/server/templates.spec.ts > getBuiltIn > all built-in templates have non-empty content
+[server] src/lib/server/templates.spec.ts > getBuiltIn > includes Short Story, Blog Post, Essay, Meeting Notes, Poem, Novel Chapter
+[server] src/lib/server/templates.spec.ts > getBuiltIn > all built-in templates have builtIn=true
+[server] src/lib/server/templates.spec.ts > saveUserTemplate > saves a template and returns it
+[server] src/lib/server/templates.spec.ts > saveUserTemplate > respects max 20 limit
+[server] src/lib/server/templates.spec.ts > deleteUserTemplate > deletes a user template
+[server] src/lib/server/templates.spec.ts > deleteUserTemplate > returns false for non-existent id
+[server] src/lib/server/templates.spec.ts > deleteUserTemplate > does not delete built-in templates
+[server] src/lib/server/templates.spec.ts > deleteUserTemplate > does not delete another user's template
+[server] src/lib/server/templates.spec.ts > getAllTemplates > returns built-in + user templates combined
+[server] src/lib/server/templates.spec.ts > getTemplate > finds built-in template by id
+[server] src/lib/server/templates.spec.ts > getTemplate > finds user template by id
+[server] src/lib/server/templates.spec.ts > getTemplate > returns undefined for unknown id
+[server] src/lib/server/templates.spec.ts > applyTemplate > returns template content and provided title
+[server] src/lib/server/templates.spec.ts > applyTemplate > falls back to template name when title is omitted
+[server] src/lib/suggestionStore.spec.ts > suggestionStore > initial state > should start with empty state
+[server] src/lib/suggestionStore.spec.ts > suggestionStore > dismissSuggestion > should clear state on dismiss
+[server] src/lib/suggestionStore.spec.ts > suggestionStore > acceptSuggestion > should return suggestion text and clear state
+[server] src/lib/suggestionStore.spec.ts > suggestionStore > requestSuggestion (debounced) > should not fire immediately (debounced)
+[server] src/lib/suggestionStore.spec.ts > suggestionStore > requestSuggestion (debounced) > should cancel previous debounce on new call
+[server] src/lib/suggestionStore.spec.ts > suggestionStore > requestSuggestionNow (immediate) > should set pending=true immediately
+[server] src/lib/suggestionStore.spec.ts > suggestionStore > requestSuggestionNow (immediate) > should set correct mode
+[server] src/lib/suggestionStore.spec.ts > suggestionStore > requestSuggestionNow (immediate) > should handle fetch failure gracefully
+[server] src/lib/suggestionStore.spec.ts > suggestionStore > cancel on dismiss > should abort fetch on dismiss
+[server] src/lib/server/versions.spec.ts > saveVersion > saves and returns a version
+[server] src/lib/server/versions.spec.ts > saveVersion > stores newest first
+[server] src/lib/server/versions.spec.ts > saveVersion > respects max 50 limit (FIFO eviction)
+[server] src/lib/server/versions.spec.ts > getVersion > retrieves a specific version by id
+[server] src/lib/server/versions.spec.ts > getVersion > returns undefined for unknown id
+[server] src/lib/server/versions.spec.ts > restoreVersion > returns content and title
+[server] src/lib/server/versions.spec.ts > restoreVersion > returns null for unknown version
+[server] src/lib/server/versions.spec.ts > labelVersion > sets a label on a version
+[server] src/lib/server/versions.spec.ts > labelVersion > returns false for unknown version
+[server] src/lib/server/versions.spec.ts > computeDiff > identifies equal lines
+[server] src/lib/server/versions.spec.ts > computeDiff > identifies inserted lines
+[server] src/lib/server/versions.spec.ts > computeDiff > identifies deleted lines
+[server] src/lib/server/versions.spec.ts > computeDiff > handles empty strings
+[server] src/lib/server/versions.spec.ts > renderDiffHtml > wraps inserts in <ins> tags
+[server] src/lib/server/versions.spec.ts > renderDiffHtml > wraps deletes in <del> tags
+[server] src/lib/server/versions.spec.ts > renderDiffHtml > escapes HTML in diff text
+[server] src/lib/server/sharing.spec.ts > createShareLink > returns a link with a token
+[server] src/lib/server/sharing.spec.ts > createShareLink > sets expiresAt when ttlHours given
+[server] src/lib/server/sharing.spec.ts > createShareLink > expiresAt is null when no ttl
+[server] src/lib/server/sharing.spec.ts > resolveShareLink > resolves a valid link
+[server] src/lib/server/sharing.spec.ts > resolveShareLink > returns null for unknown token
+[server] src/lib/server/sharing.spec.ts > resolveShareLink > returns null for revoked link
+[server] src/lib/server/sharing.spec.ts > resolveShareLink > returns null for expired link
+[server] src/lib/server/sharing.spec.ts > revokeShareLink > revokes own link
+[server] src/lib/server/sharing.spec.ts > revokeShareLink > does not revoke another user's link
+[server] src/lib/server/sharing.spec.ts > getDocShareLinks > returns only non-revoked links for doc+user
+[client (chromium)] src/lib/elements/HardenModal.svelte.spec.ts > HardenModal > renders label input and message textarea
+[client (chromium)] src/lib/elements/HardenModal.svelte.spec.ts > HardenModal > Confirm button is disabled when label is empty
+[client (chromium)] src/lib/elements/HardenModal.svelte.spec.ts > HardenModal > Confirm button is enabled when label has a value
+[client (chromium)] src/lib/elements/HardenModal.svelte.spec.ts > HardenModal > clicking Confirm dispatches harden-confirm with label and message
+[client (chromium)] src/lib/elements/HardenModal.svelte.spec.ts > HardenModal > clicking Cancel dispatches harden-cancel
+[client (chromium)] src/lib/elements/HardenModal.svelte.spec.ts > HardenModal > dialog has accessible title
+[client (chromium)] src/lib/elements/ChatBar.svelte.spec.ts > ChatBar > renders with default placeholder
+[client (chromium)] src/lib/elements/ChatBar.svelte.spec.ts > ChatBar > renders with custom placeholder
+[client (chromium)] src/lib/elements/ChatBar.svelte.spec.ts > ChatBar > renders the Send button
+[client (chromium)] src/lib/elements/ChatBar.svelte.spec.ts > ChatBar > clears the input after Send button click
+[client (chromium)] src/lib/elements/ChatBar.svelte.spec.ts > ChatBar > clears the input after Enter key
+[client (chromium)] src/lib/elements/ChatBar.svelte.spec.ts > ChatBar > Send button is disabled when input is empty
+[client (chromium)] src/lib/elements/ChatBar.svelte.spec.ts > ChatBar > Send button is disabled when input is whitespace-only
+[client (chromium)] src/lib/elements/ReviewToolbar.svelte.spec.ts > ReviewToolbar > renders the Review Mode label
+[client (chromium)] src/lib/elements/ReviewToolbar.svelte.spec.ts > ReviewToolbar > renders the scope selector with 3 options
+[client (chromium)] src/lib/elements/ReviewToolbar.svelte.spec.ts > ReviewToolbar > default scope is "current chapter"
+[client (chromium)] src/lib/elements/ReviewToolbar.svelte.spec.ts > ReviewToolbar > renders the Run analysis button
+[client (chromium)] src/lib/elements/ReviewToolbar.svelte.spec.ts > ReviewToolbar > clicking Run analysis calls onRunAnalysis
+[client (chromium)] src/lib/elements/ReviewToolbar.svelte.spec.ts > ReviewToolbar > renders the Back to writing button
+[client (chromium)] src/lib/elements/ReviewToolbar.svelte.spec.ts > ReviewToolbar > clicking Back to writing calls onExitReview
+[client (chromium)] src/lib/elements/ReviewToolbar.svelte.spec.ts > ReviewToolbar > Run analysis button is disabled when analysisRunning=true
+[client (chromium)] src/lib/elements/ReviewToolbar.svelte.spec.ts > ReviewToolbar > shows loading text when analysisRunning=true
+[client (chromium)] src/lib/elements/TabBar.svelte.spec.ts > TabBar > renders all tabs from the tabs prop
+[client (chromium)] src/lib/elements/TabBar.svelte.spec.ts > TabBar > active tab has the "active" class
+[client (chromium)] src/lib/elements/TabBar.svelte.spec.ts > TabBar > inactive tabs do not have the "active" class
+[client (chromium)] src/lib/elements/TabBar.svelte.spec.ts > TabBar > clicking a tab dispatches a tabbar-change event with the tab name
+[client (chromium)] src/lib/elements/TabBar.svelte.spec.ts > TabBar > dispatches an event even when clicking the already-active tab
+[client (chromium)] src/lib/elements/TabBar.svelte.spec.ts > TabBar > renders no tabs when tabs prop is empty
+[client (chromium)] src/lib/elements/SuggestionItem.svelte.spec.ts > SuggestionItem > renders context and type badge
+[client (chromium)] src/lib/elements/SuggestionItem.svelte.spec.ts > SuggestionItem > modification shows both before (del) and after (ins) text
+[client (chromium)] src/lib/elements/SuggestionItem.svelte.spec.ts > SuggestionItem > addition shows only ins text
+[client (chromium)] src/lib/elements/SuggestionItem.svelte.spec.ts > SuggestionItem > deletion shows only del text
+[client (chromium)] src/lib/elements/SuggestionItem.svelte.spec.ts > SuggestionItem > Accept button calls onAccept with the suggestion id
+[client (chromium)] src/lib/elements/SuggestionItem.svelte.spec.ts > SuggestionItem > Reject button calls onReject with the suggestion id
+[client (chromium)] src/lib/elements/SuggestionItem.svelte.spec.ts > SuggestionItem > has role="article" on the card
+[client (chromium)] src/lib/elements/DocumentList.svelte.spec.ts > DocumentList > renders the document list sidebar
+[client (chromium)] src/lib/elements/DocumentList.svelte.spec.ts > DocumentList > shows all document titles
+[client (chromium)] src/lib/elements/DocumentList.svelte.spec.ts > DocumentList > marks the active document with aria-current
+[client (chromium)] src/lib/elements/DocumentList.svelte.spec.ts > DocumentList > calls onNew when "New document" button is clicked
+[client (chromium)] src/lib/elements/DocumentList.svelte.spec.ts > DocumentList > calls onSelect when a document item is clicked
+[client (chromium)] src/lib/elements/DocumentList.svelte.spec.ts > DocumentList > shows delete buttons for each document
+[client (chromium)] src/lib/elements/DocumentList.svelte.spec.ts > DocumentList > title span has aria-label for rename accessibility
+[client (chromium)] src/lib/elements/HardenTimeline.svelte.spec.ts > HardenTimeline > renders one point per snapshot
+[client (chromium)] src/lib/elements/HardenTimeline.svelte.spec.ts > HardenTimeline > shows empty state when snapshots is empty
+[client (chromium)] src/lib/elements/HardenTimeline.svelte.spec.ts > HardenTimeline > clicking a point dispatches a harden-select event with the snapshot id
+[client (chromium)] src/lib/elements/HardenTimeline.svelte.spec.ts > HardenTimeline > selected snapshot button has aria-current="true"
+[client (chromium)] src/lib/elements/ExportButton.pdf.svelte.spec.ts > ExportButton PDF export > renders the export button
+[client (chromium)] src/lib/elements/ExportButton.pdf.svelte.spec.ts > ExportButton PDF export > opens dropdown menu
+[client (chromium)] src/lib/elements/ExportButton.pdf.svelte.spec.ts > ExportButton PDF export > shows PDF option in export menu
+[client (chromium)] src/lib/elements/ExportButton.pdf.svelte.spec.ts > ExportButton PDF export > PDF button is initially not disabled
+[client (chromium)] src/lib/elements/ExportButton.pdf.svelte.spec.ts > ExportButton PDF export > includes summary when "Include summary" is checked and summary exists
+[client (chromium)] src/lib/elements/ExportButton.svelte.spec.ts > ExportButton.svelte > renders the export button
+[client (chromium)] src/lib/elements/ExportButton.svelte.spec.ts > ExportButton.svelte > opens dropdown on click
+[client (chromium)] src/lib/elements/ExportButton.svelte.spec.ts > ExportButton.svelte > shows Markdown and Plain text options
+[client (chromium)] src/lib/elements/ExportButton.svelte.spec.ts > ExportButton.svelte > closes dropdown after selecting format (download triggered)
+[client (chromium)] src/lib/elements/Toast.svelte.spec.ts > Toast.svelte > renders nothing when no toasts
+[client (chromium)] src/lib/elements/Toast.svelte.spec.ts > Toast.svelte > renders a success toast
+[client (chromium)] src/lib/elements/Toast.svelte.spec.ts > Toast.svelte > renders an error toast
+[client (chromium)] src/lib/elements/Toast.svelte.spec.ts > Toast.svelte > dismiss button removes the toast
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should render toolbar with document title
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should display presence list with users
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should toggle focus mode when button clicked
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should dispatch focus-mode-toggle event
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should dispatch export-document event
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should update presence list on presence-update event
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should highlight current user in presence list
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should be responsive and hide labels on small screens
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should handle multiple users correctly
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should maintain toolbar layout with empty props
+[client (chromium)] src/lib/elements/EditorToolbar.svelte.spec.ts > EditorToolbar > should render presence list correctly
+[client (chromium)] src/lib/elements/Onboarding.svelte.spec.ts > Onboarding.svelte > shows onboarding when not seen
+[client (chromium)] src/lib/elements/Onboarding.svelte.spec.ts > Onboarding.svelte > completes and sets localStorage and emits a toast
+[client (chromium)] src/lib/elements/ReviewReport.svelte.spec.ts > ReviewReport > renders all 7 section headings with stub data
+[client (chromium)] src/lib/elements/ReviewReport.svelte.spec.ts > ReviewReport > shows placeholder when report is null
+[client (chromium)] src/lib/elements/ReviewReport.svelte.spec.ts > ReviewReport > renders an inconsistency item
+[client (chromium)] src/lib/elements/ReviewReport.svelte.spec.ts > ReviewReport > renders a PoV item
+[client (chromium)] src/lib/elements/ReviewReport.svelte.spec.ts > ReviewReport > renders a narrative thread item
+[client (chromium)] src/lib/elements/ReviewReport.svelte.spec.ts > ReviewReport > renders the tension curve stub chart
+[client (chromium)] src/lib/elements/ReviewReport.svelte.spec.ts > ReviewReport > renders report items with role="article"
+[client (chromium)] src/lib/elements/CoherenceAlert.svelte.spec.ts > CoherenceAlert > renders entity, discrepancy_type, and note
+[client (chromium)] src/lib/elements/CoherenceAlert.svelte.spec.ts > CoherenceAlert > has role="article" on the card element
+[client (chromium)] src/lib/elements/CoherenceAlert.svelte.spec.ts > CoherenceAlert > renders confidence badge with correct text
+[client (chromium)] src/lib/elements/CoherenceAlert.svelte.spec.ts > CoherenceAlert > High confidence badge has red background
+[client (chromium)] src/lib/elements/CoherenceAlert.svelte.spec.ts > CoherenceAlert > Medium confidence badge has a distinct colour from High
+[client (chromium)] src/lib/elements/StyleSliders.svelte.spec.ts > StyleSliders > renders 4 sliders
+[client (chromium)] src/lib/elements/StyleSliders.svelte.spec.ts > StyleSliders > shows all 4 labels
+[client (chromium)] src/lib/elements/StyleSliders.svelte.spec.ts > StyleSliders > sliders default to value 50
+[client (chromium)] src/lib/elements/StyleSliders.svelte.spec.ts > StyleSliders > value badges display the current value
+[client (chromium)] src/lib/elements/StyleSliders.svelte.spec.ts > StyleSliders > onChange is called with correct key and number when slider changes
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should render remote cursors container
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should display cursors with correct colors
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should calculate correct cursor position from line and column
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should show user initials in label
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should hide invisible cursors
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should update visibility based on inactivity
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should maintain cursor colors correctly
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should handle empty cursor list
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should apply visible class to active cursors
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should handle multiple cursors on same line
+[client (chromium)] src/lib/elements/RemoteCursor.svelte.spec.ts > RemoteCursor > should provide correct tooltip text
+[client (chromium)] src/lib/elements/StyleSignal.svelte.spec.ts > StyleSignal > renders location, signal, and suggestion
+[client (chromium)] src/lib/elements/StyleSignal.svelte.spec.ts > StyleSignal > has role="article" on the card
+[client (chromium)] src/lib/elements/StyleSignal.svelte.spec.ts > StyleSignal > renders a coloured badge for the signal type
+[client (chromium)] src/lib/elements/StyleSignal.svelte.spec.ts > StyleSignal > uses a fallback badge colour for unknown signal types
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > renders empty list
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > renders avatars for users
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > shows initials from user ID
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > marks current user with special styling
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > limits visible avatars with maxVisible prop
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > shows count of hidden users
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > has accessible title attributes
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > renders different user lists
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > handles offline status
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > maintains count accuracy
+[client (chromium)] src/lib/elements/PresenceList.svelte.spec.ts > PresenceList > renders with multiple statuses
+[client (chromium)] src/lib/elements/Spinner.svelte.spec.ts > Spinner > renders with default medium size class
+[client (chromium)] src/lib/elements/Spinner.svelte.spec.ts > Spinner > renders with small size class
+[client (chromium)] src/lib/elements/Spinner.svelte.spec.ts > Spinner > renders with large size class
+[client (chromium)] src/lib/elements/Spinner.svelte.spec.ts > Spinner > applies the data-theme attribute from theme prop
+[client (chromium)] src/lib/elements/Spinner.svelte.spec.ts > Spinner > defaults to light theme
+[client (chromium)] src/lib/elements/ConflictIndicator.svelte.spec.ts > ConflictIndicator.svelte > renders conflict warning when multiple users editing
+[client (chromium)] src/lib/elements/ConflictIndicator.svelte.spec.ts > ConflictIndicator.svelte > does not show warning when only one user
+[client (chromium)] src/lib/elements/ConflictIndicator.svelte.spec.ts > ConflictIndicator.svelte > shows last editor info when provided
+[client (chromium)] src/lib/elements/ConflictIndicator.svelte.spec.ts > ConflictIndicator.svelte > formats time correctly
+[client (chromium)] src/routes/page.svelte.spec.ts > /+page.svelte > should render h1
+[client (chromium)] src/lib/elements/SummaryPanel.svelte.spec.ts > SummaryPanel.svelte > renders the panel header with length tabs
+[client (chromium)] src/lib/elements/SummaryPanel.svelte.spec.ts > SummaryPanel.svelte > calls fetch on mount to generate summary
+[client (chromium)] src/lib/elements/SummaryPanel.svelte.spec.ts > SummaryPanel.svelte > calls onClose when close button is clicked
+[client (chromium)] src/lib/elements/SummaryPanel.svelte.spec.ts > SummaryPanel.svelte > refresh button calls fetch again
+[client (chromium)] src/lib/elements/SummaryPanel.svelte.spec.ts > SummaryPanel.svelte > shows error message when fetch fails
+[server] src/lib/server/exportFormats.spec.ts > buildEpubBytes > returns a non-empty Uint8Array
+[server] src/lib/server/exportFormats.spec.ts > buildEpubBytes > starts with ZIP local file header signature (PK)
+[server] src/lib/server/exportFormats.spec.ts > buildEpubBytes > handles empty content
+[server] src/lib/server/exportFormats.spec.ts > buildEpubBytes > escapes HTML in title
+[server] src/lib/server/exportFormats.spec.ts > buildDocxBytes > returns a non-empty Uint8Array
+[server] src/lib/server/exportFormats.spec.ts > buildDocxBytes > starts with ZIP signature
+[server] src/lib/server/exportFormats.spec.ts > buildDocxBytes > handles empty content
+[server] src/lib/shared/data-loader.spec.ts > loadThemes > should load themes, motifs, and symbols
+[server] src/lib/shared/data-loader.spec.ts > loadStructure > should load structure with acts and narrativeThreads
+[server] src/lib/shared/data-loader.spec.ts > loadNarrator > should load narrator config
+[server] src/lib/shared/data-loader.spec.ts > loadCharacterSheet > should load detailed character sheet
+[server] src/lib/shared/data-loader.spec.ts > loadBible > should load bible with characters, locations, objects, vehicles, relations
+[server] src/lib/shared/data-loader.spec.ts > loadTimeline > should load timeline with events and ellipses
+[server] src/lib/shared/data-loader.spec.ts > loadChapter > should load chapter with states, keyEvents, transitions
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should add users with active status
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should transition user to idle after 5 seconds of inactivity
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should reset idle timeout when user is active
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should remove users completely
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should handle multiple users with independent timeouts
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should allow manual status changes
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should maintain lastSeen timestamp on activity
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should support concurrent user management
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should cleanup timers on removal
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should maintain presence list consistency
+[server] src/lib/editor/presence-store.spec.ts > Presence Store Integration > should handle store subscription updates
+[server] src/lib/server/shares.spec.ts > shares utility > createOwnerShare > inserts an owner share record
+[server] src/lib/server/shares.spec.ts > shares utility > createOwnerShare > sets created_at automatically
+[server] src/lib/server/shares.spec.ts > shares utility > createOwnerShare > does not duplicate when called twice for different users
+[server] src/lib/server/shares.spec.ts > shares utility > upsertShare > creates a new share record
+[server] src/lib/server/shares.spec.ts > shares utility > upsertShare > updates role if share already exists
+[server] src/lib/server/shares.spec.ts > shares utility > upsertShare > does not affect other users shares
+[server] src/lib/server/shares.spec.ts > shares utility > deleteShare > removes the share by id
+[server] src/lib/server/shares.spec.ts > shares utility > deleteShare > does not remove unrelated shares
+[server] src/lib/server/shares.spec.ts > shares utility > listDocumentShares > returns all shares for a document
+[server] src/lib/server/shares.spec.ts > shares utility > listDocumentShares > does not include shares from other documents
+[server] src/lib/server/shares.spec.ts > shares utility > listDocumentShares > returns correct shape (id, user_id, role)
+[server] src/lib/server/shares.spec.ts > shares utility > getDocumentRole > returns owner role when owner share exists
+[server] src/lib/server/shares.spec.ts > shares utility > getDocumentRole > returns null when no share exists
+[server] src/lib/server/shares.spec.ts > shares utility > getDocumentRole > returns null for a different document
+[server] src/lib/server/shares.spec.ts > shares utility > getDocumentRole > returns viewer role when set
+[server] src/lib/server/shares.spec.ts > shares utility > getDocumentRole > returns editor role when set
+[server] src/lib/server/notifications.spec.ts > push > should add a notification for a user
+[server] src/lib/server/notifications.spec.ts > push > should prepend (newest first)
+[server] src/lib/server/notifications.spec.ts > push > should cap at 50 notifications
+[server] src/lib/server/notifications.spec.ts > push > should assign unique ids
+[server] src/lib/server/notifications.spec.ts > push > should set read=false by default
+[server] src/lib/server/notifications.spec.ts > push > should not affect other users
+[server] src/lib/server/notifications.spec.ts > push > should notify SSE subscribers
+[server] src/lib/server/notifications.spec.ts > markRead > should mark a single notification read
+[server] src/lib/server/notifications.spec.ts > markRead > should return false for unknown id
+[server] src/lib/server/notifications.spec.ts > markRead > should not affect other notifications
+[server] src/lib/server/notifications.spec.ts > markAllRead > should mark all unread notifications read
+[server] src/lib/server/notifications.spec.ts > markAllRead > should return 0 when nothing to mark
+[server] src/lib/server/notifications.spec.ts > getUnread > should return only unread notifications
+[server] src/lib/server/notifications.spec.ts > getUnread > should return count=0 for new user
+[server] src/lib/server/notifications.spec.ts > clear > should remove all notifications for a user
+[server] src/lib/server/notifications.spec.ts > clear > should not affect other users
+[server] src/lib/server/notifications.spec.ts > subscribe / unsubscribe > should stop receiving after unsubscribe
+[server] src/lib/server/notifications.spec.ts > subscribe / unsubscribe > should support multiple subscribers
+[server] src/lib/server/stats.spec.ts > countWords > returns 0 for empty string
+[server] src/lib/server/stats.spec.ts > countWords > returns 0 for whitespace-only
+[server] src/lib/server/stats.spec.ts > countWords > counts single word
+[server] src/lib/server/stats.spec.ts > countWords > counts multiple words
+[server] src/lib/server/stats.spec.ts > countWords > handles multiple spaces
+[server] src/lib/server/stats.spec.ts > countWords > handles newlines as separators
+[server] src/lib/server/stats.spec.ts > countWords > handles tabs
+[server] src/lib/server/stats.spec.ts > countWords > ignores leading/trailing whitespace
+[server] src/lib/server/stats.spec.ts > countWords > counts words with punctuation attached
+[server] src/lib/server/stats.spec.ts > countSentences > returns 0 for empty string
+[server] src/lib/server/stats.spec.ts > countSentences > counts single sentence with period
+[server] src/lib/server/stats.spec.ts > countSentences > counts multiple sentences
+[server] src/lib/server/stats.spec.ts > countSentences > counts question marks
+[server] src/lib/server/stats.spec.ts > countSentences > counts exclamation marks
+[server] src/lib/server/stats.spec.ts > countSentences > handles text without terminal punctuation
+[server] src/lib/server/stats.spec.ts > countSentences > handles mixed punctuation
+[server] src/lib/server/stats.spec.ts > countParagraphs > returns 0 for empty string
+[server] src/lib/server/stats.spec.ts > countParagraphs > counts single paragraph
+[server] src/lib/server/stats.spec.ts > countParagraphs > counts two paragraphs
+[server] src/lib/server/stats.spec.ts > countParagraphs > ignores extra blank lines
+[server] src/lib/server/stats.spec.ts > countParagraphs > trims whitespace-only paragraphs
+[server] src/lib/server/stats.spec.ts > readingTimeMinutes > returns 1 for empty string
+[server] src/lib/server/stats.spec.ts > readingTimeMinutes > returns 1 for short text
+[server] src/lib/server/stats.spec.ts > readingTimeMinutes > returns correct minutes for 400 words
+[server] src/lib/server/stats.spec.ts > readingTimeMinutes > rounds up
+[server] src/lib/server/stats.spec.ts > computeDocStats > computes all stats for a document
+[server] src/lib/server/stats.spec.ts > computeUserStats > returns zero stats for empty doc list
+[server] src/lib/server/stats.spec.ts > computeUserStats > sums words across all docs
+[server] src/lib/server/stats.spec.ts > computeUserStats > identifies the longest document
+[server] src/lib/server/stats.spec.ts > computeUserStats > computes correct avgWordsPerDoc
+[server] src/lib/server/stats.spec.ts > computeUserStats > seeds 30 days in activityByDay
+[server] src/lib/server/stats.spec.ts > computeUserStats > computes non-zero streak when editing today
+[server] src/lib/server/stats.spec.ts > computeUserStats > computes readingTimeMinutes for whole corpus
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should handle multi-client join with presence broadcast
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should broadcast cursor updates to all clients in document
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should handle client disconnect and broadcast leave event
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should maintain document isolation - messages only to subscribers
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should handle concurrent edits from multiple clients
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should handle presence updates with multiple concurrent actions
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should preserve message timestamps for ordering
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should handle empty document cleanup
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should deliver presence info to newly connected clients
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should handle rapid client connections and disconnections
+[server] src/lib/server/collaboration.spec.ts > Collaboration Integration > should handle mixed message types in sequence
+[server] src/lib/commandPaletteStore.spec.ts > open / close / toggle > opens palette
+[server] src/lib/commandPaletteStore.spec.ts > open / close / toggle > closes palette
+[server] src/lib/commandPaletteStore.spec.ts > open / close / toggle > toggle: closed ÔåÆ opens
+[server] src/lib/commandPaletteStore.spec.ts > open / close / toggle > toggle: open ÔåÆ closes
+[server] src/lib/commandPaletteStore.spec.ts > open / close / toggle > resets query on open
+[server] src/lib/commandPaletteStore.spec.ts > open / close / toggle > resets selectedIndex on open
+[server] src/lib/commandPaletteStore.spec.ts > setQuery > updates query state
+[server] src/lib/commandPaletteStore.spec.ts > setQuery > resets selectedIndex to 0
+[server] src/lib/commandPaletteStore.spec.ts > keyboard navigation > selectNext increments index
+[server] src/lib/commandPaletteStore.spec.ts > keyboard navigation > selectNext wraps around
+[server] src/lib/commandPaletteStore.spec.ts > keyboard navigation > selectPrev wraps to end
+[server] src/lib/commandPaletteStore.spec.ts > executeSelected > runs the selected command action
+[server] src/lib/commandPaletteStore.spec.ts > executeSelected > closes palette after execution
+[server] src/lib/commandPaletteStore.spec.ts > executeSelected > adds executed command to recents
+[server] src/lib/commandPaletteStore.spec.ts > executeSelected > caps recents at 5
+[server] src/lib/commandPaletteStore.spec.ts > executeSelected > deduplicates recents
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should validate WebSocket upgrade header
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should require authentication
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should require documentId parameter
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should extract userId from session
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should generate unique client IDs
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should validate request parameters
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should handle multiple concurrent connections
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should map document subscriptions correctly
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should handle message routing
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should handle client disconnection
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should validate message structure
+[server] src/routes/api/ws/ws.spec.ts > WebSocket API Endpoint > should handle error cases gracefully
+[server] src/lib/elements/sprint20.spec.ts > DocumentList search filter > returns all docs when query is empty
+[server] src/lib/elements/sprint20.spec.ts > DocumentList search filter > returns all docs when query is whitespace-only
+[server] src/lib/elements/sprint20.spec.ts > DocumentList search filter > filters by partial title (case-insensitive)
+[server] src/lib/elements/sprint20.spec.ts > DocumentList search filter > returns single match for unique substring
+[server] src/lib/elements/sprint20.spec.ts > DocumentList search filter > returns empty array when no documents match
+[server] src/lib/elements/sprint20.spec.ts > DocumentList search filter > is case-insensitive (uppercase query)
+[server] src/lib/elements/sprint20.spec.ts > DocumentList arrow-key navigation > ArrowDown increments index
+[server] src/lib/elements/sprint20.spec.ts > DocumentList arrow-key navigation > ArrowDown does not exceed last index
+[server] src/lib/elements/sprint20.spec.ts > DocumentList arrow-key navigation > ArrowUp decrements index
+[server] src/lib/elements/sprint20.spec.ts > DocumentList arrow-key navigation > ArrowUp does not go below 0
+[server] src/lib/elements/sprint20.spec.ts > DocumentList arrow-key navigation > ArrowDown with single item stays at 0
+[server] src/lib/elements/sprint20.spec.ts > keyboard shortcut isTyping guard > returns true for INPUT
+[server] src/lib/elements/sprint20.spec.ts > keyboard shortcut isTyping guard > returns true for TEXTAREA
+[server] src/lib/elements/sprint20.spec.ts > keyboard shortcut isTyping guard > returns true for contenteditable element
+[server] src/lib/elements/sprint20.spec.ts > keyboard shortcut isTyping guard > returns false for BUTTON
+[server] src/lib/elements/sprint20.spec.ts > keyboard shortcut isTyping guard > returns false for DIV (non-editable)
+[server] src/lib/elements/sprint20.spec.ts > next/previous document shortcuts > nextDoc moves to next document
+[server] src/lib/elements/sprint20.spec.ts > next/previous document shortcuts > nextDoc stays on last document
+[server] src/lib/elements/sprint20.spec.ts > next/previous document shortcuts > prevDoc moves to previous document
+[server] src/lib/elements/sprint20.spec.ts > next/previous document shortcuts > prevDoc stays on first document
+[server] src/lib/elements/sprint20.spec.ts > suggestionsReady initial state > defaults to false (no stale suggestions badge on load)
+[server] src/lib/elements/sprint20.spec.ts > KeyboardShortcutsHelp shortcut catalogue > lists at least 8 shortcuts
+[server] src/lib/elements/sprint20.spec.ts > KeyboardShortcutsHelp shortcut catalogue > includes Ctrl+S save shortcut
+[server] src/lib/elements/sprint20.spec.ts > KeyboardShortcutsHelp shortcut catalogue > includes Ctrl+N new document shortcut
+[server] src/lib/elements/sprint20.spec.ts > KeyboardShortcutsHelp shortcut catalogue > includes ? help toggle
+[server] src/lib/elements/sprint20.spec.ts > KeyboardShortcutsHelp shortcut catalogue > all shortcuts have non-empty descriptions
+[server] src/lib/promptHistoryStore.spec.ts > promptHistoryStore > starts empty
+[server] src/lib/promptHistoryStore.spec.ts > promptHistoryStore > add() prepends new entries
+[server] src/lib/promptHistoryStore.spec.ts > promptHistoryStore > add() deduplicates: moves existing entry to top
+[server] src/lib/promptHistoryStore.spec.ts > promptHistoryStore > ignores empty / whitespace-only strings
+[server] src/lib/promptHistoryStore.spec.ts > promptHistoryStore > caps at 10 items
+[server] src/lib/promptHistoryStore.spec.ts > promptHistoryStore > clear() empties the store
+[server] src/lib/promptHistoryStore.spec.ts > promptHistoryStore > clear() removes localStorage entry
+[server] src/lib/promptHistoryStore.spec.ts > promptHistoryStore > persists to localStorage on add()
+[server] src/lib/promptHistoryStore.spec.ts > promptHistoryStore > loads from localStorage on module init (simulated via store pre-seed)
+[server] src/lib/commandRegistry.spec.ts > registerCommand / unregisterCommand > registers a command
+[server] src/lib/commandRegistry.spec.ts > registerCommand / unregisterCommand > unregisters a command
+[server] src/lib/commandRegistry.spec.ts > registerCommand / unregisterCommand > overwrites on duplicate id
+[server] src/lib/commandRegistry.spec.ts > searchCommands > returns all commands on empty query
+[server] src/lib/commandRegistry.spec.ts > searchCommands > finds by exact label prefix
+[server] src/lib/commandRegistry.spec.ts > searchCommands > finds by label substring
+[server] src/lib/commandRegistry.spec.ts > searchCommands > finds by keyword
+[server] src/lib/commandRegistry.spec.ts > searchCommands > fuzzy matches across label chars
+[server] src/lib/commandRegistry.spec.ts > searchCommands > ranks prefix matches first
+[server] src/lib/commandRegistry.spec.ts > searchCommands > returns empty array for no match
+[server] src/lib/commandRegistry.spec.ts > searchCommands > is case-insensitive
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > CSP Header Requirements > should include CSP header
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > CSP Header Requirements > CSP should restrict default sources
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > CSP Header Requirements > CSP should restrict image sources
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > CSP Header Requirements > CSP should restrict script sources
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > CSP Header Requirements > CSP should restrict style sources
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > Content Type Protection > should set X-Content-Type-Options to nosniff
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > Content Type Protection > should deny frame embedding with X-Frame-Options
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > Transport Security > should enforce HTTPS with HSTS
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > Transport Security > HSTS should include subdomains
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > Referrer Policy > should set strict referrer policy
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > XSS Protection > should enable XSS protection
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > Header Completeness > should have all required headers configured
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > Header Security Level > CSP should use allowlist approach (self only)
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > Header Security Level > should deny all frame embedding
+[server] src/lib/server/securityHeaders.spec.ts > Security Headers Configuration > Header Security Level > should require secure transport (HTTPS)
+[server] src/lib/focusStore.spec.ts > focusStore > default pomodoroMinutes is 25
+[server] src/lib/focusStore.spec.ts > focusStore > setDurations updates work and break
+[server] src/lib/focusStore.spec.ts > focusStore > setAmbient changes ambient sound
+[server] src/lib/focusStore.spec.ts > focusStore > stopPomodoro resets active flag
+[server] src/lib/focusStore.spec.ts > focusStore > formattedTime is MM:SS
+[server] src/lib/focusStore.spec.ts > AMBIENT_LABELS > has labels for all 5 sounds
+[server] src/lib/focusStore.spec.ts > AMBIENT_LABELS > none label exists
+[server] src/lib/notificationStore.spec.ts > markRead > marks a single notification as read and decrements count
+[server] src/lib/notificationStore.spec.ts > markRead > does nothing if notification already read
+[server] src/lib/notificationStore.spec.ts > markRead > calls PATCH API
+[server] src/lib/notificationStore.spec.ts > markAllRead > marks all notifications read and resets count to 0
+[server] src/lib/notificationStore.spec.ts > clearAll > empties notifications and resets count
+[server] src/lib/elements/VirtualDocumentList.spec.ts > VirtualDocumentList ÔÇö visible window logic > renders correct subset for a 400px viewport at scroll=0
+[server] src/lib/elements/VirtualDocumentList.spec.ts > VirtualDocumentList ÔÇö visible window logic > shifts window correctly after scrolling
+[server] src/lib/elements/VirtualDocumentList.spec.ts > VirtualDocumentList ÔÇö visible window logic > clamps first to 0 at top
+[server] src/lib/elements/VirtualDocumentList.spec.ts > VirtualDocumentList ÔÇö visible window logic > clamps last to total-1 at bottom
+[server] src/lib/elements/VirtualDocumentList.spec.ts > VirtualDocumentList ÔÇö visible window logic > total height = docs.length * rowHeight
+[server] src/lib/elements/VirtualDocumentList.spec.ts > VirtualDocumentList ÔÇö visible window logic > offset top = firstIdx * rowHeight
+[server] src/lib/elements/VirtualDocumentList.spec.ts > VirtualDocumentList ÔÇö word count cache > counts words correctly
+[server] src/lib/elements/VirtualDocumentList.spec.ts > VirtualDocumentList ÔÇö word count cache > processes docs in batches of 5
+[server] src/lib/elements/VirtualDocumentList.spec.ts > VirtualDocumentList ÔÇö word count cache > clears cache on doc list change
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Operation Registration > registers insert operation without conflict
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Operation Registration > registers delete operation without conflict
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Operation Registration > detects conflict with same position from different clients
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Operation Registration > ignores operations from same client
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Conflict Detection > detects delete operation overlapping with insert
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Conflict Detection > detects delete operations at same position as conflict
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Conflict Detection > does not detect conflict for non-overlapping operations
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Document Length > updates document length on insert
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Document Length > updates document length on delete
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Operation History > stores operation history
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Operation History > limits operation history with limit parameter
+[server] src/lib/editor/ot-adapter.spec.ts > OTAdapter > Statistics > calculates operation statistics
+[server] src/lib/editor/ot-adapter.spec.ts > ConflictResolver > suggests resolution based on timestamp difference
+[server] src/lib/editor/ot-adapter.spec.ts > ConflictResolver > returns high priority for delete conflicts
+[server] src/lib/editor/ot-adapter.spec.ts > ConflictResolver > suggests manual review for delete operations
+[server] src/lib/writingGoalsStore.spec.ts > setDailyTarget > updates the daily target
+[server] src/lib/writingGoalsStore.spec.ts > setDailyTarget > clamps minimum to 1
+[server] src/lib/writingGoalsStore.spec.ts > setDailyTarget > clamps maximum to 100 000
+[server] src/lib/writingGoalsStore.spec.ts > recordWords > sets todayWords when recording for the first time
+[server] src/lib/writingGoalsStore.spec.ts > recordWords > keeps the max when called again the same day
+[server] src/lib/writingGoalsStore.spec.ts > progress / goalMet / remaining > progress is 0 when no words recorded
+[server] src/lib/writingGoalsStore.spec.ts > progress / goalMet / remaining > progress reaches 1 when goal is met
+[server] src/lib/writingGoalsStore.spec.ts > progress / goalMet / remaining > remaining decreases as words are added
+[server] src/lib/writingGoalsStore.spec.ts > reset > resets all fields to defaults
+[server] src/lib/sprint55.spec.ts > S55 ÔÇö palette commands coverage > all expected palette commands are registered
+[server] src/lib/sprint55.spec.ts > S55 ÔÇö palette commands coverage > palette:toggleTheme action dispatches event
+[server] src/routes/api/guest/guest.spec.ts > isValidUUID > accepts a valid v4 UUID
+[server] src/routes/api/guest/guest.spec.ts > isValidUUID > accepts uppercase UUID
+[server] src/routes/api/guest/guest.spec.ts > isValidUUID > rejects a UUID with wrong segment lengths
+[server] src/routes/api/guest/guest.spec.ts > isValidUUID > rejects empty string
+[server] src/routes/api/guest/guest.spec.ts > isValidUUID > rejects arbitrary string
+[server] src/routes/api/guest/guest.spec.ts > validateConvertPayload > returns null for a valid payload
+[server] src/routes/api/guest/guest.spec.ts > validateConvertPayload > returns error when email is missing
+[server] src/routes/api/guest/guest.spec.ts > validateConvertPayload > returns error when password is missing
+[server] src/routes/api/guest/guest.spec.ts > validateConvertPayload > returns error when guest_id is missing
+[server] src/routes/api/guest/guest.spec.ts > validateConvertPayload > returns error when guest_id is not a valid UUID
+[server] src/routes/api/guest/guest.spec.ts > validateConvertPayload > returns error when password is too short
+[server] src/routes/api/guest/guest.spec.ts > validateConvertPayload > returns error when password is exactly 7 chars
+[server] src/routes/api/guest/guest.spec.ts > validateConvertPayload > accepts a password of exactly 8 chars
+[server] src/routes/api/guest/guest.spec.ts > guest_id cookie integrity check > passes when cookie matches payload
+[server] src/routes/api/guest/guest.spec.ts > guest_id cookie integrity check > fails when cookie is undefined
+[server] src/routes/api/guest/guest.spec.ts > guest_id cookie integrity check > fails when cookie differs from payload
+[server] src/routes/api/guest/guest.spec.ts > highlight category ÔåÆ report section mapping > maps inconsistency to sec-inconsistencies
+[server] src/routes/api/guest/guest.spec.ts > highlight category ÔåÆ report section mapping > maps pov to sec-pov
+[server] src/routes/api/guest/guest.spec.ts > highlight category ÔåÆ report section mapping > maps style to sec-style
+[server] src/routes/api/guest/guest.spec.ts > highlight category ÔåÆ report section mapping > maps rhythm to sec-style (grouped)
+[server] src/routes/api/guest/guest.spec.ts > highlight category ÔåÆ report section mapping > maps voice to sec-voices
+[server] src/routes/api/guest/guest.spec.ts > highlight category ÔåÆ report section mapping > returns undefined for unknown category
+[server] src/lib/elements/DocumentList.tags.spec.ts > DocumentList tag integration via tagStore > allDocTags is empty when no docs have tags
+[server] src/lib/elements/DocumentList.tags.spec.ts > DocumentList tag integration via tagStore > tag filter: get() returns correct tags after set()
+[server] src/lib/elements/DocumentList.tags.spec.ts > DocumentList tag integration via tagStore > tag filter clears correctly (null = show all)
+[server] src/lib/elements/DocumentList.tags.spec.ts > DocumentList tag integration via tagStore > tag search + tag filter both applied
+[server] src/lib/elements/DocumentList.tags.spec.ts > DocumentList tag integration via tagStore > hydrate populates tags for a doc
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > throws 401 when userId is undefined
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > throws 403 when user has no share record
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > returns role when user meets minimum (owner requires owner)
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > owner passes editor minimum
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > owner passes viewer minimum
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > editor passes editor minimum
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > editor passes viewer minimum
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > editor fails owner minimum
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > viewer passes viewer minimum
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > viewer fails editor minimum
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > viewer fails owner minimum
+[server] src/lib/server/rbac.spec.ts > requireDocumentRole > user with access to doc1 cannot access doc2
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > parseSlashCommand > returns null for empty string
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > parseSlashCommand > returns null when no slash present
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > parseSlashCommand > detects /bold at start of text
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > parseSlashCommand > detects /h1 with trailing text
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > parseSlashCommand > ignores slash in middle of word (e.g. http://)
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > parseSlashCommand > detects slash after whitespace
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > filterSlashCommands > returns all commands for empty query
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > filterSlashCommands > filters by prefix
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > filterSlashCommands > exact match returns single result
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > recently used templates > returns empty array initially
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > recently used templates > adds a template id
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > recently used templates > deduplicates on re-add (moves to front)
+[server] src/lib/sprint58.spec.ts > S58 ÔÇö Slash Commands & Template Recents > recently used templates > caps at 3 entries
+[server] src/lib/cursorColors.spec.ts > getCursorColor > returns a color from the palette
+[server] src/lib/cursorColors.spec.ts > getCursorColor > is consistent for the same userId
+[server] src/lib/cursorColors.spec.ts > getCursorColor > cycles through all 8 palette colors for different users
+[server] src/lib/cursorColors.spec.ts > getCursorColor > different userIds can produce different colors
+[server] src/lib/cursorColors.spec.ts > getCursorColor > works with empty string
+[server] src/lib/cursorColors.spec.ts > cursor debounce logic > respects 200ms debounce window
+[server] src/lib/sprint57.spec.ts > S57 ÔÇö Editor Toolbar & Focus Mode Polish > word count: empty string ÔåÆ 0
+[server] src/lib/sprint57.spec.ts > S57 ÔÇö Editor Toolbar & Focus Mode Polish > word count: single word
+[server] src/lib/sprint57.spec.ts > S57 ÔÇö Editor Toolbar & Focus Mode Polish > word count: multiple words with punctuation
+[server] src/lib/sprint57.spec.ts > S57 ÔÇö Editor Toolbar & Focus Mode Polish > char count matches string length
+[server] src/lib/sprint57.spec.ts > S57 ÔÇö Editor Toolbar & Focus Mode Polish > editor:format event dispatched on format action
+[server] src/lib/sprint57.spec.ts > S57 ÔÇö Editor Toolbar & Focus Mode Polish > save indicator states: idleÔåÆpendingÔåÆsavingÔåÆsaved
+[server] src/lib/toastStore.spec.ts > toastStore > starts empty
+[server] src/lib/toastStore.spec.ts > toastStore > success() adds a success toast
+[server] src/lib/toastStore.spec.ts > toastStore > error() adds an error toast
+[server] src/lib/toastStore.spec.ts > toastStore > info() adds an info toast
+[server] src/lib/toastStore.spec.ts > toastStore > dismiss() removes the toast by id
+[server] src/lib/toastStore.spec.ts > toastStore > multiple toasts stack
+[server] src/routes/app/page.server.guard.spec.ts > +page.server.ts ÔÇö route guard (non-mock mode) > redirects to /auth when no user and isMock=false
+[server] src/routes/app/page.server.guard.spec.ts > +page.server.ts ÔÇö route guard (non-mock mode) > does not redirect when user is present
+[server] src/lib/elements/EditorPanel.wordcount.spec.ts > countWords > returns 0 for empty string
+[server] src/lib/elements/EditorPanel.wordcount.spec.ts > countWords > returns 0 for whitespace-only string
+[server] src/lib/elements/EditorPanel.wordcount.spec.ts > countWords > counts single word
+[server] src/lib/elements/EditorPanel.wordcount.spec.ts > countWords > counts multiple words separated by single spaces
+[server] src/lib/elements/EditorPanel.wordcount.spec.ts > countWords > counts words separated by multiple spaces
+[server] src/lib/elements/EditorPanel.wordcount.spec.ts > countWords > counts words separated by newlines
+[server] src/lib/elements/EditorPanel.wordcount.spec.ts > countWords > handles leading/trailing whitespace
+[server] src/lib/elements/EditorPanel.wordcount.spec.ts > countWords > handles tabs as whitespace
+[server] src/lib/elements/EditorPanel.wordcount.spec.ts > countWords > counts a realistic paragraph correctly
+[server] src/lib/summaryStore.spec.ts > summaryStore logic > returns null for unknown docId
+[server] src/lib/summaryStore.spec.ts > summaryStore logic > stores and retrieves a summary
+[server] src/lib/summaryStore.spec.ts > summaryStore logic > returns null for a different length
+[server] src/lib/summaryStore.spec.ts > summaryStore logic > refreshSummary removes the cached entry
+[server] src/lib/summaryStore.spec.ts > summaryStore logic > refreshSummary does not affect other lengths
+[server] src/lib/summaryStore.spec.ts > summaryStore logic > prune removes stale entries
+[server] src/lib/summaryStore.spec.ts > summaryStore logic > overwrites an existing summary on re-set
+[server] src/routes/settings/settings.autoSummary.spec.ts > settings autoSummary persistence > defaults autoSummary to false when no settings saved
+[server] src/routes/settings/settings.autoSummary.spec.ts > settings autoSummary persistence > persists autoSummary: true
+[server] src/routes/settings/settings.autoSummary.spec.ts > settings autoSummary persistence > persists autoSummary: false explicitly
+[server] src/routes/settings/settings.autoSummary.spec.ts > settings autoSummary persistence > round-trips all settings together
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > updates local cursor
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > tracks selection with cursor
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > adds remote cursor
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > removes remote cursor
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > marks cursor visible when recent
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > generates consistent colors
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > generates different colors for different clients
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > clears remote cursors
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > handles multiple remote cursors
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > creates visible cursors store
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > creates listener
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > broadcasts cursor updates
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > prunes stale cursors
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > updates cursor multiple times
+[server] src/lib/editor/cursor-sync.spec.ts > Cursor Sync > handles empty remote cursors
+[server] src/lib/tagStore.spec.ts > tagStore > returns empty array for unknown docId
+[server] src/lib/tagStore.spec.ts > tagStore > adds a tag and retrieves it
+[server] src/lib/tagStore.spec.ts > tagStore > does not add duplicate tags
+[server] src/lib/tagStore.spec.ts > tagStore > enforces max 5 tags via set()
+[server] src/lib/tagStore.spec.ts > tagStore > add() is a no-op when 5 tags already present
+[server] src/lib/tagStore.spec.ts > tagStore > removes a tag
+[server] src/lib/tagStore.spec.ts > tagStore > persists to localStorage
+[server] src/lib/tagStore.spec.ts > tagStore > hydrates from JSON string
+[server] src/lib/tagStore.spec.ts > tagStore > toJSON serialises correctly
+[server] src/lib/tagStore.spec.ts > tagStore > trims whitespace on add()
+[server] src/lib/tagStore.spec.ts > tagStore > ignores blank tags on add()
+[server] src/routes/api/export/pdf/pdf.spec.ts > PDF export sanitization > sanitizes special characters
+[server] src/routes/api/export/pdf/pdf.spec.ts > PDF export sanitization > handles spaces
+[server] src/routes/api/export/pdf/pdf.spec.ts > PDF export sanitization > preserves hyphens and underscores
+[server] src/routes/api/export/pdf/pdf.spec.ts > PDF export sanitization > truncates long names
+[server] src/routes/api/export/pdf/pdf.spec.ts > PDF export sanitization > defaults to "document" for empty string
+[server] src/routes/api/export/pdf/pdf.spec.ts > PDF export sanitization > removes unicode characters
+[server] src/lib/elements/SummaryPanel.timestamp.spec.ts > SummaryPanel formatRelative > returns "just now" for under 1 minute
+[server] src/lib/elements/SummaryPanel.timestamp.spec.ts > SummaryPanel formatRelative > returns singular "1 minute ago"
+[server] src/lib/elements/SummaryPanel.timestamp.spec.ts > SummaryPanel formatRelative > returns plural minutes
+[server] src/lib/elements/SummaryPanel.timestamp.spec.ts > SummaryPanel formatRelative > returns singular hour
+[server] src/lib/elements/SummaryPanel.timestamp.spec.ts > SummaryPanel formatRelative > returns plural hours
+[server] src/lib/elements/SummaryPanel.timestamp.spec.ts > SummaryPanel formatRelative > returns singular day
+[server] src/lib/elements/SummaryPanel.timestamp.spec.ts > SummaryPanel formatRelative > returns plural days
+[server] src/routes/api/ai/stream/stream.context.spec.ts > buildSystemPrompt > returns base system prompt when no context provided
+[server] src/routes/api/ai/stream/stream.context.spec.ts > buildSystemPrompt > includes document excerpt in system prompt when context is provided
+[server] src/routes/api/ai/stream/stream.context.spec.ts > buildSystemPrompt > truncates excerpt to 2000 characters
+[server] src/routes/api/ai/stream/stream.context.spec.ts > buildSystemPrompt > does not modify base prompt when context is empty string
+[server] src/routes/api/ai/stream/stream.context.spec.ts > buildSystemPrompt > does not truncate excerpts shorter than 2000 chars
+[server] src/lib/presenceStore.spec.ts > Presence store idle detection > marks user as active if seen within idle timeout
+[server] src/lib/presenceStore.spec.ts > Presence store idle detection > marks user as idle after 30s without activity
+[server] src/lib/presenceStore.spec.ts > Presence store idle detection > marks user as offline after 2 minutes without activity
+[server] src/lib/presenceStore.spec.ts > Presence store idle detection > handles multiple users with different statuses
+[server] src/lib/presenceStore.spec.ts > Presence store idle detection > filters out offline users on cleanup
+[server] src/demo.spec.ts > sum test > adds 1 + 2 to equal 3
+[server] src/routes/settings/page.server.spec.ts > settings actions > savePreferences returns success for authenticated user
+[server] src/routes/profile/page.server.spec.ts > profile +page.server.ts > returns user data when user is present (mock mode)
+[server] src/routes/profile/page.server.spec.ts > profile +page.server.ts > returns user=null when no user in mock mode (guest)

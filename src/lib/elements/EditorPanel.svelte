@@ -3,6 +3,7 @@
 -->
 <script lang="ts">
   import { onDestroy } from 'svelte';
+  import SelectionToolbar from './SelectionToolbar.svelte';
 
   export interface EditorPanelProps {
     documentId?: string;
@@ -23,6 +24,22 @@
   let saveTimer: ReturnType<typeof setTimeout> | null = null;
   let lastSaved = $state<string | null>(null);
   let isDirty = $state(false);
+
+  let selectionText = $state('');
+  let toolbarX = $state(0);
+  let toolbarY = $state(0);
+
+  function handleSelectionChange() {
+    const sel = window.getSelection();
+    const text = sel?.toString() ?? '';
+    selectionText = text;
+    if (text) {
+      const range = sel!.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      toolbarX = rect.left + rect.width / 2;
+      toolbarY = rect.top;
+    }
+  }
 
   /** Count words — split on whitespace, filter empty tokens. */
   function countWords(text: string): number {
@@ -53,6 +70,18 @@
     if (saveTimer) clearTimeout(saveTimer);
   });
 </script>
+
+<svelte:window onselectionchange={handleSelectionChange} />
+
+{#if selectionText}
+  <SelectionToolbar
+    selection={selectionText}
+    context={content}
+    x={toolbarX}
+    y={toolbarY}
+    onDismiss={() => (selectionText = '')}
+  />
+{/if}
 
 <div class="editor-wrap" data-theme={theme}>
   <div class="editor-status" aria-live="polite">

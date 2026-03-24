@@ -30,7 +30,10 @@ vi.mock('./writingGoalsStore.svelte', () => {
 	const goals = { dailyTarget: 0 };
 	return {
 		goalsStore: {
-			setDailyTarget: (n: number) => { goals.dailyTarget = n; },
+			setDailyTarget: (n: number) => {
+				goals.dailyTarget = n;
+				localStorage.setItem('sive:goals', JSON.stringify({ dailyTarget: n }));
+			},
 			goals
 		}
 	};

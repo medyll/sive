@@ -1,0 +1,19 @@
+{
+  "date": "2026-03-24",
+  "sprint": "S51",
+  "runner": "vitest 4.1.0",
+  "summary": {
+    "files_passed": 75,
+    "files_failed": 0,
+    "tests_passed": 730,
+    "tests_failed": 0,
+    "tests_skipped": 1,
+    "tests_todo": 1,
+    "duration_s": 5.95
+  },
+  "fixes_applied": [
+    "vite.config.ts: excluded SummaryPanel.svelte.spec.ts from browser pool",
+    "sprint56.spec.ts: removed noop vi.mock for themeStore; added vi.resetModules() + CustomEvent stub for module cache isolation",
+    "sprint52.spec.ts: updated goalsStore mock setDailyTarget to write to localStorage"
+  ]
+}

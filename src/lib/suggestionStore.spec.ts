@@ -3,6 +3,7 @@ import {
 	requestSuggestion,
 	requestSuggestionNow,
 	acceptSuggestion,
+	acceptNextWord,
 	dismissSuggestion,
 	suggestionState
 } from './suggestionStore.svelte';
@@ -38,11 +39,38 @@ describe('suggestionStore', () => {
 
 	describe('acceptSuggestion', () => {
 		it('should return suggestion text and clear state', () => {
-			// Manually set suggestion via store state for testing
 			dismissSuggestion();
 			const result = acceptSuggestion();
 			expect(result).toBe('');
 			expect(suggestionState.suggestion).toBe('');
+		});
+	});
+
+	describe('acceptNextWord', () => {
+		it('returns empty string when no suggestion', () => {
+			dismissSuggestion();
+			expect(acceptNextWord()).toBe('');
+		});
+
+		it('accepts first word and leaves remainder', () => {
+			suggestionState.suggestion = 'hello world foo';
+			const word = acceptNextWord();
+			expect(word).toBe('hello ');
+			expect(suggestionState.suggestion).toBe('world foo');
+		});
+
+		it('accepts single word and clears state', () => {
+			suggestionState.suggestion = 'hello';
+			const word = acceptNextWord();
+			expect(word).toBe('hello');
+			expect(suggestionState.suggestion).toBe('');
+		});
+
+		it('accepts word with trailing space', () => {
+			suggestionState.suggestion = 'foo  bar';
+			const word = acceptNextWord();
+			expect(word).toBe('foo  ');
+			expect(suggestionState.suggestion).toBe('bar');
 		});
 	});
 

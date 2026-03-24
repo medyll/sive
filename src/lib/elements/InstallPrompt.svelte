@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { pwaStore } from '$lib/pwaStore.svelte';
+
 	let deferredPrompt = $state<Event & { prompt(): Promise<void>; userChoice: Promise<{ outcome: string }> } | null>(null);
-	let dismissed = $state(false);
+	let localDismissed = $state(false);
 
 	$effect(() => {
 		// SW is registered automatically by SvelteKit (src/service-worker.ts)
@@ -14,17 +16,24 @@
 		if (!deferredPrompt) return;
 		await deferredPrompt.prompt();
 		const { outcome } = await deferredPrompt.userChoice;
-		if (outcome === 'accepted') dismissed = true;
+		if (outcome === 'accepted') pwaStore.markInstalled();
 		deferredPrompt = null;
 	}
+
+	function dismiss() {
+		localDismissed = true;
+		pwaStore.dismiss();
+	}
+
+	let visible = $derived(!!deferredPrompt && !localDismissed && pwaStore.shouldShow());
 </script>
 
-{#if deferredPrompt && !dismissed}
+{#if visible}
 	<div class="install-banner" role="banner">
 		<span>📱 Install Sive for a better offline experience</span>
 		<div class="install-actions">
 			<button class="primary" onclick={install}>Install</button>
-			<button onclick={() => (dismissed = true)}>Dismiss</button>
+			<button onclick={dismiss}>Dismiss</button>
 		</div>
 	</div>
 {/if}

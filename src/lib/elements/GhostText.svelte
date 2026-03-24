@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { suggestionState, acceptSuggestion, dismissSuggestion } from '$lib/suggestionStore.svelte';
+	import { suggestionState, acceptSuggestion, acceptNextWord, dismissSuggestion } from '$lib/suggestionStore.svelte';
 
 	interface GhostTextProps {
 		onAccept?: (text: string) => void;
@@ -14,6 +14,10 @@
 			e.preventDefault();
 			const text = acceptSuggestion();
 			onAccept?.(text);
+		} else if (e.key === 'ArrowRight' && (e.ctrlKey || e.metaKey)) {
+			e.preventDefault();
+			const word = acceptNextWord();
+			onAccept?.(word);
 		} else if (e.key === 'Escape') {
 			dismissSuggestion();
 		} else if (e.key.length === 1 || e.key === 'Backspace') {
@@ -38,7 +42,7 @@
 			<span class="ghost-pending">●●●</span>
 		{:else}
 			<span class="ghost-content">{suggestionState.suggestion}</span>
-			<span class="ghost-hint">Tab to accept · Esc to dismiss</span>
+			<span class="ghost-hint">Tab to accept · Ctrl+→ word · Esc to dismiss</span>
 		{/if}
 	</span>
 {/if}
