@@ -24,6 +24,8 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   import CommandPalette from '$lib/elements/CommandPalette.svelte';
   import ShareModal from '$lib/elements/ShareModal.svelte';
   import NotificationBell from '$lib/elements/NotificationBell.svelte';
+  import FormattingToolbar from '$lib/elements/FormattingToolbar.svelte';
+  import EditorFooter from '$lib/elements/EditorFooter.svelte';
   import { openPalette } from '$lib/commandPaletteStore.svelte';
   import { themeStore } from '$lib/themeStore.svelte';
 
@@ -515,6 +517,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
 </script>
 
 <div class="app-root" use:globalKeyboardShortcuts>
+  {#if !focusMode}
   <header class="main-toolbar">
     <div class="project-label">
       {#if editingToolbarTitle}
@@ -606,6 +609,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       {/if}
     </div>
   </header>
+  {/if}
 
   {#if reviewMode}
     <div class="workspace">
@@ -637,11 +641,13 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
             {saveStatus === 'pending' ? '…' : saveStatus === 'saving' ? 'Saving…' : 'Saved ✓'}
           </div>
         {/if}
+        <FormattingToolbar />
         <EditorPanel
           documentId={activeDocumentId}
           bind:content={activeContent}
           onSave={debouncedSave}
         />
+        <EditorFooter content={activeContent} />
       </div>
 
       {#if !focusMode}
