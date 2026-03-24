@@ -175,6 +175,28 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     } catch { /* silent */ }
   }
 
+  // Handle notification:navigate — jump to referenced document
+  $effect(() => {
+    function onNotifNavigate(e: Event) {
+      const docId = (e as CustomEvent<{ docId: string }>).detail?.docId;
+      if (docId && documents.some(d => d.id === docId)) activeDocumentId = docId;
+    }
+    window.addEventListener('notification:navigate', onNotifNavigate);
+    return () => window.removeEventListener('notification:navigate', onNotifNavigate);
+  });
+
+  // Handle palette:focusSearch — focus sidebar search input
+  $effect(() => {
+    function onFocusSearch() {
+      sidebarOpen = true;
+      setTimeout(() => {
+        (document.querySelector('.doc-search-input') as HTMLInputElement | null)?.focus();
+      }, 50);
+    }
+    window.addEventListener('palette:focusSearch', onFocusSearch);
+    return () => window.removeEventListener('palette:focusSearch', onFocusSearch);
+  });
+
   // Listen to palette custom events
   $effect(() => {
     function onNewFromTemplate() { templatePickerOpen = true; }
@@ -699,6 +721,20 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     documentId={activeDocumentId ?? ''}
     isOwner={true}
     onClose={() => { shareOpen = false; }}
+    onShared={async (email) => {
+      const docTitle = documents.find(d => d.id === activeDocumentId)?.title ?? 'Untitled';
+      await fetch('/api/notifications', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          targetUserId: email,
+          type: 'doc_shared',
+          title: 'Document shared with you',
+          body: `"${docTitle}" has been shared with you`,
+          docId: activeDocumentId
+        })
+      }).catch(() => {});
+    }}
   />
 {/if}
 

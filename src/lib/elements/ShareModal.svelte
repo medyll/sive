@@ -19,9 +19,10 @@
 		documentId: string;
 		isOwner: boolean;
 		onClose: () => void;
+		onShared?: (email: string) => void;
 	}
 
-	let { documentId, isOwner, onClose }: Props = $props();
+	let { documentId, isOwner, onClose, onShared }: Props = $props();
 
 	let shares: ShareEntry[] = $state([]);
 	let searchQuery = $state('');
@@ -87,9 +88,11 @@
 				const data = await res.json().catch(() => ({}));
 				error = (data as { message?: string }).message ?? 'Failed to invite user';
 			} else {
+				const sharedEmail = selectedUser.email;
 				searchQuery = '';
 				selectedUser = null;
 				await loadShares();
+				onShared?.(sharedEmail);
 			}
 		} catch {
 			error = 'Network error';

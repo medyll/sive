@@ -220,6 +220,15 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			category: 'view',
 			icon: '🌙',
 			action: () => window.dispatchEvent(new CustomEvent('palette:toggleTheme'))
+		},
+		{
+			id: 'doc:search',
+			label: 'Search Documents',
+			keywords: ['search', 'find', 'filter', 'documents', 'list'],
+			category: 'document',
+			icon: '🔍',
+			shortcut: 'Ctrl+Shift+F',
+			action: () => window.dispatchEvent(new CustomEvent('palette:focusSearch'))
 		}
 	];
 

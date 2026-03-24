@@ -1,5 +1,5 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { getAll, markAllRead, clear, getUnread } from '$lib/server/notifications';
+import { getAll, markAllRead, clear, getUnread, push } from '$lib/server/notifications';
 
 function getUserId(event: Parameters<RequestHandler>[0]): string | null {
 	return event.locals.user?.id ?? null;
@@ -27,6 +27,29 @@ export const DELETE: RequestHandler = async (event) => {
 
 	clear(userId);
 	return json({ success: true });
+};
+
+/** POST /api/notifications — push a notification to a target user */
+export const POST: RequestHandler = async (event) => {
+	const userId = getUserId(event);
+	if (!userId || userId === 'guest') {
+		return json({ success: false, error: 'Not authenticated' }, { status: 401 });
+	}
+
+	const body = await event.request.json().catch(() => null);
+	if (!body?.targetUserId || !body?.type || !body?.title || !body?.body) {
+		return json({ success: false, error: 'Missing fields' }, { status: 400 });
+	}
+
+	const notification = push({
+		userId: body.targetUserId,
+		type: body.type,
+		title: body.title,
+		body: body.body,
+		docId: body.docId
+	});
+
+	return json({ success: true, notification });
 };
 
 /** PATCH /api/notifications — mark all read */

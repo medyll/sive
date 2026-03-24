@@ -3,7 +3,10 @@
   import { toastStore } from '$lib/toastStore.svelte';
   import PluginManager from '$lib/elements/PluginManager.svelte';
   import { pluginStore } from '$lib/pluginStore.svelte';
+  import { goalsStore } from '$lib/writingGoalsStore.svelte';
   onMount(() => pluginStore.init());
+
+  let dailyTarget = $state(goalsStore.goals.dailyTarget);
 
   let theme: string = 'light';
   let fontSize: string = 'medium';
@@ -29,6 +32,7 @@
     const prefs = { theme, fontSize, autosave, autoSummary };
     try {
       localStorage.setItem('settings', JSON.stringify(prefs));
+      goalsStore.setDailyTarget(dailyTarget);
       toastStore.success('Preferences saved');
     } catch (e) {
       toastStore.error('Failed to save preferences');
@@ -65,6 +69,14 @@
       <input type="checkbox" bind:checked={autoSummary} />
       Auto-generate summary on save
     </label>
+  </div>
+
+  <div class="mb-4">
+    <label class="block font-medium mb-2" for="daily-goal">Daily Writing Goal (words)</label>
+    <input id="daily-goal" type="number" bind:value={dailyTarget} min="1" max="100000" />
+    {#if goalsStore.goals.streak > 0}
+      <p class="goal-streak">🔥 Current streak: {goalsStore.goals.streak} day{goalsStore.goals.streak !== 1 ? 's' : ''}</p>
+    {/if}
   </div>
 
   <button onclick={save} class="btn btn-primary">Save</button>
