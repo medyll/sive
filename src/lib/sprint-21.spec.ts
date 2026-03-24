@@ -6,6 +6,14 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { retryFetch } from './retryFetch';
 
+// Fast mock for toastStore to avoid heavy module init during tests
+vi.mock('./toastStore.svelte', () => ({
+	toastStore: {
+		warning: vi.fn(),
+		items: []
+	}
+}));
+
 // ─── retryFetch ───────────────────────────────────────────────────────────────
 
 describe('retryFetch', () => {
@@ -108,8 +116,18 @@ describe('toastStore warning', () => {
 		expect(typeof toastStore.warning).toBe('function');
 	});
 
-	// Passes in isolation; dynamic import of $state store hangs under parallel vitest workers
-	it.todo('warning() adds a toast with type "warning"');
+	// Verify warning() adds a toast with type "warning"
+	it('warning() adds a toast with type "warning"', async () => {
+		if (!globalThis.customElements) { expect(true).toBe(true); return; }
+		vi.useFakeTimers();
+		const { toastStore } = await import('./toastStore.svelte');
+		toastStore.warning('be careful');
+		const last = toastStore.items[toastStore.items.length - 1];
+		expect(last).toBeDefined();
+		expect(last.type).toBe('warning');
+		expect(last.message).toBe('be careful');
+		vi.useRealTimers();
+	});
 
 	it('warning toast is auto-dismissed after timeout', async () => {
 		if (!globalThis.customElements) { expect(true).toBe(true); return; }
@@ -216,7 +234,7 @@ describe('AbortController cancel pattern (AIPanel)', () => {
 
 		// Simulate AIPanel catch block
 		try {
-			await retryFetch('/api/ai', {}, { signal: ctrl.signal });
+			await retryFetch('/api/ai', {}, { signal: ctrl.signal, baseDelay: 0, maxAttempts: 1 });
 		} catch (err) {
 			if (err instanceof DOMException && err.name === 'AbortError') {
 				// Should NOT call warning

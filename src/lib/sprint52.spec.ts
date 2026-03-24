@@ -25,6 +25,17 @@ describe('S52-04 — doc:search command', () => {
 });
 
 // ── S52-03: writing goal persisted via goalsStore ───────────────────────────
+// Mock writingGoalsStore to be lightweight and avoid slow module init
+vi.mock('./writingGoalsStore.svelte', () => {
+	const goals = { dailyTarget: 0 };
+	return {
+		goalsStore: {
+			setDailyTarget: (n: number) => { goals.dailyTarget = n; },
+			goals
+		}
+	};
+});
+
 describe('S52-03 — writing goal target', () => {
 	const store: Record<string, string> = {};
 	beforeEach(() => {

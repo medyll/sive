@@ -1,5 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+// Mock themeStore to avoid heavy module init during tests
+vi.mock('./themeStore.svelte', () => ({
+	themeStore: {
+		setTheme: (t: string) => {
+			// noop; DOM is stubbed in tests
+		}
+	}
+}));
+
 describe('S56 — Settings & Palette Polish', () => {
 	beforeEach(() => {
 		vi.stubGlobal('localStorage', {
