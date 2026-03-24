@@ -2,14 +2,14 @@
 # Tracks the current phase and completed steps 
 
 phase:
-  - name: Analysis
-    status: done
-  - name: Planning
-    status: done
-  - name: Solutioning
-    status: done
-  - name: Implementation
+  - name: planning
     status: in_progress
+  - name: development
+    status: upcoming
+  - name: testing
+    status: upcoming
+  - name: release
+    status: upcoming
 
 completed_steps:
   - Analysis
@@ -81,9 +81,9 @@ recommendation: |
   Technical debt: Document test patterns for follow-up testing improvements
 last_updated: 2026-03-19
 
-active_role: designer
-next_action: "Sprint 57 complete (2026-03-24): FormattingToolbar, EditorFooter, focus mode hides toolbar, 6/6 unit tests pass, e2e/sprint57.spec.ts (5 scenarios). Ready to plan Sprint 58."
-active_role: scrum
+active_role: dev
+next_action: "Implement S51-01 — Stabilize Tests"
+last_updated: 2026-03-24
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
