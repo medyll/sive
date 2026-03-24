@@ -18,8 +18,14 @@
 		selectedIndex = 0;
 	});
 
+	import { trackEvent } from '$lib/telemetry';
+
 	function select(cmd: SlashCommand) {
+		// Telemetry: selection + execution
+		trackEvent('slash:select', { id: cmd.id, label: cmd.label, format: cmd.format });
 		window.dispatchEvent(new CustomEvent('editor:format', { detail: { type: cmd.format } }));
+		// Mark execution (useful if action has side effects)
+		trackEvent('slash:execute', { id: cmd.id });
 		onselect?.(cmd);
 	}
 
@@ -28,11 +34,15 @@
 		if (e.key === 'ArrowDown') { e.preventDefault(); selectedIndex = (selectedIndex + 1) % results.length; }
 		else if (e.key === 'ArrowUp') { e.preventDefault(); selectedIndex = (selectedIndex - 1 + results.length) % results.length; }
 		else if (e.key === 'Enter') { e.preventDefault(); if (results[selectedIndex]) select(results[selectedIndex]); }
-		else if (e.key === 'Escape') { e.preventDefault(); onclose?.(); }
+		else if (e.key === 'Escape') { e.preventDefault();
+			trackEvent('slash:cancel', { reason: 'escape' });
+			onclose?.();
+		}
 	}
 
 	$effect(() => {
 		if (open) {
+			trackEvent('slash:open', { query });
 			window.addEventListener('keydown', handleKeydown);
 			return () => window.removeEventListener('keydown', handleKeydown);
 		}

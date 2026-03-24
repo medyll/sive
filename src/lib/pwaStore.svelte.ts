@@ -9,28 +9,29 @@ const COOLDOWN_DAYS = 7;
 const GATE_SAVES = 2;
 
 function createPwaStore() {
-	let saveCount = $state(parseInt(localStorage.getItem(SAVES_KEY) ?? '0', 10));
-	let installed = $state(localStorage.getItem(INSTALLED_KEY) === 'true');
+	const hasLocal = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+	let saveCount = $state(hasLocal ? parseInt(window.localStorage.getItem(SAVES_KEY) ?? '0', 10) : 0);
+	let installed = $state(hasLocal ? window.localStorage.getItem(INSTALLED_KEY) === 'true' : false);
 
 	function recordSave() {
 		saveCount++;
-		localStorage.setItem(SAVES_KEY, String(saveCount));
+		if (hasLocal) window.localStorage.setItem(SAVES_KEY, String(saveCount));
 	}
 
 	function dismiss() {
 		const until = Date.now() + COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
-		localStorage.setItem(DISMISSED_KEY, String(until));
+		if (hasLocal) window.localStorage.setItem(DISMISSED_KEY, String(until));
 	}
 
 	function markInstalled() {
 		installed = true;
-		localStorage.setItem(INSTALLED_KEY, 'true');
+		if (hasLocal) window.localStorage.setItem(INSTALLED_KEY, 'true');
 	}
 
 	function shouldShow(): boolean {
 		if (installed) return false;
 		if (saveCount < GATE_SAVES) return false;
-		const until = parseInt(localStorage.getItem(DISMISSED_KEY) ?? '0', 10);
+		const until = hasLocal ? parseInt(window.localStorage.getItem(DISMISSED_KEY) ?? '0', 10) : 0;
 		return Date.now() > until;
 	}
 
