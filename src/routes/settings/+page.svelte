@@ -9,7 +9,7 @@
 
   let dailyTarget = $state(goalsStore.goals.dailyTarget);
 
-  let theme: string = themeStore.theme;
+  let theme: string = $state(themeStore.theme);
   let fontSize: string = 'medium';
   let autosave: number = 30;
   let autoSummary: boolean = false;
@@ -29,6 +29,11 @@
     }
   });
 
+  function pickTheme(t: string) {
+    theme = t;
+    themeStore.setTheme(t as 'light' | 'dark');
+  }
+
   function save() {
     const prefs = { theme, fontSize, autosave, autoSummary };
     try {
@@ -47,8 +52,20 @@
 
   <div class="mb-4">
     <label class="block font-medium mb-2">Theme</label>
-    <label><input type="radio" bind:group={theme} value="light" /> Light</label>
-    <label class="ml-4"><input type="radio" bind:group={theme} value="dark" /> Dark</label>
+    <div class="theme-picker" role="radiogroup" aria-label="Theme">
+      {#each [{ value: 'light', label: 'Light', icon: '☀️' }, { value: 'dark', label: 'Dark', icon: '🌙' }] as opt (opt.value)}
+        <button
+          type="button"
+          class={['theme-card', theme === opt.value && 'selected'].filter(Boolean).join(' ')}
+          role="radio"
+          aria-checked={theme === opt.value}
+          onclick={() => pickTheme(opt.value)}
+        >
+          <span class="theme-icon">{opt.icon}</span>
+          <span class="theme-label">{opt.label}</span>
+        </button>
+      {/each}
+    </div>
   </div>
 
   <div class="mb-4">
@@ -88,3 +105,34 @@
   <h2>Plugins</h2>
   <PluginManager />
 </section>
+
+<style>
+  .theme-picker {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .theme-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.75rem 1.25rem;
+    border: 2px solid var(--color-border, #e5e7eb);
+    border-radius: 0.625rem;
+    background: var(--color-surface, #f9fafb);
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    min-width: 80px;
+  }
+  .theme-card:hover {
+    border-color: var(--color-accent, #7c3aed);
+  }
+  .theme-card.selected {
+    border-color: var(--color-accent, #7c3aed);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent, #7c3aed) 20%, transparent);
+  }
+  .theme-icon { font-size: 1.5rem; }
+  .theme-label { font-size: 0.8rem; font-weight: 600; color: var(--color-text, #111); }
+  .goal-streak { font-size: 0.85rem; margin-top: 0.25rem; }
+</style>

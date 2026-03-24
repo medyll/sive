@@ -10,11 +10,11 @@
 	let panelOpen = $state(false);
 
 	const TYPE_ICONS: Record<string, string> = {
-		doc_shared: '📄',
-		doc_edited: '✏️',
-		conflict: '⚠️',
+		doc_shared: 'ðŸ“„',
+		doc_edited: 'âœï¸',
+		conflict: 'âš ï¸',
 		mention: '@',
-		system: 'ℹ️'
+		system: 'â„¹ï¸'
 	};
 
 	function toggle() {
@@ -56,7 +56,7 @@
 	<button
 		class={['bell-button', notificationState.unreadCount > 0 && 'has-unread'].filter(Boolean).join(' ')}
 		onclick={toggle}
-		aria-label={`Notifications${notificationState.unreadCount > 0 ? ` — ${notificationState.unreadCount} unread` : ''}`}
+		aria-label={`Notifications${notificationState.unreadCount > 0 ? ` â€” ${notificationState.unreadCount} unread` : ''}`}
 		aria-expanded={panelOpen}
 		aria-haspopup="true"
 	>
@@ -96,7 +96,7 @@
 			<ul class="notification-list" role="list">
 				{#if notificationState.notifications.length === 0}
 					<li class="empty-state">
-						<span class="empty-icon">✓</span>
+						<span class="empty-icon">âœ“</span>
 						<span>You're all caught up</span>
 					</li>
 				{:else}
@@ -108,7 +108,7 @@
 								aria-label={`${n.title}: ${n.body}`}
 							>
 								<span class="notif-icon" aria-hidden="true">
-									{TYPE_ICONS[n.type] ?? 'ℹ️'}
+									{TYPE_ICONS[n.type] ?? 'â„¹ï¸'}
 								</span>
 								<div class="notif-content">
 									<p class="notif-title">{n.title}</p>
@@ -129,7 +129,7 @@
 			<!-- Connection status -->
 			{#if !notificationState.connected}
 				<div class="connection-warning">
-					⚠️ Reconnecting…
+					âš ï¸ Reconnectingâ€¦
 				</div>
 			{/if}
 		</div>
@@ -156,13 +156,13 @@
 		background: transparent;
 		border-radius: 0.5rem;
 		cursor: pointer;
-		color: #6b7280;
+		color: var(--color-muted);
 		transition: background-color 0.15s, color 0.15s;
 	}
 
 	.bell-button:hover {
-		background: #f3f4f6;
-		color: #1f2937;
+		background: var(--color-hover);
+		color: var(--color-text);
 	}
 
 	.bell-button.has-unread {
@@ -198,8 +198,8 @@
 		top: calc(100% + 0.5rem);
 		right: 0;
 		width: min(360px, 95vw);
-		background: white;
-		border: 1px solid #e5e7eb;
+		background: var(--color-background);
+		border: 1px solid var(--color-border);
 		border-radius: 0.75rem;
 		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 		z-index: 200;
@@ -214,7 +214,7 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 1rem 1rem 0.75rem;
-		border-bottom: 1px solid #f3f4f6;
+		border-bottom: 1px solid var(--color-border);
 		flex-shrink: 0;
 	}
 
@@ -222,7 +222,7 @@
 		margin: 0;
 		font-size: 0.9375rem;
 		font-weight: 700;
-		color: #111827;
+		color: var(--color-text);
 	}
 
 	.panel-actions {
@@ -235,15 +235,15 @@
 		border: none;
 		background: transparent;
 		font-size: 0.75rem;
-		color: #6b7280;
+		color: var(--color-muted);
 		cursor: pointer;
 		border-radius: 0.25rem;
 		transition: background-color 0.15s;
 	}
 
 	.action-btn:hover {
-		background: #f3f4f6;
-		color: #374151;
+		background: var(--color-hover);
+		color: var(--color-text);
 	}
 
 	.action-btn--danger:hover {
@@ -266,7 +266,7 @@
 		align-items: center;
 		gap: 0.5rem;
 		padding: 2.5rem 1rem;
-		color: #9ca3af;
+		color: var(--color-muted);
 		font-size: 0.875rem;
 	}
 
@@ -276,7 +276,7 @@
 	}
 
 	.notification-item {
-		border-bottom: 1px solid #f9fafb;
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	.notification-item.unread {
@@ -297,7 +297,7 @@
 	}
 
 	.notification-btn:hover {
-		background: #f9fafb;
+		background: var(--color-surface);
 	}
 
 	.notif-icon {
@@ -315,7 +315,7 @@
 		margin: 0 0 0.25rem;
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: #111827;
+		color: var(--color-text);
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -324,7 +324,7 @@
 	.notif-body {
 		margin: 0 0 0.375rem;
 		font-size: 0.8125rem;
-		color: #6b7280;
+		color: var(--color-muted);
 		line-height: 1.4;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
@@ -334,7 +334,7 @@
 
 	.notif-time {
 		font-size: 0.75rem;
-		color: #9ca3af;
+		color: var(--color-muted);
 	}
 
 	.unread-dot {

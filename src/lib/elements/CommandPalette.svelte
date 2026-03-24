@@ -70,7 +70,7 @@
 				bind:this={inputEl}
 				class="search-input"
 				type="text"
-				placeholder="Search commands…"
+				placeholder="Search commandsâ€¦"
 				value={paletteState.query}
 				oninput={handleInput}
 				onkeydown={handleKeydown}
@@ -138,8 +138,8 @@
 
 		<!-- Footer hint -->
 		<div class="palette-footer" aria-hidden="true">
-			<span><kbd>↑↓</kbd> navigate</span>
-			<span><kbd>↵</kbd> execute</span>
+			<span><kbd>â†‘â†“</kbd> navigate</span>
+			<span><kbd>â†µ</kbd> execute</span>
 			<span><kbd>Esc</kbd> close</span>
 		</div>
 	</div>
@@ -161,7 +161,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		width: min(560px, 92vw);
-		background: white;
+		background: var(--color-background);
 		border-radius: 0.875rem;
 		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(0,0,0,0.06);
 		z-index: 301;
@@ -187,13 +187,13 @@
 		align-items: center;
 		gap: 0.75rem;
 		padding: 0.875rem 1rem;
-		border-bottom: 1px solid #f3f4f6;
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	.search-icon {
 		width: 1.125rem;
 		height: 1.125rem;
-		color: #9ca3af;
+		color: var(--color-muted);
 		flex-shrink: 0;
 	}
 
@@ -203,19 +203,19 @@
 		outline: none;
 		font-size: 1rem;
 		font-family: inherit;
-		color: #111827;
+		color: var(--color-text);
 		background: transparent;
 	}
 
-	.search-input::placeholder { color: #9ca3af; }
+	.search-input::placeholder { color: var(--color-muted); }
 
 	.esc-hint {
 		padding: 0.2rem 0.4rem;
-		background: #f3f4f6;
-		border: 1px solid #e5e7eb;
+		background: var(--color-hover);
+		border: 1px solid var(--color-border);
 		border-radius: 0.25rem;
 		font-size: 0.7rem;
-		color: #6b7280;
+		color: var(--color-muted);
 		flex-shrink: 0;
 	}
 
@@ -234,14 +234,14 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.07em;
-		color: #9ca3af;
+		color: var(--color-muted);
 	}
 
 	.result-item { }
 
 	.result-item.selected .result-btn,
 	.result-btn:hover {
-		background: #f5f3ff;
+		background: var(--color-hover);
 	}
 
 	.result-btn {
@@ -256,7 +256,7 @@
 		cursor: pointer;
 		font-family: inherit;
 		font-size: 0.9rem;
-		color: #111827;
+		color: var(--color-text);
 		transition: background-color 0.1s;
 	}
 
@@ -281,16 +281,16 @@
 
 	.shortcut {
 		padding: 0.15rem 0.375rem;
-		background: #f3f4f6;
-		border: 1px solid #e5e7eb;
+		background: var(--color-hover);
+		border: 1px solid var(--color-border);
 		border-radius: 0.25rem;
 		font-size: 0.7rem;
-		color: #6b7280;
+		color: var(--color-muted);
 	}
 
 	.cmd-category {
 		font-size: 0.7rem;
-		color: #d1d5db;
+		color: var(--color-muted);
 	}
 
 	/* Empty state */
@@ -301,29 +301,29 @@
 		gap: 0.375rem;
 		padding: 2rem 1rem;
 		font-size: 0.9rem;
-		color: #6b7280;
+		color: var(--color-muted);
 	}
 
-	.empty-hint { font-size: 0.75rem; color: #9ca3af; }
+	.empty-hint { font-size: 0.75rem; color: var(--color-muted); }
 
 	/* Footer */
 	.palette-footer {
 		display: flex;
 		gap: 1.25rem;
 		padding: 0.5rem 1rem;
-		border-top: 1px solid #f3f4f6;
+		border-top: 1px solid var(--color-border);
 		font-size: 0.7rem;
-		color: #9ca3af;
+		color: var(--color-muted);
 		justify-content: center;
 	}
 
 	.palette-footer kbd {
 		padding: 0.1rem 0.3rem;
-		background: #f9fafb;
-		border: 1px solid #e5e7eb;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
 		border-radius: 0.2rem;
 		font-size: 0.65rem;
-		color: #6b7280;
+		color: var(--color-muted);
 		margin-right: 0.2rem;
 	}
 

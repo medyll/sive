@@ -25,6 +25,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   import ShareModal from '$lib/elements/ShareModal.svelte';
   import NotificationBell from '$lib/elements/NotificationBell.svelte';
   import { openPalette } from '$lib/commandPaletteStore.svelte';
+  import { themeStore } from '$lib/themeStore.svelte';
 
   function isAutoSummaryEnabled(): boolean {
     if (!browser) return false;
@@ -195,6 +196,60 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     }
     window.addEventListener('palette:focusSearch', onFocusSearch);
     return () => window.removeEventListener('palette:focusSearch', onFocusSearch);
+  });
+
+  // Palette handlers — all remaining commands
+  $effect(() => {
+    function onNewDocument() { handleNewDocument(); }
+    function onToggleFocus() { focusMode = !focusMode; }
+    function onShowShortcuts() { showShortcutsHelp = true; }
+    function onToggleTheme() {
+      themeStore.setTheme(themeStore.theme === 'dark' ? 'light' : 'dark');
+    }
+    function onSummarize() { showSummaryPanel = true; }
+    function onOpenAIChat() { chatBarOpen = true; }
+    function onExportPDF() {
+      const doc = documents.find(d => d.id === activeDocumentId);
+      if (!doc) return;
+      const params = new URLSearchParams({ title: doc.title, content: activeContent });
+      window.open(`/api/export/pdf?${params}`, '_blank');
+    }
+    function onExportMarkdown() {
+      const doc = documents.find(d => d.id === activeDocumentId);
+      if (!doc) return;
+      const blob = new Blob([activeContent], { type: 'text/markdown' });
+      const a = Object.assign(document.createElement('a'), {
+        href: URL.createObjectURL(blob),
+        download: `${doc.title}.md`
+      });
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+    function onDuplicateDocument() {
+      if (!activeDocumentId) return;
+      if (duplicateDocForm && duplicateIdInput) {
+        duplicateIdInput.value = activeDocumentId;
+        duplicateDocForm.requestSubmit();
+      }
+    }
+    function onDeleteDocument() {
+      if (activeDocumentId) handleDelete(activeDocumentId);
+    }
+
+    const events: [string, () => void][] = [
+      ['palette:newDocument',      onNewDocument],
+      ['palette:toggleFocus',      onToggleFocus],
+      ['palette:showShortcuts',    onShowShortcuts],
+      ['palette:toggleTheme',      onToggleTheme],
+      ['palette:summarize',        onSummarize],
+      ['palette:openAIChat',       onOpenAIChat],
+      ['palette:exportPDF',        onExportPDF],
+      ['palette:exportMarkdown',   onExportMarkdown],
+      ['palette:duplicateDocument',onDuplicateDocument],
+      ['palette:deleteDocument',   onDeleteDocument],
+    ];
+    for (const [ev, fn] of events) window.addEventListener(ev, fn);
+    return () => { for (const [ev, fn] of events) window.removeEventListener(ev, fn); };
   });
 
   // Listen to palette custom events

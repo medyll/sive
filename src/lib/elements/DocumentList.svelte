@@ -1,5 +1,5 @@
 <!--
-  DocumentList — sidebar listing user documents with create/switch/rename/delete support
+  DocumentList Ã¢â‚¬â€ sidebar listing user documents with create/switch/rename/delete support
 -->
 <script lang="ts">
   import { tagStore } from '$lib/tagStore.svelte.js';
@@ -136,12 +136,12 @@
     }
   }
 
-  // Focus input when entering edit mode — using attachment (Svelte 5)
+  // Focus input when entering edit mode Ã¢â‚¬â€ using attachment (Svelte 5)
   function focusOnMount(node: HTMLElement) {
     node.focus();
   }
 
-  // ── Context menu ──────────────────────────────────────────────────────────
+  // Ã¢â€â‚¬Ã¢â€â‚¬ Context menu Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
   let menuOpenId = $state<string | null>(null);
   let menuRef = $state<HTMLElement | null>(null);
 
@@ -181,7 +181,7 @@
     return () => document.removeEventListener('mousedown', onOutside);
   });
 
-  // ── Bulk select ───────────────────────────────────────────────────────────
+  // Ã¢â€â‚¬Ã¢â€â‚¬ Bulk select Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
   let bulkMode = $state(false);
   let selectedIds = $state<Set<string>>(new Set());
 
@@ -229,7 +229,7 @@
         onclick={toggleSelectAll}
         aria-label={allSelected ? 'Deselect all' : 'Select all'}
         title={allSelected ? 'Deselect all' : 'Select all'}
-      >{allSelected ? '☑' : '☐'}</button>
+      >{allSelected ? 'Ã¢Ëœâ€˜' : 'Ã¢ËœÂ'}</button>
       {#if selectedCount > 0}
         <button
           class="btn-bulk-delete"
@@ -238,10 +238,10 @@
           aria-label="Delete selected documents"
         >Delete ({selectedCount})</button>
       {/if}
-      <button class="btn-bulk-cancel" type="button" onclick={toggleBulkMode} aria-label="Cancel selection">✕</button>
+      <button class="btn-bulk-cancel" type="button" onclick={toggleBulkMode} aria-label="Cancel selection">Ã¢Å“â€¢</button>
     {:else}
-      <button class="btn-bulk-mode" type="button" onclick={toggleBulkMode} aria-label="Select documents" title="Select multiple">☐</button>
-      <button class="btn-new-doc" type="button" onclick={onNew} aria-label="New document">＋</button>
+      <button class="btn-bulk-mode" type="button" onclick={toggleBulkMode} aria-label="Select documents" title="Select multiple">Ã¢ËœÂ</button>
+      <button class="btn-new-doc" type="button" onclick={onNew} aria-label="New document">Ã¯Â¼â€¹</button>
     {/if}
   </div>
 
@@ -249,7 +249,7 @@
     <input
       class="doc-search-input flex-1 text-sm border rounded px-2 py-1 bg-[var(--color-background,#fff)] text-[var(--color-text,#1a1a1a)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#646cff)]"
       type="search"
-      placeholder="Filter…"
+      placeholder="FilterÃ¢â‚¬Â¦"
       aria-label="Filter documents"
       bind:value={searchQuery}
     />
@@ -259,7 +259,7 @@
         type="button"
         aria-label="Clear filter"
         onclick={() => { searchQuery = ''; focusedIndex = -1; }}
-      >✕</button>
+      >Ã¢Å“â€¢</button>
     {/if}
   </div>
 
@@ -279,7 +279,7 @@
           class="btn-tag-filter-clear"
           aria-label="Clear tag filter"
           onclick={() => { activeTagFilter = null; }}
-        >✕</button>
+        >Ã¢Å“â€¢</button>
       {/if}
     </div>
   {/if}
@@ -300,7 +300,7 @@
           <button type="button" class="btn-empty-new" onclick={() => { searchQuery = ''; }}>Clear filter</button>
         {:else}
           <span>No documents yet.</span>
-          <button type="button" class="btn-empty-new" onclick={onNew}>Create one →</button>
+          <button type="button" class="btn-empty-new" onclick={onNew}>Create one Ã¢â€ â€™</button>
         {/if}
       </li>
     {:else}
@@ -365,7 +365,7 @@
                 aria-expanded={menuOpenId === doc.id}
                 aria-haspopup="menu"
                 onclick={(e) => openMenu(doc.id, e)}
-              >⋯</button>
+              >Ã¢â€¹Â¯</button>
               {#if menuOpenId === doc.id}
                 <ul class="doc-context-menu" role="menu" aria-label="Document actions">
                   <li role="none">
@@ -390,7 +390,7 @@
                   class="btn-tag-remove"
                   aria-label="Remove tag {tag}"
                   onclick={(e) => { e.stopPropagation(); tagStore.remove(doc.id, tag); }}
-                >×</button>
+                >Ãƒâ€”</button>
               </span>
             {/each}
             {#if tagStore.get(doc.id).length < 5}
@@ -398,7 +398,7 @@
                 <input
                   class="tag-input"
                   type="text"
-                  placeholder="tag…"
+                  placeholder="tagÃ¢â‚¬Â¦"
                   bind:value={tagInputValue}
                   onblur={() => commitTag(doc.id)}
                   onkeydown={(e) => onTagInputKeydown(e, doc.id)}
@@ -412,7 +412,7 @@
                   class="btn-tag-add"
                   aria-label="Add tag to {doc.title}"
                   onclick={(e) => startTagEdit(doc.id, e)}
-                >＋</button>
+                >Ã¯Â¼â€¹</button>
               {/if}
             {/if}
           </div>
@@ -424,16 +424,6 @@
 </aside>
 
 <style>
-:root{
-  --color-border:#e0e0e0;
-  --color-surface:#f9f9f9;
-  --color-background:#fff;
-  --color-text:#1a1a1a;
-  --color-text-muted:#9ca3af;
-  --color-primary:#646cff;
-  --color-primary-light:#ebebff;
-  --color-hover:#f0f0f0;
-}
 
 /* Lightweight overrides kept for accessibility and small components */
 .doc-title-row{display:flex;align-items:center;gap:0.35rem;min-width:0;flex:1}

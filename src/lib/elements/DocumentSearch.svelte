@@ -221,10 +221,10 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		border: 1px solid #e5e7eb;
+		border: 1px solid var(--color-border);
 		border-radius: 0.5rem;
 		padding: 0.5rem;
-		background-color: #fff;
+		background-color: var(--color-background);
 		transition: all 0.2s;
 	}
 
@@ -236,7 +236,7 @@
 	.search-icon {
 		width: 1.25rem;
 		height: 1.25rem;
-		color: #9ca3af;
+		color: var(--color-muted);
 		flex-shrink: 0;
 	}
 
@@ -259,13 +259,13 @@
 		padding: 0;
 		border: none;
 		background: transparent;
-		color: #6b7280;
+		color: var(--color-muted);
 		cursor: pointer;
 		transition: color 0.2s;
 	}
 
 	.clear-button:hover {
-		color: #1f2937;
+		color: var(--color-text);
 	}
 
 	.clear-button svg {
@@ -275,7 +275,7 @@
 
 	.result-count {
 		font-size: 0.75rem;
-		color: #6b7280;
+		color: var(--color-muted);
 		padding: 0 0.5rem;
 	}
 
@@ -285,8 +285,8 @@
 		left: 0;
 		right: 0;
 		margin-top: 0.5rem;
-		background: white;
-		border: 1px solid #e5e7eb;
+		background: var(--color-background);
+		border: 1px solid var(--color-border);
 		border-radius: 0.5rem;
 		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 		max-height: 400px;
@@ -304,7 +304,7 @@
 		gap: 0.75rem;
 		padding: 2rem 1rem;
 		text-align: center;
-		color: #6b7280;
+		color: var(--color-muted);
 	}
 
 	.loading svg,
@@ -317,7 +317,7 @@
 	.spinner {
 		width: 1.25rem;
 		height: 1.25rem;
-		border: 2px solid #e5e7eb;
+		border: 2px solid var(--color-border);
 		border-top-color: #3b82f6;
 		border-radius: 50%;
 		animation: spin 0.6s linear infinite;
@@ -340,7 +340,7 @@
 	}
 
 	.result-item {
-		border-bottom: 1px solid #f3f4f6;
+		border-bottom: 1px solid var(--color-border);
 		transition: background-color 0.2s;
 	}
 
@@ -364,7 +364,7 @@
 	}
 
 	.result-button:hover {
-		background-color: #f9fafb;
+		background-color: var(--color-surface);
 	}
 
 	.result-button:focus {
@@ -384,7 +384,7 @@
 		margin: 0;
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: #1f2937;
+		color: var(--color-text);
 		flex: 1;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -393,7 +393,7 @@
 
 	.result-score {
 		font-size: 0.75rem;
-		color: #9ca3af;
+		color: var(--color-muted);
 		white-space: nowrap;
 		flex-shrink: 0;
 	}
@@ -401,7 +401,7 @@
 	.result-snippet {
 		margin: 0.5rem 0;
 		font-size: 0.75rem;
-		color: #6b7280;
+		color: var(--color-muted);
 		line-height: 1.4;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -431,8 +431,8 @@
 		padding: 0.25rem 0.5rem;
 		font-size: 0.7rem;
 		border-radius: 0.25rem;
-		background-color: #f3f4f6;
-		color: #374151;
+		background-color: var(--color-hover);
+		color: var(--color-text);
 		font-weight: 500;
 	}
 
@@ -443,7 +443,7 @@
 	.tag-more {
 		padding: 0.25rem 0.5rem;
 		font-size: 0.7rem;
-		color: #9ca3af;
+		color: var(--color-muted);
 	}
 
 	.backdrop {
