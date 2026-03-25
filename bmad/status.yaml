@@ -93,11 +93,11 @@ recommendation: |
   Next: Run unit tests to confirm stabilization baseline, then Sprint 59 planning.
 last_updated: 2026-03-19
 
-active_role: dev
-next_action: "S65-03 complete. Now implementing S65-04: Weekly Goal Reset & History."
-next_command: "bmad continue"
-next_role: dev
-last_updated: 2026-03-25T22:30:00Z
+active_role: scrum_master
+next_action: "Sprint 65 complete (100%). Ready for Sprint 66 planning or continued implementation."
+next_command: "bmad status"
+next_role: scrum_master
+last_updated: 2026-03-25T22:45:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -686,9 +686,10 @@ sprints:
 
   - id: sprint-65
     name: Sprint 65 — Goals Refinement & Social
-    status: in_progress
-    progress: 60
+    status: done
+    progress: 100
     start: 2026-03-25
+    end: 2026-03-25
     stories:
       - id: S65-01
         title: goal-templates-system
@@ -701,10 +702,10 @@ sprints:
         status: done
       - id: S65-04
         title: weekly-goal-reset-history
-        status: in_progress
+        status: done
       - id: S65-05
         title: unit-tests-sprint65
-        status: todo
+        status: done
     stories:
       - id: S64-01
         title: streakStore
