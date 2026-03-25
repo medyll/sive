@@ -93,11 +93,11 @@ recommendation: |
   Next: Run unit tests to confirm stabilization baseline, then Sprint 59 planning.
 last_updated: 2026-03-19
 
-active_role: scrum_master
-next_action: "Sprint 65 complete (100%). Ready for Sprint 66 planning or continued implementation."
-next_command: "bmad status"
-next_role: scrum_master
-last_updated: 2026-03-25T22:45:00Z
+active_role: pm
+next_action: "Sprint 66 plan created: Social Sharing & Community Features (6 stories). Review plan or approve to start implementation."
+next_command: "bmad continue"
+next_role: dev
+last_updated: 2026-03-25T23:00:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -706,6 +706,31 @@ sprints:
       - id: S65-05
         title: unit-tests-sprint65
         status: done
+
+  - id: sprint-66
+    name: Sprint 66 — Social Sharing & Community Features
+    status: planning
+    progress: 5
+    start: 2026-03-26
+    stories:
+      - id: S66-01
+        title: user-profiles-with-goal-stats
+        status: todo
+      - id: S66-02
+        title: share-goals-link-referral-style
+        status: todo
+      - id: S66-03
+        title: accountability-partners-follow-feature
+        status: todo
+      - id: S66-04
+        title: milestone-celebrations-badge-pop
+        status: todo
+      - id: S66-05
+        title: weekly-leaderboard-optional
+        status: todo
+      - id: S66-06
+        title: unit-tests-sprint66
+        status: todo
     stories:
       - id: S64-01
         title: streakStore
