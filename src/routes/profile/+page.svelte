@@ -23,7 +23,7 @@
 
 <main class="profile-page">
   <div class="profile-card">
-    <a href="/app" class="back-link">← Back to editor</a>
+    <a href="/" class="back-link">← Back to editor</a>
 
     <div class="profile-avatar">
       {#if data.user}

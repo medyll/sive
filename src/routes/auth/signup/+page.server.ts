@@ -4,7 +4,7 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!isMock && locals.user && (locals.user as any).id !== 'guest') {
-		throw redirect(302, '/app');
+		throw redirect(302, '/');
 	}
 	return { isMock };
 };
@@ -26,7 +26,7 @@ export const actions: Actions = {
 
 		try {
 			await auth.api.signUpEmail({ email, password, name });
-			throw redirect(302, '/app');
+			throw redirect(302, '/');
 		} catch (err: unknown) {
 			if (err instanceof Response || (err as { status?: number }).status === 302) throw err;
 			const msg = (err as { message?: string })?.message;

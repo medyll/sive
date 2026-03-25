@@ -16,7 +16,7 @@
     {#if data.isMock}
       <div class="auth-notice" role="status">
         ⚠️ Dev mode — no database available. Auth is disabled.
-        <a href="/app" class="link-app">Continue as guest →</a>
+        <a href="/" class="link-app">Continue as guest →</a>
       </div>
     {/if}
 

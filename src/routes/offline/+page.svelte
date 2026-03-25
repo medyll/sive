@@ -13,7 +13,7 @@
 		<p>Sive can't reach the server right now. Check your connection and try again.</p>
 		<p class="tip">💡 Your locally cached documents are still accessible.</p>
 		<button onclick={retry}>Try again</button>
-		<a href="/app" class="back-link">← Back to app</a>
+		<a href="/" class="back-link">← Back to app</a>
 	</div>
 </main>
 

@@ -6,7 +6,7 @@ import type { Actions, PageServerLoad } from './$types';
 // Redirect authenticated users away from login page
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!isMock && locals.user && (locals.user as any).id !== 'guest') {
-		throw redirect(302, '/app');
+		throw redirect(302, '/');
 	}
 	return {
 		isMock,
@@ -30,7 +30,7 @@ export const actions: Actions = {
 
 		try {
 			await auth.api.signInEmail({ email, password });
-			throw redirect(302, '/app');
+			throw redirect(302, '/');
 		} catch (err: unknown) {
 			if (err instanceof Response || (err as { status?: number }).status === 302) throw err;
 			return fail(401, { error: 'Invalid email or password.' });

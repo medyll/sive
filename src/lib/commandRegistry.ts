@@ -81,7 +81,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['editor', 'app', 'home', 'write'],
 			category: 'navigation',
 			icon: '✏️',
-			action: () => navigate('/app')
+			action: () => navigate('/')
 		},
 		{
 			id: 'nav:dashboard',

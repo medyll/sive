@@ -46,7 +46,7 @@
 <main class="dashboard">
 	<header class="dash-header">
 		<h1 class="dash-title">Your Writing Dashboard</h1>
-		<a href="/app" class="back-link">← Back to editor</a>
+		<a href="/" class="back-link">← Back to editor</a>
 	</header>
 
 	<!-- Hero stat cards -->
@@ -103,7 +103,7 @@
 				<ol class="doc-list">
 					{#each topDocs as doc (doc.id)}
 						<li class="doc-item">
-							<a href="/app" class="doc-link" data-docid={doc.id}>
+							<a href="/" class="doc-link" data-docid={doc.id}>
 								<span class="doc-title">{doc.title || 'Untitled'}</span>
 								<span class="doc-words">{formatNumber(doc.wordCount)} words</span>
 							</a>
@@ -122,7 +122,7 @@
 				<ul class="doc-list">
 					{#each recentDocs as doc (doc.id)}
 						<li class="doc-item">
-							<a href="/app" class="doc-link" data-docid={doc.id}>
+							<a href="/" class="doc-link" data-docid={doc.id}>
 								<span class="doc-title">{doc.title || 'Untitled'}</span>
 								<span class="doc-meta">
 									{formatNumber(doc.wordCount)} words · {relativeDate(doc.updatedAt)}

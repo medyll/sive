@@ -66,13 +66,13 @@ if (DEV) {
 				body: data.body ?? '',
 				icon: '/icons/icon-192.png',
 				badge: '/icons/icon-192.png',
-				data: { url: data.url ?? '/app' }
+				data: { url: data.url ?? '/' }
 			})
 		);
 	});
 
 	self.addEventListener('notificationclick', (e) => {
 		e.notification.close();
-		e.waitUntil(self.clients.openWindow(e.notification.data?.url ?? '/app'));
+		e.waitUntil(self.clients.openWindow(e.notification.data?.url ?? '/'));
 	});
 }

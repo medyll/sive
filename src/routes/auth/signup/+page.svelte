@@ -15,7 +15,7 @@
 
     {#if data.isMock}
       <div class="auth-notice" role="status">
-        ⚠️ Dev mode — auth disabled. <a href="/app" class="link-app">Continue as guest →</a>
+        ⚠️ Dev mode — auth disabled. <a href="/" class="link-app">Continue as guest →</a>
       </div>
     {/if}
 
