@@ -3,7 +3,7 @@
  * Commands are registered statically at startup and dynamically per context
  */
 
-export type CommandCategory = 'navigation' | 'document' | 'ai' | 'settings' | 'view';
+export type CommandCategory = 'navigation' | 'document' | 'ai' | 'settings' | 'view' | 'plugin';
 
 export interface Command {
 	id: string;
@@ -117,7 +117,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			category: 'document',
 			icon: '📄',
 			shortcut: 'Cmd+N',
-			action: () => window.dispatchEvent(new CustomEvent('palette:newDocument'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:newDocument'))
 		},
 		{
 			id: 'doc:new:template',
@@ -125,7 +125,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['template', 'new', 'starter', 'story', 'blog', 'essay'],
 			category: 'document',
 			icon: '📋',
-			action: () => window.dispatchEvent(new CustomEvent('palette:newFromTemplate'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:newFromTemplate'))
 		},
 		{
 			id: 'doc:save:template',
@@ -133,7 +133,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['template', 'save', 'custom'],
 			category: 'document',
 			icon: '💾',
-			action: () => window.dispatchEvent(new CustomEvent('palette:saveAsTemplate'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:saveAsTemplate'))
 		},
 		{
 			id: 'doc:export:pdf',
@@ -141,7 +141,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['export', 'pdf', 'download', 'print'],
 			category: 'document',
 			icon: '📑',
-			action: () => window.dispatchEvent(new CustomEvent('palette:exportPDF'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:exportPDF'))
 		},
 		{
 			id: 'doc:export:markdown',
@@ -149,7 +149,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['export', 'markdown', 'md', 'download'],
 			category: 'document',
 			icon: '📝',
-			action: () => window.dispatchEvent(new CustomEvent('palette:exportMarkdown'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:exportMarkdown'))
 		},
 		{
 			id: 'doc:duplicate',
@@ -157,7 +157,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['duplicate', 'copy', 'clone'],
 			category: 'document',
 			icon: '⧉',
-			action: () => window.dispatchEvent(new CustomEvent('palette:duplicateDocument'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:duplicateDocument'))
 		},
 		{
 			id: 'doc:delete',
@@ -165,7 +165,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['delete', 'remove', 'trash'],
 			category: 'document',
 			icon: '🗑️',
-			action: () => window.dispatchEvent(new CustomEvent('palette:deleteDocument'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:deleteDocument'))
 		},
 
 		// AI actions
@@ -175,7 +175,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['summarize', 'summary', 'ai', 'tldr'],
 			category: 'ai',
 			icon: '✨',
-			action: () => window.dispatchEvent(new CustomEvent('palette:summarize'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:summarize'))
 		},
 		{
 			id: 'ai:chat',
@@ -183,7 +183,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['chat', 'ai', 'ask', 'assistant'],
 			category: 'ai',
 			icon: '💬',
-			action: () => window.dispatchEvent(new CustomEvent('palette:openAIChat'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:openAIChat'))
 		},
 		{
 			id: 'ai:suggest',
@@ -191,7 +191,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['suggest', 'autocomplete', 'complete', 'ai', 'ghost'],
 			category: 'ai',
 			icon: '🔮',
-			action: () => window.dispatchEvent(new CustomEvent('palette:aiSuggest'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:aiSuggest'))
 		},
 
 		// View / settings
@@ -202,7 +202,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			category: 'view',
 			icon: '🎯',
 			shortcut: 'Cmd+Shift+F',
-			action: () => window.dispatchEvent(new CustomEvent('palette:toggleFocus'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:toggleFocus'))
 		},
 		{
 			id: 'view:shortcuts',
@@ -211,7 +211,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			category: 'view',
 			icon: '⌨️',
 			shortcut: '?',
-			action: () => window.dispatchEvent(new CustomEvent('palette:showShortcuts'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:showShortcuts'))
 		},
 		{
 			id: 'view:theme',
@@ -219,7 +219,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			keywords: ['dark', 'light', 'theme', 'mode'],
 			category: 'view',
 			icon: '🌙',
-			action: () => window.dispatchEvent(new CustomEvent('palette:toggleTheme'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:toggleTheme'))
 		},
 		{
 			id: 'doc:search',
@@ -228,7 +228,7 @@ export function registerStaticCommands(navigate: (path: string) => void) {
 			category: 'document',
 			icon: '🔍',
 			shortcut: 'Ctrl+Shift+F',
-			action: () => window.dispatchEvent(new CustomEvent('palette:focusSearch'))
+			action: () => void window.dispatchEvent(new CustomEvent('palette:focusSearch'))
 		}
 	];
 

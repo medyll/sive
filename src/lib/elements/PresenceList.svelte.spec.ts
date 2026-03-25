@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import PresenceList from './PresenceList.svelte';
-import type { OnlineUser } from './PresenceList.svelte';
+interface OnlineUser { userId: string; clientId: string; name?: string; status: 'active' | 'idle' | 'offline'; }
 
 describe('PresenceList', () => {
 	it('renders empty list', async () => {

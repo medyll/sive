@@ -38,7 +38,7 @@ describe('SummaryPanel.svelte', () => {
 		render(SummaryPanel, { props: { docId: 'doc2', content: 'Content here' } });
 		await new Promise((r) => setTimeout(r, 100));
 		expect(mockFetch).toHaveBeenCalledOnce();
-		expect(mockFetch.mock.calls[0][0]).toContain('/api/ai/summary');
+		expect((mockFetch.mock.calls as unknown[][])[0][0]).toContain('/api/ai/summary');
 	});
 
 

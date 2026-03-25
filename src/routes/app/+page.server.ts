@@ -84,7 +84,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	} catch (err) {
 		// If DB tables are missing or another DB error occurs, fall back to guest stub mode
 		// eslint-disable-next-line no-console
-		console.warn('DB access failed in load(): falling back to guest stubs:', err?.message ?? err);
+		console.warn('DB access failed in load(): falling back to guest stubs:', (err as Error)?.message ?? err);
 		return { documents: STUB_DOCUMENTS, activeDocumentId: STUB_DOCUMENTS[0].id, user: locals.user ?? null };
 	}
 };

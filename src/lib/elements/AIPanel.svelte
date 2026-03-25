@@ -13,6 +13,7 @@
   import { STUB_SUGGESTIONS, suggestionsStore, type SuggestionData } from '$lib/suggestionsStore.svelte.js';
   import { toastStore } from '$lib/toastStore.svelte';
   import { promptHistoryStore } from '$lib/promptHistoryStore.svelte.js';
+  import OutlinePanel from './OutlinePanel.svelte';
   import { browser } from '$app/environment';
 
   export interface AIPanelProps {
@@ -23,7 +24,7 @@
     docId?: string | null;
   }
 
-  const TABS = ['Chat', 'Suggestions', 'Coherence', 'Style', 'History'] as const;
+  const TABS = ['Chat', 'Suggestions', 'Coherence', 'Style', 'History', 'Outline'] as const;
   type Tab = (typeof TABS)[number];
 
   // ── Chat state ────────────────────────────────────────────────────────────
@@ -432,6 +433,10 @@
           onSelectVersion={(id) => { selectedHardenId = id; }}
         />
         <HardenDiff snapshots={hardenStore.snapshots} />
+      </div>
+    {:else if activeTab === 'Outline'}
+      <div id="tab-content-outline" class="tab-pane" role="tabpanel" aria-label="Outline">
+        <OutlinePanel {docId} content={editorContent} />
       </div>
     {/if}
   </div>

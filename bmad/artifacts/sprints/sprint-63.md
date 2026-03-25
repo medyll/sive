@@ -1,58 +1,61 @@
-# Sprint 63 — Writing Statistics & Reading Time
+# Sprint 63 — AI Outline Generator & Document Structure
 
-**Sprint Duration:** 2026-03-24
+**Sprint Duration:** 2026-03-25
 **Status:** 🚀 Active
-**Goal:** Surface meaningful writing stats to the user — reading time, readability score, sentence count, and progress against daily goal — in a lightweight StatsPanel component.
+**Goal:** Add an Outline tab to the AI panel that generates a structured document outline from either a topic prompt or the current document content, displayed as a collapsible tree. Users can insert heading blocks directly from the outline into the editor.
 
 ---
 
 ## Stories
 
-### S63-01 — Writing stats utility
-**File:** `src/lib/writingStats.ts`
-Pure functions (no Svelte, easy to unit test):
-- `wordCount(text): number` — whitespace-split, filter empty
-- `sentenceCount(text): number` — split on `.!?` boundaries
-- `paragraphCount(text): number` — split on double-newline
-- `readingTimeMinutes(text): number` — words / 200, minimum 1
-- `fleschReadingEase(text): number` — standard formula (0–100)
-- `readabilityLabel(score): string` — "Very Easy" / "Easy" / … / "Very Difficult"
+### S63-01 — `/api/ai/outline` SSE endpoint
+**File:** `src/routes/api/ai/outline/+server.ts`
+- GET endpoint accepting `?topic=<text>&ctx=<base64 doc content>`
+- Streams SSE tokens in the same format as `/api/ai/stream`
+- Returns a structured outline as markdown headings (## Section\n### Subsection)
+- If `ctx` provided: derive outline from existing content
+- If `topic` provided: generate outline for that topic from scratch
 
-### S63-02 — StatsPanel component
-**File:** `src/lib/elements/StatsPanel.svelte`
-Props: `text: string`, `dailyGoal?: number` (default 0)
-Displays:
-- Words / Sentences / Paragraphs in a stat grid
-- Reading time ("~3 min read")
-- Readability score + label (colour-coded green→red)
-- Daily goal progress bar (words / dailyGoal) — hidden when dailyGoal = 0
+### S63-02 — `outlineStore.svelte.ts`
+**File:** `src/lib/outlineStore.svelte.ts`
+- Svelte 5 runes store
+- `outline: OutlineNode[]` — parsed tree of `{ level: number; text: string; children: OutlineNode[] }`
+- `isGenerating: boolean`
+- `generate(topic: string, docContent?: string)` — calls SSE endpoint, streams into store
+- `cancel()` — aborts in-flight request
+- `parseOutline(markdown: string): OutlineNode[]` — converts heading markdown to tree
 
-### S63-03 — Wire StatsPanel into editor layout
-**File:** `src/routes/app/+page.svelte` or `EditorPanel.svelte`
-- Add a "Stats" button to EditorFooter or the existing FooterBar
-- Toggle StatsPanel visibility; panel slides up from the bottom of the editor
-- Pass current `content` and `dailyTarget` from `goalsStore`
+### S63-03 — `OutlinePanel` component
+**File:** `src/lib/elements/OutlinePanel.svelte`
+- Props: `docId: string`, `content: string`
+- Text input: "Enter a topic or generate from document"
+- "Generate" button + "From document" shortcut button
+- Renders `OutlineNode[]` as a collapsible tree (`<details>`/`<summary>`)
+- Each node has an "Insert" button that dispatches `outline:insert` custom event with the heading text
+- Shows streaming skeleton while generating
+- Empty state: "Enter a topic above to generate an outline"
 
-### S63-04 — Live word count badge update
-**File:** `src/lib/elements/WordCountBadge.svelte`
-- Ensure WordCountBadge uses the same `wordCount()` utility from S63-01
-- Add reading time next to the word count: "342 words · ~2 min"
+### S63-04 — Wire OutlinePanel as Outline tab in AIPanel
+**File:** `src/lib/elements/AIPanel.svelte`
+- Add "Outline" tab (🗂️) alongside existing AI tabs
+- Render `OutlinePanel` when Outline tab is active
+- Pass `editorContent` and `docId` props
 
 ### S63-05 — Unit tests Sprint 63
-- `wordCount`: empty, whitespace-only, single word, multi-word
-- `sentenceCount`: no punctuation, single sentence, multi-sentence
-- `readingTimeMinutes`: < 200 words → 1 min, 400 words → 2 min
-- `fleschReadingEase`: known sentence produces expected score range
-- `readabilityLabel`: boundary values map to correct labels
+- `outlineStore`: `parseOutline` with h2/h3 markdown, generate sets `isGenerating`, cancel aborts
+- `OutlinePanel`: renders empty state, shows input, generate button present
 
-### S63-06 — E2E Sprint 63 (deferred)
-- Type in editor → word count badge updates live
-- Click Stats → StatsPanel shows correct reading time and readability
+### S63-06 — E2E Sprint 63
+- Navigate to app → AI panel → Outline tab visible
+- Enter topic → click Generate → outline tree appears
+- "From document" button generates outline from current content
+- Click Insert on a node → heading inserted into editor
 
 ---
 
 ## Acceptance Criteria
-- [ ] `writingStats.ts` exports all 6 functions
-- [ ] StatsPanel displays all stats correctly
-- [ ] WordCountBadge shows reading time
-- [ ] 0 new test failures
+- [ ] `/api/ai/outline` streams markdown headings
+- [ ] OutlinePanel renders collapsible tree
+- [ ] Insert button fires `outline:insert` event
+- [ ] Outline tab visible in AIPanel
+- [ ] 0 new test failures introduced

@@ -6,10 +6,13 @@
 		context: string;
 		x: number;
 		y: number;
+		anchorStart?: number;
+		anchorEnd?: number;
 		onDismiss?: () => void;
+		onComment?: (anchorStart: number, anchorEnd: number, selection: string) => void;
 	}
 
-	let { selection, context, x, y, onDismiss }: SelectionToolbarProps = $props();
+	let { selection, context, x, y, anchorStart = 0, anchorEnd = 0, onDismiss, onComment }: SelectionToolbarProps = $props();
 
 	let showToneMenu = $state(false);
 
@@ -28,6 +31,11 @@
 	function handleTone(tone: string) {
 		requestSuggestionNow(context, 'tone', tone + ':' + selection);
 		showToneMenu = false;
+		onDismiss?.();
+	}
+
+	function handleComment() {
+		onComment?.(anchorStart, anchorEnd, selection);
 		onDismiss?.();
 	}
 
@@ -50,6 +58,10 @@
 >
 	<button class="toolbar-btn" onclick={handleRewrite} title="AI Rewrite">
 		✏️ Rewrite
+	</button>
+
+	<button class="toolbar-btn" onclick={handleComment} title="Add comment">
+		💬 Comment
 	</button>
 
 	<div class="tone-wrapper">

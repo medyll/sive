@@ -28,7 +28,7 @@ if (!isMock) {
 	} catch (err) {
 		// native module failed to load or DB creation failed — fall back to mock
 		// eslint-disable-next-line no-console
-		console.warn('better-sqlite3 failed to load or init, running with a mocked DB for dev:', err?.message || err);
+		console.warn('better-sqlite3 failed to load or init, running with a mocked DB for dev:', (err as Error)?.message || err);
 		isMock = true;
 	}
 }

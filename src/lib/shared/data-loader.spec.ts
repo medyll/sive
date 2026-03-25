@@ -28,9 +28,9 @@ describe('loadStructure', () => {
   it('should load structure with acts and narrativeThreads', () => {
     const structure = loadStructure('src/data/structure.yaml');
     expect(structure.model).toBe('three_acts');
-    expect(structure.acts.length).toBeGreaterThan(0);
-    expect(structure.narrativeThreads.length).toBeGreaterThan(0);
-    expect(structure.tensionCurve.length).toBeGreaterThan(0);
+    expect(structure.acts?.length).toBeGreaterThan(0);
+    expect(structure.narrativeThreads?.length).toBeGreaterThan(0);
+    expect(structure.tensionCurve?.length).toBeGreaterThan(0);
   });
 });
 
@@ -74,7 +74,7 @@ describe('loadTimeline', () => {
     const timeline = loadTimeline('src/data/timeline.yaml');
     expect(timeline.timeUnit).toBe('day');
     expect(timeline.events.length).toBeGreaterThan(0);
-    expect(timeline.ellipses.length).toBeGreaterThan(0);
+    expect(timeline.ellipses?.length).toBeGreaterThan(0);
   });
 });
 
@@ -83,10 +83,10 @@ describe('loadChapter', () => {
   it('should load chapter with states, keyEvents, transitions', () => {
     const chapter = loadChapter('src/data/chapter_07.yaml');
     expect(chapter.chapterRef).toBe('chapter_07');
-    expect(chapter.states.characters.length).toBeGreaterThan(0);
-    expect(chapter.states.objects.length).toBeGreaterThan(0);
-    expect(chapter.states.vehicles.length).toBeGreaterThan(0);
-    expect(chapter.keyEvents.length).toBeGreaterThan(0);
-    expect(chapter.transitions.length).toBeGreaterThan(0);
+    expect(chapter.states?.characters?.length).toBeGreaterThan(0);
+    expect(chapter.states?.objects?.length).toBeGreaterThan(0);
+    expect(chapter.states?.vehicles?.length).toBeGreaterThan(0);
+    expect(chapter.keyEvents?.length).toBeGreaterThan(0);
+    expect(chapter.transitions?.length).toBeGreaterThan(0);
   });
 });

@@ -203,7 +203,7 @@ describe('Cursor Sync', () => {
 	});
 
 	it('handles empty remote cursors', () => {
-		const presence = store.getDocumentPresence?.() || [];
+		const presence = (store as Record<string, any>).getDocumentPresence?.() || [];
 		expect(Array.isArray(presence) || presence instanceof Map).toBe(true);
 	});
 });

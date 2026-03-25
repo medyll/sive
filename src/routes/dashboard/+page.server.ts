@@ -33,7 +33,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			.slice(0, 5)
 			.map((d: { id: string; title: string; updated_at: number }) => ({
 				id: d.id, title: d.title, updatedAt: d.updated_at,
-				wordCount: docStats.find((s) => s.id === d.id)?.wordCount ?? 0
+				wordCount: docStats.find((s: { id: string }) => s.id === d.id)?.wordCount ?? 0
 			}));
 
 		const topDocs = [...docStats]

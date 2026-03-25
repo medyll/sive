@@ -84,10 +84,10 @@ recommendation: |
 last_updated: 2026-03-19
 
 active_role: dev
-next_action: "Working on s59-01 — instrument-slash-usage"
-next_command: "bmad work s59-01"
+next_action: "Implementing S64-01 — streakStore.svelte.ts"
+next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-24T23:30:38Z
+last_updated: 2026-03-25T01:20:00Z
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -638,8 +638,108 @@ sprints:
 
   - id: sprint-60
     name: Sprint 60 — AI Rewrite & Tone Tools
+    status: done
+    progress: 100
+
+  - id: sprint-61
+    name: Sprint 61 — Inline Comment Threads & Margin Annotations
+    status: done
+    progress: 100
+
+  - id: sprint-62
+    name: Sprint 62 — Writing Stats & Readability Panel
+    status: done
+    progress: 100
+
+  - id: sprint-63
+    name: Sprint 63 — AI Outline Generator & Document Structure
+    status: done
+    progress: 100
+
+  - id: sprint-64
+    name: Sprint 64 — Writing Goals Dashboard & Streaks
     status: in_progress
     progress: 0
+    start: 2026-03-25
+    stories:
+      - id: S64-01
+        title: streakStore
+        status: todo
+      - id: S64-02
+        title: GoalsDashboard-component
+        status: todo
+      - id: S64-03
+        title: wire-goalsDashboard-settings
+        status: todo
+      - id: S64-04
+        title: auto-record-activity-on-save
+        status: todo
+      - id: S64-05
+        title: unit-tests-sprint64
+        status: todo
+      - id: S64-06
+        title: e2e-sprint64
+        status: todo
+    start: 2026-03-25
+    stories:
+      - id: S63-01
+        title: api-ai-outline-endpoint
+        status: done
+      - id: S63-02
+        title: outlineStore
+        status: done
+      - id: S63-03
+        title: OutlinePanel-component
+        status: done
+      - id: S63-04
+        title: wire-outline-tab-aipanel
+        status: done
+      - id: S63-05
+        title: unit-tests-sprint63
+        status: done
+      - id: S63-06
+        title: e2e-sprint63
+        status: done
+    start: 2026-03-25
+    stories:
+      - id: S62-01
+        title: writingStats-utility
+        status: done
+      - id: S62-02
+        title: WritingStatsPanel-component
+        status: done
+      - id: S62-03
+        title: wire-statsPanel-editorFooter
+        status: done
+      - id: S62-04
+        title: readability-badge-footer
+        status: done
+      - id: S62-05
+        title: unit-tests-sprint62
+        status: done
+      - id: S62-06
+        title: e2e-sprint62
+        status: done
+    start: 2026-03-25
+    stories:
+      - id: S61-01
+        title: highlight-to-comment-gesture
+        status: done
+      - id: S61-02
+        title: comment-anchor-store
+        status: done
+      - id: S61-03
+        title: margin-highlight-rendering
+        status: done
+      - id: S61-04
+        title: wire-commentsidebar
+        status: done
+      - id: S61-05
+        title: unit-tests-sprint61
+        status: done
+      - id: S61-06
+        title: e2e-sprint61
+        status: done
     start: 2026-03-24
     stories:
       - id: S60-01
@@ -659,7 +759,7 @@ sprints:
         status: done
       - id: S60-06
         title: e2e-sprint60
-        status: todo
+        status: done
     stories:
       - id: S59-01
         title: tab-to-accept-ghost-text

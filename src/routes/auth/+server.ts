@@ -19,6 +19,6 @@ export const POST: RequestHandler = async ({ request }) => {
     // better-auth should set cookies via sveltekitCookies plugin; otherwise return success
     return new Response(JSON.stringify({ ok: true }), { status: 200 });
   } catch (err) {
-    return new Response(JSON.stringify({ message: err?.message || 'Sign-in failed' }), { status: 401 });
+    return new Response(JSON.stringify({ message: (err as Error)?.message || 'Sign-in failed' }), { status: 401 });
   }
 };

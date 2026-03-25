@@ -1,43 +1,60 @@
-# Sprint 64 — Performance & Stability
+# Sprint 64 — Writing Goals Dashboard & Streaks
 
-Sprint ID: sprint-64
-Status: planned
-Start: 2026-03-25
-End: 2026-04-07
+**Sprint Duration:** 2026-03-25
+**Status:** 🚀 Active
+**Goal:** Extend the existing `WritingGoalBar` and `writingGoalsStore` with a full Goals Dashboard — daily word targets, streak tracking (consecutive writing days), and a 12-week contribution heatmap. Persisted in localStorage.
 
-Goal
-: Improve runtime performance and reduce flakiness in CI by stabilizing browser pools and optimizing hot paths.
+---
 
-Stories
-- id: S64-01
-  title: perf-profiling-and-hotpath-optimizations
-  status: todo
-  acceptance: "Measure baseline, improve hotpath by 15% on key flows, add benchmarks."
+## Stories
 
-- id: S64-02
-  title: stabilize-e2e-browser-pool
-  status: todo
-  acceptance: "Isolate browser pool tests; reduce flakiness below 1% over 50 runs."
+### S64-01 — `streakStore.svelte.ts`
+**File:** `src/lib/streakStore.svelte.ts`
+- Tracks writing sessions by day (key: `YYYY-MM-DD`)
+- `recordActivity(wordCount: number)` — logs words written today
+- `streak: number` — current consecutive-day streak
+- `longestStreak: number` — all-time longest streak
+- `activityMap: Record<string, number>` — date → word count for heatmap
+- Persisted in `localStorage` under `sive.streaks`
 
-- id: S64-03
-  title: ci-parallelism-tuning
-  status: todo
-  acceptance: "Tune CI parallelism to avoid resource contention; document config."
+### S64-02 — `GoalsDashboard` component
+**File:** `src/lib/elements/GoalsDashboard.svelte`
+- Daily word goal input (default 500) — persisted in settings
+- Today's progress: words written / goal, animated progress ring
+- Current streak badge (🔥 N days)
+- Longest streak badge
+- 12-week heatmap grid (84 cells), colour intensity by word count:
+  - 0 words → `#e5e7eb` (grey)
+  - 1–99 → `#c4b5fd` (light purple)
+  - 100–499 → `#8b5cf6` (medium)
+  - 500+ → `#5b21b6` (dark)
+- Tooltip on hover showing date + word count
 
-- id: S64-04
-  title: memory-leak-investigation
-  status: todo
-  acceptance: "Identify and fix top 2 memory leaks in long-running sessions."
+### S64-03 — Wire `GoalsDashboard` into Settings panel
+**File:** `src/routes/settings/+page.svelte`
+- Add "Writing Goals" section with `GoalsDashboard`
+- Daily goal slider (100–5000 words, step 50)
 
-- id: S64-05
-  title: unit-and-e2e-stability-metrics
-  status: todo
-  acceptance: "Add metrics and alerts for test flakiness and runtime regressions."
+### S64-04 — Auto-record activity on save
+**File:** `src/routes/app/+page.svelte`
+- After each successful `handleSave`, call `streakStore.recordActivity(wordCount(activeContent))`
+- This feeds the streak and heatmap without user action
 
-- id: S64-06
-  title: rollout-and-monitoring
-  status: todo
-  acceptance: "Roll out changes to staging and monitor for regressions for 72h."
+### S64-05 — Unit tests Sprint 64
+- `streakStore`: recordActivity updates today's count, streak increments on new day, gap in days resets streak, longestStreak tracks correctly
+- `GoalsDashboard`: renders progress ring, streak badge, heatmap cells
 
-Notes
-- Sprint planned by Scrum. Developer role will pick up implementation next.
+### S64-06 — E2E Sprint 64
+- Navigate to Settings → Writing Goals section visible
+- Daily goal input present
+- Heatmap grid rendered (84 cells)
+- Streak badge visible
+
+---
+
+## Acceptance Criteria
+- [ ] `streakStore` persists daily word counts to localStorage
+- [ ] Streak resets after a day with no activity
+- [ ] Heatmap shows 84 cells (12 weeks × 7 days)
+- [ ] Daily goal progress ring updates as content changes
+- [ ] 0 new test failures introduced

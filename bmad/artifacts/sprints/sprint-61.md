@@ -1,52 +1,55 @@
-# Sprint 61 — PWA Polish & Install Flow
+# Sprint 61 — Inline Comment Threads & Margin Annotations
 
-**Sprint Duration:** 2026-03-24
+**Sprint Duration:** 2026-03-25
 **Status:** 🚀 Active
-**Goal:** Make Sive a first-class PWA — wire the existing InstallPrompt component, complete the service worker cache strategy, and surface an offline-ready badge in the toolbar.
+**Goal:** Wire the existing `CommentSidebar` and `CommentThread` components into the editor so users can highlight text, leave inline comments, and see threaded replies in the margin. Complements AI rewrite/tone tools and review mode.
 
 ---
 
 ## Stories
 
-### S61-01 — Wire InstallPrompt component
-**File:** `src/lib/elements/InstallPrompt.svelte`
-- Listen for `beforeinstallprompt` event on `window`
-- Store the deferred prompt event; show the InstallPrompt banner after the user has made 2 document saves (engagement gate)
-- On "Install" click: call `prompt()` on the deferred event, track outcome in localStorage (`sive:pwa:installed`)
-- On dismiss: hide and don't show again for 7 days
+### S61-01 — Highlight-to-comment gesture
+**File:** `src/lib/elements/EditorPanel.svelte`
+- On text selection, add a **Comment** button (💬) to the `SelectionToolbar` alongside Rewrite/Tone
+- Clicking it opens the inline comment input anchored to the selection range
+- Store the selection range (start/end offsets) alongside the comment
 
-### S61-02 — Mount InstallPrompt in app layout
-**File:** `src/routes/+layout.svelte`
-- Import and mount `<InstallPrompt />` at root layout level
-- Only render when not already installed (`sive:pwa:installed !== 'true'`)
+### S61-02 — Comment anchor store
+**File:** `src/lib/commentStore.svelte.ts`
+- Svelte 5 runes store: `comments[]` with `{ id, docId, anchorStart, anchorEnd, text, author, createdAt, replies[] }`
+- `addComment(docId, anchor, text)` — persists via `/api/comments` POST
+- `resolveComment(id)` — marks as resolved, removes highlight
+- Load comments for active doc on mount
 
-### S61-03 — Service worker cache strategy
-**File:** `src/service-worker.ts`
-- Cache-first for static assets (`/_app/immutable/**`)
-- Network-first with offline fallback for API routes (`/api/**`)
-- Precache the app shell on install
-- On activate: delete old caches
+### S61-03 — Margin highlight rendering
+**File:** `src/lib/elements/EditorPanel.svelte`
+- Render a subtle yellow highlight over anchored text ranges using a `<mark>` overlay or CSS range approach
+- Clicking a highlighted range opens the `CommentThread` for that comment
+- Resolved comments clear their highlight
 
-### S61-04 — Offline-ready badge in toolbar
-**File:** `src/lib/elements/EditorToolbar.svelte`
-- Show a small "Offline ready ✓" chip when service worker is active and cache is warm
-- Use `navigator.serviceWorker.ready` + a custom `sw:cached` postMessage event
-- Hide chip while online (only show as reassurance when offline)
+### S61-04 — Wire CommentSidebar
+**File:** `src/routes/app/+page.svelte` (or layout)
+- `CommentSidebar` slides in from the right when comments exist (or via toolbar toggle)
+- Lists all unresolved comments for the active document
+- Clicking a comment scrolls editor to the anchored range
+- "Resolve" button on each thread calls `resolveComment`
 
 ### S61-05 — Unit tests Sprint 61
-- InstallPrompt: engagement gate (shows after 2 saves), dismiss sets cooldown, install clears prompt
-- `pwaStore`: engagement count increment, installed flag, cooldown logic
+- `commentStore`: addComment, resolveComment, loads per-doc comments
+- `CommentThread`: renders author, text, reply count
+- SelectionToolbar: Comment button present alongside Rewrite/Tone
 
 ### S61-06 — E2E Sprint 61
-- After 2 saves, install banner appears
-- Dismiss hides banner
-- Offline banner + offline-ready chip both visible when network is offline
+- Select text → Comment button visible in SelectionToolbar
+- Add a comment → highlight appears in editor, comment visible in sidebar
+- Click sidebar comment → editor scrolls to anchor
+- Resolve comment → highlight clears, comment removed from sidebar
 
 ---
 
 ## Acceptance Criteria
-- [ ] Install prompt appears after 2 document saves
-- [ ] Dismissing sets 7-day cooldown
-- [ ] Service worker caches static assets on install
-- [ ] Offline-ready chip shown in toolbar when SW active
-- [ ] 0 new test failures
+- [ ] Comment button appears in SelectionToolbar on text selection
+- [ ] Comments anchored to text ranges with visible highlights
+- [ ] CommentSidebar shows all unresolved comments for active doc
+- [ ] Resolve clears highlight and removes from sidebar
+- [ ] 0 new test failures introduced

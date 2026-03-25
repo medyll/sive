@@ -30,31 +30,31 @@ describe('+page.server.ts — document handlers (mock mode)', () => {
 
 	describe('load()', () => {
 		it('returns stub documents when isMock=true', async () => {
-			const result = await load({ locals: mockLocals } as Parameters<typeof load>[0]);
+			const result = await load({ locals: mockLocals } as Parameters<typeof load>[0]) as Record<string, any>;
 			expect(result.documents).toHaveLength(1);
 			expect(result.documents[0].id).toBe('stub-doc-1');
 			expect(result.documents[0].title).toBe('Chapter 1');
 		});
 
 		it('returns an activeDocumentId', async () => {
-			const result = await load({ locals: mockLocals } as Parameters<typeof load>[0]);
+			const result = await load({ locals: mockLocals } as Parameters<typeof load>[0]) as Record<string, any>;
 			expect(result.activeDocumentId).toBe('stub-doc-1');
 		});
 
 		it('stub document has content', async () => {
-			const result = await load({ locals: mockLocals } as Parameters<typeof load>[0]);
+			const result = await load({ locals: mockLocals } as Parameters<typeof load>[0]) as Record<string, any>;
 			expect(typeof result.documents[0].content).toBe('string');
 			expect(result.documents[0].content.length).toBeGreaterThan(0);
 		});
 
 		it('returns user=null when no user in mock mode', async () => {
-			const result = await load({ locals: mockLocals } as Parameters<typeof load>[0]);
+			const result = await load({ locals: mockLocals } as Parameters<typeof load>[0]) as Record<string, any>;
 			expect(result.user).toBeNull();
 		});
 
 		it('returns the user when present in mock mode', async () => {
 			const user = { id: 'u1', name: 'Alice', email: 'alice@example.com' };
-			const result = await load({ locals: { user } } as Parameters<typeof load>[0]);
+			const result = await load({ locals: { user } } as Parameters<typeof load>[0]) as Record<string, any>;
 			expect(result.user).toEqual(user);
 		});
 	});
@@ -73,7 +73,7 @@ describe('+page.server.ts — document handlers (mock mode)', () => {
 				locals: mockLocals,
 				request: new Request('http://localhost/', { method: 'POST' })
 			} as Parameters<typeof actions.createDocument>[0]);
-			expect(typeof result.id).toBe('string');
+			expect(typeof (result as Record<string, unknown>)?.id).toBe('string');
 		});
 	});
 

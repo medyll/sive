@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import RemoteCursor from './RemoteCursor.svelte';
-import type { CursorState } from './RemoteCursor.svelte';
+interface CursorState { clientId: string; userId: string; name?: string; color: string; line: number; column: number; isVisible?: boolean; lastUpdated?: number; }
 
 describe('RemoteCursor', () => {
 	const mockCursors: CursorState[] = [

@@ -1,54 +1,61 @@
-# Sprint 62 — Document Comments & Annotations
+# Sprint 62 — Writing Stats & Readability Panel
 
-**Sprint Duration:** 2026-03-24
+**Sprint Duration:** 2026-03-25
 **Status:** 🚀 Active
-**Goal:** Allow users to leave inline comments on selected text. Comments appear as margin annotations, support replies, and are persisted to the database.
+**Goal:** Surface live writing statistics (Flesch-Kincaid readability score, average sentence length, reading time, top word frequency) in a collapsible stats panel. Builds on the existing word/char count in EditorFooter and Writing Goals Bar.
 
 ---
 
 ## Stories
 
-### S62-01 — Comment data model & store
-**File:** `src/lib/commentStore.svelte.ts`
-- `Comment`: `{ id, docId, userId, anchorText, anchorOffset, body, createdAt, resolved }`
-- `commentStore`: load(docId), add(comment), resolve(id), remove(id)
-- Persist to localStorage for now (`sive:comments:{docId}`); DB wire-up deferred
-- `$derived` list of unresolved comments sorted by anchorOffset
+### S62-01 — writingStats utility
+**File:** `src/lib/writingStats.ts`
+- Pure functions (no Svelte reactivity) for easy unit testing:
+  - `wordCount(text)` → number
+  - `sentenceCount(text)` → number
+  - `avgWordsPerSentence(text)` → number (1 decimal)
+  - `readingTimeMinutes(text)` → number (assumes 200 wpm, 1 decimal)
+  - `fleschKincaid(text)` → readability score 0–100 (standard FK Reading Ease formula)
+  - `topWords(text, n)` → `{ word: string; count: number }[]` (excludes stop words)
 
-### S62-02 — CommentThread component
-**File:** `src/lib/elements/CommentThread.svelte`
-- Shows a single comment + reply input
-- Props: `comment`, `onResolve`, `onRemove`
-- Resolve button marks comment as resolved (strikethrough + hide)
-- Timestamp formatted as relative time ("2 min ago")
+### S62-02 — WritingStatsPanel component
+**File:** `src/lib/elements/WritingStatsPanel.svelte`
+- Props: `content: string`
+- Displays:
+  - Words / Sentences / Avg words/sentence
+  - Reading time (e.g. "~2 min read")
+  - Flesch-Kincaid score with label (90–100 Very Easy → 0–30 Very Difficult)
+  - Top 5 words bar chart (CSS-only, relative widths)
+- Collapsible with a toggle button
+- Updates reactively as `content` changes (debounced 300 ms)
 
-### S62-03 — CommentSidebar component
-**File:** `src/lib/elements/CommentSidebar.svelte`
-- Lists all unresolved CommentThreads for the current document
-- "Add comment" button visible only when text is selected (receives `selectionText` prop)
-- New comment form: textarea + Submit / Cancel
-- Slides in from the right edge of the editor
+### S62-03 — Wire WritingStatsPanel into EditorFooter
+**File:** `src/lib/elements/EditorFooter.svelte`
+- Add a **Stats** toggle button in the footer
+- When active, render `WritingStatsPanel` above the footer bar
+- Persist open/closed state in `localStorage` under `sive.statsPanel`
 
-### S62-04 — Wire comment highlight in EditorPanel
-**File:** `src/lib/elements/EditorPanel.svelte`
-- When comments exist, underline anchored text with a subtle yellow highlight
-- Click on highlighted text → focus the corresponding CommentThread in sidebar
-- Use `mark` wrapping via a lightweight overlay (no contenteditable — keep textarea)
+### S62-04 — ReadabilityBadge in EditorFooter
+**File:** `src/lib/elements/EditorFooter.svelte`
+- Always-visible small badge showing FK score colour-coded:
+  - Green (≥70 Easy), Amber (40–69 Moderate), Red (<40 Difficult)
+- Tooltip shows full label on hover
 
 ### S62-05 — Unit tests Sprint 62
-- commentStore: add, resolve, remove, persist to localStorage, load from localStorage
-- CommentThread: renders body, resolve click fires callback, timestamp display
-- CommentSidebar: shows/hides add form on selection
+- `writingStats`: all 6 functions with known inputs/outputs
+- `WritingStatsPanel`: renders correct word count, reading time, FK label
 
 ### S62-06 — E2E Sprint 62
-- Select text → click "Add comment" → type comment → Submit
-- Comment appears in sidebar with anchor text quoted
-- Click Resolve → comment disappears from sidebar
+- Type text in editor → Stats badge visible in footer
+- Click Stats toggle → WritingStatsPanel expands
+- Panel shows word count, reading time, FK score
+- Panel collapses on second click
 
 ---
 
 ## Acceptance Criteria
-- [ ] Comments persist across page reload (localStorage)
-- [ ] Resolved comments hidden from sidebar
-- [ ] Anchor text quoted in comment thread
-- [ ] 0 new test failures
+- [ ] FK score computed correctly for sample text
+- [ ] ReadabilityBadge colour updates as content changes
+- [ ] WritingStatsPanel collapses/expands and persists state
+- [ ] Top 5 words exclude common stop words
+- [ ] 0 new test failures introduced

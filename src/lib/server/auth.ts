@@ -1,6 +1,5 @@
 import { env } from '$env/dynamic/private';
 import { getRequestEvent } from '$app/server';
-import type { BetterAuth } from 'better-auth/minimal';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 
@@ -41,7 +40,7 @@ try {
 } catch (err) {
 	// fallback stub
 	// eslint-disable-next-line no-console
-	console.warn('better-auth init failed; using auth stub for dev:', err?.message || err);
+	console.warn('better-auth init failed; using auth stub for dev:', (err as Error)?.message || err);
 	isMock = true;
 
 	auth = {

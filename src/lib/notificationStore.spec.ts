@@ -11,8 +11,8 @@ vi.stubGlobal('EventSource', class { onopen = null; onmessage = null; onerror = 
 function seedNotifications() {
 	// Directly mutate state via exposed reference
 	notificationState.notifications = [
-		{ id: 'n1', type: 'doc_shared', title: 'Shared', body: 'Doc shared', read: false, createdAt: Date.now(), docId: 'doc1' },
-		{ id: 'n2', type: 'system',     title: 'Info',   body: 'System msg',  read: false, createdAt: Date.now() }
+		{ id: 'n1', userId: 'u1', type: 'doc_shared', title: 'Shared', body: 'Doc shared', read: false, createdAt: Date.now(), docId: 'doc1' },
+		{ id: 'n2', userId: 'u1', type: 'system',     title: 'Info',   body: 'System msg',  read: false, createdAt: Date.now() }
 	];
 	notificationState.unreadCount = 2;
 }

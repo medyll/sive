@@ -26,6 +26,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   import NotificationBell from '$lib/elements/NotificationBell.svelte';
   import FormattingToolbar from '$lib/elements/FormattingToolbar.svelte';
   import EditorFooter from '$lib/elements/EditorFooter.svelte';
+  import CommentSidebar from '$lib/elements/CommentSidebar.svelte';
   import { openPalette } from '$lib/commandPaletteStore.svelte';
   import { themeStore } from '$lib/themeStore.svelte';
 
@@ -107,6 +108,8 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let versionPanelOpen = $state(false);
   let focusPanelOpen = $state(false);
   let shareOpen = $state(false);
+  let commentSidebarOpen = $state(false);
+  let pendingCommentSelection = $state<{ anchorText: string; anchorOffset: number } | null>(null);
 
   // Document state
   let documents = $state(data.documents);
@@ -646,9 +649,22 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
           documentId={activeDocumentId}
           bind:content={activeContent}
           onSave={debouncedSave}
+          onComment={(anchorText, anchorOffset) => {
+            pendingCommentSelection = { anchorText, anchorOffset };
+            commentSidebarOpen = true;
+          }}
         />
         <EditorFooter content={activeContent} />
       </div>
+
+      {#if commentSidebarOpen}
+        <CommentSidebar
+          docId={activeDocumentId}
+          userId={data.user?.id ?? 'guest'}
+          selectionText={pendingCommentSelection?.anchorText ?? ''}
+          selectionOffset={pendingCommentSelection?.anchorOffset ?? 0}
+        />
+      {/if}
 
       {#if !focusMode}
         <div

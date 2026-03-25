@@ -7,6 +7,8 @@ declare global {
 		interface Locals {
 			user?: User;
 			session?: Session;
+			isGuest?: boolean;
+			preferences?: Record<string, unknown> | null;
 		}
 
 		// interface Error {}

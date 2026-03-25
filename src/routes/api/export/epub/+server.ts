@@ -11,7 +11,7 @@ export const POST: RequestHandler = async (event) => {
 	const bytes = buildEpubBytes(String(title), String(content), String(author));
 	const slug = title.slice(0, 40).replace(/[^a-z0-9]+/gi, '-').toLowerCase();
 
-	return new Response(bytes, {
+	return new Response(Buffer.from(bytes), {
 		headers: {
 			'Content-Type': 'application/epub+zip',
 			'Content-Disposition': `attachment; filename="${slug}.epub"`

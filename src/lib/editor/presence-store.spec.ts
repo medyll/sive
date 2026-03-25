@@ -118,7 +118,8 @@ function createPresenceStore() {
 }
 
 describe('Presence Store Integration', () => {
-	let store: ReturnType<typeof createPresenceStore> | null = null;
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	let store!: ReturnType<typeof createPresenceStore>;
 
 	beforeEach(() => {
 		vi.useFakeTimers();
@@ -320,25 +321,26 @@ describe('Presence Store Integration', () => {
 	});
 
 	it('should handle store subscription updates', () => {
-		let lastState: Map<string, OnlineUser> | null = null;
+		// Use object wrapper to avoid TypeScript control-flow narrowing to `never`
+		const stateRef: { current: Map<string, OnlineUser> | null } = { current: null };
 
-		const unsubscribe = store.users.subscribe((state) => {
-			lastState = new Map(state);
+		const unsubscribe = store.users.subscribe((state: Map<string, OnlineUser>) => {
+			stateRef.current = new Map(state);
 		});
 
 		store.addUser('alice', 'c1', 'Alice');
 
-		expect(lastState?.size).toBe(1);
-		expect(lastState?.has('c1')).toBe(true);
+		expect(stateRef.current?.size).toBe(1);
+		expect(stateRef.current?.has('c1')).toBe(true);
 
 		store.addUser('bob', 'c2', 'Bob');
 
-		expect(lastState?.size).toBe(2);
+		expect(stateRef.current?.size).toBe(2);
 
 		store.removeUser('c1');
 
-		expect(lastState?.size).toBe(1);
-		expect(lastState?.has('c1')).toBe(false);
+		expect(stateRef.current?.size).toBe(1);
+		expect(stateRef.current?.has('c1')).toBe(false);
 
 		unsubscribe();
 	});

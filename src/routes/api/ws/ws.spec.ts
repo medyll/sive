@@ -159,7 +159,7 @@ describe('WebSocket API Endpoint', () => {
 			documentId: 'doc1'
 		};
 
-		expect(invalidMsg.type).toBeUndefined();
+		expect((invalidMsg as Record<string, unknown>).type).toBeUndefined();
 	});
 
 	it('should handle error cases gracefully', () => {
