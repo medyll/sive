@@ -10,11 +10,16 @@ function createThemeStore() {
 	let theme = $state<Theme>(loadTheme());
 
 	function loadTheme(): Theme {
-		if (typeof localStorage === 'undefined') return 'light';
-		const saved = localStorage.getItem(STORAGE_KEY);
+		// localStorage is not available during SSR
+		if (typeof window === 'undefined' || typeof window.localStorage === 'undefined') {
+			// Respect OS preference if possible during hydration; otherwise default to light
+			if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches) return 'dark';
+			return 'light';
+		}
+		const saved = window.localStorage.getItem(STORAGE_KEY);
 		if (saved === 'dark' || saved === 'light') return saved;
 		// Respect OS preference on first visit
-		if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
+		if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
 			return 'dark';
 		}
 		return 'light';

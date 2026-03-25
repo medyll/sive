@@ -66,6 +66,12 @@ completed_steps:
 
 missing_artifacts: []
 
+delayed_issues:
+  - id: del-2026-03-25-001
+    title: "Svelte build warnings (a11y/state/css)"
+    note: "Non-blocking Svelte warnings and LightningCSS at-rule errors — delayed for later cleanup. E2E run should proceed."
+    reported: 2026-03-25T13:37:48Z
+
 recommendation: |
   SPRINT 58 COMPLETE (2026-03-24). Slash Command system + recently-used templates implemented.
   S51-01 test stabilization done: SummaryPanel excluded from browser pool, slow modules mocked,
@@ -84,10 +90,10 @@ recommendation: |
 last_updated: 2026-03-19
 
 active_role: dev
-next_action: "Implementing S64-01 — streakStore.svelte.ts"
-next_command: "bmad continue"
-next_role: dev
-last_updated: 2026-03-25T01:20:00Z
+next_action: "Implemented S64-01 — streakStore.svelte.ts (artifact created)"
+next_command: "bmad test"
+next_role: tester
+last_updated: 2026-03-25T12:24:54Z
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:

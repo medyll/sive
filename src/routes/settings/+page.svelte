@@ -10,9 +10,9 @@
   let dailyTarget = $state(goalsStore.goals.dailyTarget);
 
   let theme: string = $state(themeStore.theme);
-  let fontSize: string = 'medium';
-  let autosave: number = 30;
-  let autoSummary: boolean = false;
+  let fontSize = $state('medium');
+  let autosave = $state(30);
+  let autoSummary = $state(false);
 
   onMount(() => {
     try {

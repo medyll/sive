@@ -291,17 +291,17 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   }
 
   // Hidden form references for programmatic submission
-  let createDocForm: HTMLFormElement;
-  let saveDocForm: HTMLFormElement;
-  let saveIdInput: HTMLInputElement;
-  let saveContentInput: HTMLInputElement;
-  let renameDocForm: HTMLFormElement;
-  let renameIdInput: HTMLInputElement;
-  let renameTitleInput: HTMLInputElement;
-  let deleteDocForm: HTMLFormElement;
-  let deleteIdInput: HTMLInputElement;
-  let duplicateDocForm: HTMLFormElement;
-  let duplicateIdInput: HTMLInputElement;
+  let createDocForm = $state<HTMLFormElement | null>(null);
+  let saveDocForm = $state<HTMLFormElement | null>(null);
+  let saveIdInput = $state<HTMLInputElement | null>(null);
+  let saveContentInput = $state<HTMLInputElement | null>(null);
+  let renameDocForm = $state<HTMLFormElement | null>(null);
+  let renameIdInput = $state<HTMLInputElement | null>(null);
+  let renameTitleInput = $state<HTMLInputElement | null>(null);
+  let deleteDocForm = $state<HTMLFormElement | null>(null);
+  let deleteIdInput = $state<HTMLInputElement | null>(null);
+  let duplicateDocForm = $state<HTMLFormElement | null>(null);
+  let duplicateIdInput = $state<HTMLInputElement | null>(null);
 
   function handleSelectDocument(id: string) {
     activeDocumentId = id;

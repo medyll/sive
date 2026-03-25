@@ -381,7 +381,7 @@
               {/if}
             </div>
           </span>
-          <div class="doc-tags" onclick={(e) => e.stopPropagation()}>
+          <div class="doc-tags" role="button" tabindex="0" onclick={(e) => e.stopPropagation()} onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); }}>
             {#each tagStore.get(doc.id) as tag}
               <span class="doc-tag-chip">
                 {tag}

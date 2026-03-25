@@ -130,8 +130,8 @@
 	});
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="modal-backdrop" onclick={handleBackdropClick} data-testid="share-modal-backdrop">
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="modal-backdrop" role="button" tabindex="0" onclick={handleBackdropClick} onkeydown={(e) => { if (e.key==='Enter' || e.key===' ') handleBackdropClick(e as unknown as MouseEvent); }} data-testid="share-modal-backdrop">
 	<div class="modal" role="dialog" aria-modal="true" aria-label="Share document" data-testid="share-modal">
 		<div class="modal-header">
 			<h2 class="modal-title">Share document</h2>
