@@ -2,12 +2,15 @@
   import { onMount } from 'svelte';
   import { toastStore } from '$lib/toastStore.svelte';
   import PluginManager from '$lib/elements/PluginManager.svelte';
+  import GoalsDashboard from '$lib/elements/GoalsDashboard.svelte';
+  import GoalTemplateModal from '$lib/elements/GoalTemplateModal.svelte';
   import { pluginStore } from '$lib/pluginStore.svelte';
   import { goalsStore } from '$lib/writingGoalsStore.svelte';
   import { themeStore } from '$lib/themeStore.svelte';
   onMount(() => pluginStore.init());
 
   let dailyTarget = $state(goalsStore.goals.dailyTarget);
+  let showTemplateModal = $state(false);
 
   let theme: string = $state(themeStore.theme);
   let fontSize = $state('medium');
@@ -51,8 +54,8 @@
   <h1 class="text-2xl mb-4">Settings</h1>
 
   <div class="mb-4">
-    <label class="block font-medium mb-2">Theme</label>
-    <div class="theme-picker" role="radiogroup" aria-label="Theme">
+    <label id="theme-label" class="block font-medium mb-2">Theme</label>
+    <div id="theme-picker" class="theme-picker" role="radiogroup" aria-labelledby="theme-label">
       {#each [{ value: 'light', label: 'Light', icon: '☀️' }, { value: 'dark', label: 'Dark', icon: '🌙' }] as opt (opt.value)}
         <button
           type="button"
@@ -69,8 +72,8 @@
   </div>
 
   <div class="mb-4">
-    <label class="block font-medium mb-2">Font size</label>
-    <select bind:value={fontSize}>
+    <label class="block font-medium mb-2" for="font-size">Font size</label>
+    <select id="font-size" bind:value={fontSize}>
       <option value="small">Small</option>
       <option value="medium">Medium</option>
       <option value="large">Large</option>
@@ -78,21 +81,26 @@
   </div>
 
   <div class="mb-4">
-    <label class="block font-medium mb-2">Autosave interval (seconds)</label>
-    <input type="number" bind:value={autosave} min="0" />
+    <label class="block font-medium mb-2" for="autosave">Autosave interval (seconds)</label>
+    <input id="autosave" type="number" bind:value={autosave} min="0" />
   </div>
 
   <div class="mb-4">
-    <label class="block font-medium mb-2">AI Summary</label>
-    <label>
-      <input type="checkbox" bind:checked={autoSummary} />
+    <label class="block font-medium mb-2" for="auto-summary">AI Summary</label>
+    <label for="auto-summary">
+      <input id="auto-summary" type="checkbox" bind:checked={autoSummary} />
       Auto-generate summary on save
     </label>
   </div>
 
   <div class="mb-4">
     <label class="block font-medium mb-2" for="daily-goal">Daily Writing Goal (words)</label>
-    <input id="daily-goal" type="number" bind:value={dailyTarget} min="1" max="100000" />
+    <div class="goal-input-row">
+      <input id="daily-goal" type="number" bind:value={dailyTarget} min="1" max="100000" />
+      <button type="button" onclick={() => (showTemplateModal = true)} class="btn-template">
+        📋 Use Template
+      </button>
+    </div>
     {#if goalsStore.goals.streak > 0}
       <p class="goal-streak">🔥 Current streak: {goalsStore.goals.streak} day{goalsStore.goals.streak !== 1 ? 's' : ''}</p>
     {/if}
@@ -105,6 +113,15 @@
   <h2>Plugins</h2>
   <PluginManager />
 </section>
+
+<section class="settings-section">
+  <h2>Goals Dashboard</h2>
+  <GoalsDashboard />
+</section>
+
+{#if showTemplateModal}
+  <GoalTemplateModal onClose={() => (showTemplateModal = false)} />
+{/if}
 
 <style>
   .theme-picker {
@@ -135,4 +152,32 @@
   .theme-icon { font-size: 1.5rem; }
   .theme-label { font-size: 0.8rem; font-weight: 600; color: var(--color-text, #111); }
   .goal-streak { font-size: 0.85rem; margin-top: 0.25rem; }
+
+  .goal-input-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .goal-input-row input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .btn-template {
+    padding: 0.5rem 1rem;
+    background: var(--color-accent, #7c3aed);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.2s;
+    font-size: 0.9rem;
+  }
+
+  .btn-template:hover {
+    background: #6d28d9;
+  }
 </style>

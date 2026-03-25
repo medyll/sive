@@ -71,6 +71,10 @@ delayed_issues:
     title: "Svelte build warnings (a11y/state/css)"
     note: "Non-blocking Svelte warnings and LightningCSS at-rule errors — delayed for later cleanup. E2E run should proceed."
     reported: 2026-03-25T13:37:48Z
+  - id: del-2026-03-25-002
+    title: "E2E webserver timeout (Playwright)"
+    note: "Playwright webServer timed out (120s). better-auth init stubbed; ensure DB or increase webServer timeout, start preview manually, then re-run tests."
+    reported: 2026-03-25T14:52:43Z
 
 recommendation: |
   SPRINT 58 COMPLETE (2026-03-24). Slash Command system + recently-used templates implemented.
@@ -89,11 +93,11 @@ recommendation: |
   Next: Run unit tests to confirm stabilization baseline, then Sprint 59 planning.
 last_updated: 2026-03-19
 
-active_role: pm
-next_action: "S59-01 implemented — unit tests stabilized and verified"
+active_role: dev
+next_action: "Sprint 65 — Remaining: S65-03 (share goals), S65-04 (weekly history), S65-05 (tests). Progress: 2/5 complete."
 next_command: "bmad continue"
-next_role: pm
-last_updated: 2026-03-25T15:21:47Z
+next_role: dev
+last_updated: 2026-03-25T19:35:00Z
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
@@ -664,28 +668,48 @@ sprints:
 
   - id: sprint-64
     name: Sprint 64 — Writing Goals Dashboard & Streaks
-    status: in_progress
-    progress: 0
+    status: done
+    progress: 100
     start: 2026-03-25
+    end: 2026-03-25
+
+  - id: sprint-65
+    name: Sprint 65 — Goals Refinement & Social
+    status: in_progress
+    progress: 40
+    start: 2026-03-25
+    stories:
+      - id: S65-01
+        title: goal-templates-system
+        status: done
+      - id: S65-02
+        title: achievement-badges-milestones
+        status: done
+      - id: S65-03
+        title: share-goals-streaks
+        status: todo
+      - id: S65-04
+        title: weekly-goal-reset-history
+        status: todo
+      - id: S65-05
+        title: unit-tests-sprint65
+        status: todo
     stories:
       - id: S64-01
         title: streakStore
-        status: todo
+        status: done
       - id: S64-02
         title: GoalsDashboard-component
-        status: todo
+        status: done
       - id: S64-03
         title: wire-goalsDashboard-settings
-        status: todo
+        status: done
       - id: S64-04
         title: auto-record-activity-on-save
-        status: todo
+        status: done
       - id: S64-05
         title: unit-tests-sprint64
-        status: todo
-      - id: S64-06
-        title: e2e-sprint64
-        status: todo
+        status: done
     start: 2026-03-25
     stories:
       - id: S63-01

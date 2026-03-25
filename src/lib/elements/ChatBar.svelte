@@ -33,16 +33,16 @@ ChatBar — floating input with mini-chat history (user/AI bubbles)
   {#if chatStore.messages.length > 0}
     <div class="chat-messages" bind:this={messagesEl} aria-live="polite" aria-label="Chat history">
       {#each chatStore.messages as msg, i (i)}
-        <div class="chat-bubble {msg.role}" role="article">
+        <article class="chat-bubble {msg.role}">
           <span class="bubble-label">{msg.role === 'user' ? 'You' : 'AI'}</span>
           <p class="bubble-text">{msg.text}</p>
-        </div>
+        </article>
       {/each}
       {#if chatStore.sending}
-        <div class="chat-bubble assistant typing" aria-label="AI typing">
+        <article class="chat-bubble assistant typing" aria-label="AI typing">
           <span class="bubble-label">AI</span>
           <p class="bubble-text">…</p>
-        </div>
+        </article>
       {/if}
     </div>
   {/if}

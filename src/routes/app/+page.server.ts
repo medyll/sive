@@ -12,6 +12,7 @@ import {
   validateDocumentFormData
 } from '$lib/server/inputValidation';
 import type { PageServerLoad, Actions } from './$types';
+import { existsSync } from 'node:fs';
 
 // Guest user id used when auth is unavailable (mock/dev mode)
 const GUEST_USER_ID = 'guest';
@@ -28,13 +29,18 @@ const STUB_DOCUMENTS = [
 	}
 ];
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, cookies }) => {
 	// In production mode (real DB + auth), require authentication
 	if (!isMock && !locals.user) {
 		throw redirect(302, '/auth');
 	}
 
 	const userId = locals.user?.id ?? GUEST_USER_ID;
+
+	// Allow forcing stub documents for e2e tests via environment variable or cookie
+	if (process.env.FORCE_E2E_STUBS === 'true' || cookies.get('sive_e2e_mock') === '1') {
+		return { documents: STUB_DOCUMENTS, activeDocumentId: STUB_DOCUMENTS[0].id, user: locals.user ?? null };
+	}
 
 	if (isMock || !db) {
 		return { documents: STUB_DOCUMENTS, activeDocumentId: STUB_DOCUMENTS[0].id, user: locals.user ?? null };

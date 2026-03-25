@@ -58,21 +58,19 @@ at him. Martin noticed her hands were shaking.\n\n\
   class="review-text"
   role="document"
   aria-label="Manuscript text — read only"
-  aria-readonly="true"
 >
   <div class="text-content">
     {#each segments as seg}
       {#if seg.highlight}
-        <mark
+        <button
+          type="button"
           class="highlight highlight--{seg.highlight.category}"
           data-category={seg.highlight.category}
           data-highlight-id={seg.highlight.id}
-          tabindex="0"
-          role="button"
           aria-label="Flagged passage: {seg.highlight.category}"
           onclick={() => onHighlightClick?.(seg.highlight!)}
           onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && onHighlightClick?.(seg.highlight!)}
-        >{seg.text}</mark>
+        >{seg.text}</button>
       {:else}
         {seg.text}
       {/if}

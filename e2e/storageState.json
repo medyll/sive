@@ -1,0 +1,15 @@
+{
+  "cookies": [
+    { "name": "sive_e2e_mock", "value": "1", "domain": "localhost", "path": "/", "expires": -1, "httpOnly": false, "secure": false, "sameSite": "Lax" }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:4173",
+      "localStorage": [
+        { "name": "sive:pwa:installed", "value": "true" },
+        { "name": "sive:pwa:dismissed-until", "value": "9999999999999" },
+        { "name": "sive:pwa:saves", "value": "99" }
+      ]
+    }
+  ]
+}

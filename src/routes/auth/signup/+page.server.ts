@@ -3,7 +3,7 @@ import { auth, isMock } from '$lib/server/auth';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
-	if (!isMock && locals.user) {
+	if (!isMock && locals.user && (locals.user as any).id !== 'guest') {
 		throw redirect(302, '/app');
 	}
 	return { isMock };

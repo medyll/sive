@@ -15,6 +15,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   import SummaryPanel from '$lib/elements/SummaryPanel.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';
   import { summaryStore } from '$lib/summaryStore.svelte';
+  import { streakStore } from '$lib/streakStore.svelte';
   import TemplatePicker from '$lib/elements/TemplatePicker.svelte';
   import VersionHistoryPanel from '$lib/elements/VersionHistoryPanel.svelte';
   import WritingGoalBar from '$lib/elements/WritingGoalBar.svelte';
@@ -322,6 +323,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       saveContentInput.value = content;
       saveDocForm.requestSubmit();
       toastStore.success('Document saved');
+      streakStore.recordActivity();
       if (isAutoSummaryEnabled()) {
         toastStore.info('Updating summary…');
         summaryStore.refreshSummary(id, 'medium');
@@ -338,6 +340,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         body: new URLSearchParams({ id, content }).toString()
       });
       toastStore.success('Document saved');
+      streakStore.recordActivity();
       if (isAutoSummaryEnabled()) {
         toastStore.info('Updating summary…');
         summaryStore.refreshSummary(id, 'medium');
@@ -700,6 +703,10 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
         </div>
       {/if}
     </div>
+
+    {#if focusMode}
+      <button type="button" class="floating-exit-focus" onclick={toggleFocusMode} aria-pressed={focusMode} style="position:fixed;bottom:1rem;right:1rem;z-index:1000;">Exit Focus</button>
+    {/if}
 
     <!-- Hidden forms for server actions -->
     <form

@@ -99,7 +99,7 @@ Props: report (null = placeholder)
     <section class="report-section" aria-labelledby="sec-inconsistencies">
       <h3 id="sec-inconsistencies">Inconsistencies</h3>
       {#each report.inconsistencies as item}
-        <article class="report-item" role="article">
+        <article class="report-item">
           <strong>{item.entity}</strong>
           <span class="badge-confidence">{Math.round(item.confidence * 100)}%</span>
           <p>{item.description}</p>
@@ -111,7 +111,7 @@ Props: report (null = placeholder)
     <section class="report-section" aria-labelledby="sec-pov">
       <h3 id="sec-pov">Point of View</h3>
       {#each report.pov as item}
-        <article class="report-item" role="article">
+        <article class="report-item">
           <strong>{item.location}</strong>
           <p>{item.detected_deviation}</p>
         </article>
@@ -122,7 +122,7 @@ Props: report (null = placeholder)
     <section class="report-section" aria-labelledby="sec-threads">
       <h3 id="sec-threads">Narrative Threads</h3>
       {#each report.threads as item}
-        <article class="report-item" role="article">
+        <article class="report-item">
           <strong>{item.thread_id}</strong>
           <span class="thread-status status--{item.status}">{item.status}</span>
           <p>{item.note}</p>
@@ -146,7 +146,7 @@ Props: report (null = placeholder)
     <section class="report-section" aria-labelledby="sec-motifs">
       <h3 id="sec-motifs">Themes &amp; Motifs</h3>
       {#each report.motifs as item}
-        <article class="report-item" role="article">
+        <article class="report-item">
           <strong>{item.motif_id}</strong>
           <span class="badge-presence">{item.presence}</span>
           <p>{item.consistency}</p>
@@ -158,7 +158,7 @@ Props: report (null = placeholder)
     <section class="report-section" aria-labelledby="sec-voices">
       <h3 id="sec-voices">Character Voices</h3>
       {#each report.voices as item}
-        <article class="report-item" role="article">
+        <article class="report-item">
           <strong>{item.character_id}</strong>
           <p>{item.register_deviation}</p>
           <blockquote class="voice-example">"{item.example}"</blockquote>
@@ -170,7 +170,7 @@ Props: report (null = placeholder)
     <section class="report-section" aria-labelledby="sec-style">
       <h3 id="sec-style">Style &amp; Rhythm</h3>
       {#each report.style as item}
-        <article class="report-item" role="article">
+        <article class="report-item">
           <strong>{item.signal_type}</strong>
           <span class="item-location">{item.location}</span>
           <p>{item.suggestion}</p>

@@ -15,7 +15,7 @@
 
 	// Debounced stats — recompute 300 ms after content stops changing
 	let _debounceTimer: ReturnType<typeof setTimeout> | null = null;
-	let _stale = $state(content);
+	let _stale = $state('');
 	$effect(() => {
 		const c = content;
 		if (_debounceTimer) clearTimeout(_debounceTimer);

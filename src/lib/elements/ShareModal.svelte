@@ -161,7 +161,7 @@
 										class="suggestion-item"
 										role="option"
 										aria-selected={selectedUser?.id === user.id}
-										onclick={() => selectUser(user)}
+										onclick={() => selectUser(user)} onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') selectUser(user); }} tabindex="0"
 										data-testid="user-suggestion"
 									>
 										<span class="suggestion-name">{user.name ?? user.email}</span>

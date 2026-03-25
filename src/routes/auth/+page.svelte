@@ -11,7 +11,7 @@
 
 <main class="auth-page">
   <div class="auth-card">
-    <h1 class="auth-title">Sign in to Sive</h1>
+    <h1 id="login-title" class="auth-title">Sign in</h1>
 
     {#if data.isMock}
       <div class="auth-notice" role="status">
@@ -24,7 +24,7 @@
       <div class="auth-error" role="alert">{form.error}</div>
     {/if}
 
-    <form method="POST" action="?/login" use:enhance class="auth-form">
+    <form method="POST" action="?/login" use:enhance class="auth-form" aria-labelledby="login-title">
       <label for="email">Email</label>
       <input id="email" name="email" type="email" required autocomplete="email" />
 
