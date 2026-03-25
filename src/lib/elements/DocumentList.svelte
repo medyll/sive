@@ -1,5 +1,5 @@
 <!--
-  DocumentList Ã¢â‚¬â€ sidebar listing user documents with create/switch/rename/delete support
+  DocumentList – sidebar listing user documents with create/switch/rename/delete support
 -->
 <script lang="ts">
   import { tagStore } from '$lib/tagStore.svelte.js';
@@ -136,7 +136,7 @@
     }
   }
 
-  // Focus input when entering edit mode Ã¢â‚¬â€ using attachment (Svelte 5)
+  // Focus input when entering edit mode – using attachment (Svelte 5)
   function focusOnMount(node: HTMLElement) {
     node.focus();
   }
@@ -229,7 +229,7 @@
         onclick={toggleSelectAll}
         aria-label={allSelected ? 'Deselect all' : 'Select all'}
         title={allSelected ? 'Deselect all' : 'Select all'}
-      >{allSelected ? 'Ã¢Ëœâ€˜' : 'Ã¢ËœÂ'}</button>
+      >{allSelected ? '☑' : '☐'}</button>
       {#if selectedCount > 0}
         <button
           class="btn-bulk-delete"
@@ -238,10 +238,10 @@
           aria-label="Delete selected documents"
         >Delete ({selectedCount})</button>
       {/if}
-      <button class="btn-bulk-cancel" type="button" onclick={toggleBulkMode} aria-label="Cancel selection">Ã¢Å“â€¢</button>
+      <button class="btn-bulk-cancel" type="button" onclick={toggleBulkMode} aria-label="Cancel selection">❌</button>
     {:else}
-      <button class="btn-bulk-mode" type="button" onclick={toggleBulkMode} aria-label="Select documents" title="Select multiple">Ã¢ËœÂ</button>
-      <button class="btn-new-doc" type="button" onclick={onNew} aria-label="New document">Ã¯Â¼â€¹</button>
+      <button class="btn-bulk-mode" type="button" onclick={toggleBulkMode} aria-label="Select documents" title="Select multiple">☐</button>
+      <button class="btn-new-doc" type="button" onclick={onNew} aria-label="New document">➕</button>
     {/if}
   </div>
 
@@ -249,7 +249,7 @@
     <input
       class="doc-search-input flex-1 text-sm border rounded px-2 py-1 bg-[var(--color-background,#fff)] text-[var(--color-text,#1a1a1a)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#646cff)]"
       type="search"
-      placeholder="FilterÃ¢â‚¬Â¦"
+      placeholder="Filter…"
       aria-label="Filter documents"
       bind:value={searchQuery}
     />
@@ -259,7 +259,7 @@
         type="button"
         aria-label="Clear filter"
         onclick={() => { searchQuery = ''; focusedIndex = -1; }}
-      >Ã¢Å“â€¢</button>
+      >❌</button>
     {/if}
   </div>
 
@@ -279,7 +279,7 @@
           class="btn-tag-filter-clear"
           aria-label="Clear tag filter"
           onclick={() => { activeTagFilter = null; }}
-        >Ã¢Å“â€¢</button>
+        >❌</button>
       {/if}
     </div>
   {/if}
@@ -365,7 +365,7 @@
                 aria-expanded={menuOpenId === doc.id}
                 aria-haspopup="menu"
                 onclick={(e) => openMenu(doc.id, e)}
-              >Ã¢â€¹Â¯</button>
+              >⋯</button>
               {#if menuOpenId === doc.id}
                 <ul class="doc-context-menu" role="menu" aria-label="Document actions">
                   <li role="none">
@@ -390,7 +390,7 @@
                   class="btn-tag-remove"
                   aria-label="Remove tag {tag}"
                   onclick={(e) => { e.stopPropagation(); tagStore.remove(doc.id, tag); }}
-                >Ãƒâ€”</button>
+                >×</button>
               </span>
             {/each}
             {#if tagStore.get(doc.id).length < 5}
@@ -398,7 +398,7 @@
                 <input
                   class="tag-input"
                   type="text"
-                  placeholder="tagÃ¢â‚¬Â¦"
+                  placeholder="tag…"
                   bind:value={tagInputValue}
                   onblur={() => commitTag(doc.id)}
                   onkeydown={(e) => onTagInputKeydown(e, doc.id)}
@@ -412,7 +412,7 @@
                   class="btn-tag-add"
                   aria-label="Add tag to {doc.title}"
                   onclick={(e) => startTagEdit(doc.id, e)}
-                >Ã¯Â¼â€¹</button>
+                >➕</button>
               {/if}
             {/if}
           </div>
