@@ -94,10 +94,10 @@ recommendation: |
 last_updated: 2026-03-19
 
 active_role: dev
-next_action: "All hotfixes complete. Resume Sprint 65 S65-03: Share Goals & Streaks feature implementation."
+next_action: "S65-03 complete. Now implementing S65-04: Weekly Goal Reset & History."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-25T22:15:00Z
+last_updated: 2026-03-25T22:30:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -687,7 +687,7 @@ sprints:
   - id: sprint-65
     name: Sprint 65 — Goals Refinement & Social
     status: in_progress
-    progress: 40
+    progress: 60
     start: 2026-03-25
     stories:
       - id: S65-01
@@ -698,10 +698,10 @@ sprints:
         status: done
       - id: S65-03
         title: share-goals-streaks
-        status: todo
+        status: done
       - id: S65-04
         title: weekly-goal-reset-history
-        status: todo
+        status: in_progress
       - id: S65-05
         title: unit-tests-sprint65
         status: todo
