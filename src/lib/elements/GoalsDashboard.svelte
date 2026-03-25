@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { goalsStore } from '$lib/writingGoalsStore.svelte';
 	import { streakStore } from '$lib/streakStore.svelte';
+	import ShareGoalsModal from './ShareGoalsModal.svelte';
 
 	interface Props {
 		compact?: boolean;
 	}
 
 	let { compact = false }: Props = $props();
+	let showShareModal = $state(false);
 
 	// Derived data
 	const dailyProgress = $derived(goalsStore.progress);
@@ -74,8 +76,22 @@
 		</div>
 	</div>
 
-	<!-- Streaks -->
+	<!-- Streaks + Share button -->
 	<div class="section">
+		<div class="section-header">
+			<h3 class="section-title">Streaks</h3>
+			{#if !compact}
+				<button
+					type="button"
+					class="btn-share"
+					onclick={() => (showShareModal = true)}
+					title="Share your goals and streaks"
+					aria-label="Share goals and streaks"
+				>
+					📤 Share
+				</button>
+			{/if}
+		</div>
 		<div class="streak-grid">
 			<div class="streak-card">
 				<div class="streak-value">🔥 {currentStreak}</div>
@@ -131,6 +147,10 @@
 		</div>
 	{/if}
 </div>
+
+{#if showShareModal}
+	<ShareGoalsModal onClose={() => (showShareModal = false)} />
+{/if}
 
 <style>
 	.goals-dashboard {
@@ -323,5 +343,23 @@
 	.stat-unit {
 		font-size: 0.7rem;
 		color: var(--color-muted, #6b7280);
+	}
+
+	/* Share button */
+	.btn-share {
+		padding: 0.5rem 1rem;
+		background: var(--color-accent, #7c3aed);
+		color: white;
+		border: none;
+		border-radius: 0.375rem;
+		font-size: 0.85rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: background 0.2s;
+		white-space: nowrap;
+	}
+
+	.btn-share:hover {
+		background: #6d28d9;
 	}
 </style>
