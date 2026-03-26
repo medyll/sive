@@ -1,375 +1,181 @@
 <script lang="ts">
-	import {
-		notificationState,
-		markRead,
-		markAllRead,
-		clearAll
-	} from '$lib/notificationStore.svelte';
-	import type { Notification } from '$lib/server/notifications';
+	import { notificationStore } from '$lib/notificationStore.svelte';
 
-	let panelOpen = $state(false);
-
-	const TYPE_ICONS: Record<string, string> = {
-		doc_shared: 'ðŸ“„',
-		doc_edited: 'âœï¸',
-		conflict: 'âš ï¸',
-		mention: '@',
-		system: 'â„¹ï¸'
-	};
+	let open = $state(false);
 
 	function toggle() {
-		panelOpen = !panelOpen;
+		open = !open;
+		if (open) notificationStore.markAllRead();
 	}
 
-	function close() {
-		panelOpen = false;
+	function relativeTime(iso: string): string {
+		const diff = Date.now() - new Date(iso).getTime();
+		const mins = Math.floor(diff / 60_000);
+		if (mins < 1) return 'just now';
+		if (mins < 60) return `${mins}m ago`;
+		const hrs = Math.floor(mins / 60);
+		if (hrs < 24) return `${hrs}h ago`;
+		return `${Math.floor(hrs / 24)}d ago`;
 	}
 
-	async function handleNotificationClick(n: Notification) {
-		await markRead(n.id);
-		if (n.docId) {
-			window.dispatchEvent(new CustomEvent('notification:navigate', { detail: { docId: n.docId } }));
-		}
-		close();
-	}
-
-	function relativeTime(ts: number): string {
-		const diff = Date.now() - ts;
-		const s = Math.floor(diff / 1000);
-		if (s < 60) return 'just now';
-		const m = Math.floor(s / 60);
-		if (m < 60) return `${m}m ago`;
-		const h = Math.floor(m / 60);
-		if (h < 24) return `${h}h ago`;
-		return `${Math.floor(h / 24)}d ago`;
-	}
-
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'Escape') close();
-	}
+	const typeIcon: Record<string, string> = {
+		streak_reminder: '🔥',
+		partner_activity: '👥',
+		challenge_deadline: '⏰',
+		goal_reminder: '🎯'
+	};
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
-
 <div class="bell-wrapper">
-	<!-- Bell button -->
 	<button
-		class={['bell-button', notificationState.unreadCount > 0 && 'has-unread'].filter(Boolean).join(' ')}
+		type="button"
+		class="bell-btn"
 		onclick={toggle}
-		aria-label={`Notifications${notificationState.unreadCount > 0 ? ` â€” ${notificationState.unreadCount} unread` : ''}`}
-		aria-expanded={panelOpen}
-		aria-haspopup="true"
+		aria-label="Notifications{notificationStore.unreadCount > 0 ? ` (${notificationStore.unreadCount} unread)` : ''}"
 	>
-		<svg class="bell-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-			<path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-		</svg>
-
-		{#if notificationState.unreadCount > 0}
-			<span class="badge" aria-hidden="true">
-				{notificationState.unreadCount > 99 ? '99+' : notificationState.unreadCount}
-			</span>
+		🔔
+		{#if notificationStore.unreadCount > 0}
+			<span class="badge">{notificationStore.unreadCount > 9 ? '9+' : notificationStore.unreadCount}</span>
 		{/if}
 	</button>
 
-	<!-- Panel -->
-	{#if panelOpen}
-		<div
-			class="panel"
-			role="dialog"
-			aria-label="Notifications"
-			aria-modal="false"
-		>
-			<!-- Panel header -->
-			<div class="panel-header">
-				<h2 class="panel-title">Notifications</h2>
-				<div class="panel-actions">
-					{#if notificationState.unreadCount > 0}
-						<button class="action-btn" onclick={markAllRead}>Mark all read</button>
-					{/if}
-					{#if notificationState.notifications.length > 0}
-						<button class="action-btn action-btn--danger" onclick={clearAll}>Clear all</button>
-					{/if}
-				</div>
+	{#if open}
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div class="backdrop" onclick={() => (open = false)}></div>
+		<div class="dropdown" role="dialog" aria-label="Notifications">
+			<div class="dropdown-header">
+				<span class="dropdown-title">Notifications</span>
+				{#if notificationStore.state.items.length > 0}
+					<button type="button" class="clear-btn" onclick={() => notificationStore.reset()}>Clear all</button>
+				{/if}
 			</div>
 
-			<!-- List -->
-			<ul class="notification-list" role="list">
-				{#if notificationState.notifications.length === 0}
-					<li class="empty-state">
-						<span class="empty-icon">âœ“</span>
-						<span>You're all caught up</span>
-					</li>
-				{:else}
-					{#each notificationState.notifications as n (n.id)}
-						<li class={['notification-item', !n.read && 'unread'].filter(Boolean).join(' ')}>
+			{#if notificationStore.state.items.length === 0}
+				<p class="empty">No notifications yet</p>
+			{:else}
+				<ul class="notif-list">
+					{#each notificationStore.state.items as notif (notif.id)}
+						<li class="notif-item" class:unread={!notif.read}>
+							<span class="notif-icon">{typeIcon[notif.type] ?? '📌'}</span>
+							<div class="notif-body">
+								<p class="notif-msg">{notif.message}</p>
+								<span class="notif-time">{relativeTime(notif.createdAt)}</span>
+							</div>
 							<button
-								class="notification-btn"
-								onclick={() => handleNotificationClick(n)}
-								aria-label={`${n.title}: ${n.body}`}
-							>
-								<span class="notif-icon" aria-hidden="true">
-									{TYPE_ICONS[n.type] ?? 'â„¹ï¸'}
-								</span>
-								<div class="notif-content">
-									<p class="notif-title">{n.title}</p>
-									<p class="notif-body">{n.body}</p>
-									<time class="notif-time" datetime={new Date(n.createdAt).toISOString()}>
-										{relativeTime(n.createdAt)}
-									</time>
-								</div>
-								{#if !n.read}
-									<span class="unread-dot" aria-label="unread"></span>
-								{/if}
-							</button>
+								type="button"
+								class="dismiss-btn"
+								onclick={() => notificationStore.dismiss(notif.id)}
+								aria-label="Dismiss"
+							>✕</button>
 						</li>
 					{/each}
-				{/if}
-			</ul>
-
-			<!-- Connection status -->
-			{#if !notificationState.connected}
-				<div class="connection-warning">
-					âš ï¸ Reconnectingâ€¦
-				</div>
+				</ul>
 			{/if}
 		</div>
-
-		<!-- Backdrop -->
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<div class="backdrop" onclick={close} aria-hidden="true"></div>
 	{/if}
 </div>
 
 <style>
-	.bell-wrapper {
-		position: relative;
-	}
+	.bell-wrapper { position: relative; display: inline-block; }
 
-	.bell-button {
+	.bell-btn {
 		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.5rem;
-		height: 2.5rem;
+		background: none;
 		border: none;
-		background: transparent;
-		border-radius: 0.5rem;
+		font-size: 1.25rem;
 		cursor: pointer;
-		color: var(--color-muted);
-		transition: background-color 0.15s, color 0.15s;
-	}
-
-	.bell-button:hover {
-		background: var(--color-hover);
-		color: var(--color-text);
-	}
-
-	.bell-button.has-unread {
-		color: #4f46e5;
-	}
-
-	.bell-icon {
-		width: 1.25rem;
-		height: 1.25rem;
+		padding: 0.25rem;
+		line-height: 1;
 	}
 
 	.badge {
 		position: absolute;
-		top: 0.25rem;
-		right: 0.25rem;
-		min-width: 1.125rem;
-		height: 1.125rem;
-		padding: 0 0.25rem;
+		top: -4px;
+		right: -4px;
 		background: #ef4444;
 		color: white;
-		border-radius: 9999px;
-		font-size: 0.625rem;
+		font-size: 0.6rem;
 		font-weight: 700;
+		min-width: 16px;
+		height: 16px;
+		border-radius: 8px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		line-height: 1;
+		padding: 0 3px;
 	}
 
-	/* Panel */
-	.panel {
+	.backdrop { position: fixed; inset: 0; z-index: 99; }
+
+	.dropdown {
 		position: absolute;
-		top: calc(100% + 0.5rem);
 		right: 0;
-		width: min(360px, 95vw);
-		background: var(--color-background);
-		border: 1px solid var(--color-border);
-		border-radius: 0.75rem;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-		z-index: 200;
-		display: flex;
-		flex-direction: column;
-		max-height: 480px;
+		top: calc(100% + 8px);
+		width: 320px;
+		background: var(--color-surface, #fff);
+		border: 1px solid var(--color-border, #e5e7eb);
+		border-radius: 10px;
+		box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+		z-index: 100;
 		overflow: hidden;
 	}
 
-	.panel-header {
+	.dropdown-header {
 		display: flex;
-		align-items: center;
 		justify-content: space-between;
-		padding: 1rem 1rem 0.75rem;
-		border-bottom: 1px solid var(--color-border);
-		flex-shrink: 0;
-	}
-
-	.panel-title {
-		margin: 0;
-		font-size: 0.9375rem;
-		font-weight: 700;
-		color: var(--color-text);
-	}
-
-	.panel-actions {
-		display: flex;
-		gap: 0.5rem;
-	}
-
-	.action-btn {
-		padding: 0.25rem 0.5rem;
-		border: none;
-		background: transparent;
-		font-size: 0.75rem;
-		color: var(--color-muted);
-		cursor: pointer;
-		border-radius: 0.25rem;
-		transition: background-color 0.15s;
-	}
-
-	.action-btn:hover {
-		background: var(--color-hover);
-		color: var(--color-text);
-	}
-
-	.action-btn--danger:hover {
-		background: #fef2f2;
-		color: #dc2626;
-	}
-
-	/* List */
-	.notification-list {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		overflow-y: auto;
-		flex: 1;
-	}
-
-	.empty-state {
-		display: flex;
-		flex-direction: column;
 		align-items: center;
-		gap: 0.5rem;
-		padding: 2.5rem 1rem;
-		color: var(--color-muted);
+		padding: 0.75rem 1rem;
+		border-bottom: 1px solid var(--color-border, #e5e7eb);
+	}
+
+	.dropdown-title { font-weight: 600; font-size: 0.9rem; }
+
+	.clear-btn {
+		background: none;
+		border: none;
+		font-size: 0.75rem;
+		color: var(--color-text-secondary, #999);
+		cursor: pointer;
+	}
+
+	.clear-btn:hover { color: var(--color-text, #111); }
+
+	.empty {
+		padding: 2rem 1rem;
+		text-align: center;
+		color: var(--color-text-secondary, #999);
 		font-size: 0.875rem;
+		margin: 0;
 	}
 
-	.empty-icon {
-		font-size: 1.5rem;
-		color: #10b981;
-	}
+	.notif-list { list-style: none; margin: 0; padding: 0; max-height: 360px; overflow-y: auto; }
 
-	.notification-item {
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.notification-item.unread {
-		background: #f8f7ff;
-	}
-
-	.notification-btn {
+	.notif-item {
 		display: flex;
 		align-items: flex-start;
-		gap: 0.75rem;
-		width: 100%;
-		padding: 0.875rem 1rem;
+		gap: 0.625rem;
+		padding: 0.75rem 1rem;
+		border-bottom: 1px solid var(--color-border, #f3f4f6);
+	}
+
+	.notif-item.unread { background: var(--color-primary-subtle, #f5f3ff); }
+	.notif-item:last-child { border-bottom: none; }
+
+	.notif-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+	.notif-body { flex: 1; min-width: 0; }
+
+	.notif-msg { margin: 0; font-size: 0.825rem; color: var(--color-text, #111); line-height: 1.4; }
+	.notif-time { font-size: 0.7rem; color: var(--color-text-secondary, #999); }
+
+	.dismiss-btn {
+		background: none;
 		border: none;
-		background: transparent;
-		text-align: left;
 		cursor: pointer;
-		transition: background-color 0.15s;
-	}
-
-	.notification-btn:hover {
-		background: var(--color-surface);
-	}
-
-	.notif-icon {
-		font-size: 1.125rem;
-		flex-shrink: 0;
-		margin-top: 0.125rem;
-	}
-
-	.notif-content {
-		flex: 1;
-		min-width: 0;
-	}
-
-	.notif-title {
-		margin: 0 0 0.25rem;
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: var(--color-text);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	.notif-body {
-		margin: 0 0 0.375rem;
-		font-size: 0.8125rem;
-		color: var(--color-muted);
-		line-height: 1.4;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
-	.notif-time {
+		color: var(--color-text-secondary, #ccc);
 		font-size: 0.75rem;
-		color: var(--color-muted);
-	}
-
-	.unread-dot {
-		width: 0.5rem;
-		height: 0.5rem;
-		background: #6366f1;
-		border-radius: 50%;
-		flex-shrink: 0;
-		margin-top: 0.375rem;
-	}
-
-	.connection-warning {
-		padding: 0.625rem 1rem;
-		background: #fffbeb;
-		font-size: 0.75rem;
-		color: #92400e;
-		border-top: 1px solid #fde68a;
+		padding: 0;
 		flex-shrink: 0;
 	}
 
-	.backdrop {
-		position: fixed;
-		inset: 0;
-		z-index: 199;
-	}
-
-	@media (max-width: 640px) {
-		.panel {
-			right: -0.5rem;
-			width: 100vw;
-			border-radius: 0.75rem 0.75rem 0 0;
-			position: fixed;
-			bottom: 0;
-			top: auto;
-			max-height: 70vh;
-		}
-	}
+	.dismiss-btn:hover { color: var(--color-text, #666); }
 </style>

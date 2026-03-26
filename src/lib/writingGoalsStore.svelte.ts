@@ -2,6 +2,9 @@
  * Writing goals — daily word target, session progress, streak tracking
  */
 
+import { activityStore } from './activityStore.svelte';
+import { challengeStore } from './challengeStore.svelte';
+
 const STORAGE_KEY = 'sive:goals';
 const SESSION_KEY = 'sive:goals:session';
 
@@ -64,8 +67,28 @@ function createGoalsStore() {
 			lastWrittenDate = t;
 		}
 
+		const prevWords = goals.todayWords;
+		const wasGoalMet = prevWords >= goals.dailyTarget;
 		goals = { ...goals, todayWords, lastWrittenDate, streak, longestStreak };
 		save(goals);
+
+		// Contribute new words to joined challenges (fire-and-forget)
+		const delta = goals.todayWords - prevWords;
+		if (delta > 0) {
+			queueMicrotask(() => {
+				for (const id of challengeStore.state.joined) {
+					challengeStore.addWords(id, delta);
+				}
+			});
+		}
+
+		// Emit goal_completed when target first crossed (fire-and-forget)
+		const isNowMet = goals.todayWords >= goals.dailyTarget;
+		if (isNowMet && !wasGoalMet) {
+			queueMicrotask(() => {
+				activityStore.emit('goal_completed', 'self', 'me', { words: goals.todayWords });
+			});
+		}
 	}
 
 	function reset() {

@@ -7,6 +7,12 @@
  * Activity is tracked in UTC for consistency across timezones.
  */
 
+import { activityStore } from './activityStore.svelte';
+import { notificationStore } from './notificationStore.svelte';
+
+const REMINDER_KEY = 'sive:streak:lastReminder';
+
+const STREAK_MILESTONES = [7, 30, 100, 365];
 const STORAGE_KEY = 'sive:streak';
 
 export interface StreakData {
@@ -106,7 +112,15 @@ function createStreakStore() {
 			}
 
 			data.lastActiveDate = t;
+			const prevLongest = data.longestStreak;
 			data.longestStreak = Math.max(data.longestStreak, data.currentStreak);
+
+			// Emit streak milestone on milestone days (fire-and-forget)
+			if (STREAK_MILESTONES.includes(data.currentStreak)) {
+				queueMicrotask(() => {
+					activityStore.emit('streak_milestone', 'self', 'me', { days: data.currentStreak });
+				});
+			}
 		}
 
 		save(data);
@@ -156,6 +170,22 @@ function createStreakStore() {
 	function reset(): void {
 		data = { ...DEFAULT };
 		save(data);
+	}
+
+	// Streak reminder: fire once per day after 8pm if no activity today
+	if (typeof localStorage !== 'undefined' && data.currentStreak > 0) {
+		const t = today();
+		const lastReminder = localStorage.getItem(REMINDER_KEY);
+		const hour = new Date().getHours();
+		if (hour >= 20 && lastReminder !== t && !hasActivityOn(t)) {
+			queueMicrotask(() => {
+				notificationStore.notify(
+					'streak_reminder',
+					`🔥 Don't break your ${data.currentStreak}-day streak! Write something today.`
+				);
+				localStorage.setItem(REMINDER_KEY, t);
+			});
+		}
 	}
 
 	// Derived values

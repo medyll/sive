@@ -4,6 +4,8 @@
   import PluginManager from '$lib/elements/PluginManager.svelte';
   import GoalsDashboard from '$lib/elements/GoalsDashboard.svelte';
   import GoalTemplateModal from '$lib/elements/GoalTemplateModal.svelte';
+  import PartnersList from '$lib/elements/PartnersList.svelte';
+  import { privacyStore } from '$lib/privacyStore.svelte';
   import { pluginStore } from '$lib/pluginStore.svelte';
   import { goalsStore } from '$lib/writingGoalsStore.svelte';
   import { themeStore } from '$lib/themeStore.svelte';
@@ -117,6 +119,49 @@
 <section class="settings-section">
   <h2>Goals Dashboard</h2>
   <GoalsDashboard />
+</section>
+
+<section class="settings-section">
+  <PartnersList />
+</section>
+
+<section class="settings-section">
+  <h2>Privacy</h2>
+  <div class="privacy-row">
+    <label for="leaderboard-toggle">
+      <input
+        id="leaderboard-toggle"
+        type="checkbox"
+        checked={privacyStore.state.showOnLeaderboard}
+        onchange={(e) => privacyStore.setLeaderboardVisibility((e.target as HTMLInputElement).checked)}
+      />
+      Show me on the leaderboard
+    </label>
+  </div>
+  <div class="privacy-row">
+    <label for="discovery-toggle">
+      <input
+        id="discovery-toggle"
+        type="checkbox"
+        checked={privacyStore.state.showInDiscovery}
+        onchange={(e) => privacyStore.setShowInDiscovery((e.target as HTMLInputElement).checked)}
+      />
+      Allow others to discover me
+    </label>
+  </div>
+  {#if privacyStore.state.showOnLeaderboard || privacyStore.state.showInDiscovery}
+    <div class="privacy-name">
+      <label for="display-name">Display name</label>
+      <input
+        id="display-name"
+        type="text"
+        maxlength="30"
+        placeholder="@yourname"
+        value={privacyStore.state.displayName}
+        oninput={(e) => privacyStore.setDisplayName((e.target as HTMLInputElement).value)}
+      />
+    </div>
+  {/if}
 </section>
 
 {#if showTemplateModal}

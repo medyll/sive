@@ -1,105 +1,110 @@
 /**
- * Client-side notification store
- * Connects to SSE stream, manages local state, exposes actions
+ * notificationStore — in-app notifications
+ *
+ * Types: streak_reminder | partner_activity | challenge_deadline | goal_reminder
+ * Auto-dismiss after 6s. Ring buffer: max 50. Persists to localStorage.
  */
 
-import type { Notification } from '$lib/server/notifications';
+const STORAGE_KEY = 'sive:notifications';
+const MAX_NOTIFICATIONS = 50;
+const AUTO_DISMISS_MS = 6000;
 
-interface NotificationState {
-	notifications: Notification[];
-	unreadCount: number;
-	connected: boolean;
+export type NotificationType =
+	| 'streak_reminder'
+	| 'partner_activity'
+	| 'challenge_deadline'
+	| 'goal_reminder';
+
+export interface Notification {
+	id: string;
+	type: NotificationType;
+	message: string;
+	meta?: Record<string, unknown>;
+	createdAt: string;
+	read: boolean;
 }
 
-let state = $state<NotificationState>({
-	notifications: [],
-	unreadCount: 0,
-	connected: false
-});
+export interface NotificationState {
+	items: Notification[];
+}
 
-let eventSource: EventSource | null = null;
-let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
-let reconnectDelay = 1000; // starts at 1s, doubles up to 30s
+function load(): NotificationState {
+	if (typeof localStorage === 'undefined') return { items: [] };
+	try {
+		const raw = localStorage.getItem(STORAGE_KEY);
+		return raw ? JSON.parse(raw) : { items: [] };
+	} catch {
+		return { items: [] };
+	}
+}
 
-function connect() {
-	if (typeof window === 'undefined') return;
-	if (eventSource) return; // already connected
+function save(state: NotificationState): void {
+	if (typeof localStorage !== 'undefined') {
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+	}
+}
 
-	eventSource = new EventSource('/api/notifications/stream');
+let _idCounter = 0;
+function generateId(): string {
+	return `notif_${Date.now()}_${++_idCounter}`;
+}
 
-	eventSource.onopen = () => {
-		state.connected = true;
-		reconnectDelay = 1000; // reset backoff
-	};
+function createNotificationStore() {
+	let state = $state<NotificationState>(load());
 
-	eventSource.onmessage = (e) => {
-		try {
-			const payload = JSON.parse(e.data);
+	const unreadCount = $derived(state.items.filter((n) => !n.read).length);
 
-			if (payload.type === 'init') {
-				state.notifications = payload.notifications ?? [];
-				state.unreadCount = payload.unreadCount ?? 0;
-			} else if (payload.type === 'notification') {
-				state.notifications = [payload.notification, ...state.notifications].slice(0, 50);
-				state.unreadCount += 1;
-			}
-		} catch {
-			// malformed event — ignore
+	function notify(
+		type: NotificationType,
+		message: string,
+		meta?: Record<string, unknown>
+	): string {
+		const id = generateId();
+		const notification: Notification = {
+			id,
+			type,
+			message,
+			meta,
+			createdAt: new Date().toISOString(),
+			read: false
+		};
+
+		// Ring buffer: drop oldest if at cap
+		const items = [notification, ...state.items].slice(0, MAX_NOTIFICATIONS);
+		state = { items };
+		save(state);
+
+		// Auto-dismiss after 6s
+		if (typeof setTimeout !== 'undefined') {
+			setTimeout(() => dismiss(id), AUTO_DISMISS_MS);
 		}
+
+		return id;
+	}
+
+	function dismiss(id: string): void {
+		state = { items: state.items.filter((n) => n.id !== id) };
+		save(state);
+	}
+
+	function markAllRead(): void {
+		state = { items: state.items.map((n) => ({ ...n, read: true })) };
+		save(state);
+	}
+
+	function reset(): void {
+		state = { items: [] };
+		save(state);
+	}
+
+	return {
+		get state() { return state; },
+		get unreadCount() { return unreadCount; },
+		notify,
+		dismiss,
+		markAllRead,
+		reset
 	};
-
-	eventSource.onerror = () => {
-		state.connected = false;
-		eventSource?.close();
-		eventSource = null;
-
-		// Exponential backoff reconnect
-		if (reconnectTimer) clearTimeout(reconnectTimer);
-		reconnectTimer = setTimeout(() => {
-			reconnectDelay = Math.min(reconnectDelay * 2, 30_000);
-			connect();
-		}, reconnectDelay);
-	};
 }
 
-function disconnect() {
-	if (reconnectTimer) clearTimeout(reconnectTimer);
-	eventSource?.close();
-	eventSource = null;
-	state.connected = false;
-}
-
-/** Mark single notification read */
-export async function markRead(id: string): Promise<void> {
-	const n = state.notifications.find((x) => x.id === id);
-	if (!n || n.read) return;
-
-	n.read = true;
-	state.unreadCount = Math.max(0, state.unreadCount - 1);
-
-	await fetch(`/api/notifications/${id}`, { method: 'PATCH' }).catch(() => {});
-}
-
-/** Mark all notifications read */
-export async function markAllRead(): Promise<void> {
-	for (const n of state.notifications) n.read = true;
-	state.unreadCount = 0;
-
-	await fetch('/api/notifications', { method: 'PATCH' }).catch(() => {});
-}
-
-/** Clear all notifications */
-export async function clearAll(): Promise<void> {
-	state.notifications = [];
-	state.unreadCount = 0;
-
-	await fetch('/api/notifications', { method: 'DELETE' }).catch(() => {});
-}
-
-/** Call on app mount */
-export function initNotifications() {
-	connect();
-	return disconnect; // return cleanup
-}
-
-export { state as notificationState };
+export const notificationStore = createNotificationStore();
