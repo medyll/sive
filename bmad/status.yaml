@@ -63,6 +63,9 @@ completed_steps:
   - Sprint 26 Implementation — autoSummary setting, background trigger, print CSS, timestamp in panel (S26-01 → S26-06)
   - Sprint 27 Planning — PDF Export & Mobile UX Polish
   - Sprint 27 Implementation — PDF /api/export endpoint, PDF button, 44px tap targets, mobile panels (S27-01 → S27-06)
+  - Sprint 69 Planning — Writer Discovery & Community Challenges
+  - Sprint 70 Planning — Notifications & Writing Reminders
+  - Sprint 70 Implementation — Notifications & Reminders (S70-01 → S70-06)
 
 missing_artifacts: []
 
@@ -77,17 +80,17 @@ delayed_issues:
     reported: 2026-03-25T14:52:43Z
 
 recommendation: |
-  SPRINT 66 COMPLETE (2026-03-26). Social Sharing & Community Features ✅
+  SPRINT 70 COMPLETE (2026-03-27). Notifications & Writing Reminders ✅
 
   Completed Stories:
-  - S66-01: User Profiles with Goal Stats
-  - S66-02: Share Goals Link (Referral Style) — 30-day expiry, read-only view
-  - S66-03: Accountability Partners (Follow Feature) — Follow/unfollow + partners list
-  - S66-04: Milestone Celebrations (Badge Pop & Confetti) — Animations + notifications
-  - S66-06: Comprehensive unit tests (41 tests, 100% passing)
-  - [Skipped] S66-05: Weekly Leaderboard (optional, deferred)
+  - S70-01: Notification Store — types, notify, dismiss, markAllRead, unreadCount, ring buffer 50
+  - S70-02: Notification Bell UI — bell icon, unread badge, dropdown panel, relative timestamps
+  - S70-03: Streak Reminder — fires at 8pm if no write today, once per day
+  - S70-04: Challenge Deadline Reminder — notifies for challenges ending within 48h
+  - S70-05: Partner Activity Notifications — notifies on new partner events
+  - S70-06: Unit Tests — notificationStore (11 tests), all stores integrated
 
-  Test Coverage: 41 new tests (goalSharing, shareLinksStore, partnersStore, celebrationStore)
+  Test Coverage: notificationStore.spec.ts (11 tests), inline tests in streakStore, challengeStore, partnerFeedStore
 
   Sprint history (compressed):
   - Sprints 1–28: Core features (Auth, AI Chat, Review Mode, Versioning, Persistence)
@@ -95,16 +98,19 @@ recommendation: |
   - Sprints 49–50: Test hardening & pool isolation
   - Sprint 51: Command Palette + WritingGoalBar
   - Sprints 52–65: Feature expansions & writing goals
-  - Sprint 66: Social Sharing & Community Features (NOW COMPLETE)
+  - Sprint 66: Social Sharing & Community Features
+  - Sprints 67–68: Gamification & Partner Activity Feed
+  - Sprint 69: Writer Discovery & Community Challenges (IN PROGRESS)
+  - Sprint 70: Notifications & Writing Reminders (NOW COMPLETE)
 
-  Next: Sprint 67 Planning — Community Gamification (leaderboards, achievements, streaks).
-last_updated: 2026-03-19
+  Next: Sprint 69 Implementation — Writer Discovery & Community Challenges.
+last_updated: 2026-03-26
 
 active_role: dev
-next_action: "S70-01: notificationStore.svelte.ts — types, notify, dismiss, markAllRead, unreadCount derived, ring buffer 50, localStorage."
+next_action: "S69-01: writer-discovery-page — implement discover writers page with search, filter, follow/unfollow."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-26T13:02:00Z
+last_updated: 2026-03-27T00:00:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -701,6 +707,32 @@ sprints:
         status: done
       - id: S68-06
         title: unit-tests-sprint68
+        status: done
+
+  - id: sprint-70
+    name: Sprint 70 — Notifications & Writing Reminders
+    status: done
+    progress: 100
+    start: 2026-03-27
+    end: 2026-03-27
+    stories:
+      - id: S70-01
+        title: notification-store
+        status: done
+      - id: S70-02
+        title: notification-bell-ui
+        status: done
+      - id: S70-03
+        title: streak-reminder
+        status: done
+      - id: S70-04
+        title: challenge-deadline-reminder
+        status: done
+      - id: S70-05
+        title: partner-activity-notifications
+        status: done
+      - id: S70-06
+        title: unit-tests-sprint70
         status: done
 
   - id: sprint-67

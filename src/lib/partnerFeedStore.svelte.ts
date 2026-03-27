@@ -3,12 +3,16 @@
  *
  * Reads from activityStore, filters to events from followed partners,
  * groups by day, and tracks unread count.
+ * 
+ * Emits partner_activity notifications when new events arrive.
  */
 
 import { activityStore, type ActivityEvent } from './activityStore.svelte';
 import { partnersStore } from './partnersStore.svelte';
+import { notificationStore } from './notificationStore.svelte';
 
 const UNREAD_KEY = 'sive:feed-last-read';
+const LAST_EVENT_COUNT_KEY = 'sive:feed-lastEventCount';
 
 export interface FeedGroup {
 	label: string; // "Today", "Yesterday", "This week", date string
@@ -78,6 +82,23 @@ function createPartnerFeedStore() {
 			const label = dayLabel(event.timestamp);
 			if (!groups.has(label)) groups.set(label, []);
 			groups.get(label)!.push(event);
+		}
+
+		// S70-05: Emit partner activity notification if new events since last check
+		if (typeof localStorage !== 'undefined') {
+			const lastCount = Number(localStorage.getItem(LAST_EVENT_COUNT_KEY) ?? 0);
+			const currentCount = events.length;
+			if (currentCount > lastCount && currentCount > 0) {
+				const newCount = currentCount - lastCount;
+				queueMicrotask(() => {
+					notificationStore.notify(
+						'partner_activity',
+						`${newCount} new activit${newCount === 1 ? 'y' : 'ies'} from your writing partners`,
+						{ count: newCount }
+					);
+				});
+			}
+			localStorage.setItem(LAST_EVENT_COUNT_KEY, String(currentCount));
 		}
 
 		return [...groups.entries()].map(([label, evs]) => ({ label, events: evs }));
