@@ -1,97 +1,27 @@
 <script lang="ts">
-	import { suggestionState, acceptSuggestion, acceptNextWord, dismissSuggestion } from '$lib/suggestionStore.svelte';
+	import { ghostTextStore } from '$lib/ghostTextStore.svelte';
 
-	interface GhostTextProps {
-		onAccept?: (text: string) => void;
+	interface Props {
+		position?: { top: number; left: number };
 	}
 
-	let { onAccept }: GhostTextProps = $props();
-
-	function handleKeydown(e: KeyboardEvent) {
-		if (!suggestionState.suggestion) return;
-
-		if (e.key === 'Tab') {
-			e.preventDefault();
-			const text = acceptSuggestion();
-			onAccept?.(text);
-		} else if (e.key === 'ArrowRight' && (e.ctrlKey || e.metaKey)) {
-			e.preventDefault();
-			const word = acceptNextWord();
-			onAccept?.(word);
-		} else if (e.key === 'Escape') {
-			dismissSuggestion();
-		} else if (e.key.length === 1 || e.key === 'Backspace') {
-			// Any printable key or backspace dismisses the suggestion
-			dismissSuggestion();
-		}
-	}
+	let { position }: Props = $props();
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
-
-{#if suggestionState.suggestion || suggestionState.pending}
-	<span
-		class="ghost-text"
-		role="status"
-		aria-label={suggestionState.suggestion
-			? `AI suggestion: ${suggestionState.suggestion}`
-			: 'AI thinking…'}
-		aria-live="polite"
-	>
-		{#if suggestionState.pending && !suggestionState.suggestion}
-			<span class="ghost-pending">●●●</span>
-		{:else}
-			<span class="ghost-content">{suggestionState.suggestion}</span>
-			<span class="ghost-hint">Tab to accept · Ctrl+→ word · Esc to dismiss</span>
-		{/if}
+{#if ghostTextStore.isVisible}
+	<span class="ghost-text" style="top: {position?.top ?? 0}px; left: {position?.left ?? 0}px;">
+		{ghostTextStore.displayText}
 	</span>
 {/if}
 
 <style>
 	.ghost-text {
-		display: inline;
+		position: absolute;
+		color: #9ca3af;
+		opacity: 0.6;
 		pointer-events: none;
-		user-select: none;
-	}
-
-	.ghost-content {
-		opacity: 0.38;
 		font-style: italic;
-		color: inherit;
-	}
-
-	.ghost-pending {
-		opacity: 0.3;
-		font-size: 0.5em;
-		letter-spacing: 0.25em;
-		vertical-align: middle;
-		animation: pulse 1.2s ease-in-out infinite;
-	}
-
-	.ghost-hint {
-		display: inline-block;
-		margin-left: 0.75em;
-		opacity: 0;
-		font-size: 0.7em;
-		font-style: normal;
-		font-weight: 500;
-		letter-spacing: 0.02em;
-		color: #6b7280;
-		background: #f3f4f6;
-		border: 1px solid #e5e7eb;
-		border-radius: 0.25rem;
-		padding: 0.1em 0.4em;
-		pointer-events: none;
-		transition: opacity 0.2s;
-	}
-
-	.ghost-text:hover .ghost-hint,
-	.ghost-text:focus-within .ghost-hint {
-		opacity: 1;
-	}
-
-	@keyframes pulse {
-		0%, 100% { opacity: 0.2; }
-		50%       { opacity: 0.6; }
+		white-space: pre;
+		user-select: none;
 	}
 </style>

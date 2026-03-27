@@ -70,6 +70,8 @@ completed_steps:
   - Sprint 71 Planning — Test Hardening & Quality
   - Sprint 71 Implementation — Test Hardening (S71-01 → S71-06)
   - Sprint 72 Planning — Component Test Infrastructure
+  - Sprint 72 Implementation — Test Infrastructure (S72-01 → S72-05)
+  - Sprint 73 Planning — AI Features Expansion
 
 missing_artifacts: []
 
@@ -84,23 +86,21 @@ delayed_issues:
     reported: 2026-03-25T14:52:43Z
 
 recommendation: |
-  SPRINT 72 IN PROGRESS — Component Test Infrastructure
+  SPRINT 73 IN PROGRESS — AI Features Expansion
 
   Completed Stories:
-  - S72-01: Investigate Test Infrastructure — Root cause found (page.container undefined)
-  - S72-04: Rewrite BadgeDisplay Tests — 11/11 tests passing
+  - S73-01: Ghost Text — Tab to Accept — Store, component, endpoint, 20 tests ✅
 
   In Progress:
-  - S72-02: Fix vitest Configuration — Documentation update needed
-  - S72-03: Create Store Mocking Utilities — Optional, depends on remaining tests
-  - S72-05: Rewrite UserProfileCard Tests — Pending
-
-  Key Finding: Use render() result object instead of page.container
-  Pattern: const { container, getByText } = render(Component)
+  - S73-02: Ghost Text — Partial Accept (Word-by-Word)
+  - S73-03: Selection Toolbar — Rewrite Actions
+  - S73-04: Tone Submenu Actions
+  - S73-05: AI Outline Generator
+  - S73-06: Unit Tests — AI Features
 
   Test Coverage: 
-  - BadgeDisplay.svelte.spec.ts (11 tests) — Fixed and passing
-  - Total S72: 11 tests verified
+  - ghostTextStore.spec.ts (20 tests) — Passing
+  - Total S73: 20 tests verified
 
   Sprint history (compressed):
   - Sprints 1–28: Core features
@@ -113,16 +113,17 @@ recommendation: |
   - Sprint 69: Writer Discovery & Community Challenges (COMPLETE)
   - Sprint 70: Notifications & Writing Reminders (COMPLETE)
   - Sprint 71: Test Hardening & Quality (COMPLETE)
-  - Sprint 72: Component Test Infrastructure (IN PROGRESS)
+  - Sprint 72: Component Test Infrastructure (COMPLETE)
+  - Sprint 73: AI Features Expansion (IN PROGRESS)
 
-  Next: Continue S72-02, S72-05 (remaining component tests).
+  Next: S73-02 — EditorPanel integration for Tab/Escape handling.
 last_updated: 2026-03-28
 
 active_role: dev
-next_action: "S72-02: Document test pattern in test-patterns.md, then S72-05: Fix UserProfileCard tests."
+next_action: "S73-02: Ghost Text Partial Accept — Integrate with EditorPanel for Tab/Escape key handling."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-28T00:00:00Z
+last_updated: 2026-03-28T21:30:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -775,25 +776,51 @@ sprints:
 
   - id: sprint-72
     name: Sprint 72 — Component Test Infrastructure
-    status: in_progress
-    progress: 40
+    status: done
+    progress: 100
     start: 2026-03-28
-    end: 2026-03-29
+    end: 2026-03-28
     stories:
       - id: S72-01
         title: investigate-test-infrastructure
         status: done
       - id: S72-02
         title: fix-vitest-config
-        status: in_progress
+        status: done
       - id: S72-03
         title: create-store-mocks
-        status: todo
+        status: skipped
       - id: S72-04
         title: rewrite-badgedisplay-tests
         status: done
       - id: S72-05
         title: rewrite-userprofilecard-tests
+        status: done
+
+  - id: sprint-73
+    name: Sprint 73 — AI Features Expansion
+    status: in_progress
+    progress: 20
+    start: 2026-03-29
+    end: 2026-03-30
+    stories:
+      - id: S73-01
+        title: ghost-text-tab-accept
+        status: done
+      - id: S73-02
+        title: ghost-text-partial-accept
+        status: in_progress
+      - id: S73-03
+        title: selection-toolbar-rewrite
+        status: todo
+      - id: S73-04
+        title: tone-submenu-actions
+        status: todo
+      - id: S73-05
+        title: ai-outline-generator
+        status: todo
+      - id: S73-06
+        title: unit-tests-ai-features
         status: todo
 
   - id: sprint-70
