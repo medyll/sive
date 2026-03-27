@@ -13,7 +13,8 @@ export type ActivityType =
 	| 'badge_earned'
 	| 'streak_milestone'
 	| 'leaderboard_entry'
-	| 'goal_completed';
+	| 'goal_completed'
+	| 'challenge_progress';
 
 export interface ActivityEvent {
 	id: string;

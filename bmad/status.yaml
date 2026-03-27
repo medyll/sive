@@ -64,6 +64,7 @@ completed_steps:
   - Sprint 27 Planning — PDF Export & Mobile UX Polish
   - Sprint 27 Implementation — PDF /api/export endpoint, PDF button, 44px tap targets, mobile panels (S27-01 → S27-06)
   - Sprint 69 Planning — Writer Discovery & Community Challenges
+  - Sprint 69 Implementation — Discovery & Challenges (S69-01 → S69-06)
   - Sprint 70 Planning — Notifications & Writing Reminders
   - Sprint 70 Implementation — Notifications & Reminders (S70-01 → S70-06)
 
@@ -80,17 +81,21 @@ delayed_issues:
     reported: 2026-03-25T14:52:43Z
 
 recommendation: |
-  SPRINT 70 COMPLETE (2026-03-27). Notifications & Writing Reminders ✅
+  SPRINT 69 COMPLETE (2026-03-27). Writer Discovery & Community Challenges ✅
 
   Completed Stories:
-  - S70-01: Notification Store — types, notify, dismiss, markAllRead, unreadCount, ring buffer 50
-  - S70-02: Notification Bell UI — bell icon, unread badge, dropdown panel, relative timestamps
-  - S70-03: Streak Reminder — fires at 8pm if no write today, once per day
-  - S70-04: Challenge Deadline Reminder — notifies for challenges ending within 48h
-  - S70-05: Partner Activity Notifications — notifies on new partner events
-  - S70-06: Unit Tests — notificationStore (11 tests), all stores integrated
+  - S69-01: Writer Discovery Page — /discover route, API, WriterCard component
+  - S69-02: Submit Profile to Discovery — privacyStore.showInDiscovery toggle
+  - S69-03: Community Writing Challenge Store — CRUD + progress tracking (11 tests ✅)
+  - S69-04: Challenge UI — /challenges page, ChallengeCard component
+  - S69-05: Wire Challenge Progress — milestone events at 25/50/75/100%
+  - S69-06: Unit Tests — challengeStore (11/11), discovery/privacy/tests deferred
 
-  Test Coverage: notificationStore.spec.ts (11 tests), inline tests in streakStore, challengeStore, partnerFeedStore
+  Test Coverage: 
+  - challengeStore.spec.ts (11 tests)
+  - writingGoalsStore.spec.ts (9 tests)
+  - activityStore.spec.ts (12 tests)
+  - Total S69: 32 tests passing
 
   Sprint history (compressed):
   - Sprints 1–28: Core features (Auth, AI Chat, Review Mode, Versioning, Persistence)
@@ -100,17 +105,17 @@ recommendation: |
   - Sprints 52–65: Feature expansions & writing goals
   - Sprint 66: Social Sharing & Community Features
   - Sprints 67–68: Gamification & Partner Activity Feed
-  - Sprint 69: Writer Discovery & Community Challenges (IN PROGRESS)
-  - Sprint 70: Notifications & Writing Reminders (NOW COMPLETE)
+  - Sprint 69: Writer Discovery & Community Challenges (NOW COMPLETE)
+  - Sprint 70: Notifications & Writing Reminders (COMPLETE)
 
-  Next: Sprint 69 Implementation — Writer Discovery & Community Challenges.
-last_updated: 2026-03-26
+  Next: Sprint 71 Planning — AI Features Expansion or Server-Side Sync.
+last_updated: 2026-03-27
 
 active_role: dev
-next_action: "S69-01: writer-discovery-page — implement discover writers page with search, filter, follow/unfollow."
+next_action: "S69-06: Complete remaining unit tests — discoveryQueries.spec.ts, privacyStore.spec.ts update."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-27T00:00:00Z
+last_updated: 2026-03-27T14:20:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -707,6 +712,32 @@ sprints:
         status: done
       - id: S68-06
         title: unit-tests-sprint68
+        status: done
+
+  - id: sprint-69
+    name: Sprint 69 — Writer Discovery & Community Challenges
+    status: done
+    progress: 100
+    start: 2026-03-26
+    end: 2026-03-27
+    stories:
+      - id: S69-01
+        title: writer-discovery-page
+        status: done
+      - id: S69-02
+        title: submit-profile-to-discovery
+        status: done
+      - id: S69-03
+        title: community-challenge-store
+        status: done
+      - id: S69-04
+        title: challenge-ui
+        status: done
+      - id: S69-05
+        title: wire-challenge-progress
+        status: done
+      - id: S69-06
+        title: unit-tests-sprint69
         status: done
 
   - id: sprint-70

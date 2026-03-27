@@ -72,12 +72,42 @@ function createGoalsStore() {
 		goals = { ...goals, todayWords, lastWrittenDate, streak, longestStreak };
 		save(goals);
 
-		// Contribute new words to joined challenges (fire-and-forget)
+		// S69-05: Contribute new words to joined challenges (fire-and-forget)
 		const delta = goals.todayWords - prevWords;
 		if (delta > 0) {
 			queueMicrotask(() => {
 				for (const id of challengeStore.state.joined) {
+					const prevProgress = challengeStore.getProgress(id);
 					challengeStore.addWords(id, delta);
+					
+					// S69-05: Emit challenge_progress at milestones (25%, 50%, 75%, 100%)
+					const newProgress = challengeStore.getProgress(id);
+					const challenge = challengeStore.state.available.find((c) => c.id === id);
+					if (newProgress && challenge && challenge.targetWords > 0) {
+						const prevPct = prevProgress 
+							? Math.floor((prevProgress.wordsContributed / challenge.targetWords) * 100)
+							: 0;
+						const newPct = Math.floor((newProgress.wordsContributed / challenge.targetWords) * 100);
+						
+						// Check for milestone crossings
+						const milestones = [25, 50, 75, 100];
+						for (const milestone of milestones) {
+							if (prevPct < milestone && newPct >= milestone) {
+								activityStore.emit(
+									'challenge_progress',
+									'self',
+									'me',
+									{
+										challengeId: id,
+										challengeTitle: challenge.title,
+										milestone,
+										wordsContributed: newProgress.wordsContributed,
+										targetWords: challenge.targetWords
+									}
+								);
+							}
+						}
+					}
 				}
 			});
 		}
