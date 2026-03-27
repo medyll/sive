@@ -68,6 +68,8 @@ completed_steps:
   - Sprint 70 Planning — Notifications & Writing Reminders
   - Sprint 70 Implementation — Notifications & Reminders (S70-01 → S70-06)
   - Sprint 71 Planning — Test Hardening & Quality
+  - Sprint 71 Implementation — Test Hardening (S71-01 → S71-06)
+  - Sprint 72 Planning — Component Test Infrastructure
 
 missing_artifacts: []
 
@@ -82,48 +84,45 @@ delayed_issues:
     reported: 2026-03-25T14:52:43Z
 
 recommendation: |
-  SPRINT 71 COMPLETE (2026-03-27). Test Hardening & Quality ✅
+  SPRINT 72 IN PROGRESS — Component Test Infrastructure
 
   Completed Stories:
-  - S71-01: Fix Placeholder Tests — 3 tests fixed (page.svelte.spec.ts)
-  - S71-02: Fix Critical Test — page.svelte.spec.ts (3/3 passing)
-  - S71-03: Fix E2E Timeout — Already implemented (300000ms timeout)
-  - S71-04: Fix Svelte Warnings — Deferred (requires component test infrastructure fix)
-  - S71-05: Challenge Progress Tests — Already passing (S69-05)
-  - S71-06: Test Documentation — Stories documented
+  - S72-01: Investigate Test Infrastructure — Root cause found (page.container undefined)
+  - S72-04: Rewrite BadgeDisplay Tests — 11/11 tests passing
 
-  Skipped (Infrastructure Issues):
-  - BadgeDisplay.svelte.spec.ts — page.container undefined
-  - UserProfileCard.spec.ts — page.container undefined
-  - ShareGoalsModal.spec.ts — Likely same issue
-  - WeeklyHistoryPanel.spec.ts — Likely same issue
+  In Progress:
+  - S72-02: Fix vitest Configuration — Documentation update needed
+  - S72-03: Create Store Mocking Utilities — Optional, depends on remaining tests
+  - S72-05: Rewrite UserProfileCard Tests — Pending
+
+  Key Finding: Use render() result object instead of page.container
+  Pattern: const { container, getByText } = render(Component)
 
   Test Coverage: 
-  - page.svelte.spec.ts (3 tests) — Fixed
-  - challengeStore.spec.ts (11 tests) — Already passing
-  - discoveryQueries.spec.ts (13 tests) — Already passing
-  - Total S71: 27 tests verified
+  - BadgeDisplay.svelte.spec.ts (11 tests) — Fixed and passing
+  - Total S72: 11 tests verified
 
   Sprint history (compressed):
-  - Sprints 1–28: Core features (Auth, AI Chat, Review Mode, Versioning, Persistence)
-  - Sprints 29–48: Polish (Onboarding, Presence, Notifications, Dark Mode, PDF Export)
+  - Sprints 1–28: Core features
+  - Sprints 29–48: Polish
   - Sprints 49–50: Test hardening & pool isolation
   - Sprint 51: Command Palette + WritingGoalBar
-  - Sprints 52–65: Feature expansions & writing goals
+  - Sprints 52–65: Feature expansions
   - Sprint 66: Social Sharing & Community Features
   - Sprints 67–68: Gamification & Partner Activity Feed
   - Sprint 69: Writer Discovery & Community Challenges (COMPLETE)
   - Sprint 70: Notifications & Writing Reminders (COMPLETE)
   - Sprint 71: Test Hardening & Quality (COMPLETE)
+  - Sprint 72: Component Test Infrastructure (IN PROGRESS)
 
-  Next: Sprint 72 Planning — Component Test Infrastructure or AI Features.
-last_updated: 2026-03-27
+  Next: Continue S72-02, S72-05 (remaining component tests).
+last_updated: 2026-03-28
 
 active_role: dev
-next_action: "S72 Planning — Choose: Component Test Infrastructure fix, AI Features, or Server-Side Sync."
+next_action: "S72-02: Document test pattern in test-patterns.md, then S72-05: Fix UserProfileCard tests."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-27T15:00:00Z
+last_updated: 2026-03-28T00:00:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -773,6 +772,29 @@ sprints:
       - id: S71-06
         title: test-docs
         status: done
+
+  - id: sprint-72
+    name: Sprint 72 — Component Test Infrastructure
+    status: in_progress
+    progress: 40
+    start: 2026-03-28
+    end: 2026-03-29
+    stories:
+      - id: S72-01
+        title: investigate-test-infrastructure
+        status: done
+      - id: S72-02
+        title: fix-vitest-config
+        status: in_progress
+      - id: S72-03
+        title: create-store-mocks
+        status: todo
+      - id: S72-04
+        title: rewrite-badgedisplay-tests
+        status: done
+      - id: S72-05
+        title: rewrite-userprofilecard-tests
+        status: todo
 
   - id: sprint-70
     name: Sprint 70 — Notifications & Writing Reminders
