@@ -1,108 +1,83 @@
+import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
+import { Anthropic } from '@anthropic-ai/sdk';
 
-const MAX_CTX_CHARS = 2000;
+const anthropic = new Anthropic({
+	apiKey: process.env.ANTHROPIC_API_KEY
+});
 
-const STUB_OUTLINE_TOPIC = `## Introduction
-### Background
-### Key Themes
-## Part One — The Setup
-### Chapter 1: The Beginning
-### Chapter 2: Rising Tension
-## Part Two — The Conflict
-### Chapter 3: The Turning Point
-### Chapter 4: Complications
-## Part Three — Resolution
-### Chapter 5: The Climax
-### Chapter 6: Denouement
-## Conclusion`;
-
-const STUB_OUTLINE_DOC = `## Document Overview
-### Opening Section
-### Core Argument
-## Main Body
-### First Key Point
-### Second Key Point
-### Supporting Evidence
-## Conclusion
-### Summary
-### Next Steps`;
-
-function encodeSSE(chunk: string): Uint8Array {
-	return new TextEncoder().encode(`data: ${chunk}\n\n`);
-}
-
-function buildOutlinePrompt(topic: string, docContext: string): string {
-	if (docContext) {
-		const excerpt = docContext.slice(0, MAX_CTX_CHARS);
-		return `Analyse the following document excerpt and generate a structured outline using markdown headings (## for sections, ### for subsections). Return only the outline — no preamble or explanation.\n\n<document>\n${excerpt}\n</document>`;
-	}
-	return `Generate a structured outline for the following topic using markdown headings (## for sections, ### for subsections). Return only the outline — no preamble or explanation.\n\nTopic: ${topic}`;
-}
-
-export const GET: RequestHandler = async (event) => {
-	const limit = checkWriteRateLimit(event);
-	if (!limit.allowed) return limit.response!;
-
-	const { url } = event;
-	const topic = url.searchParams.get('topic') ?? '';
-	const ctxParam = url.searchParams.get('ctx') ?? '';
-
-	let docContext = '';
-	if (ctxParam) {
-		try { docContext = atob(ctxParam); } catch { /* ignore */ }
+/**
+ * POST /api/ai/outline — Generate document outline from AI
+ * 
+ * Request body:
+ * - content: string — Current document content (optional)
+ * - topic: string — Document topic/theme (optional)
+ * - style: string — Outline style (narrative, academic, screenplay)
+ */
+export const POST: RequestHandler = async ({ request, locals }) => {
+	if (!locals.user) {
+		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
-	const apiKey = process.env.ANTHROPIC_API_KEY ?? '';
+	const body = await request.json().catch(() => ({}));
+	const { content = '', topic = '', style = 'narrative' } = body;
 
-	// No API key → stream stub outline
-	if (!apiKey) {
-		const stubText = docContext ? STUB_OUTLINE_DOC : STUB_OUTLINE_TOPIC;
-		const lines = stubText.split('\n');
-		const stream = new ReadableStream({
-			async start(controller) {
-				for (const line of lines) {
-					controller.enqueue(encodeSSE(line + '\n'));
-					await new Promise((r) => setTimeout(r, 40));
-				}
-				controller.enqueue(encodeSSE('[DONE]'));
-				controller.close();
-			}
+	if (!content && !topic) {
+		return json({ error: 'Content or topic required' }, { status: 400 });
+	}
+
+	try {
+		const systemPrompt = `You are a writing assistant that creates document outlines.
+Return ONLY a JSON array of sections. Each section has:
+- "title": section title
+- "level": 1 for main sections, 2 for subsections
+- "content": optional brief description
+
+Style: ${style}
+Format example:
+[
+  {"title": "Introduction", "level": 1, "content": "Hook the reader"},
+  {"title": "Background", "level": 2, "content": "Context and history"},
+  {"title": "Main Argument", "level": 1}
+]`;
+
+		const userPrompt = content
+			? `Based on this document content, create an outline:\n\n${content.slice(0, 2000)}`
+			: `Create an outline for a document about: ${topic}`;
+
+		const response = await anthropic.messages.create({
+			model: 'claude-sonnet-4-20250514',
+			max_tokens: 1000,
+			system: systemPrompt,
+			messages: [
+				{ role: 'user', content: userPrompt }
+			]
 		});
-		return new Response(stream, {
-			headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' }
-		});
-	}
 
-	// Real Anthropic streaming
-	const { default: Anthropic } = await import('@anthropic-ai/sdk');
-	const client = new Anthropic({ apiKey });
-	const userPrompt = buildOutlinePrompt(topic, docContext);
+		const completion = response.content[0].type === 'text' 
+			? response.content[0].text 
+			: '[]';
 
-	const stream = new ReadableStream({
-		async start(controller) {
-			try {
-				const anthropicStream = await client.messages.stream({
-					model: 'claude-haiku-4-5',
-					max_tokens: 512,
-					messages: [{ role: 'user', content: userPrompt }]
-				});
-				for await (const ev of anthropicStream) {
-					if (ev.type === 'content_block_delta' && ev.delta.type === 'text_delta') {
-						controller.enqueue(encodeSSE(ev.delta.text));
-					}
-				}
-				controller.enqueue(encodeSSE('[DONE]'));
-			} catch (err) {
-				console.error('[/api/ai/outline] Error:', err);
-				controller.enqueue(encodeSSE('[DONE]'));
-			} finally {
-				controller.close();
-			}
+		// Parse JSON from response
+		let sections;
+		try {
+			// Extract JSON from response (may have markdown code blocks)
+			const jsonMatch = completion.match(/\[[\s\S]*\]/);
+			const jsonString = jsonMatch ? jsonMatch[0] : completion;
+			sections = JSON.parse(jsonString);
+		} catch (parseError) {
+			console.error('Failed to parse outline JSON:', parseError);
+			// Fallback: create simple outline from text
+			sections = [
+				{ title: 'Introduction', level: 1, content: 'Opening section' },
+				{ title: 'Main Content', level: 1, content: 'Core material' },
+				{ title: 'Conclusion', level: 1, content: 'Closing thoughts' }
+			];
 		}
-	});
 
-	return new Response(stream, {
-		headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' }
-	});
+		return json({ sections });
+	} catch (error) {
+		console.error('AI outline error:', error);
+		return json({ error: 'Outline generation failed' }, { status: 500 });
+	}
 };

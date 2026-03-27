@@ -1,205 +1,217 @@
 <script lang="ts">
-	import { outlineStore, type OutlineNode } from '$lib/outlineStore.svelte';
+	import { outlineStore } from '$lib/outlineStore.svelte';
 
 	interface Props {
-		docId?: string;
-		content?: string;
+		onInsert?: () => void;
+		onNavigate?: (sectionTitle: string) => void;
 	}
 
-	let { docId = '', content = '' }: Props = $props();
+	let { onInsert, onNavigate }: Props = $props();
 
-	let topic = $state('');
-
-	function handleGenerate() {
-		if (!topic.trim() && !content.trim()) return;
-		outlineStore.generate(topic.trim(), '');
+	async function generateOutline() {
+		outlineStore.setLoading(true);
+		
+		try {
+			const res = await fetch('/api/ai/outline', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' }
+				// content and topic would be passed from parent component
+			});
+			
+			if (!res.ok) throw new Error('Failed to generate outline');
+			
+			const data = await res.json();
+			outlineStore.setSections(data.sections, 'current-doc');
+		} catch (err) {
+			outlineStore.setError(err instanceof Error ? err.message : 'Unknown error');
+		}
 	}
 
-	function handleFromDocument() {
-		outlineStore.generate('', content);
+	function handleInsert() {
+		onInsert?.();
 	}
 
-	function insertNode(text: string) {
-		window.dispatchEvent(new CustomEvent('outline:insert', { detail: { text } }));
+	function handleNavigate(sectionTitle: string) {
+		onNavigate?.(sectionTitle);
 	}
 </script>
 
-<div class="outline-panel" data-testid="outline-panel">
-	<div class="outline-controls">
-		<input
-			class="topic-input"
-			bind:value={topic}
-			placeholder="Enter a topic to outline…"
-			onkeydown={(e) => e.key === 'Enter' && handleGenerate()}
-		/>
-		<div class="btn-row">
-			<button
-				class="generate-btn"
-				onclick={handleGenerate}
-				disabled={outlineStore.isGenerating || (!topic.trim() && !content.trim())}
-				data-testid="outline-generate-btn"
-			>
-				{outlineStore.isGenerating ? '⏳ Generating…' : '✨ Generate'}
-			</button>
-			{#if content.trim()}
-				<button
-					class="doc-btn"
-					onclick={handleFromDocument}
-					disabled={outlineStore.isGenerating}
-					title="Generate outline from current document"
-					data-testid="outline-from-doc-btn"
-				>
-					📄 From doc
-				</button>
-			{/if}
-			{#if outlineStore.isGenerating}
-				<button class="cancel-btn" onclick={() => outlineStore.cancel()}>✕</button>
-			{/if}
-		</div>
+<div class="outline-panel">
+	<div class="outline-header">
+		<h3>Document Outline</h3>
+		<button class="btn-generate" onclick={generateOutline} disabled={outlineStore.isLoading}>
+			{outlineStore.isLoading ? 'Generating...' : '✨ Generate Outline'}
+		</button>
 	</div>
 
-	{#if outlineStore.outline.length === 0 && !outlineStore.isGenerating}
-		<p class="empty-state">Enter a topic above or click "From doc" to generate an outline.</p>
+	{#if outlineStore.error}
+		<div class="outline-error" role="alert">
+			⚠️ {outlineStore.error}
+		</div>
 	{/if}
 
-	{#if outlineStore.outline.length > 0}
-		<div class="outline-tree" data-testid="outline-tree">
-			{#each outlineStore.outline as node}
-				<OutlineNodeEl {node} onInsert={insertNode} />
+	{#if outlineStore.sections.length > 0}
+		<div class="outline-actions">
+			<button class="btn-insert" onclick={handleInsert}>
+				📋 Insert at Cursor
+			</button>
+		</div>
+
+		<nav class="outline-nav" aria-label="Document outline">
+			{#each outlineStore.flatSections as section (section.id)}
+				<button
+					class="outline-item"
+					class:level-1={section.level === 1}
+					class:level-2={section.level === 2}
+					onclick={() => handleNavigate(section.title)}
+				>
+					{section.level === 2 ? '  ' : ''}{section.title}
+				</button>
 			{/each}
+		</nav>
+
+		<div class="outline-meta">
+			{outlineStore.sectionCount} sections · Generated {outlineStore.generatedAt}
+		</div>
+	{:else if !outlineStore.isLoading}
+		<div class="outline-empty">
+			<p>📝 No outline yet</p>
+			<p class="outline-hint">Click "Generate Outline" to create a document structure</p>
 		</div>
 	{/if}
 </div>
-
-<!-- Recursive node component via snippet -->
-{#snippet OutlineNodeEl(node: OutlineNode, onInsert: (t: string) => void)}
-	<details class={`node level-${node.level}`} open>
-		<summary class="node-summary">
-			<span class="node-text">{node.text}</span>
-			<button
-				class="insert-btn"
-				onclick={(e) => { e.preventDefault(); e.stopPropagation(); onInsert(node.text); }}
-				title="Insert heading into editor"
-			>+</button>
-		</summary>
-		{#if node.children.length > 0}
-			<div class="children">
-				{#each node.children as child}
-					{@render OutlineNodeEl(child, onInsert)}
-				{/each}
-			</div>
-		{/if}
-	</details>
-{/snippet}
 
 <style>
 	.outline-panel {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-		padding: 0.75rem;
 		height: 100%;
-		overflow-y: auto;
-		font-size: 0.82rem;
+		padding: 1rem;
+		background: var(--color-surface, #fff);
 	}
 
-	.outline-controls {
+	.outline-header {
 		display: flex;
-		flex-direction: column;
-		gap: 0.375rem;
-	}
-
-	.topic-input {
-		width: 100%;
-		border: 1px solid #e5e7eb;
-		border-radius: 0.375rem;
-		padding: 0.375rem 0.5rem;
-		font-size: 0.82rem;
-		box-sizing: border-box;
-	}
-
-	.topic-input:focus { outline: 2px solid #7c3aed; border-color: transparent; }
-
-	.btn-row { display: flex; gap: 0.375rem; }
-
-	.generate-btn {
-		flex: 1;
-		background: #7c3aed;
-		color: #fff;
-		border: none;
-		border-radius: 0.375rem;
-		padding: 0.3rem 0.75rem;
-		font-size: 0.78rem;
-		cursor: pointer;
-	}
-
-	.generate-btn:disabled { opacity: 0.5; cursor: default; }
-	.generate-btn:not(:disabled):hover { background: #6d28d9; }
-
-	.doc-btn {
-		background: #f3f4f6;
-		border: 1px solid #e5e7eb;
-		border-radius: 0.375rem;
-		padding: 0.3rem 0.5rem;
-		font-size: 0.75rem;
-		cursor: pointer;
-		color: #374151;
-	}
-
-	.doc-btn:hover { background: #e5e7eb; }
-	.doc-btn:disabled { opacity: 0.5; cursor: default; }
-
-	.cancel-btn {
-		background: none;
-		border: 1px solid #e5e7eb;
-		border-radius: 0.375rem;
-		padding: 0.3rem 0.5rem;
-		cursor: pointer;
-		color: #6b7280;
-		font-size: 0.75rem;
-	}
-
-	.empty-state {
-		color: #9ca3af;
-		font-size: 0.78rem;
-		text-align: center;
-		margin: 1rem 0;
-	}
-
-	.outline-tree { display: flex; flex-direction: column; gap: 0.2rem; }
-
-	.node { border: none; }
-	.node-summary {
-		display: flex;
-		align-items: center;
 		justify-content: space-between;
-		cursor: pointer;
-		padding: 0.2rem 0.3rem;
-		border-radius: 0.25rem;
-		list-style: none;
+		align-items: center;
+		margin-bottom: 1rem;
 	}
 
-	.node-summary:hover { background: #f3f4f6; }
+	.outline-header h3 {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: 600;
+	}
 
-	.level-2 > .node-summary { font-weight: 600; color: #1f2937; }
-	.level-3 > .node-summary { padding-left: 1rem; color: #374151; }
-	.level-4 > .node-summary { padding-left: 1.75rem; color: #6b7280; font-size: 0.78rem; }
-
-	.node-text { flex: 1; }
-
-	.insert-btn {
-		background: none;
-		border: 1px solid #e5e7eb;
-		border-radius: 0.25rem;
-		padding: 0.05rem 0.35rem;
-		font-size: 0.72rem;
+	.btn-generate {
+		padding: 0.375rem 0.75rem;
+		background: var(--color-primary, #7c3aed);
+		color: white;
+		border: none;
+		border-radius: 6px;
+		font-size: 0.75rem;
+		font-weight: 500;
 		cursor: pointer;
-		color: #7c3aed;
-		opacity: 0;
 		transition: opacity 0.15s;
 	}
 
-	.node-summary:hover .insert-btn { opacity: 1; }
+	.btn-generate:hover:not(:disabled) {
+		opacity: 0.9;
+	}
 
-	.children { padding-left: 0; }
+	.btn-generate:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	.outline-error {
+		padding: 0.75rem;
+		background: #fef2f2;
+		border: 1px solid #fca5a5;
+		border-radius: 6px;
+		color: #991b1b;
+		font-size: 0.8rem;
+		margin-bottom: 1rem;
+	}
+
+	.outline-actions {
+		margin-bottom: 1rem;
+	}
+
+	.btn-insert {
+		width: 100%;
+		padding: 0.5rem 1rem;
+		background: var(--color-surface, #f9fafb);
+		border: 1px solid var(--color-border, #e5e7eb);
+		border-radius: 6px;
+		font-size: 0.8rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.15s;
+	}
+
+	.btn-insert:hover {
+		background: var(--color-primary, #7c3aed);
+		color: white;
+		border-color: var(--color-primary, #7c3aed);
+	}
+
+	.outline-nav {
+		flex: 1;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.outline-item {
+		padding: 0.5rem 0.75rem;
+		background: none;
+		border: none;
+		border-radius: 4px;
+		text-align: left;
+		font-size: 0.85rem;
+		color: var(--color-text, #111);
+		cursor: pointer;
+		transition: background 0.15s;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.outline-item:hover {
+		background: var(--color-background, #f3f4f6);
+	}
+
+	.outline-item.level-1 {
+		font-weight: 600;
+	}
+
+	.outline-item.level-2 {
+		font-weight: 400;
+		color: var(--color-text-secondary, #666);
+	}
+
+	.outline-meta {
+		margin-top: 1rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid var(--color-border, #e5e7eb);
+		font-size: 0.7rem;
+		color: var(--color-text-muted, #9ca3af);
+	}
+
+	.outline-empty {
+		text-align: center;
+		padding: 2rem 1rem;
+		color: var(--color-text-secondary, #666);
+	}
+
+	.outline-empty p {
+		margin: 0.5rem 0;
+	}
+
+	.outline-hint {
+		font-size: 0.8rem;
+		color: var(--color-text-muted, #9ca3af);
+	}
 </style>

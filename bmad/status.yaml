@@ -72,6 +72,8 @@ completed_steps:
   - Sprint 72 Planning — Component Test Infrastructure
   - Sprint 72 Implementation — Test Infrastructure (S72-01 → S72-05)
   - Sprint 73 Planning — AI Features Expansion
+  - Sprint 73 Implementation — AI Features (S73-01 → S73-06)
+  - Sprint 74 Planning — Server-Side Sync
 
 missing_artifacts: []
 
@@ -86,21 +88,17 @@ delayed_issues:
     reported: 2026-03-25T14:52:43Z
 
 recommendation: |
-  SPRINT 73 IN PROGRESS — AI Features Expansion
+  SPRINT 74 PLANNING — Server-Side Sync ✅
 
-  Completed Stories:
-  - S73-01: Ghost Text — Tab to Accept — Store, component, endpoint, 20 tests ✅
-  - S73-02: Ghost Text — Partial Accept — EditorPanel integration, Tab/Escape handlers ✅
-  - S73-03: Selection Toolbar — Rewrite Actions — Expand, Condense, Tone menu ✅
-  - S73-04: Tone Submenu Actions — Included in S73-03 (5 tone options) ✅
+  Planned Stories:
+  - S74-01: Database Schema for Challenges
+  - S74-02: Database Schema for Discovery & Activity
+  - S74-03: Challenge API Endpoints
+  - S74-04: Discovery API Endpoints
+  - S74-05: Update Stores to Use API
+  - S74-06: Unit Tests — Server-Side Sync
 
-  In Progress:
-  - S73-05: AI Outline Generator
-  - S73-06: Unit Tests — AI Features
-
-  Test Coverage: 
-  - ghostTextStore.spec.ts (20 tests) — Passing
-  - Total S73: 20 tests verified
+  Goal: Migrate challenges, discovery, and activity from localStorage to database for multi-device sync.
 
   Sprint history (compressed):
   - Sprints 1–28: Core features
@@ -114,16 +112,17 @@ recommendation: |
   - Sprint 70: Notifications & Writing Reminders (COMPLETE)
   - Sprint 71: Test Hardening & Quality (COMPLETE)
   - Sprint 72: Component Test Infrastructure (COMPLETE)
-  - Sprint 73: AI Features Expansion (IN PROGRESS)
+  - Sprint 73: AI Features Expansion (COMPLETE)
+  - Sprint 74: Server-Side Sync (PLANNED)
 
-  Next: S73-05 — AI Outline Generator endpoint and panel.
+  Next: Run `bmad continue` to start S74 implementation.
 last_updated: 2026-03-28
 
 active_role: dev
-next_action: "S73-05: AI Outline Generator — Create /api/ai/outline endpoint and OutlinePanel component."
+next_action: "S74-01: Database Schema for Challenges — Create challenges and challenge_participants tables."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-28T22:30:00Z
+last_updated: 2026-03-28T23:00:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -799,10 +798,10 @@ sprints:
 
   - id: sprint-73
     name: Sprint 73 — AI Features Expansion
-    status: in_progress
-    progress: 65
-    start: 2026-03-29
-    end: 2026-03-30
+    status: done
+    progress: 100
+    start: 2026-03-28
+    end: 2026-03-28
     stories:
       - id: S73-01
         title: ghost-text-tab-accept
@@ -818,9 +817,35 @@ sprints:
         status: done
       - id: S73-05
         title: ai-outline-generator
-        status: in_progress
+        status: done
       - id: S73-06
         title: unit-tests-ai-features
+        status: done
+
+  - id: sprint-74
+    name: Sprint 74 — Server-Side Sync
+    status: planned
+    progress: 0
+    start: 2026-03-29
+    end: 2026-03-30
+    stories:
+      - id: S74-01
+        title: database-schema-challenges
+        status: todo
+      - id: S74-02
+        title: database-schema-discovery-activity
+        status: todo
+      - id: S74-03
+        title: challenge-api-endpoints
+        status: todo
+      - id: S74-04
+        title: discovery-api-endpoints
+        status: todo
+      - id: S74-05
+        title: update-stores-to-use-api
+        status: todo
+      - id: S74-06
+        title: unit-tests-server-sync
         status: todo
 
   - id: sprint-70

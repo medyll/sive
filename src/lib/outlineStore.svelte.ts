@@ -1,113 +1,153 @@
 /**
- * outlineStore — AI-generated document outline.
- * Streams from /api/ai/outline and parses markdown headings into a tree.
+ * outlineStore — AI-generated document outlines
+ *
+ * Stores outline sections and subsections for document structure.
  */
 
-export interface OutlineNode {
-	level: number;
-	text: string;
-	children: OutlineNode[];
+const STORAGE_KEY = 'sive:outline';
+
+export interface OutlineSection {
+	id: string;
+	title: string;
+	level: number; // 1 = main section, 2 = subsection, etc.
+	content?: string;
+	children?: OutlineSection[];
 }
 
-let _outline = $state<OutlineNode[]>([]);
-let _isGenerating = $state(false);
-let _abortController: AbortController | null = null;
+export interface OutlineState {
+	sections: OutlineSection[];
+	documentId: string | null;
+	generatedAt: string | null;
+	isLoading: boolean;
+	error: string | null;
+}
 
-export const outlineStore = {
-	get outline(): OutlineNode[] { return _outline; },
-	get isGenerating(): boolean { return _isGenerating; },
-
-	/** Parse markdown heading lines into a nested tree. */
-	parseOutline(markdown: string): OutlineNode[] {
-		const lines = markdown.split('\n').map((l) => l.trim()).filter(Boolean);
-		const roots: OutlineNode[] = [];
-		const stack: OutlineNode[] = [];
-
-		for (const line of lines) {
-			const match = line.match(/^(#{2,4})\s+(.+)/);
-			if (!match) continue;
-			const level = match[1].length;
-			const text = match[2].trim();
-			const node: OutlineNode = { level, text, children: [] };
-
-			// Pop stack until parent level found
-			while (stack.length > 0 && stack[stack.length - 1].level >= level) {
-				stack.pop();
-			}
-
-			if (stack.length === 0) {
-				roots.push(node);
-			} else {
-				stack[stack.length - 1].children.push(node);
-			}
-			stack.push(node);
-		}
-
-		return roots;
-	},
-
-	/** Generate an outline from a topic or existing doc content. */
-	async generate(topic: string, docContent = ''): Promise<void> {
-		if (_isGenerating) outlineStore.cancel();
-
-		_abortController = new AbortController();
-		_isGenerating = true;
-		_outline = [];
-
-		const ctx = docContent
-			? btoa(unescape(encodeURIComponent(docContent.slice(0, 2000))))
-			: '';
-		const params = new URLSearchParams();
-		if (topic) params.set('topic', topic);
-		if (ctx) params.set('ctx', ctx);
-
-		try {
-			const res = await fetch(`/api/ai/outline?${params}`, {
-				signal: _abortController.signal
-			});
-			if (!res.ok || !res.body) return;
-
-			const reader = res.body.getReader();
-			const decoder = new TextDecoder();
-			let buffer = '';
-			let raw = '';
-
-			while (true) {
-				const { done, value } = await reader.read();
-				if (done) break;
-				buffer += decoder.decode(value, { stream: true });
-				const lines = buffer.split('\n');
-				buffer = lines.pop() ?? '';
-				for (const line of lines) {
-					if (!line.startsWith('data: ')) continue;
-					const token = line.slice(6);
-					if (token === '[DONE]') {
-						_outline = outlineStore.parseOutline(raw);
-						return;
-					}
-					raw += token;
-					// Live-update tree as tokens stream in
-					_outline = outlineStore.parseOutline(raw);
-				}
-			}
-		} catch (err) {
-			if ((err as Error).name !== 'AbortError') {
-				console.error('[outlineStore] generate error:', err);
-			}
-		} finally {
-			_isGenerating = false;
-			_abortController = null;
-		}
-	},
-
-	/** Cancel an in-flight generation. */
-	cancel(): void {
-		_abortController?.abort();
-		_isGenerating = false;
-	},
-
-	/** Clear the outline. */
-	clear(): void {
-		_outline = [];
-	}
+const DEFAULT: OutlineState = {
+	sections: [],
+	documentId: null,
+	generatedAt: null,
+	isLoading: false,
+	error: null
 };
+
+function load(): OutlineState {
+	if (typeof localStorage === 'undefined') return { ...DEFAULT };
+	try {
+		const raw = localStorage.getItem(STORAGE_KEY);
+		return raw ? { ...DEFAULT, ...JSON.parse(raw) } : { ...DEFAULT };
+	} catch {
+		return { ...DEFAULT };
+	}
+}
+
+function save(state: OutlineState): void {
+	if (typeof localStorage !== 'undefined') {
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+	}
+}
+
+function createOutlineStore() {
+	let state = $state<OutlineState>(load());
+
+	/**
+	 * Set loading state
+	 */
+	function setLoading(loading: boolean): void {
+		state.isLoading = loading;
+		if (loading) {
+			state.error = null;
+		}
+		save(state);
+	}
+
+	/**
+	 * Set outline sections
+	 */
+	function setSections(sections: OutlineSection[], documentId: string): void {
+		state = {
+			sections,
+			documentId,
+			generatedAt: new Date().toISOString(),
+			isLoading: false,
+			error: null
+		};
+		save(state);
+	}
+
+	/**
+	 * Set error state
+	 */
+	function setError(error: string): void {
+		state.isLoading = false;
+		state.error = error;
+		save(state);
+	}
+
+	/**
+	 * Clear outline
+	 */
+	function clear(): void {
+		state = { ...DEFAULT };
+		save(state);
+	}
+
+	/**
+	 * Insert outline at cursor position in document
+	 */
+	function insertAtCursor(content: string): string {
+		const outlineText = state.sections
+			.map((section) => {
+				const prefix = section.level === 1 ? '# ' : section.level === 2 ? '## ' : '### ';
+				return `${prefix}${section.title}`;
+			})
+			.join('\n\n');
+
+		return outlineText + '\n\n' + content;
+	}
+
+	/**
+	 * Navigate to section (scroll to heading)
+	 */
+	function scrollToSection(sectionTitle: string): void {
+		// Find heading element and scroll into view
+		const heading = document.querySelector(`[data-outline-section="${sectionTitle}"]`);
+		if (heading) {
+			heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
+	}
+
+	/**
+	 * Get flat list of all sections (for navigation)
+	 */
+	const flatSections = $derived(
+		state.sections.flatMap((section) => [section, ...(section.children ?? [])])
+	);
+
+	/**
+	 * Get section count
+	 */
+	const sectionCount = $derived(state.sections.length);
+
+	function reset(): void {
+		state = { ...DEFAULT };
+		save(state);
+	}
+
+	return {
+		get state() { return state; },
+		get sections() { return state.sections; },
+		get flatSections() { return flatSections; },
+		get sectionCount() { return sectionCount; },
+		get isLoading() { return state.isLoading; },
+		get error() { return state.error; },
+		setLoading,
+		setSections,
+		setError,
+		clear,
+		insertAtCursor,
+		scrollToSection,
+		reset
+	};
+}
+
+export const outlineStore = createOutlineStore();
