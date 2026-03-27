@@ -75,6 +75,7 @@ completed_steps:
   - Sprint 73 Implementation — AI Features (S73-01 → S73-06)
   - Sprint 74 Planning — Server-Side Sync
   - Sprint 74 Implementation — Server-Side Sync (S74-01 → S74-06)
+  - Sprint 75 Planning — Mobile Polish & Touch Optimization
 
 missing_artifacts: []
 
@@ -89,19 +90,17 @@ delayed_issues:
     reported: 2026-03-25T14:52:43Z
 
 recommendation: |
-  SPRINT 74 COMPLETE (2026-03-29). Server-Side Sync ✅
+  SPRINT 75 IN PROGRESS — Mobile Polish & Touch Optimization
 
   Completed Stories:
-  - S74-01: Database Schema for Challenges — Schema, types, migration ✅
-  - S74-02: Database Schema for Discovery & Activity — Schema, types, indexes ✅
-  - S74-03: Challenge API Endpoints — 6 endpoints (list, create, join, leave, progress) ✅
-  - S74-04: Discovery API Endpoints — 5 endpoints (list, opt-in, opt-out, activity) ✅
-  - S74-05: Update Stores to Use API — challengeStore, activityStore, discoveryQueries ✅
-  - S74-06: Unit Tests — Server-Side Sync — Deferred to E2E testing
+  - S75-01: Mobile Navigation Drawer — Store, component, hamburger button ✅
+  - S75-02: Touch Gestures for Editor — Swipe detector, 4 directions ✅
 
-  Database: 4 new tables (challenges, challenge_participants, writer_discovery, activity_events)
-  API: 11 new endpoints with auth, validation, error handling
-  Stores: 3 stores updated with optimistic updates + localStorage fallback
+  In Progress:
+  - S75-03: Mobile Editor Toolbar
+  - S75-04: Virtual Keyboard Optimization
+  - S75-05: Offline Indicator & Mobile Network Handling
+  - S75-06: Mobile E2E Tests
 
   Sprint history (compressed):
   - Sprints 1–28: Core features
@@ -117,15 +116,16 @@ recommendation: |
   - Sprint 72: Component Test Infrastructure (COMPLETE)
   - Sprint 73: AI Features Expansion (COMPLETE)
   - Sprint 74: Server-Side Sync (COMPLETE)
+  - Sprint 75: Mobile Polish & Touch Optimization (IN PROGRESS)
 
-  Next: Sprint 75 Planning — Mobile Polish, Test Hardening, or New Features.
+  Next: S75-03 — Mobile editor toolbar (bottom-positioned, thumb-friendly).
 last_updated: 2026-03-29
 
 active_role: dev
-next_action: "S75 Planning — Choose: Mobile Polish (responsive, touch), Test Hardening (E2E), or New Features."
+next_action: "S75-03: Mobile Editor Toolbar — Create bottom-positioned toolbar with common actions."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-29T01:00:00Z
+last_updated: 2026-03-29T02:30:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -850,6 +850,32 @@ sprints:
       - id: S74-06
         title: unit-tests-server-sync
         status: deferred
+
+  - id: sprint-75
+    name: Sprint 75 — Mobile Polish & Touch Optimization
+    status: in_progress
+    progress: 40
+    start: 2026-03-30
+    end: 2026-03-31
+    stories:
+      - id: S75-01
+        title: mobile-navigation-drawer
+        status: done
+      - id: S75-02
+        title: touch-gestures-editor
+        status: done
+      - id: S75-03
+        title: mobile-editor-toolbar
+        status: in_progress
+      - id: S75-04
+        title: virtual-keyboard-optimization
+        status: todo
+      - id: S75-05
+        title: offline-indicator-mobile
+        status: todo
+      - id: S75-06
+        title: mobile-e2e-tests
+        status: todo
 
   - id: sprint-70
     name: Sprint 70 — Notifications & Writing Reminders

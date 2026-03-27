@@ -1,12 +1,14 @@
 <!--
   EditorPanel — main text editor with auto-save support
   S73-02: Added ghost text integration (Tab to accept, Escape to dismiss)
+  S75-02: Added swipe gestures for mobile navigation
 -->
 <script lang="ts">
   import { onDestroy } from 'svelte';
   import SelectionToolbar from './SelectionToolbar.svelte';
   import GhostText from './GhostText.svelte';
   import { ghostTextStore } from '$lib/ghostTextStore.svelte';
+  import { swipe } from '$lib/gestures/swipe';
 
   export interface EditorPanelProps {
     documentId?: string;
@@ -15,6 +17,10 @@
     editable?: boolean;
     theme?: string;
     enableGhostText?: boolean;
+    onSwipeLeft?: () => void;
+    onSwipeRight?: () => void;
+    onSwipeDown?: () => void;
+    onSwipeUp?: () => void;
   }
 
   let {
@@ -23,11 +29,16 @@
     onSave,
     editable = true,
     theme = 'light',
-    enableGhostText = true
+    enableGhostText = true,
+    onSwipeLeft,
+    onSwipeRight,
+    onSwipeDown,
+    onSwipeUp
   }: EditorPanelProps = $props();
 
   let saveTimer: ReturnType<typeof setTimeout> | null = null;
   let ghostTextTimer: ReturnType<typeof setTimeout> | null = null;
+  let editorElement: HTMLTextAreaElement | null = null;
   let lastSaved = $state<string | null>(null);
   let isDirty = $state(false);
 
@@ -171,6 +182,7 @@
   </div>
   <div class="editor-content" style="position: relative;">
     <textarea
+      bind:this={editorElement}
       class="editor-textarea"
       aria-label="Document editor"
       value={content}
@@ -178,6 +190,13 @@
       onkeydown={handleKeydown}
       readonly={!editable}
       placeholder="Start writing…"
+      use:swipe={{
+        threshold: 50,
+        onSwipeLeft: () => onSwipeLeft?.(),
+        onSwipeRight: () => onSwipeRight?.(),
+        onSwipeDown: () => onSwipeDown?.(),
+        onSwipeUp: () => onSwipeUp?.()
+      }}
     ></textarea>
     {#if enableGhostText}
       <GhostText {ghostTextX} {ghostTextY} />
