@@ -7,6 +7,7 @@
 	import MilestoneNotification from '$lib/elements/MilestoneNotification.svelte';
 	import NotificationBell from '$lib/elements/NotificationBell.svelte';
 	import MobileNavDrawer from '$lib/elements/MobileNavDrawer.svelte';
+	import MobileEditorToolbar from '$lib/elements/MobileEditorToolbar.svelte';
 	import { browser } from '$app/environment';
 	import { themeStore } from '$lib/themeStore.svelte';
 	import { pwaStore } from '$lib/pwaStore.svelte';
@@ -24,6 +25,13 @@
 	<InstallPrompt />
 {/if}
 <MilestoneNotification />
+<MobileEditorToolbar
+	onBold={() => document.execCommand('bold')}
+	onItalic={() => document.execCommand('italic')}
+	onUndo={() => document.execCommand('undo')}
+	onRedo={() => document.execCommand('redo')}
+	onAI={() => console.log('AI rewrite')}
+/>
 
 <!-- Mobile hamburger menu button -->
 <button

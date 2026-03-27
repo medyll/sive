@@ -95,9 +95,9 @@ recommendation: |
   Completed Stories:
   - S75-01: Mobile Navigation Drawer — Store, component, hamburger button ✅
   - S75-02: Touch Gestures for Editor — Swipe detector, 4 directions ✅
+  - S75-03: Mobile Editor Toolbar — Bottom toolbar, 5 actions, collapsible ✅
 
   In Progress:
-  - S75-03: Mobile Editor Toolbar
   - S75-04: Virtual Keyboard Optimization
   - S75-05: Offline Indicator & Mobile Network Handling
   - S75-06: Mobile E2E Tests
@@ -118,14 +118,14 @@ recommendation: |
   - Sprint 74: Server-Side Sync (COMPLETE)
   - Sprint 75: Mobile Polish & Touch Optimization (IN PROGRESS)
 
-  Next: S75-03 — Mobile editor toolbar (bottom-positioned, thumb-friendly).
+  Next: S75-04 — Virtual keyboard optimization (scroll above keyboard, prevent overlap).
 last_updated: 2026-03-29
 
 active_role: dev
-next_action: "S75-03: Mobile Editor Toolbar — Create bottom-positioned toolbar with common actions."
+next_action: "S75-04: Virtual Keyboard — Handle keyboard show/hide, scroll editor above keyboard."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-29T02:30:00Z
+last_updated: 2026-03-29T03:00:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -854,7 +854,7 @@ sprints:
   - id: sprint-75
     name: Sprint 75 — Mobile Polish & Touch Optimization
     status: in_progress
-    progress: 40
+    progress: 60
     start: 2026-03-30
     end: 2026-03-31
     stories:
@@ -866,10 +866,10 @@ sprints:
         status: done
       - id: S75-03
         title: mobile-editor-toolbar
-        status: in_progress
+        status: done
       - id: S75-04
         title: virtual-keyboard-optimization
-        status: todo
+        status: in_progress
       - id: S75-05
         title: offline-indicator-mobile
         status: todo
