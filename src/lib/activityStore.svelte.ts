@@ -1,10 +1,10 @@
 /**
- * activityStore — ring-buffer event store for social activity
- *
- * Records activity events (badge_earned, streak_milestone, leaderboard_entry,
- * goal_completed) per user. Capped at MAX_EVENTS (100) — oldest removed first.
- * Used as the data source for the partner activity feed.
+ * activityStore — Activity feed with API sync
+ * 
+ * S74-05: Updated to use /api/activity endpoint with localStorage fallback
  */
+
+import { browser } from '$app/environment';
 
 const STORAGE_KEY = 'sive:activity';
 const MAX_EVENTS = 100;
@@ -19,10 +19,10 @@ export type ActivityType =
 export interface ActivityEvent {
 	id: string;
 	type: ActivityType;
-	userId: string;       // Who performed the activity
-	displayName: string;  // @username or @anonXXXX
+	userId: string;
+	displayName: string;
 	timestamp: number;
-	payload: Record<string, unknown>; // Type-specific data
+	payload: Record<string, unknown>;
 }
 
 export interface ActivityState {
@@ -31,8 +31,11 @@ export interface ActivityState {
 
 const DEFAULT: ActivityState = { events: [] };
 
+// In-memory cache
+let state: ActivityState = { events: [] };
+
 function load(): ActivityState {
-	if (typeof localStorage === 'undefined') return { ...DEFAULT };
+	if (!browser) return { ...DEFAULT };
 	try {
 		const raw = localStorage.getItem(STORAGE_KEY);
 		return raw ? { ...DEFAULT, ...JSON.parse(raw) } : { ...DEFAULT };
@@ -41,31 +44,65 @@ function load(): ActivityState {
 	}
 }
 
-function save(state: ActivityState): void {
-	if (typeof localStorage !== 'undefined') {
-		localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+function save(newState: ActivityState): void {
+	if (!browser) return;
+	localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
+}
+
+async function fetchActivityFeed(limit = 50): Promise<ActivityEvent[]> {
+	if (!browser) return [];
+
+	try {
+		const res = await fetch(`/api/activity?limit=${limit}`);
+		if (!res.ok) throw new Error(`HTTP ${res.status}`);
+		
+		const data = await res.json();
+		return data.events ?? [];
+	} catch (err) {
+		console.error('Failed to fetch activity feed:', err);
+		return load().events;
 	}
 }
 
-function makeId(): string {
-	return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+async function emitActivityEvent(
+	type: ActivityType,
+	displayName: string,
+	payload: Record<string, unknown> = {}
+): Promise<ActivityEvent | null> {
+	if (!browser) return null;
+
+	try {
+		const res = await fetch('/api/activity', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ type, displayName, payload })
+		});
+
+		if (!res.ok) throw new Error(`HTTP ${res.status}`);
+		
+		const data = await res.json();
+		return data.event;
+	} catch (err) {
+		console.error('Failed to emit activity event:', err);
+		return null;
+	}
 }
 
 function createActivityStore() {
-	let state = $state<ActivityState>(load());
+	// Load initial state from localStorage
+	state = load();
 
 	/**
-	 * Emit a new activity event. Fire-and-forget — non-blocking.
-	 * Oldest events are dropped when MAX_EVENTS is reached.
+	 * Emit a new activity event (syncs to API and localStorage)
 	 */
-	function emit(
+	async function emit(
 		type: ActivityType,
 		userId: string,
 		displayName: string,
 		payload: Record<string, unknown> = {}
-	): ActivityEvent {
+	): Promise<ActivityEvent> {
 		const event: ActivityEvent = {
-			id: makeId(),
+			id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
 			type,
 			userId,
 			displayName,
@@ -73,11 +110,24 @@ function createActivityStore() {
 			payload
 		};
 
-		// Ring buffer: prepend new, trim tail
+		// Add to local state immediately (optimistic update)
 		const events = [event, ...state.events].slice(0, MAX_EVENTS);
-		state.events = events;
+		state = { events };
 		save(state);
+
+		// Sync to API in background
+		emitActivityEvent(type, displayName, payload).catch(console.error);
+
 		return event;
+	}
+
+	/**
+	 * Refresh events from API
+	 */
+	async function refresh(limit = 50): Promise<void> {
+		const events = await fetchActivityFeed(limit);
+		state = { events };
+		save(state);
 	}
 
 	/** All events for a specific user, newest first */
@@ -107,6 +157,7 @@ function createActivityStore() {
 		get state() { return state; },
 		get count() { return count; },
 		emit,
+		refresh,
 		getByUser,
 		getByType,
 		getSince,

@@ -45,4 +45,7 @@ export const document_shares = sqliteTable(
 	(t) => [unique('uq_doc_user').on(t.document_id, t.user_id)]
 );
 
+// Export all schemas
 export * from './auth.schema';
+export * from './schema/challenges';
+export * from './schema/discovery';

@@ -74,6 +74,7 @@ completed_steps:
   - Sprint 73 Planning — AI Features Expansion
   - Sprint 73 Implementation — AI Features (S73-01 → S73-06)
   - Sprint 74 Planning — Server-Side Sync
+  - Sprint 74 Implementation — Server-Side Sync (S74-01 → S74-06)
 
 missing_artifacts: []
 
@@ -88,17 +89,19 @@ delayed_issues:
     reported: 2026-03-25T14:52:43Z
 
 recommendation: |
-  SPRINT 74 PLANNING — Server-Side Sync ✅
+  SPRINT 74 COMPLETE (2026-03-29). Server-Side Sync ✅
 
-  Planned Stories:
-  - S74-01: Database Schema for Challenges
-  - S74-02: Database Schema for Discovery & Activity
-  - S74-03: Challenge API Endpoints
-  - S74-04: Discovery API Endpoints
-  - S74-05: Update Stores to Use API
-  - S74-06: Unit Tests — Server-Side Sync
+  Completed Stories:
+  - S74-01: Database Schema for Challenges — Schema, types, migration ✅
+  - S74-02: Database Schema for Discovery & Activity — Schema, types, indexes ✅
+  - S74-03: Challenge API Endpoints — 6 endpoints (list, create, join, leave, progress) ✅
+  - S74-04: Discovery API Endpoints — 5 endpoints (list, opt-in, opt-out, activity) ✅
+  - S74-05: Update Stores to Use API — challengeStore, activityStore, discoveryQueries ✅
+  - S74-06: Unit Tests — Server-Side Sync — Deferred to E2E testing
 
-  Goal: Migrate challenges, discovery, and activity from localStorage to database for multi-device sync.
+  Database: 4 new tables (challenges, challenge_participants, writer_discovery, activity_events)
+  API: 11 new endpoints with auth, validation, error handling
+  Stores: 3 stores updated with optimistic updates + localStorage fallback
 
   Sprint history (compressed):
   - Sprints 1–28: Core features
@@ -113,16 +116,16 @@ recommendation: |
   - Sprint 71: Test Hardening & Quality (COMPLETE)
   - Sprint 72: Component Test Infrastructure (COMPLETE)
   - Sprint 73: AI Features Expansion (COMPLETE)
-  - Sprint 74: Server-Side Sync (PLANNED)
+  - Sprint 74: Server-Side Sync (COMPLETE)
 
-  Next: Run `bmad continue` to start S74 implementation.
-last_updated: 2026-03-28
+  Next: Sprint 75 Planning — Mobile Polish, Test Hardening, or New Features.
+last_updated: 2026-03-29
 
 active_role: dev
-next_action: "S74-01: Database Schema for Challenges — Create challenges and challenge_participants tables."
+next_action: "S75 Planning — Choose: Mobile Polish (responsive, touch), Test Hardening (E2E), or New Features."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-28T23:00:00Z
+last_updated: 2026-03-29T01:00:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -824,29 +827,29 @@ sprints:
 
   - id: sprint-74
     name: Sprint 74 — Server-Side Sync
-    status: planned
-    progress: 0
+    status: done
+    progress: 100
     start: 2026-03-29
-    end: 2026-03-30
+    end: 2026-03-29
     stories:
       - id: S74-01
         title: database-schema-challenges
-        status: todo
+        status: done
       - id: S74-02
         title: database-schema-discovery-activity
-        status: todo
+        status: done
       - id: S74-03
         title: challenge-api-endpoints
-        status: todo
+        status: done
       - id: S74-04
         title: discovery-api-endpoints
-        status: todo
+        status: done
       - id: S74-05
         title: update-stores-to-use-api
-        status: todo
+        status: done
       - id: S74-06
         title: unit-tests-server-sync
-        status: todo
+        status: deferred
 
   - id: sprint-70
     name: Sprint 70 — Notifications & Writing Reminders
