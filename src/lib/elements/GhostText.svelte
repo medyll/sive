@@ -2,14 +2,15 @@
 	import { ghostTextStore } from '$lib/ghostTextStore.svelte';
 
 	interface Props {
-		position?: { top: number; left: number };
+		ghostTextX?: number;
+		ghostTextY?: number;
 	}
 
-	let { position }: Props = $props();
+	let { ghostTextX = 100, ghostTextY = 200 }: Props = $props();
 </script>
 
 {#if ghostTextStore.isVisible}
-	<span class="ghost-text" style="top: {position?.top ?? 0}px; left: {position?.left ?? 0}px;">
+	<span class="ghost-text" style="top: {ghostTextY}px; left: {ghostTextX}px;">
 		{ghostTextStore.displayText}
 	</span>
 {/if}
@@ -23,5 +24,8 @@
 		font-style: italic;
 		white-space: pre;
 		user-select: none;
+		font-family: 'Georgia', serif;
+		font-size: 1rem;
+		line-height: 1.75;
 	}
 </style>

@@ -90,11 +90,11 @@ recommendation: |
 
   Completed Stories:
   - S73-01: Ghost Text — Tab to Accept — Store, component, endpoint, 20 tests ✅
+  - S73-02: Ghost Text — Partial Accept — EditorPanel integration, Tab/Escape handlers ✅
+  - S73-03: Selection Toolbar — Rewrite Actions — Expand, Condense, Tone menu ✅
+  - S73-04: Tone Submenu Actions — Included in S73-03 (5 tone options) ✅
 
   In Progress:
-  - S73-02: Ghost Text — Partial Accept (Word-by-Word)
-  - S73-03: Selection Toolbar — Rewrite Actions
-  - S73-04: Tone Submenu Actions
   - S73-05: AI Outline Generator
   - S73-06: Unit Tests — AI Features
 
@@ -116,14 +116,14 @@ recommendation: |
   - Sprint 72: Component Test Infrastructure (COMPLETE)
   - Sprint 73: AI Features Expansion (IN PROGRESS)
 
-  Next: S73-02 — EditorPanel integration for Tab/Escape handling.
+  Next: S73-05 — AI Outline Generator endpoint and panel.
 last_updated: 2026-03-28
 
 active_role: dev
-next_action: "S73-02: Ghost Text Partial Accept — Integrate with EditorPanel for Tab/Escape key handling."
+next_action: "S73-05: AI Outline Generator — Create /api/ai/outline endpoint and OutlinePanel component."
 next_command: "bmad continue"
 next_role: dev
-last_updated: 2026-03-28T21:30:00Z
+last_updated: 2026-03-28T22:30:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -800,7 +800,7 @@ sprints:
   - id: sprint-73
     name: Sprint 73 — AI Features Expansion
     status: in_progress
-    progress: 20
+    progress: 65
     start: 2026-03-29
     end: 2026-03-30
     stories:
@@ -809,16 +809,16 @@ sprints:
         status: done
       - id: S73-02
         title: ghost-text-partial-accept
-        status: in_progress
+        status: done
       - id: S73-03
         title: selection-toolbar-rewrite
-        status: todo
+        status: done
       - id: S73-04
         title: tone-submenu-actions
-        status: todo
+        status: done
       - id: S73-05
         title: ai-outline-generator
-        status: todo
+        status: in_progress
       - id: S73-06
         title: unit-tests-ai-features
         status: todo

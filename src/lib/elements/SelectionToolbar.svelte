@@ -19,12 +19,23 @@
 	const tones = [
 		{ label: 'Formal', value: 'formal' },
 		{ label: 'Casual', value: 'casual' },
-		{ label: 'Concise', value: 'concise' },
-		{ label: 'Expand', value: 'expand' }
+		{ label: 'Professional', value: 'professional' },
+		{ label: 'Creative', value: 'creative' },
+		{ label: 'Academic', value: 'academic' }
 	];
 
 	function handleRewrite() {
 		requestSuggestionNow(context, 'rewrite', selection);
+		onDismiss?.();
+	}
+
+	function handleExpand() {
+		requestSuggestionNow(context, 'expand', selection);
+		onDismiss?.();
+	}
+
+	function handleCondense() {
+		requestSuggestionNow(context, 'condense', selection);
 		onDismiss?.();
 	}
 
@@ -58,6 +69,14 @@
 >
 	<button class="toolbar-btn" onclick={handleRewrite} title="AI Rewrite">
 		✏️ Rewrite
+	</button>
+
+	<button class="toolbar-btn" onclick={handleExpand} title="Expand with more detail">
+		📝 Expand
+	</button>
+
+	<button class="toolbar-btn" onclick={handleCondense} title="Make more concise">
+		📌 Condense
 	</button>
 
 	<button class="toolbar-btn" onclick={handleComment} title="Add comment">

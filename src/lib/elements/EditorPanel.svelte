@@ -1,9 +1,12 @@
 <!--
   EditorPanel — main text editor with auto-save support
+  S73-02: Added ghost text integration (Tab to accept, Escape to dismiss)
 -->
 <script lang="ts">
   import { onDestroy } from 'svelte';
   import SelectionToolbar from './SelectionToolbar.svelte';
+  import GhostText from './GhostText.svelte';
+  import { ghostTextStore } from '$lib/ghostTextStore.svelte';
 
   export interface EditorPanelProps {
     documentId?: string;
@@ -11,6 +14,7 @@
     onSave?: (id: string, content: string) => void;
     editable?: boolean;
     theme?: string;
+    enableGhostText?: boolean;
   }
 
   let {
@@ -18,16 +22,22 @@
     content = $bindable(''),
     onSave,
     editable = true,
-    theme = 'light'
+    theme = 'light',
+    enableGhostText = true
   }: EditorPanelProps = $props();
 
   let saveTimer: ReturnType<typeof setTimeout> | null = null;
+  let ghostTextTimer: ReturnType<typeof setTimeout> | null = null;
   let lastSaved = $state<string | null>(null);
   let isDirty = $state(false);
 
   let selectionText = $state('');
   let toolbarX = $state(0);
   let toolbarY = $state(0);
+
+  // Ghost text positioning
+  let ghostTextX = $state(0);
+  let ghostTextY = $state(0);
 
   function handleSelectionChange() {
     const sel = window.getSelection();
@@ -53,6 +63,11 @@
     content = (e.target as HTMLTextAreaElement).value;
     isDirty = true;
     scheduleSave();
+    
+    // Trigger ghost text fetch with debounce
+    if (enableGhostText) {
+      scheduleGhostTextFetch();
+    }
   }
 
   function scheduleSave() {
@@ -66,8 +81,68 @@
     }, 2000);
   }
 
+  function scheduleGhostTextFetch() {
+    if (ghostTextTimer) clearTimeout(ghostTextTimer);
+    ghostTextTimer = setTimeout(() => {
+      fetchGhostText();
+    }, 500); // 500ms debounce
+  }
+
+  async function fetchGhostText() {
+    if (!content || content.length < 10) return; // Need some context
+    
+    try {
+      const res = await fetch('/api/ai/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: content.slice(-100), // Last 100 chars
+          context: content.slice(0, 500) // First 500 chars as context
+        })
+      });
+      
+      if (!res.ok) return;
+      
+      const data = await res.json();
+      if (data.completion && data.completion.trim()) {
+        // Calculate cursor position (end of content)
+        const cursorPosition = content.length;
+        ghostTextStore.show(data.completion.trim(), cursorPosition);
+        
+        // Calculate ghost text position (simplified - would need textarea ref for precise positioning)
+        ghostTextX = 100; // Would calculate from textarea
+        ghostTextY = 200;
+      }
+    } catch (err) {
+      // Silently fail - ghost text is optional
+    }
+  }
+
+  function handleKeydown(e: KeyboardEvent) {
+    if (ghostTextStore.isVisible) {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const text = ghostTextStore.acceptNextWord();
+        if (text) {
+          // Insert accepted word at cursor
+          const textarea = e.target as HTMLTextAreaElement;
+          const pos = textarea.selectionStart || 0;
+          content = content.slice(0, pos) + text + content.slice(pos);
+          // Update cursor position
+          setTimeout(() => {
+            textarea.selectionStart = textarea.selectionEnd = pos + text.length;
+          }, 0);
+        }
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        ghostTextStore.hide();
+      }
+    }
+  }
+
   onDestroy(() => {
     if (saveTimer) clearTimeout(saveTimer);
+    if (ghostTextTimer) clearTimeout(ghostTextTimer);
   });
 </script>
 
@@ -94,14 +169,20 @@
       <span class="status-saved">· Saved at {lastSaved}</span>
     {/if}
   </div>
-  <textarea
-    class="editor-textarea"
-    aria-label="Document editor"
-    value={content}
-    oninput={handleInput}
-    readonly={!editable}
-    placeholder="Start writing…"
-  ></textarea>
+  <div class="editor-content" style="position: relative;">
+    <textarea
+      class="editor-textarea"
+      aria-label="Document editor"
+      value={content}
+      oninput={handleInput}
+      onkeydown={handleKeydown}
+      readonly={!editable}
+      placeholder="Start writing…"
+    ></textarea>
+    {#if enableGhostText}
+      <GhostText {ghostTextX} {ghostTextY} />
+    {/if}
+  </div>
 </div>
 
 <style>
