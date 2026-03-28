@@ -4,6 +4,7 @@
 <script lang="ts">
   import { tagStore } from '$lib/tagStore.svelte.js';
   import { presenceStore } from '$lib/presenceStore.svelte';
+  import Icon from './Icon.svelte';
 
   export interface DocumentItem {
     id: string;
@@ -259,7 +260,7 @@
         type="button"
         aria-label="Clear filter"
         onclick={() => { searchQuery = ''; focusedIndex = -1; }}
-      >❌</button>
+      ><Icon type="close" size={16} /></button>
     {/if}
   </div>
 
@@ -279,7 +280,7 @@
           class="btn-tag-filter-clear"
           aria-label="Clear tag filter"
           onclick={() => { activeTagFilter = null; }}
-        >❌</button>
+        ><Icon type="close" size={14} /></button>
       {/if}
     </div>
   {/if}
@@ -365,7 +366,7 @@
                 aria-expanded={menuOpenId === doc.id}
                 aria-haspopup="menu"
                 onclick={(e) => openMenu(doc.id, e)}
-              >⋯</button>
+              ><Icon type="more" size={16} /></button>
               {#if menuOpenId === doc.id}
                 <ul class="doc-context-menu" role="menu" aria-label="Document actions">
                   <li role="none">
@@ -390,7 +391,7 @@
                   class="btn-tag-remove"
                   aria-label="Remove tag {tag}"
                   onclick={(e) => { e.stopPropagation(); tagStore.remove(doc.id, tag); }}
-                >×</button>
+                ><Icon type="remove" size={10} /></button>
               </span>
             {/each}
             {#if tagStore.get(doc.id).length < 5}
@@ -412,7 +413,7 @@
                   class="btn-tag-add"
                   aria-label="Add tag to {doc.title}"
                   onclick={(e) => startTagEdit(doc.id, e)}
-                >➕</button>
+                ><Icon type="add" size={14} /></button>
               {/if}
             {/if}
           </div>

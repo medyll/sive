@@ -363,14 +363,22 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   }
 
   function handleDelete(id: string) {
+    // Remove from local state immediately (optimistic update)
+    const docToDelete = documents.find(d => d.id === id);
     documents = documents.filter((d) => d.id !== id);
     if (activeDocumentId === id) {
       activeDocumentId = documents[0]?.id ?? '';
     }
 
+    // Also call server action for persistence (if available)
     if (deleteDocForm && deleteIdInput) {
       deleteIdInput.value = id;
       deleteDocForm.requestSubmit();
+    }
+    
+    // Show toast notification
+    if (docToDelete) {
+      toastStore.success(`"${docToDelete.title}" deleted`);
     }
   }
 
