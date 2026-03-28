@@ -11,9 +11,11 @@
 	let error = $state<string | null>(null);
 	let search = $state('');
 
-	$: filtered = search.trim()
-		? profiles.filter((p) => p.displayName.toLowerCase().includes(search.toLowerCase()))
-		: profiles;
+	const filtered = $derived(
+		search.trim()
+			? profiles.filter((p) => p.displayName.toLowerCase().includes(search.toLowerCase()))
+			: profiles
+	);
 
 	onMount(async () => {
 		// Submit own profile if opted in

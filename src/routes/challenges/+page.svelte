@@ -9,9 +9,9 @@
 	let durationDays = $state(30);
 	let tab = $state<'active' | 'joined'>('active');
 
-	$: active = challengeStore.getActive();
-	$: joined = active.filter((c) => challengeStore.isJoined(c.id));
-	$: displayed = tab === 'joined' ? joined : active;
+	const active = $derived(challengeStore.getActive());
+	const joined = $derived(active.filter((c) => challengeStore.isJoined(c.id)));
+	const displayed = $derived(tab === 'joined' ? joined : active);
 
 	function submit() {
 		if (!title.trim()) return;
@@ -37,7 +37,7 @@
 		</header>
 
 		{#if showCreate}
-			<form class="create-form" onsubmit|preventDefault={submit}>
+			<form class="create-form" onsubmit={(e) => { e.preventDefault(); submit(); }}>
 				<h2>New Challenge</h2>
 				<label>
 					Title
