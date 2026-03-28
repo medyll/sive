@@ -1,32 +1,37 @@
 <!--
   OfflineBanner — shown at top of page when network is unavailable.
-  Listens to window online/offline events; initial state from navigator.onLine.
+  S75-05: Enhanced with sync status and pending saves indicator
 -->
 <script lang="ts">
   import { browser } from '$app/environment';
+  import { offlineStore } from '$lib/offlineStore.svelte';
 
-  let offline = $state(browser ? !navigator.onLine : false);
+  let initialized = $state(false);
 
   $effect(() => {
-    if (!browser) return;
-
-    function handleOffline() { offline = true; }
-    function handleOnline()  { offline = false; }
-
-    window.addEventListener('offline', handleOffline);
-    window.addEventListener('online',  handleOnline);
+    if (!browser || initialized) return;
+    
+    offlineStore.init();
+    initialized = true;
 
     return () => {
-      window.removeEventListener('offline', handleOffline);
-      window.removeEventListener('online',  handleOnline);
+      offlineStore.destroy();
     };
   });
 </script>
 
-{#if offline}
+{#if offlineStore.isOffline}
   <div class="offline-banner" role="alert" aria-live="assertive" data-testid="offline-banner">
-    <span class="offline-icon" aria-hidden="true">⚠</span>
-    You are offline — changes will not be saved until your connection is restored.
+    <span class="offline-icon" aria-hidden="true">⚠️</span>
+    <span class="offline-text">
+      You are offline
+      {#if offlineStore.hasPendingSaves}
+        — {offlineStore.pendingCount} save{offlineStore.pendingCount !== 1 ? 's' : ''} pending
+      {/if}
+    </span>
+    {#if offlineStore.isOnline && offlineStore.hasPendingSaves}
+      <span class="sync-indicator">🔄 Syncing...</span>
+    {/if}
   </div>
 {/if}
 
@@ -52,5 +57,18 @@
 
   .offline-icon {
     font-size: 1rem;
+  }
+
+  .offline-text {
+    flex: 1;
+  }
+
+  .sync-indicator {
+    font-size: 0.75rem;
+    color: #059669;
+    background: #d1fae5;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 0.5rem;
   }
 </style>
