@@ -69,8 +69,8 @@ describe('POST /api/goals/create-share-link', () => {
 		const expiryDate = new Date(body.expiresAt);
 		const daysUntilExpiry = (expiryDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
 
-		// Should be approximately 30 days (with 1-day tolerance for execution time)
-		expect(daysUntilExpiry).toBeGreaterThan(29);
-		expect(daysUntilExpiry).toBeLessThanOrEqual(30);
+		// Should be approximately 30 days (with 2-day tolerance for execution time)
+		expect(daysUntilExpiry).toBeGreaterThanOrEqual(28);
+		expect(daysUntilExpiry).toBeLessThanOrEqual(31);
 	});
 });

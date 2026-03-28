@@ -30,6 +30,18 @@ export const test = baseTest.extend({
       return page.goto(path);
     };
     await use(goto);
+  },
+
+  // Helper fixture for login as actor
+  loginAct: async ({ page }, use) => {
+    const loginAct = async () => {
+      await page.goto('/auth/login');
+      await page.fill('[name="email"]', 'actor@test.com');
+      await page.fill('[name="password"]', 'password123');
+      await page.click('button[type="submit"]');
+      await page.waitForURL('/dashboard');
+    };
+    await use(loginAct);
   }
 });
 

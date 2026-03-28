@@ -1,60 +1,76 @@
-import { describe, it, expect } from 'vitest';
-
 /**
  * streakStore Unit Tests
  *
  * The streakStore manages daily activity tracking with localStorage persistence.
- * Full integration tests are covered by e2e tests to verify localStorage behavior.
  */
 
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { streakStore } from './streakStore.svelte';
+
+// Mock localStorage
+global.localStorage = {
+	getItem: vi.fn().mockReturnValue(null),
+	setItem: vi.fn(),
+	removeItem: vi.fn(),
+	clear: vi.fn(),
+	length: 0,
+	key: vi.fn()
+} as any;
+
 describe('streakStore', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		streakStore.reset();
+	});
+
 	it('should export required methods', () => {
-		// Verify store exports expected API
-		expect(typeof Object).toBe('object');
+		expect(typeof streakStore.recordActivity).toBe('function');
+		expect(typeof streakStore.getActivityCount).toBe('function');
+		expect(typeof streakStore.getActivityWindow).toBe('function');
+		expect(typeof streakStore.hasActivityOn).toBe('function');
+		expect(typeof streakStore.reset).toBe('function');
 	});
 
 	it('should export recordActivity method', () => {
-		// recordActivity() is called on document save to track user activity
-		expect(typeof Object).toBe('object');
+		expect(typeof streakStore.recordActivity).toBe('function');
 	});
 
 	it('should export getActivityCount method', () => {
-		// Returns activity count for a specific date
-		expect(typeof Object).toBe('object');
+		expect(typeof streakStore.getActivityCount).toBe('function');
 	});
 
 	it('should export getActivityWindow method', () => {
-		// Returns activity data for last N days for dashboard display
-		expect(typeof Object).toBe('object');
+		expect(typeof streakStore.getActivityWindow).toBe('function');
 	});
 
 	it('should track activity timestamps', () => {
-		// Each activity record contains a timestamp for analysis
-		expect(typeof Number).toBe('function');
+		streakStore.recordActivity();
+		const today = new Date().toISOString().slice(0, 10);
+		expect(streakStore.getActivityCount(today)).toBeGreaterThan(0);
 	});
 
 	it('should calculate streak based on consecutive days', () => {
-		// Streak is broken if there's a gap of more than 1 day
-		expect(typeof Object).toBe('object');
+		streakStore.recordActivity();
+		expect(streakStore.data.currentStreak).toBeGreaterThanOrEqual(1);
 	});
 
 	it('should persist data to localStorage', () => {
-		// Activity data is saved to localStorage for persistence across sessions
-		expect(typeof Object).toBe('object');
+		streakStore.recordActivity();
+		expect(localStorage.setItem).toHaveBeenCalled();
 	});
 
 	it('should handle missing localStorage gracefully', () => {
-		// Store works even if localStorage is unavailable (e.g., in server context)
-		expect(typeof Object).toBe('object');
+		// Store should work even without localStorage
+		expect(() => streakStore.recordActivity()).not.toThrow();
 	});
 
 	it('should provide isActiveToday derived value', () => {
-		// Reactive flag indicating if user has activity today
-		expect(typeof Boolean).toBe('function');
+		streakStore.recordActivity();
+		expect(streakStore.isActiveToday).toBe(true);
 	});
 
 	it('should provide dailyActivityCount derived value', () => {
-		// Reactive count of sessions/saves today
-		expect(typeof Number).toBe('function');
+		streakStore.recordActivity();
+		expect(streakStore.dailyActivityCount).toBeGreaterThan(0);
 	});
 });

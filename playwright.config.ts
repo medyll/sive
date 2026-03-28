@@ -19,5 +19,6 @@ export default defineConfig({
 	},
 	webServer: webServerConfig,
 	timeout: 60000,
-	testDir: 'e2e'
+	testDir: 'e2e',
+	reuseExistingServer: true
 });
