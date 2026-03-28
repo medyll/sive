@@ -56,7 +56,7 @@
   <h1 class="text-2xl mb-4">Settings</h1>
 
   <div class="mb-4">
-    <label id="theme-label" class="block font-medium mb-2">Theme</label>
+    <h2 id="theme-label" class="block font-medium mb-2">Theme</h2>
     <div id="theme-picker" class="theme-picker" role="radiogroup" aria-labelledby="theme-label">
       {#each [{ value: 'light', label: 'Light', icon: '☀️' }, { value: 'dark', label: 'Dark', icon: '🌙' }] as opt (opt.value)}
         <button

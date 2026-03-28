@@ -85,7 +85,7 @@
 		</div>
 
 		<!-- Tabs -->
-		<nav class="lb-tabs" role="tablist" aria-label="Leaderboard views">
+		<div class="lb-tabs" role="tablist" aria-label="Leaderboard views">
 			{#each [
 				{ id: 'weekly', label: 'This Week' },
 				{ id: 'alltime-streak', label: '🔥 Best Streak' },
@@ -100,7 +100,7 @@
 					onclick={() => switchTab(tab.id as Tab)}
 				>{tab.label}</button>
 			{/each}
-		</nav>
+		</div>
 
 		<!-- Content -->
 		{#if activeTab === 'myrank'}

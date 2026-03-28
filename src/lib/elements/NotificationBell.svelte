@@ -40,8 +40,14 @@
 	</button>
 
 	{#if open}
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<div class="backdrop" onclick={() => (open = false)}></div>
+		<div 
+			class="backdrop" 
+			onclick={() => (open = false)}
+			onkeydown={(e) => e.key === 'Enter' && (open = false)}
+			tabindex="0"
+			role="button"
+			aria-label="Close notifications"
+		></div>
 		<div class="dropdown" role="dialog" aria-label="Notifications">
 			<div class="dropdown-header">
 				<span class="dropdown-title">Notifications</span>

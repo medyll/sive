@@ -22,7 +22,7 @@
 		</header>
 
 		<!-- Filters -->
-		<nav class="feed-filters" role="tablist" aria-label="Filter activity">
+		<div class="feed-filters" role="tablist" aria-label="Filter activity">
 			{#each filters as f (f.id)}
 				<button
 					type="button"
@@ -32,7 +32,7 @@
 					onclick={() => (filter = f.id)}
 				>{f.label}</button>
 			{/each}
-		</nav>
+		</div>
 
 		<PartnerActivityFeed limit={50} />
 

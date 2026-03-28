@@ -30,7 +30,13 @@
 	}
 </script>
 
-<div class="modal-overlay" onclick={(e) => e.target === e.currentTarget && close()}>
+<div 
+	class="modal-overlay" 
+	onclick={(e) => e.target === e.currentTarget && close()}
+	onkeydown={(e) => e.target === e.currentTarget && e.key === 'Escape' && close()}
+	tabindex="-1"
+	role="presentation"
+>
 	<div class="modal-content" role="dialog" aria-labelledby="modal-title">
 		<div class="modal-header">
 			<h2 id="modal-title" class="modal-title">Goal Templates</h2>

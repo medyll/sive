@@ -1062,11 +1062,6 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       gap: 0.25rem;
     }
 
-    /* Hide some toolbar buttons on small screens */
-    .main-toolbar button[aria-disabled="true"] {
-      display: none;
-    }
-
     .workspace {
       flex-direction: column;
     }
