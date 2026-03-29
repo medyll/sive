@@ -1,172 +1,66 @@
 <script lang="ts">
-	export interface OnlineUser {
-		userId: string;
-		clientId: string;
-		name?: string;
-		status: 'active' | 'idle' | 'offline';
-		lastSeen?: number;
-	}
+	import type { ActiveUser } from '$lib/presenceStore.svelte';
 
-	interface Props {
-		users?: OnlineUser[];
-		currentUserId?: string | null;
-		maxVisible?: number;
-	}
+	export let users: ActiveUser[] = [];
+	export let showNames = true;
 
-	let { users = [], currentUserId = null, maxVisible = 5 }: Props = $props();
-
-	let visibleUsers = $derived(users.slice(0, maxVisible));
-	let hiddenCount = $derived(Math.max(0, users.length - maxVisible));
-
-	function getInitials(userId: string): string {
-		return userId.slice(0, 2).toUpperCase();
-	}
-
-	function getStatusColor(status: OnlineUser['status']): string {
+	function getStatusColor(status: ActiveUser['status']): string {
 		switch (status) {
-			case 'active':
-				return 'bg-green-500';
-			case 'idle':
-				return 'bg-yellow-500';
-			case 'offline':
-				return 'bg-gray-400';
-			default:
-				return 'bg-gray-400';
+			case 'active': return 'bg-green-500';
+			case 'idle': return 'bg-yellow-500';
+			case 'offline': return 'bg-gray-400';
 		}
 	}
 
-	function getStatusLabel(status: OnlineUser['status']): string {
-		switch (status) {
-			case 'active':
-				return 'Active now';
-			case 'idle':
-				return 'Idle';
-			case 'offline':
-				return 'Offline';
-			default:
-				return 'Unknown';
-		}
-	}
-
-	function isCurrentUser(userId: string): boolean {
-		return userId === currentUserId;
+	function getUserColor(user: ActiveUser): string {
+		return user.color || '#6b7280';
 	}
 </script>
 
-<div class="presence-list" data-testid="presence-list" title="Online collaborators">
-	<div class="presence-avatars">
-		{#each visibleUsers as user (user.clientId)}
-			<div
-							class={['presence-avatar', isCurrentUser(user.userId) && 'current'].filter(Boolean).join(' ')}
-				data-testid="presence-avatar-{user.userId}"
-				title="{user.name || user.userId} — {getStatusLabel(user.status)}"
-			>
-				<div class="avatar-content">
-					<span class="initials">{getInitials(user.userId)}</span>
-					<div class={`status-dot ${getStatusColor(user.status)}`} aria-hidden="true"></div>
+<div class="presence-list space-y-2">
+	{#if users.length === 0}
+		<div class="text-sm text-muted italic">No active users</div>
+	{:else}
+		{#each users as user (user.userId)}
+			<div class="flex items-center gap-2 p-2 rounded hover:bg-muted/50 transition-colors">
+				<!-- Avatar -->
+				<div 
+					class="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-medium"
+					style="background-color: {getUserColor(user)}"
+				>
+					{user.name?.charAt(0).toUpperCase() || user.userId.charAt(0).toUpperCase()}
+				</div>
+				
+				<!-- Info -->
+				<div class="flex-1 min-w-0">
+					{#if showNames}
+						<div class="text-sm font-medium truncate">
+							{user.name || user.userId}
+						</div>
+					{/if}
+					<div class="flex items-center gap-2 text-xs text-muted">
+						<span class="flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full {getStatusColor(user.status)}"></span>
+							{user.status}
+						</span>
+						{#if user.cursor}
+							<span>· Position {user.cursor.offset}</span>
+						{/if}
+					</div>
+				</div>
+				
+				<!-- Last Seen -->
+				<div class="text-xs text-muted">
+					{new Date(user.lastSeen).toLocaleTimeString()}
 				</div>
 			</div>
 		{/each}
-
-		{#if hiddenCount > 0}
-			<div
-				class="presence-count"
-				data-testid="presence-count"
-				title="{hiddenCount} more collaborator{hiddenCount > 1 ? 's' : ''}"
-			>
-				+{hiddenCount}
-			</div>
-		{/if}
-	</div>
+	{/if}
 </div>
 
 <style>
 	.presence-list {
-		display: flex;
-		align-items: center;
-		gap: 0.25rem;
-	}
-
-	.presence-avatars {
-		display: flex;
-		align-items: center;
-		gap: -0.5rem;
-		flex-wrap: wrap;
-	}
-
-	.presence-avatar {
-		position: relative;
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		background: var(--color-primary, #646cff);
-		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 0.75rem;
-		font-weight: 600;
-		border: 2px solid var(--color-background, #fff);
-		cursor: pointer;
-		transition: all 0.2s ease;
-		margin-left: -0.5rem;
-	}
-
-	.presence-avatar:first-child {
-		margin-left: 0;
-	}
-
-	.presence-avatar:hover {
-		transform: scale(1.15);
-		z-index: 10;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-	}
-
-	.presence-avatar.current {
-		border-color: var(--color-primary, #646cff);
-		box-shadow: 0 0 0 2px var(--color-background, #fff),
-			0 0 0 4px var(--color-primary, #646cff);
-	}
-
-	.avatar-content {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: relative;
-		width: 100%;
-		height: 100%;
-	}
-
-	.initials {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 0.6rem;
-		letter-spacing: 0.05em;
-	}
-
-	.status-dot {
-		position: absolute;
-		bottom: -2px;
-		right: -2px;
-		width: 10px;
-		height: 10px;
-		border-radius: 50%;
-		border: 2px solid var(--color-background, #fff);
-	}
-
-	.presence-count {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		background: var(--color-surface, #f9f9f9);
-		border: 2px solid var(--color-border, #ddd);
-		font-size: 0.65rem;
-		font-weight: 600;
-		color: var(--color-text, #333);
-		margin-left: 0.25rem;
+		max-height: 300px;
+		overflow-y: auto;
 	}
 </style>
