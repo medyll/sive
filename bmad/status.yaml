@@ -96,54 +96,41 @@ delayed_issues:
     reported: 2026-03-25T14:52:43Z
 
 recommendation: |
-  SIVE V1.0 — PRODUCTION READY ✅
+  SIVE V1.1 — MCP TOOLS & SKILLS COMPLETE ✅
 
-  Sprint 78 COMPLETE (2026-03-29). Accessibility Audit ✅
+  Sprints 78b-85 COMPLETE (2026-03-29). MCP Tools + Skills Engine ✅
 
   Completed Stories:
-  - S78-01: Accessibility Audit — Fixed all high-severity issues ✅
-  - S78-02: Keyboard Navigation — All elements focusable ✅
-  - S78-03: Screen Reader Support — ARIA labels added ✅
-  - S78-04: Color Contrast — WCAG AA compliant ✅
-  - S78-05: Accessibility E2E Tests — Keyboard nav tests ✅
+  - Sprint 78b: MCP Tools Foundation (23 tools) ✅
+  - Sprint 79: Command Bus (26 commands) ✅
+  - Sprint 80: YAML File System + Types ✅
+  - Sprint 81: Skills Engine ✅
+  - Sprint 82: skill_coherence Implementation ✅
+  - Sprint 83: skill_review + skill_style ✅
+  - Sprint 84: Hybrid AI (Ollama + Cloud) ✅
+  - Sprint 85: MCP Skills Integration ✅
 
-  PROJECT STATUS: v1.0.0 COMPLETE — READY FOR PRODUCTION
+  PROJECT STATUS: v1.1.0 READY — MCP/SKILLS FOUNDATION COMPLETE
 
   Final Statistics:
-  - 78 sprints completed
-  - 1,072 unit tests passing
-  - 42 E2E tests passing
-  - 115 KB client bundle (gzipped)
-  - WCAG 2.1 AA compliant
+  - 85 sprints completed
+  - 25+ files created
+  - 3500+ lines of code
+  - 40+ unit tests
+  - 23 MCP tools
+  - 26 Command Bus commands
+  - 4 built-in skills
+  - Hybrid AI support
 
-  Sprint history (complete):
-  - Sprints 1–28: Core features
-  - Sprints 29–48: Polish
-  - Sprints 49–50: Test hardening
-  - Sprint 51: Command Palette
-  - Sprints 52–65: Feature expansions
-  - Sprint 66: Social Sharing
-  - Sprints 67–68: Gamification
-  - Sprint 69: Writer Discovery
-  - Sprint 70: Notifications
-  - Sprint 71: Test Hardening
-  - Sprint 72: Component Tests
-  - Sprint 73: AI Features
-  - Sprint 74: Server-Side Sync
-  - Sprint 75: Mobile Polish
-  - Sprint 76: E2E Hardening
-  - Sprint 77: Performance
-  - Sprint 78: Accessibility Audit
-
-  Next: DEPLOY TO PRODUCTION — See RELEASE_NOTES.md
+  Next: UI Integration & Production Deployment
 
 last_updated: 2026-03-29
 
-active_role: release
-next_action: "Deploy to production — Follow deployment guide in docs/DEPLOYMENT.md"
-next_command: "npm run build && npm run preview"
-next_role: dev
-last_updated: 2026-03-29T07:00:00Z
+active_role: dev
+next_action: "Session complete — 8 sprints done (78b-85). Ready for UI integration."
+next_command: "bmad status"
+next_role: scrum
+last_updated: 2026-03-29T08:00:00Z
 
 hotfixes:
   - id: hf-2026-03-25-001
@@ -943,25 +930,241 @@ sprints:
 
   - id: sprint-78
     name: Sprint 78 — Accessibility Audit
-    status: planned
-    progress: 0
-    start: 2026-03-30
-    end: 2026-03-31
+    status: done
+    progress: 100
+    start: 2026-03-29
+    end: 2026-03-29
     stories:
       - id: S78-01
         title: accessibility-audit-axe-core
-        status: todo
+        status: done
       - id: S78-02
         title: fix-keyboard-navigation
-        status: todo
+        status: done
       - id: S78-03
         title: fix-screen-reader-support
-        status: todo
+        status: done
       - id: S78-04
         title: fix-color-contrast
-        status: todo
+        status: done
       - id: S78-05
         title: accessibility-e2e-tests
+        status: done
+
+  - id: sprint-78b
+    name: Sprint 78b — MCP Tools Foundation
+    status: done
+    progress: 100
+    start: 2026-03-29
+    end: 2026-03-29
+    stories:
+      - id: S78b-01
+        title: mcp-tools-read
+        status: done
+      - id: S78b-02
+        title: mcp-tools-write
+        status: done
+      - id: S78b-03
+        title: mcp-tools-analyse-version
+        status: done
+      - id: S78b-04
+        title: mcp-tool-registry
+        status: done
+
+  - id: sprint-79
+    name: Sprint 79 — Command Bus
+    status: done
+    progress: 100
+    start: 2026-03-29
+    end: 2026-03-29
+    stories:
+      - id: S79-01
+        title: command-bus-core
+        status: done
+      - id: S79-02
+        title: ui-command-handlers
+        status: done
+      - id: S79-03
+        title: editor-command-handlers
+        status: done
+
+  - id: sprint-80
+    name: Sprint 80 — YAML File System + Types
+    status: done
+    progress: 100
+    start: 2026-03-29
+    end: 2026-03-29
+    stories:
+      - id: S80-01
+        title: typescript-types
+        status: done
+      - id: S80-02
+        title: yaml-store
+        status: done
+      - id: S80-03
+        title: project-file-structure
+        status: done
+
+  - id: sprint-81
+    name: Sprint 81 — Skills Engine
+    status: done
+    progress: 100
+    start: 2026-03-29
+    end: 2026-03-29
+    stories:
+      - id: S81-01
+        title: skill-execution-core
+        status: done
+      - id: S81-02
+        title: skill-yaml-loader
+        status: done
+
+  - id: sprint-82
+    name: Sprint 82 — skill_coherence
+    status: done
+    progress: 100
+    start: 2026-03-29
+    end: 2026-03-29
+    stories:
+      - id: S82-01
+        title: skill-coherence-implementation
+        status: done
+      - id: S82-02
+        title: coherence-ui-integration
+        status: done
+
+  - id: sprint-83
+    name: Sprint 83 — skill_review + skill_style
+    status: done
+    progress: 100
+    start: 2026-03-29
+    end: 2026-03-29
+    stories:
+      - id: S83-01
+        title: skill-review-implementation
+        status: done
+      - id: S83-02
+        title: review-mode-ui
+        status: done
+      - id: S83-03
+        title: skill-style-implementation
+        status: done
+      - id: S83-04
+        title: style-tab-ui
+        status: done
+
+  - id: sprint-84
+    name: Sprint 84 — Hybrid AI (Ollama + Cloud)
+    status: done
+    progress: 100
+    start: 2026-03-29
+    end: 2026-03-29
+    stories:
+      - id: S84-01
+        title: ollama-integration
+        status: done
+      - id: S84-02
+        title: ai-model-router
+        status: done
+      - id: S84-03
+        title: multi-provider-support
+        status: done
+      - id: S84-04
+        title: ai-settings-ui
+        status: done
+
+  - id: sprint-85
+    name: Sprint 85 — MCP Skills Integration
+    status: done
+    progress: 100
+    start: 2026-03-29
+    end: 2026-03-29
+    stories:
+      - id: S85-01
+        title: wire-skills-to-ui
+        status: done
+      - id: S85-02
+        title: skill-trigger-buttons
+        status: done
+      - id: S85-03
+        title: skill-execution-ui
+        status: done
+      - id: S85-04
+        title: skill-results-display
+        status: done
+
+  - id: sprint-86
+    name: Sprint 86 — Real-time Collaboration Enhancements
+    status: planned
+    progress: 0
+    start: 2026-03-30
+    end: 2026-04-23
+    stories:
+      - id: S86-01
+        title: websocket-presence-improvements
+        status: todo
+      - id: S86-02
+        title: collaborative-cursors
+        status: todo
+      - id: S86-03
+        title: conflict-resolution-ui
+        status: todo
+      - id: S86-04
+        title: collaborative-versioning
+        status: todo
+
+  - id: sprint-82
+    name: Sprint 82 — skill_coherence
+    status: planned
+    progress: 0
+    start: 2026-04-09
+    end: 2026-04-11
+    stories:
+      - id: S82-01
+        title: skill-coherence-implementation
+        status: todo
+      - id: S82-02
+        title: coherence-ui-integration
+        status: todo
+
+  - id: sprint-83
+    name: Sprint 83 — skill_review + skill_style
+    status: planned
+    progress: 0
+    start: 2026-04-11
+    end: 2026-04-14
+    stories:
+      - id: S83-01
+        title: skill-review-implementation
+        status: todo
+      - id: S83-02
+        title: review-mode-ui
+        status: todo
+      - id: S83-03
+        title: skill-style-implementation
+        status: todo
+      - id: S83-04
+        title: style-tab-ui
+        status: todo
+
+  - id: sprint-84
+    name: Sprint 84 — Hybrid AI (Ollama + Cloud)
+    status: planned
+    progress: 0
+    start: 2026-04-14
+    end: 2026-04-17
+    stories:
+      - id: S84-01
+        title: ollama-integration
+        status: todo
+      - id: S84-02
+        title: ai-model-router
+        status: todo
+      - id: S84-03
+        title: multi-provider-support
+        status: todo
+      - id: S84-04
+        title: ai-settings-ui
         status: todo
 
   - id: sprint-70
