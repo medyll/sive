@@ -139,6 +139,11 @@ hotfixes:
       - Updated 7 redirect/navigate references
       - Build verified passing
     resolved_at: 2026-03-25T21:45:00Z
+  - id: hf-2026-03-30-001
+    title: "Test file naming convention"
+    status: resolved
+    note: "Renamed +server.spec.ts → server.spec.ts (SvelteKit reserves + prefix)"
+    resolved_at: 2026-03-30T10:05:00Z
 
 # New v3.1.0 structured fields (Single Source of Truth)
 artifacts:
