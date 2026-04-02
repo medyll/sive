@@ -68,30 +68,34 @@ ChatBar — floating input with mini-chat history (user/AI bubbles)
 </div>
 
 <style>
+  /* ───────────────────────────────────────────────────────────────────────
+     CSS migrated to @medyll/css-base tokens
+     ─────────────────────────────────────────────────────────────────────── */
+
   .chat-bar {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--color-border, #e0e0e0);
-    border-radius: 0.5rem;
-    background: var(--color-background, #fff);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
     overflow: hidden;
   }
 
   .chat-messages {
     max-height: 220px;
     overflow-y: auto;
-    padding: 0.75rem;
+    padding: var(--pad-md);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    border-bottom: 1px solid var(--color-border, #e0e0e0);
+    gap: var(--gap-sm);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .chat-bubble {
     display: flex;
     flex-direction: column;
     max-width: 85%;
-    gap: 0.1rem;
+    gap: var(--gap-xs);
   }
 
   .chat-bubble.user {
@@ -105,68 +109,70 @@ ChatBar — floating input with mini-chat history (user/AI bubbles)
   }
 
   .bubble-label {
-    font-size: 0.65rem;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
     text-transform: uppercase;
-    color: var(--color-text-muted, #9ca3af);
+    color: var(--color-text-muted);
     letter-spacing: 0.04em;
   }
 
   .bubble-text {
     margin: 0;
-    padding: 0.4rem 0.7rem;
-    border-radius: 1rem;
-    font-size: 0.85rem;
-    line-height: 1.45;
+    padding: var(--pad-sm) var(--pad-md);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    line-height: var(--leading-normal);
   }
 
   .chat-bubble.user .bubble-text {
-    background: var(--color-primary, #646cff);
-    color: #fff;
-    border-bottom-right-radius: 0.2rem;
+    background: var(--color-primary);
+    color: var(--color-surface);
+    border-bottom-right-radius: var(--radius-sm);
   }
 
   .chat-bubble.assistant .bubble-text {
-    background: var(--color-surface, #f3f4f6);
-    color: var(--color-text, #1a1a1a);
-    border-bottom-left-radius: 0.2rem;
+    background: var(--color-surface-alt);
+    color: var(--color-text);
+    border-bottom-left-radius: var(--radius-sm);
   }
 
   .chat-bubble.typing .bubble-text {
-    color: var(--color-text-muted, #9ca3af);
+    color: var(--color-text-muted);
     font-style: italic;
   }
 
   .chat-input-row {
     display: flex;
-    padding: 0.5rem;
-    gap: 0.4rem;
+    padding: var(--pad-sm);
+    gap: var(--gap-sm);
   }
 
   .chat-input {
     flex: 1;
-    border: 1px solid var(--color-border, #e0e0e0);
-    border-radius: 0.375rem;
-    padding: 0.4rem 0.6rem;
-    font-size: 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--pad-sm);
+    font-size: var(--text-base);
     outline: none;
-    background: var(--color-background, #fff);
+    background: var(--color-surface);
+    color: var(--color-text);
   }
 
   .chat-input:focus {
-    border-color: var(--color-primary, #646cff);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-hover);
   }
 
   .btn-send {
-    padding: 0.4rem 0.9rem;
-    background: var(--color-primary, #646cff);
-    color: #fff;
+    padding: var(--pad-sm) var(--pad-md);
+    background: var(--color-primary);
+    color: var(--color-surface);
     border: none;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 500;
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: var(--transition-fast);
   }
 
   .btn-send:disabled {

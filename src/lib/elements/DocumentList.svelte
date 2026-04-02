@@ -220,8 +220,8 @@
   }
 </script>
 
-<aside class="doc-list flex-shrink-0 w-56 bg-[var(--color-surface,#f9f9f9)] border-r border-[var(--color-border,#e0e0e0)] h-full flex flex-col" aria-label="Document list">
-  <div class="doc-list-header flex items-center gap-2 px-3 py-2">
+<aside class="doc-list" aria-label="Document list">
+  <div class="doc-list-header">
     <span class="doc-list-title">Documents</span>
     {#if bulkMode}
       <button
@@ -230,7 +230,7 @@
         onclick={toggleSelectAll}
         aria-label={allSelected ? 'Deselect all' : 'Select all'}
         title={allSelected ? 'Deselect all' : 'Select all'}
-      >{allSelected ? '☑' : '☐'}</button>
+      >{allSelected ? '☑' : '☐'}</button>
       {#if selectedCount > 0}
         <button
           class="btn-bulk-delete"
@@ -241,14 +241,14 @@
       {/if}
       <button class="btn-bulk-cancel" type="button" onclick={toggleBulkMode} aria-label="Cancel selection">❌</button>
     {:else}
-      <button class="btn-bulk-mode" type="button" onclick={toggleBulkMode} aria-label="Select documents" title="Select multiple">☐</button>
+      <button class="btn-bulk-mode" type="button" onclick={toggleBulkMode} aria-label="Select documents" title="Select multiple">☐</button>
       <button class="btn-new-doc" type="button" onclick={onNew} aria-label="New document">➕</button>
     {/if}
   </div>
 
-  <div class="doc-search-row flex items-center gap-2 px-3 pb-2 border-b">
+  <div class="doc-search-row">
     <input
-      class="doc-search-input flex-1 text-sm border rounded px-2 py-1 bg-[var(--color-background,#fff)] text-[var(--color-text,#1a1a1a)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#646cff)]"
+      class="doc-search-input"
       type="search"
       placeholder="Filter…"
       aria-label="Filter documents"

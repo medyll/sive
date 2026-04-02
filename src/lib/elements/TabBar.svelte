@@ -56,21 +56,32 @@ Horizontal tab navigation bar with theme support.
 </div>
 
 <style>
+  /* ───────────────────────────────────────────────────────────────────────
+     CSS migrated to @medyll/css-base tokens
+     ─────────────────────────────────────────────────────────────────────── */
+
   .tab-bar {
     display: flex;
     border-bottom: 1px solid var(--color-border);
   }
 
   .tab {
-    padding: 0.5rem 1rem;
+    padding: var(--pad-sm) var(--pad-md);
     cursor: pointer;
     background: none;
     border: none;
     outline: none;
+    color: var(--color-text);
+    transition: var(--transition-fast);
+  }
+
+  .tab:hover {
+    background: var(--color-surface-hover);
   }
 
   .tab.active {
     border-bottom: 2px solid var(--color-primary);
-    font-weight: bold;
+    font-weight: var(--font-semibold);
+    color: var(--color-primary);
   }
 </style>

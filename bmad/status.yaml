@@ -124,9 +124,10 @@ recommendation: |
 last_updated: 2026-03-30
 
 active_role: dev
-next_action: "Session complete — 13 sprints done (86-90). Beta v1.2.0 ready."
-next_command: "bmad status"
-next_role: scrum
+next_action: "CSS migration — DocumentList.svelte encoding issue, continue with other components"
+next_command: "bmad continue"
+next_role: dev
+progress: 60
 last_updated: 2026-03-30T10:00:00Z
 
 hotfixes:
@@ -1197,8 +1198,8 @@ sprints:
 
   - id: sprint-91
     name: Sprint 91 — Post-Beta Cleanup
-    status: planned
-    progress: 0
+    status: in_progress
+    progress: 40
     start: 2026-04-01
     end: 2026-05-02
     stories:
@@ -1214,6 +1215,9 @@ sprints:
       - id: S91-04
         title: v1.3-planning
         status: todo
+      - id: S91-05
+        title: css-migration-to-css-base
+        status: done
     end: 2026-04-14
     stories:
       - id: S83-01

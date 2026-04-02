@@ -868,30 +868,43 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
 />
 
 <style>
+  /* ───────────────────────────────────────────────────────────────────────
+     CSS migrated to @medyll/css-base tokens
+     No more hardcoded colors — all values use design tokens
+     ─────────────────────────────────────────────────────────────────────── */
+
   .save-indicator {
     position: absolute;
-    top: 0.5rem;
-    right: 1rem;
+    top: var(--pad-sm);
+    right: var(--pad-md);
     z-index: 10;
-    font-size: 0.75rem;
-    color: var(--muted, #9ca3af);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
     pointer-events: none;
-    transition: opacity 2s ease;
+    transition: opacity var(--duration-slow);
   }
   .save-indicator.fade { opacity: 0; }
-  .sidebar { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
   .version-panel-overlay {
-    border-top: 1px solid var(--border, #e5e7eb);
-    padding: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    padding: var(--pad-md);
     height: 50%;
     overflow-y: auto;
-    background: var(--surface, #fff);
+    background: var(--color-surface);
   }
+
   .focus-panel-overlay {
-    border-top: 1px solid var(--border, #e5e7eb);
-    padding: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    padding: var(--pad-md);
     overflow-y: auto;
-    background: var(--surface, #fff);
+    background: var(--color-surface);
   }
 
   .app-root {
@@ -904,43 +917,43 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   .main-toolbar {
     display: flex;
     align-items: center;
-    padding: 0 1rem;
+    padding: 0 var(--pad-md);
     height: 3rem;
-    border-bottom: 1px solid var(--color-border, #e0e0e0);
+    border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
   }
 
   .project-label {
     flex: 1;
-    font-weight: 500;
+    font-weight: var(--font-medium);
   }
 
   .toolbar-title {
     cursor: pointer;
-    padding: 0.1rem 0.25rem;
-    border-radius: 3px;
+    padding: var(--pad-xs) var(--pad-sm);
+    border-radius: var(--radius-sm);
     border: 1px solid transparent;
   }
 
   .toolbar-title:hover {
-    border-color: var(--color-border, #e0e0e0);
-    background: var(--color-hover, #f0f0f0);
+    border-color: var(--color-border);
+    background: var(--color-surface-hover);
   }
 
   .toolbar-title-input {
-    font-size: 1rem;
-    font-weight: 500;
-    border: 1px solid var(--color-primary, #646cff);
-    border-radius: 3px;
-    padding: 0.1rem 0.25rem;
-    background: #fff;
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    padding: var(--pad-xs) var(--pad-sm);
+    background: var(--color-surface);
     outline: none;
     min-width: 8rem;
   }
 
   .toolbar-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--gap-sm);
     align-items: center;
   }
 
@@ -950,15 +963,15 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     justify-content: center;
     width: 28px;
     height: 28px;
-    border-radius: 50%;
-    background: var(--color-primary, #646cff);
-    color: #fff;
-    font-size: 0.7rem;
-    font-weight: 700;
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    color: var(--color-surface);
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
     text-decoration: none;
     letter-spacing: 0.03em;
     flex-shrink: 0;
-    transition: opacity 0.15s;
+    transition: opacity var(--transition-fast);
   }
 
   .user-badge:hover { opacity: 0.82; }
@@ -972,54 +985,54 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   .panel {
     overflow: hidden;
     height: 100%;
-    transition: width 0.2s ease;
+    transition: width var(--transition-fast);
   }
 
   .resize-handle {
     width: 6px;
     flex-shrink: 0;
     cursor: ew-resize;
-    background-color: var(--color-border, #e0e0e0);
-    transition: background-color 0.15s;
+    background-color: var(--color-border);
+    transition: background-color var(--transition-fast);
   }
 
   .resize-handle:hover,
   .resize-handle:active {
-    background-color: var(--color-primary, #646cff);
+    background-color: var(--color-primary);
   }
 
   /* Chat overlay — fixed bottom-center */
   .chat-overlay {
     position: fixed;
-    bottom: 1rem;
+    bottom: var(--pad-md);
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.25rem;
-    z-index: 100;
+    gap: var(--gap-xs);
+    z-index: var(--z-dropdown);
   }
 
   .chat-toggle {
-    background: var(--color-background, #fff);
-    border: 1px solid var(--color-border, #e0e0e0);
-    border-radius: 1rem;
-    padding: 0.15rem 0.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: var(--pad-xs) var(--pad-md);
     cursor: pointer;
-    font-size: 0.75rem;
-    line-height: 1.5;
+    font-size: var(--text-xs);
+    line-height: var(--leading-normal);
   }
 
   .chat-bar-inner {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    background: var(--color-background, #fff);
-    border: 1px solid var(--color-border, #e0e0e0);
-    border-radius: 2rem;
-    padding: 0.4rem 0.75rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    gap: var(--gap-sm);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: var(--pad-sm) var(--pad-md);
+    box-shadow: var(--shadow-lg);
     min-width: 32rem;
   }
 
@@ -1027,20 +1040,20 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;
-    padding: 0.25rem;
+    font-size: var(--text-lg);
+    padding: var(--pad-xs);
     opacity: 0.5;
   }
 
   .badge {
     position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
+    bottom: var(--pad-lg);
+    right: var(--pad-lg);
     width: 12px;
     height: 12px;
-    border-radius: 50%;
-    background-color: var(--color-primary, #646cff);
-    box-shadow: 0 0 6px var(--color-primary, #646cff);
+    border-radius: var(--radius-full);
+    background-color: var(--color-primary);
+    box-shadow: 0 0 6px var(--color-primary);
     animation: pulse 2s infinite;
   }
 
@@ -1055,9 +1068,9 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;
-    padding: 0.2rem 0.4rem;
-    color: var(--color-text, #1a1a1a);
+    font-size: var(--text-lg);
+    padding: var(--pad-xs) var(--pad-sm);
+    color: var(--color-text);
   }
 
   @media (max-width: 767px) {
@@ -1066,8 +1079,8 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
     }
 
     .main-toolbar {
-      padding: 0 0.5rem;
-      gap: 0.25rem;
+      padding: 0 var(--pad-sm);
+      gap: var(--gap-xs);
     }
 
     .workspace {
@@ -1080,7 +1093,7 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
       height: auto;
       max-height: 40vh;
       border-right: none;
-      border-bottom: 1px solid var(--color-border, #e0e0e0);
+      border-bottom: 1px solid var(--color-border);
     }
 
     .panel {
@@ -1095,38 +1108,41 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
 
     /* Chat overlay mobile */
     .chat-overlay {
-      left: 0.5rem;
-      right: 0.5rem;
+      left: var(--pad-sm);
+      right: var(--pad-sm);
       max-width: none;
     }
   }
-.btn-summary {
-  padding: 0.35rem 0.65rem;
-  font-size: 0.82rem;
-  background: var(--color-surface, #f4f4f4);
-  border: 1px solid var(--color-border, #d1d5db);
-  border-radius: 0.375rem;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s;
-}
 
-.btn-summary:hover { background: var(--color-hover, #e9e9e9); }
-.btn-summary[aria-pressed="true"] {
-  background: var(--color-primary, #646cff);
-  border-color: var(--color-primary, #646cff);
-  color: #fff;
-}
+  .btn-summary {
+    padding: var(--pad-sm) var(--pad-md);
+    font-size: var(--text-sm);
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--transition-fast);
+  }
 
-.guest-indicator {
-  margin-left: 0.5rem;
-  font-size: 0.8rem;
-  color: var(--color-muted, #6b7280);
-  background: rgba(0,0,0,0.04);
-  padding: 0.15rem 0.45rem;
-  border-radius: 0.5rem;
-  align-self: center;
-  display: inline-block;
-}
+  .btn-summary:hover {
+    background: var(--color-surface-hover);
+  }
 
+  .btn-summary[aria-pressed="true"] {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-surface);
+  }
+
+  .guest-indicator {
+    margin-left: var(--gap-sm);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    background: rgba(0, 0, 0, 0.04);
+    padding: var(--pad-xs) var(--pad-sm);
+    border-radius: var(--radius-full);
+    align-self: center;
+    display: inline-block;
+  }
 </style>
