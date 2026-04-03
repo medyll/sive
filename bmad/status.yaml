@@ -124,10 +124,10 @@ recommendation: |
 last_updated: 2026-03-30
 
 active_role: dev
-next_action: "CSS migration — DocumentList.svelte encoding issue, continue with other components"
+next_action: "S91-01 — Fix beta feedback issues: investigate and resolve reported bugs"
 next_command: "bmad continue"
 next_role: dev
-progress: 60
+progress: 100
 last_updated: 2026-03-30T10:00:00Z
 
 hotfixes:
@@ -1199,7 +1199,7 @@ sprints:
   - id: sprint-91
     name: Sprint 91 — Post-Beta Cleanup
     status: in_progress
-    progress: 40
+    progress: 60
     start: 2026-04-01
     end: 2026-05-02
     stories:

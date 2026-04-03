@@ -99,10 +99,14 @@
 </div>
 
 <style>
+	/* ───────────────────────────────────────────────────────────────────────
+	   CSS migrated to @medyll/css-base tokens
+	   ─────────────────────────────────────────────────────────────────────── */
+
 	.challenges-page {
 		min-height: 100vh;
-		padding: 2rem 1rem;
-		background: var(--color-background, #f9fafb);
+		padding: var(--pad-2xl) var(--pad-md);
+		background: var(--color-surface);
 	}
 
 	.challenges-container {
@@ -110,7 +114,7 @@
 		margin: 0 auto;
 		display: flex;
 		flex-direction: column;
-		gap: 1.25rem;
+		gap: var(--gap-md);
 	}
 
 	.challenges-header {
@@ -119,113 +123,150 @@
 		align-items: flex-start;
 	}
 
-	.challenges-header h1 { margin: 0; font-size: 1.75rem; }
-	.subtitle { margin: 0.25rem 0 0; color: var(--color-text-secondary, #666); font-size: 0.875rem; }
+	.challenges-header h1 {
+		margin: 0;
+		font-size: var(--text-2xl);
+		color: var(--color-text);
+	}
+
+	.subtitle {
+		margin: var(--pad-xs) 0 0;
+		color: var(--color-text-muted);
+		font-size: var(--text-sm);
+	}
 
 	.btn-create {
-		padding: 0.5rem 1rem;
-		background: var(--color-primary, #7c3aed);
-		color: white;
+		padding: var(--pad-sm) var(--pad-md);
+		background: var(--color-primary);
+		color: var(--color-surface);
 		border: none;
-		border-radius: 8px;
-		font-size: 0.875rem;
-		font-weight: 600;
+		border-radius: var(--radius-lg);
+		font-size: var(--text-sm);
+		font-weight: var(--font-semibold);
 		cursor: pointer;
 		white-space: nowrap;
+		transition: var(--transition-fast);
 	}
 
 	.btn-create:hover { opacity: 0.9; }
 
 	.create-form {
-		background: var(--color-surface, #fff);
-		border: 1px solid var(--color-border, #e5e7eb);
-		border-radius: 12px;
-		padding: 1.5rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-xl);
+		padding: var(--pad-lg);
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: var(--gap-md);
 	}
 
-	.create-form h2 { margin: 0; font-size: 1.1rem; }
+	.create-form h2 {
+		margin: 0;
+		font-size: var(--text-lg);
+		color: var(--color-text);
+	}
 
 	.create-form label {
 		display: flex;
 		flex-direction: column;
-		gap: 0.3rem;
-		font-size: 0.875rem;
-		font-weight: 500;
+		gap: var(--gap-xs);
+		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
+		color: var(--color-text);
 	}
 
-	.create-form input, .create-form textarea {
-		padding: 0.5rem 0.75rem;
-		border: 1px solid var(--color-border, #ddd);
-		border-radius: 6px;
-		font-size: 0.9rem;
-		background: var(--color-background, #f9fafb);
-		color: var(--color-text, #111);
+	.create-form input,
+	.create-form textarea {
+		padding: var(--pad-sm) var(--pad-md);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		font-size: var(--text-base);
+		background: var(--color-surface);
+		color: var(--color-text);
+	}
+
+	.create-form input:focus,
+	.create-form textarea:focus {
+		outline: none;
+		border-color: var(--color-primary);
+		box-shadow: 0 0 0 2px var(--color-primary-hover);
 	}
 
 	.create-form textarea { resize: vertical; min-height: 80px; }
 
-	.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+	.form-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--gap-md);
+	}
 
 	.btn-submit {
 		align-self: flex-start;
-		padding: 0.5rem 1.25rem;
-		background: var(--color-primary, #7c3aed);
-		color: white;
+		padding: var(--pad-sm) var(--pad-lg);
+		background: var(--color-primary);
+		color: var(--color-surface);
 		border: none;
-		border-radius: 8px;
-		font-size: 0.875rem;
-		font-weight: 600;
+		border-radius: var(--radius-lg);
+		font-size: var(--text-sm);
+		font-weight: var(--font-semibold);
 		cursor: pointer;
+		transition: var(--transition-fast);
+	}
+
+	.btn-submit:hover {
+		background: var(--color-primary-hover);
 	}
 
 	.tabs {
 		display: flex;
-		gap: 0.25rem;
-		border-bottom: 1px solid var(--color-border, #e5e7eb);
+		gap: var(--gap-xs);
+		border-bottom: 1px solid var(--color-border);
 		padding-bottom: 0;
 	}
 
 	.tab {
-		padding: 0.5rem 1rem;
+		padding: var(--pad-sm) var(--pad-md);
 		border: none;
 		background: none;
 		cursor: pointer;
-		font-size: 0.875rem;
-		color: var(--color-text-secondary, #666);
+		font-size: var(--text-sm);
+		color: var(--color-text-muted);
 		border-bottom: 2px solid transparent;
 		margin-bottom: -1px;
+		transition: var(--transition-fast);
+	}
+
+	.tab:hover {
+		color: var(--color-text);
 	}
 
 	.tab--active {
-		color: var(--color-primary, #7c3aed);
-		border-bottom-color: var(--color-primary, #7c3aed);
-		font-weight: 600;
+		color: var(--color-primary);
+		border-bottom-color: var(--color-primary);
+		font-weight: var(--font-semibold);
 	}
 
 	.challenges-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 1rem;
+		gap: var(--gap-md);
 	}
 
 	.empty {
 		text-align: center;
-		padding: 3rem 1rem;
-		background: var(--color-surface, #fff);
-		border-radius: 12px;
-		border: 1px solid var(--color-border, #e5e7eb);
-		color: var(--color-text-secondary, #666);
-		font-size: 0.9rem;
-		line-height: 1.7;
+		padding: var(--pad-3xl) var(--pad-md);
+		background: var(--color-surface);
+		border-radius: var(--radius-xl);
+		border: 1px solid var(--color-border);
+		color: var(--color-text-muted);
+		font-size: var(--text-sm);
+		line-height: var(--leading-relaxed);
 	}
 
 	.link-btn {
 		background: none;
 		border: none;
-		color: var(--color-primary, #7c3aed);
+		color: var(--color-primary);
 		cursor: pointer;
 		font-size: inherit;
 		padding: 0;
@@ -234,9 +275,11 @@
 
 	.challenges-footer {
 		text-align: center;
-		font-size: 0.75rem;
-		color: var(--color-text-secondary, #aaa);
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
 	}
 
-	.challenges-footer a { color: var(--color-primary, #7c3aed); }
+	.challenges-footer a {
+		color: var(--color-primary);
+	}
 </style>

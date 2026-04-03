@@ -150,10 +150,14 @@
 </main>
 
 <style>
+	/* ───────────────────────────────────────────────────────────────────────
+	   CSS migrated to @medyll/css-base tokens
+	   ─────────────────────────────────────────────────────────────────────── */
+
 	.dashboard {
 		max-width: 960px;
 		margin: 0 auto;
-		padding: 2rem 1.5rem 4rem;
+		padding: var(--pad-2xl) var(--pad-lg) var(--pad-3xl);
 		font-family: inherit;
 	}
 
@@ -161,21 +165,21 @@
 		display: flex;
 		align-items: baseline;
 		justify-content: space-between;
-		margin-bottom: 2rem;
+		margin-bottom: var(--pad-2xl);
 		flex-wrap: wrap;
-		gap: 0.5rem;
+		gap: var(--gap-sm);
 	}
 
 	.dash-title {
 		margin: 0;
-		font-size: 1.75rem;
-		font-weight: 800;
-		color: #111827;
+		font-size: var(--text-2xl);
+		font-weight: var(--font-bold);
+		color: var(--color-text);
 	}
 
 	.back-link {
-		font-size: 0.875rem;
-		color: #6366f1;
+		font-size: var(--text-sm);
+		color: var(--color-primary);
 		text-decoration: none;
 	}
 
@@ -185,61 +189,61 @@
 	.stat-grid {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
-		gap: 1rem;
-		margin-bottom: 2.5rem;
+		gap: var(--gap-md);
+		margin-bottom: var(--pad-2xl);
 	}
 
 	.stat-card {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: 1.5rem 1rem;
-		background: white;
-		border: 1px solid #e5e7eb;
-		border-radius: 0.75rem;
+		padding: var(--pad-lg) var(--pad-md);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
 		text-align: center;
-		gap: 0.375rem;
+		gap: var(--gap-xs);
 	}
 
 	.stat-card--highlight {
-		background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+		background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
 		border-color: transparent;
-		color: white;
+		color: var(--color-surface);
 	}
 
 	.stat-value {
-		font-size: 2rem;
-		font-weight: 800;
-		color: #111827;
+		font-size: var(--text-2xl);
+		font-weight: var(--font-bold);
+		color: var(--color-text);
 		line-height: 1;
 	}
 
-	.stat-card--highlight .stat-value { color: white; }
+	.stat-card--highlight .stat-value { color: var(--color-surface); }
 
 	.stat-label {
-		font-size: 0.75rem;
-		font-weight: 600;
+		font-size: var(--text-xs);
+		font-weight: var(--font-semibold);
 		text-transform: uppercase;
 		letter-spacing: 0.06em;
-		color: #6b7280;
+		color: var(--color-text-muted);
 	}
 
 	.stat-card--highlight .stat-label { color: rgba(255,255,255,0.8); }
 
 	/* Sections */
 	.section {
-		background: white;
-		border: 1px solid #e5e7eb;
-		border-radius: 0.75rem;
-		padding: 1.5rem;
-		margin-bottom: 1.5rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: var(--pad-lg);
+		margin-bottom: var(--gap-md);
 	}
 
 	.section-title {
-		margin: 0 0 1.25rem;
-		font-size: 0.9375rem;
-		font-weight: 700;
-		color: #374151;
+		margin: 0 0 var(--pad-md);
+		font-size: var(--text-base);
+		font-weight: var(--font-bold);
+		color: var(--color-text);
 	}
 
 	/* Heatmap */
@@ -247,26 +251,26 @@
 		display: grid;
 		grid-template-columns: repeat(30, 1fr);
 		gap: 3px;
-		margin-bottom: 0.75rem;
+		margin-bottom: var(--gap-md);
 	}
 
 	.heat-cell {
 		aspect-ratio: 1;
-		border-radius: 2px;
+		border-radius: var(--radius-xs);
 	}
 
-	.heat-0 { background: #f3f4f6; }
-	.heat-1 { background: #c7d2fe; }
-	.heat-2 { background: #818cf8; }
-	.heat-3 { background: #4f46e5; }
-	.heat-4 { background: #3730a3; }
+	.heat-0 { background: var(--color-surface-alt); }
+	.heat-1 { background: color-mix(in oklch, var(--color-primary) 20%, transparent); }
+	.heat-2 { background: color-mix(in oklch, var(--color-primary) 50%, transparent); }
+	.heat-3 { background: color-mix(in oklch, var(--color-primary) 75%, transparent); }
+	.heat-4 { background: var(--color-primary); }
 
 	.heatmap-legend {
 		display: flex;
 		align-items: center;
 		gap: 4px;
-		font-size: 0.7rem;
-		color: #9ca3af;
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
 		justify-content: flex-end;
 	}
 
@@ -280,8 +284,8 @@
 	.two-col {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 1.5rem;
-		margin-bottom: 1.5rem;
+		gap: var(--gap-md);
+		margin-bottom: var(--gap-md);
 	}
 
 	/* Doc lists */
@@ -291,28 +295,28 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 0.25rem;
+		gap: var(--gap-xs);
 	}
 
-	.doc-item { border-radius: 0.375rem; }
+	.doc-item { border-radius: var(--radius-md); }
 
 	.doc-link {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 0.75rem;
-		padding: 0.625rem 0.75rem;
+		gap: var(--gap-md);
+		padding: var(--pad-sm) var(--pad-md);
 		text-decoration: none;
-		border-radius: 0.375rem;
-		transition: background-color 0.15s;
+		border-radius: var(--radius-md);
+		transition: background-color var(--transition-fast);
 	}
 
-	.doc-link:hover { background: #f9fafb; }
+	.doc-link:hover { background: var(--color-surface-hover); }
 
 	.doc-title {
-		font-size: 0.875rem;
-		color: #111827;
-		font-weight: 500;
+		font-size: var(--text-sm);
+		color: var(--color-text);
+		font-weight: var(--font-medium);
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -320,31 +324,31 @@
 	}
 
 	.doc-words, .doc-meta {
-		font-size: 0.75rem;
-		color: #9ca3af;
+		font-size: var(--text-xs);
+		color: var(--color-text-muted);
 		white-space: nowrap;
 		flex-shrink: 0;
 	}
 
 	.empty-hint {
 		margin: 0;
-		font-size: 0.875rem;
-		color: #9ca3af;
+		font-size: var(--text-sm);
+		color: var(--color-text-muted);
 		font-style: italic;
 	}
 
 	/* Footer summary */
 	.summary-footer {
-		padding: 1.25rem 1.5rem;
-		background: #f9fafb;
-		border: 1px solid #e5e7eb;
-		border-radius: 0.75rem;
-		font-size: 0.875rem;
-		color: #6b7280;
+		padding: var(--pad-md) var(--pad-lg);
+		background: var(--color-surface-alt);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		font-size: var(--text-sm);
+		color: var(--color-text-muted);
 		text-align: center;
 	}
 
-	.summary-footer strong { color: #374151; }
+	.summary-footer strong { color: var(--color-text); }
 
 	/* Responsive */
 	@media (max-width: 720px) {

@@ -43,106 +43,115 @@
 </main>
 
 <style>
+  /* ───────────────────────────────────────────────────────────────────────
+     CSS migrated to @medyll/css-base tokens
+     ─────────────────────────────────────────────────────────────────────── */
+
   .auth-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-surface, #f9f9f9);
-    padding: 1rem;
+    background: var(--color-surface);
+    padding: var(--pad-md);
   }
 
   .auth-card {
     width: 100%;
-    max-width: 380px;
-    background: #fff;
-    border: 1px solid var(--color-border, #e0e0e0);
-    border-radius: 0.75rem;
-    padding: 2rem 2rem 1.5rem;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    max-width: 24rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--pad-2xl);
+    box-shadow: var(--shadow-xl);
   }
 
   .auth-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem;
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    margin: 0 0 var(--pad-lg);
     text-align: center;
-    color: var(--color-text, #1a1a1a);
+    color: var(--color-text);
   }
 
   .auth-notice {
-    font-size: 0.82rem;
-    background: #fef9c3;
-    border: 1px solid #fde047;
-    border-radius: 0.4rem;
-    padding: 0.6rem 0.75rem;
-    margin-bottom: 1rem;
+    font-size: var(--text-sm);
+    background: color-mix(in oklch, var(--color-warning) 15%, transparent);
+    border: 1px solid var(--color-warning);
+    border-radius: var(--radius-md);
+    padding: var(--pad-sm) var(--pad-md);
+    margin-bottom: var(--pad-md);
   }
 
   .link-app {
-    font-weight: 600;
-    color: var(--color-primary, #646cff);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary);
   }
 
   .auth-error {
-    font-size: 0.85rem;
-    color: #dc2626;
-    background: #fef2f2;
-    border: 1px solid #fca5a5;
-    border-radius: 0.4rem;
-    padding: 0.5rem 0.75rem;
-    margin-bottom: 1rem;
+    font-size: var(--text-sm);
+    color: var(--color-critical);
+    background: color-mix(in oklch, var(--color-critical) 10%, transparent);
+    border: 1px solid var(--color-critical);
+    border-radius: var(--radius-md);
+    padding: var(--pad-sm) var(--pad-md);
+    margin-bottom: var(--pad-md);
   }
 
   .auth-form {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--gap-sm);
   }
 
   .auth-form label {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--color-text, #1a1a1a);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text);
   }
 
   .auth-form input {
-    padding: 0.55rem 0.75rem;
-    border: 1px solid var(--color-border, #d1d5db);
-    border-radius: 0.375rem;
-    font-size: 0.9rem;
+    padding: var(--pad-sm) var(--pad-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
     outline: none;
-    transition: border-color 0.15s;
+    transition: var(--transition-fast);
+    background: var(--color-surface);
+    color: var(--color-text);
   }
 
   .auth-form input:focus {
-    border-color: var(--color-primary, #646cff);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-hover);
   }
 
   .btn-primary {
-    margin-top: 0.5rem;
-    padding: 0.6rem 1rem;
-    background: var(--color-primary, #646cff);
-    color: #fff;
+    margin-top: var(--gap-sm);
+    padding: var(--pad-sm) var(--pad-md);
+    background: var(--color-primary);
+    color: var(--color-surface);
     border: none;
-    border-radius: 0.375rem;
-    font-size: 0.9rem;
-    font-weight: 600;
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: var(--transition-fast);
   }
 
-  .btn-primary:hover { opacity: 0.88; }
+  .btn-primary:hover {
+    opacity: 0.88;
+  }
 
   .auth-footer {
     text-align: center;
-    font-size: 0.82rem;
-    color: var(--color-text-muted, #6b7280);
-    margin: 1.25rem 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: var(--pad-lg) 0 0;
   }
 
   .auth-footer a {
-    color: var(--color-primary, #646cff);
-    font-weight: 500;
+    color: var(--color-primary);
+    font-weight: var(--font-medium);
   }
 </style>

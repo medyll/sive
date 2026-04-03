@@ -169,38 +169,115 @@
 {/if}
 
 <style>
+  /* ───────────────────────────────────────────────────────────────────────
+     CSS migrated to @medyll/css-base tokens
+     ─────────────────────────────────────────────────────────────────────── */
+
+  section {
+    padding: var(--pad-lg);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--pad-lg);
+    color: var(--color-text);
+  }
+
+  h2 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--pad-md);
+    color: var(--color-text);
+  }
+
+  .mb-4 {
+    margin-bottom: var(--pad-lg);
+  }
+
+  .block {
+    display: block;
+  }
+
+  .font-medium {
+    font-weight: var(--font-medium);
+  }
+
+  label {
+    color: var(--color-text);
+    font-weight: var(--font-medium);
+  }
+
+  select,
+  input[type="number"],
+  input[type="text"] {
+    width: 100%;
+    padding: var(--pad-sm) var(--pad-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  select:focus,
+  input[type="number"]:focus,
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-hover);
+  }
+
+  input[type="checkbox"] {
+    margin-right: var(--gap-sm);
+  }
+
   .theme-picker {
     display: flex;
-    gap: 0.75rem;
+    gap: var(--gap-md);
     flex-wrap: wrap;
   }
+
   .theme-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.375rem;
-    padding: 0.75rem 1.25rem;
-    border: 2px solid var(--color-border, #e5e7eb);
-    border-radius: 0.625rem;
-    background: var(--color-surface, #f9fafb);
+    gap: var(--gap-xs);
+    padding: var(--pad-md) var(--pad-lg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
     cursor: pointer;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: var(--transition-fast);
     min-width: 80px;
   }
+
   .theme-card:hover {
-    border-color: var(--color-accent, #7c3aed);
+    border-color: var(--color-primary);
   }
+
   .theme-card.selected {
-    border-color: var(--color-accent, #7c3aed);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent, #7c3aed) 20%, transparent);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-primary) 20%, transparent);
   }
-  .theme-icon { font-size: 1.5rem; }
-  .theme-label { font-size: 0.8rem; font-weight: 600; color: var(--color-text, #111); }
-  .goal-streak { font-size: 0.85rem; margin-top: 0.25rem; }
+
+  .theme-icon {
+    font-size: var(--text-xl);
+  }
+
+  .theme-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-text);
+  }
+
+  .goal-streak {
+    font-size: var(--text-sm);
+    margin-top: var(--pad-xs);
+    color: var(--color-text);
+  }
 
   .goal-input-row {
     display: flex;
-    gap: 0.75rem;
+    gap: var(--gap-md);
     align-items: center;
   }
 
@@ -210,19 +287,67 @@
   }
 
   .btn-template {
-    padding: 0.5rem 1rem;
-    background: var(--color-accent, #7c3aed);
-    color: white;
+    padding: var(--pad-sm) var(--pad-md);
+    background: var(--color-primary);
+    color: var(--color-surface);
     border: none;
-    border-radius: 0.375rem;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    font-weight: 500;
+    font-weight: var(--font-medium);
     white-space: nowrap;
-    transition: background 0.2s;
-    font-size: 0.9rem;
+    transition: var(--transition-fast);
+    font-size: var(--text-base);
   }
 
   .btn-template:hover {
-    background: #6d28d9;
+    background: var(--color-primary-hover);
+  }
+
+  .btn-primary {
+    padding: var(--pad-sm) var(--pad-lg);
+    background: var(--color-primary);
+    color: var(--color-surface);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-primary-hover);
+  }
+
+  .settings-section {
+    padding: var(--pad-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .privacy-row {
+    margin-bottom: var(--pad-md);
+  }
+
+  .privacy-row label {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    font-weight: var(--font-normal);
+    color: var(--color-text);
+  }
+
+  .privacy-name {
+    margin-top: var(--pad-md);
+  }
+
+  .privacy-name label {
+    display: block;
+    margin-bottom: var(--pad-xs);
+    font-weight: var(--font-medium);
+    color: var(--color-text);
+  }
+
+  .privacy-name input {
+    max-width: 20rem;
   }
 </style>
