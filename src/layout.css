@@ -1,0 +1,71 @@
+/* ───────────────────────────────────────────────────────────────────────
+   SIVE — Layout CSS
+   Built on @medyll/css-base design tokens
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* 
+  Note: @medyll/css-base is imported in +layout.svelte
+  This file contains app-specific layout styles using design tokens
+*/
+
+/* Global resets / base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  font-size: var(--text-base, 1rem);
+  line-height: var(--leading-normal, 1.5);
+  color: var(--color-text, #1a1a1a);
+  background: var(--color-background, #f9fafb);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* App root layout */
+#svelte {
+  height: 100%;
+  display: contents;
+}
+
+/* Scrollbar styling (optional polish) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface, #fff);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border, #e5e7eb);
+  border-radius: var(--radius-full, 9999px);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted, #9ca3af);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary, #0ea5e9);
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background: color-mix(in oklch, var(--color-primary) 30%, transparent);
+  color: var(--color-text);
+}
