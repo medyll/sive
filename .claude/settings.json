@@ -1,1 +1,10 @@
-﻿
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"require\\(''''sharp''''\\); console.log\\(''''sharp ok''''\\)\")",
+      "Bash(node \"d:/boulot/dev/node/sive/scripts/generate-icons.mjs\")",
+      "Read(//c/Users/Mydde/.claude/**)",
+      "Edit(~/.claude/skills/bmad-master/**)"
+    ]
+  }
+}

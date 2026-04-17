@@ -12,28 +12,8 @@ import { ollamaClient, OllamaClient } from './ollama';
 
 /**
  * AI Provider types
- * 
- * Supported providers:
- * - ollama: Local models (Mistral, Llama, etc.)
- * - anthropic: Claude models
- * - openai: GPT-4, GPT-4o, o1
- * - gemini: Google Gemini
- * - mistral: Mistral AI (French)
- * - groq: Ultra-fast inference
- * - deepseek: Code specialist (Chinese)
- * - qwen: Alibaba Cloud (Chinese)
- * - cohere: Enterprise focus
  */
-export type AIProvider = 
-	| 'ollama'
-	| 'anthropic'
-	| 'openai'
-	| 'gemini'
-	| 'mistral'
-	| 'groq'
-	| 'deepseek'
-	| 'qwen'
-	| 'cohere';
+export type AIProvider = 'ollama' | 'anthropic' | 'openai' | 'gemini';
 
 /**
  * Model configuration
@@ -61,13 +41,6 @@ export interface RoutingConfig {
 
 /**
  * Default routing configuration
- * 
- * Strategy:
- * - Local-first: Ollama for simple tasks (coherence, style)
- * - Quality: Anthropic Claude for complex tasks (review, suggestions)
- * - Speed: Groq for real-time needs
- * - Cost-effective: DeepSeek/Qwen for bulk operations
- * - Fallback: Ollama (always available locally)
  */
 const DEFAULT_ROUTING: RoutingConfig = {
 	coherence: { provider: 'ollama', model: 'mistral', temperature: 0.3 },
@@ -75,36 +48,6 @@ const DEFAULT_ROUTING: RoutingConfig = {
 	review: { provider: 'anthropic', model: 'claude-haiku-4-5', temperature: 0.3, maxTokens: 2048 },
 	suggestions: { provider: 'anthropic', model: 'claude-haiku-4-5', temperature: 0.7, maxTokens: 512 },
 	chat: { provider: 'anthropic', model: 'claude-haiku-4-5', temperature: 0.7, maxTokens: 1024 },
-	fallback: { provider: 'ollama', model: 'mistral', temperature: 0.7 }
-};
-
-/**
- * Alternative provider configurations (cost/performance optimized)
- */
-const COST_OPTIMIZED_ROUTING: RoutingConfig = {
-	coherence: { provider: 'deepseek', model: 'deepseek-chat', temperature: 0.3 },
-	style: { provider: 'deepseek', model: 'deepseek-chat', temperature: 0.5 },
-	review: { provider: 'qwen', model: 'qwen-max', temperature: 0.3, maxTokens: 2048 },
-	suggestions: { provider: 'qwen', model: 'qwen-max', temperature: 0.7, maxTokens: 512 },
-	chat: { provider: 'qwen', model: 'qwen-max', temperature: 0.7, maxTokens: 1024 },
-	fallback: { provider: 'ollama', model: 'mistral', temperature: 0.7 }
-};
-
-const SPEED_OPTIMIZED_ROUTING: RoutingConfig = {
-	coherence: { provider: 'groq', model: 'llama-3.1-70b-versatile', temperature: 0.3 },
-	style: { provider: 'groq', model: 'llama-3.1-70b-versatile', temperature: 0.5 },
-	review: { provider: 'groq', model: 'llama-3.1-70b-versatile', temperature: 0.3, maxTokens: 2048 },
-	suggestions: { provider: 'groq', model: 'llama-3.1-70b-versatile', temperature: 0.7, maxTokens: 512 },
-	chat: { provider: 'groq', model: 'llama-3.1-70b-versatile', temperature: 0.7, maxTokens: 1024 },
-	fallback: { provider: 'ollama', model: 'mistral', temperature: 0.7 }
-};
-
-const EUROPEAN_ROUTING: RoutingConfig = {
-	coherence: { provider: 'mistral', model: 'mistral-small', temperature: 0.3 },
-	style: { provider: 'mistral', model: 'mistral-small', temperature: 0.5 },
-	review: { provider: 'mistral', model: 'mistral-large', temperature: 0.3, maxTokens: 2048 },
-	suggestions: { provider: 'mistral', model: 'mistral-large', temperature: 0.7, maxTokens: 512 },
-	chat: { provider: 'mistral', model: 'mistral-medium', temperature: 0.7, maxTokens: 1024 },
 	fallback: { provider: 'ollama', model: 'mistral', temperature: 0.7 }
 };
 
@@ -148,16 +91,6 @@ export class AIModelRouter {
 					return await this.callOpenAI(prompt, config, systemPrompt);
 				case 'gemini':
 					return await this.callGemini(prompt, config);
-				case 'mistral':
-					return await this.callMistral(prompt, config, systemPrompt);
-				case 'groq':
-					return await this.callGroq(prompt, config, systemPrompt);
-				case 'deepseek':
-					return await this.callDeepSeek(prompt, config, systemPrompt);
-				case 'qwen':
-					return await this.callQwen(prompt, config, systemPrompt);
-				case 'cohere':
-					return await this.callCohere(prompt, config, systemPrompt);
 				default:
 					return await this.callOllama(prompt, this.routing.fallback);
 			}
@@ -205,7 +138,7 @@ export class AIModelRouter {
 	/**
 	 * Call Ollama
 	 */
-	private async callOllama(prompt: string, config: ModelConfig, systemPrompt?: string): Promise<string> {
+	private async callOllama(prompt: string, config: ModelConfig): Promise<string> {
 		const fullPrompt = systemPrompt 
 			? `${systemPrompt}\n\n${prompt}` 
 			: prompt;
@@ -279,7 +212,7 @@ export class AIModelRouter {
 	}
 
 	/**
-	 * Call OpenAI
+	 * Call OpenAI (stub - implement with openai package)
 	 */
 	private async callOpenAI(
 		prompt: string,
@@ -290,324 +223,41 @@ export class AIModelRouter {
 			throw new Error('OpenAI API key not configured');
 		}
 
-		const apiKey = config.apiKey || process.env.OPENAI_API_KEY;
-		const { default: OpenAI } = await import('openai');
-		const client = new OpenAI({ apiKey });
-
-		const messages: Array<{ role: string; content: string }> = [
-			{ role: 'system', content: systemPrompt || 'You are a helpful AI writing assistant.' },
-			{ role: 'user', content: prompt }
-		];
-
-		const completion = await client.chat.completions.create({
-			model: config.model || 'gpt-4o',
-			messages,
-			max_tokens: config.maxTokens || 1024,
-			temperature: config.temperature || 0.7
-		});
-
-		return completion.choices[0]?.message?.content || '';
+		// Stub implementation
+		throw new Error('OpenAI integration not yet implemented');
 	}
 
 	/**
-	 * Stream from OpenAI
+	 * Stream from OpenAI (stub)
 	 */
 	private async *streamOpenAI(
 		prompt: string,
 		config: ModelConfig,
 		systemPrompt?: string
 	): AsyncGenerator<string, void, unknown> {
-		const apiKey = config.apiKey || process.env.OPENAI_API_KEY;
-		const { default: OpenAI } = await import('openai');
-		const client = new OpenAI({ apiKey });
-
-		const messages: Array<{ role: string; content: string }> = [
-			{ role: 'system', content: systemPrompt || 'You are a helpful AI writing assistant.' },
-			{ role: 'user', content: prompt }
-		];
-
-		const stream = await client.chat.completions.create({
-			model: config.model || 'gpt-4o',
-			messages,
-			max_tokens: config.maxTokens || 1024,
-			temperature: config.temperature || 0.7,
-			stream: true
-		});
-
-		for await (const chunk of stream) {
-			const content = chunk.choices[0]?.delta?.content;
-			if (content) yield content;
-		}
+		throw new Error('OpenAI streaming not yet implemented');
 	}
 
 	/**
-	 * Call Gemini (Google)
+	 * Call Gemini (stub - implement with @google/generative-ai)
 	 */
 	private async callGemini(prompt: string, config: ModelConfig): Promise<string> {
 		if (!config.apiKey && !process.env.GEMINI_API_KEY) {
 			throw new Error('Gemini API key not configured');
 		}
 
-		const apiKey = config.apiKey || process.env.GEMINI_API_KEY;
-		const { GoogleGenerativeAI } = await import('@google/generative-ai');
-		const genAI = new GoogleGenerativeAI(apiKey);
-		const model = genAI.getGenerativeModel({ model: config.model || 'gemini-pro' });
-
-		const result = await model.generateContent({
-			contents: [{ role: 'user', parts: [{ text: systemPrompt ? `${systemPrompt}\n\n${prompt}` : prompt }] }],
-			generationConfig: {
-				maxOutputTokens: config.maxTokens || 1024,
-				temperature: config.temperature || 0.7
-			}
-		});
-
-		return result.response.text();
+		// Stub implementation
+		throw new Error('Gemini integration not yet implemented');
 	}
 
 	/**
-	 * Stream from Gemini
+	 * Stream from Gemini (stub)
 	 */
 	private async *streamGemini(
 		prompt: string,
-		config: ModelConfig,
-		systemPrompt?: string
+		config: ModelConfig
 	): AsyncGenerator<string, void, unknown> {
-		const apiKey = config.apiKey || process.env.GEMINI_API_KEY;
-		const { GoogleGenerativeAI } = await import('@google/generative-ai');
-		const genAI = new GoogleGenerativeAI(apiKey);
-		const model = genAI.getGenerativeModel({ model: config.model || 'gemini-pro' });
-
-		const result = await model.generateContentStream({
-			contents: [{ role: 'user', parts: [{ text: systemPrompt ? `${systemPrompt}\n\n${prompt}` : prompt }] }],
-			generationConfig: {
-				maxOutputTokens: config.maxTokens || 1024,
-				temperature: config.temperature || 0.7
-			}
-		});
-
-		for await (const chunk of result.stream) {
-			yield chunk.text();
-		}
-	}
-
-	/**
-	 * Call Mistral AI (French)
-	 */
-	private async callMistral(
-		prompt: string,
-		config: ModelConfig,
-		systemPrompt?: string
-	): Promise<string> {
-		if (!config.apiKey && !process.env.MISTRAL_API_KEY) {
-			throw new Error('Mistral API key not configured');
-		}
-
-		const apiKey = config.apiKey || process.env.MISTRAL_API_KEY;
-		const { MistralClient } = await import('@mistralai/mistralai');
-		const client = new MistralClient(apiKey);
-
-		const messages: Array<{ role: string; content: string }> = [
-			{ role: 'system', content: systemPrompt || 'You are a helpful AI writing assistant.' },
-			{ role: 'user', content: prompt }
-		];
-
-		const response = await client.chat({
-			model: config.model || 'mistral-large',
-			messages,
-			maxTokens: config.maxTokens || 1024,
-			temperature: config.temperature || 0.7
-		});
-
-		return response.choices[0]?.message?.content || '';
-	}
-
-	/**
-	 * Stream from Mistral AI
-	 */
-	private async *streamMistral(
-		prompt: string,
-		config: ModelConfig,
-		systemPrompt?: string
-	): AsyncGenerator<string, void, unknown> {
-		const apiKey = config.apiKey || process.env.MISTRAL_API_KEY;
-		const { MistralClient } = await import('@mistralai/mistralai');
-		const client = new MistralClient(apiKey);
-
-		const messages: Array<{ role: string; content: string }> = [
-			{ role: 'system', content: systemPrompt || 'You are a helpful AI writing assistant.' },
-			{ role: 'user', content: prompt }
-		];
-
-		const stream = await client.chatStream({
-			model: config.model || 'mistral-large',
-			messages,
-			maxTokens: config.maxTokens || 1024,
-			temperature: config.temperature || 0.7
-		});
-
-		for await (const chunk of stream) {
-			if (chunk.choices[0]?.delta?.content) {
-				yield chunk.choices[0].delta.content;
-			}
-		}
-	}
-
-	/**
-	 * Call Groq (Ultra-fast inference)
-	 */
-	private async callGroq(
-		prompt: string,
-		config: ModelConfig,
-		systemPrompt?: string
-	): Promise<string> {
-		if (!config.apiKey && !process.env.GROQ_API_KEY) {
-			throw new Error('Groq API key not configured');
-		}
-
-		const apiKey = config.apiKey || process.env.GROQ_API_KEY;
-		const { Groq } = await import('groq-sdk');
-		const client = new Groq({ apiKey });
-
-		const messages: Array<{ role: string; content: string }> = [
-			{ role: 'system', content: systemPrompt || 'You are a helpful AI writing assistant.' },
-			{ role: 'user', content: prompt }
-		];
-
-		const completion = await client.chat.completions.create({
-			model: config.model || 'llama-3.1-70b-versatile',
-			messages,
-			max_tokens: config.maxTokens || 1024,
-			temperature: config.temperature || 0.7
-		});
-
-		return completion.choices[0]?.message?.content || '';
-	}
-
-	/**
-	 * Stream from Groq
-	 */
-	private async *streamGroq(
-		prompt: string,
-		config: ModelConfig,
-		systemPrompt?: string
-	): AsyncGenerator<string, void, unknown> {
-		const apiKey = config.apiKey || process.env.GROQ_API_KEY;
-		const { Groq } = await import('groq-sdk');
-		const client = new Groq({ apiKey });
-
-		const messages: Array<{ role: string; content: string }> = [
-			{ role: 'system', content: systemPrompt || 'You are a helpful AI writing assistant.' },
-			{ role: 'user', content: prompt }
-		];
-
-		const stream = await client.chat.completions.create({
-			model: config.model || 'llama-3.1-70b-versatile',
-			messages,
-			max_tokens: config.maxTokens || 1024,
-			temperature: config.temperature || 0.7,
-			stream: true
-		});
-
-		for await (const chunk of stream) {
-			const content = chunk.choices[0]?.delta?.content;
-			if (content) yield content;
-		}
-	}
-
-	/**
-	 * Call DeepSeek (Chinese, code specialist)
-	 */
-	private async callDeepSeek(
-		prompt: string,
-		config: ModelConfig,
-		systemPrompt?: string
-	): Promise<string> {
-		if (!config.apiKey && !process.env.DEEPSEEK_API_KEY) {
-			throw new Error('DeepSeek API key not configured');
-		}
-
-		const apiKey = config.apiKey || process.env.DEEPSEEK_API_KEY;
-		// DeepSeek uses OpenAI-compatible API
-		const { default: OpenAI } = await import('openai');
-		const client = new OpenAI({ 
-			apiKey, 
-			baseURL: 'https://api.deepseek.com/v1' 
-		});
-
-		const messages: Array<{ role: string; content: string }> = [
-			{ role: 'system', content: systemPrompt || 'You are a helpful AI writing assistant.' },
-			{ role: 'user', content: prompt }
-		];
-
-		const completion = await client.chat.completions.create({
-			model: config.model || 'deepseek-chat',
-			messages,
-			max_tokens: config.maxTokens || 1024,
-			temperature: config.temperature || 0.7
-		});
-
-		return completion.choices[0]?.message?.content || '';
-	}
-
-	/**
-	 * Call Qwen (Alibaba Cloud)
-	 */
-	private async callQwen(
-		prompt: string,
-		config: ModelConfig,
-		systemPrompt?: string
-	): Promise<string> {
-		if (!config.apiKey && !process.env.DASHSCOPE_API_KEY) {
-			throw new Error('DashScope (Qwen) API key not configured');
-		}
-
-		const apiKey = config.apiKey || process.env.DASHSCOPE_API_KEY;
-		// Qwen uses OpenAI-compatible API via DashScope
-		const { default: OpenAI } = await import('openai');
-		const client = new OpenAI({ 
-			apiKey, 
-			baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1' 
-		});
-
-		const messages: Array<{ role: string; content: string }> = [
-			{ role: 'system', content: systemPrompt || 'You are a helpful AI writing assistant.' },
-			{ role: 'user', content: prompt }
-		];
-
-		const completion = await client.chat.completions.create({
-			model: config.model || 'qwen-max',
-			messages,
-			max_tokens: config.maxTokens || 1024,
-			temperature: config.temperature || 0.7
-		});
-
-		return completion.choices[0]?.message?.content || '';
-	}
-
-	/**
-	 * Call Cohere (Enterprise focus)
-	 */
-	private async callCohere(
-		prompt: string,
-		config: ModelConfig,
-		systemPrompt?: string
-	): Promise<string> {
-		if (!config.apiKey && !process.env.COHERE_API_KEY) {
-			throw new Error('Cohere API key not configured');
-		}
-
-		const apiKey = config.apiKey || process.env.COHERE_API_KEY;
-		const { CohereClient } = await import('cohere-ai');
-		const cohere = new CohereClient({ token: apiKey });
-
-		const response = await cohere.chat({
-			message: systemPrompt ? `${systemPrompt}\n\n${prompt}` : prompt,
-			model: config.model || 'command-r-plus',
-			maxTokens: config.maxTokens || 1024,
-			temperature: config.temperature || 0.7
-		});
-
-		return response.text || '';
+		throw new Error('Gemini streaming not yet implemented');
 	}
 
 	/**
@@ -635,21 +285,6 @@ export class AIModelRouter {
 			case 'gemini':
 				available = !!(process.env.GEMINI_API_KEY);
 				break;
-			case 'mistral':
-				available = !!(process.env.MISTRAL_API_KEY);
-				break;
-			case 'groq':
-				available = !!(process.env.GROQ_API_KEY);
-				break;
-			case 'deepseek':
-				available = !!(process.env.DEEPSEEK_API_KEY);
-				break;
-			case 'qwen':
-				available = !!(process.env.DASHSCOPE_API_KEY);
-				break;
-			case 'cohere':
-				available = !!(process.env.COHERE_API_KEY);
-				break;
 		}
 
 		// Cache result
@@ -667,10 +302,7 @@ export class AIModelRouter {
 	 * Get all available providers
 	 */
 	async getAvailableProviders(): Promise<AIProvider[]> {
-		const providers: AIProvider[] = [
-			'ollama', 'anthropic', 'openai', 'gemini',
-			'mistral', 'groq', 'deepseek', 'qwen', 'cohere'
-		];
+		const providers: AIProvider[] = ['ollama', 'anthropic', 'openai', 'gemini'];
 		const available: AIProvider[] = [];
 
 		for (const provider of providers) {
