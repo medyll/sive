@@ -133,8 +133,9 @@
 		
 		<div class="space-y-4">
 			<div>
-				<label class="block text-sm font-medium mb-1">Model</label>
+				<label for="ai-model-select" class="block text-sm font-medium mb-1">Model</label>
 				<input
+					id="ai-model-select"
 					type="text"
 					bind:value={selectedModel}
 					class="w-full px-3 py-2 border rounded bg-background"
@@ -143,10 +144,11 @@
 			</div>
 
 			<div>
-				<label class="block text-sm font-medium mb-1">
+				<label for="ai-temp-range" class="block text-sm font-medium mb-1">
 					Temperature: {temperature.toFixed(1)}
 				</label>
 				<input
+					id="ai-temp-range"
 					type="range"
 					min="0"
 					max="1"
@@ -161,8 +163,9 @@
 			</div>
 
 			<div>
-				<label class="block text-sm font-medium mb-1">Max Tokens</label>
+				<label for="ai-max-tokens" class="block text-sm font-medium mb-1">Max Tokens</label>
 				<input
+					id="ai-max-tokens"
 					type="number"
 					bind:value={maxTokens}
 					class="w-full px-3 py-2 border rounded bg-background"
@@ -199,7 +202,7 @@
 				bind:value={testPrompt}
 				class="w-full px-3 py-2 border rounded bg-background min-h-[80px]"
 				placeholder="Enter a test prompt..."
-			/>
+			></textarea>
 			
 			<button
 				onclick={runTest}

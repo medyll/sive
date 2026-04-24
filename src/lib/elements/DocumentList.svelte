@@ -107,6 +107,8 @@
   function menuRename(doc: DocumentItem, e: MouseEvent | KeyboardEvent) { e.stopPropagation(); closeMenu(); editingId = doc.id; editingTitle = doc.title; }
   function menuDuplicate(id: string, e: MouseEvent | KeyboardEvent) { e.stopPropagation(); closeMenu(); onDuplicate?.(id); }
   function menuDelete(id: string, e: MouseEvent | KeyboardEvent) { e.stopPropagation(); closeMenu(); if (confirm('Delete this document?')) onDelete?.(id); }
+  function onMenuDeleteClick(id: string) { return (e: MouseEvent) => { menuDelete(id, e); }; }
+  function onTagRemoveClick(docId: string, tag: string) { return (e: MouseEvent) => { e.stopPropagation(); tagStore.remove(docId, tag); }; }
 
   $effect(() => {
     if (!menuOpenId) return;
@@ -183,13 +185,13 @@
                 <ul class="doc-context-menu" role="menu" aria-label="Document actions">
                   <li role="none"><button role="menuitem" type="button" onclick={(e) => menuRename(doc, e)}>Rename</button></li>
                   <li role="none"><button role="menuitem" type="button" onclick={(e) => menuDuplicate(doc.id, e)}>Duplicate</button></li>
-                  <li role="none"><button role="menuitem" type="button" class="menu-item-danger" onclick={(e) => menuDelete(doc.id, e)">Delete</button></li>
+                  <li role="none"><button role="menuitem" type="button" class="menu-item-danger" onclick={onMenuDeleteClick(doc.id)}>Delete</button></li>
                 </ul>
               {/if}
             </div>
           </span>
           <div class="doc-tags" role="button" tabindex="0" onclick={(e) => e.stopPropagation()} onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); }}>
-            {#each tagStore.get(doc.id) as tag}<span class="doc-tag-chip">{tag}<button type="button" class="btn-tag-remove" aria-label="Remove tag {tag}" onclick={(e) => { e.stopPropagation(); tagStore.remove(doc.id, tag); }}"><Icon type="remove" size={10} /></button></span>{/each}
+            {#each tagStore.get(doc.id) as tag}<span class="doc-tag-chip">{tag}<button type="button" class="btn-tag-remove" aria-label="Remove tag {tag}" onclick={onTagRemoveClick(doc.id, tag)}><Icon type="remove" size={10} /></button></span>{/each}
             {#if tagStore.get(doc.id).length < 5}
               {#if tagEditingDocId === doc.id}<input class="tag-input" type="text" placeholder="tag…" bind:value={tagInputValue} onblur={() => commitTag(doc.id)} onkeydown={(e) => onTagInputKeydown(e, doc.id)} onclick={(e) => e.stopPropagation()} aria-label="Add tag" {@attach focusTagInput}/>{:else}<button type="button" class="btn-tag-add" aria-label="Add tag to {doc.title}" onclick={(e) => startTagEdit(doc.id, e)}><Icon type="add" size={14} /></button>{/if}
             {/if}

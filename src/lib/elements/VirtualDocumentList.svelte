@@ -139,6 +139,7 @@
 					aria-selected={doc.id === activeId}
 					aria-posinset={absIdx + 1}
 					aria-setsize={docs.length}
+					tabindex="0"
 					style="height:{rowHeight}px"
 					onclick={() => onselect?.(doc)}
 				>

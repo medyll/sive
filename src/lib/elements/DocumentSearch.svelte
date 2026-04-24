@@ -175,8 +175,7 @@
 
 								<p
 									class="result-snippet"
-									{@html highlightSnippet(result.snippet, result.highlights)}
-								></p>
+								>{@html highlightSnippet(result.snippet, result.highlights)}</p>
 
 								{#if result.tags && result.tags.length > 0}
 									<div class="result-tags">

@@ -38,7 +38,7 @@ export const GET: RequestHandler = async ({ request }) => {
 
 	let clientInfo: Client | null = null;
 
-	ws.addEventListener('message', async (event) => {
+	ws.addEventListener('message', async (event: MessageEvent) => {
 		try {
 			const message = JSON.parse(event.data as string) as PresenceMessage;
 			
@@ -120,8 +120,9 @@ export const GET: RequestHandler = async ({ request }) => {
 
 	return new Response(null, {
 		status: 101,
+		// @ts-expect-error - webSocket is a Cloudflare Workers extension
 		webSocket: response
-	});
+	} as ResponseInit & { webSocket: WebSocket });
 };
 
 /**
@@ -169,7 +170,7 @@ function broadcastToDoc(docId: string, message: PresenceMessage, excludeUserId?:
 /**
  * Cleanup inactive clients (called periodically)
  */
-export function cleanupInactiveClients(): void {
+function cleanupInactiveClients(): void {
 	const now = Date.now();
 	const timeout = 120000; // 2 minutes
 	
@@ -184,4 +185,6 @@ export function cleanupInactiveClients(): void {
 }
 
 // Run cleanup every minute
-setInterval(cleanupInactiveClients, 60000);
+if (typeof setInterval !== 'undefined') {
+	setInterval(cleanupInactiveClients, 60000);
+}

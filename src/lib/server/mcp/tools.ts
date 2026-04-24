@@ -353,6 +353,7 @@ export function addMotifOccurrence(
  * @returns Parsed object
  */
 export function parseYaml<T>(yamlContent: string): T {
+	try {
 		const lines = yamlContent.split('\n');
 		const result: Record<string, unknown> = {};
 		

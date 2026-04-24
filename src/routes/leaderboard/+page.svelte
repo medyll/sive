@@ -5,8 +5,9 @@
 	import { toastStore } from '$lib/toastStore.svelte';
 
 	type Tab = 'weekly' | 'alltime-streak' | 'alltime-words' | 'myrank';
+	type AlltimeView = 'streak' | 'words';
 	let activeTab = $state<Tab>('weekly');
-	let alltimeView = $state<'streak' | 'words'>('streak');
+	let alltimeView = $state<AlltimeView>('streak');
 
 	const medals = ['🥇', '🥈', '🥉'];
 

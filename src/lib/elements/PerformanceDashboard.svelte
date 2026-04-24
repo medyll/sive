@@ -53,7 +53,7 @@
 		}
 	]);
 	
-	let navigationTiming = $state<NavigationTiming | null>(null);
+	let navigationTiming: PerformanceNavigationTiming | null = $state(null);
 	
 	onMount(() => {
 		// Observe Core Web Vitals
@@ -89,8 +89,10 @@
 		
 		// FID is deprecated, using INP instead
 		const observer = new PerformanceObserver((list) => {
-			for (const entry of list.getEntries()) {
-				updateMetric('FID', entry.processingStart - entry.startTime);
+			for (const entry of list.getEntries() as PerformanceEntry[]) {
+				if ('processingStart' in entry) {
+					updateMetric('FID', (entry as any).processingStart - entry.startTime);
+				}
 			}
 		});
 		
@@ -103,9 +105,9 @@
 		let clsValue = 0;
 		
 		const observer = new PerformanceObserver((list) => {
-			for (const entry of list.getEntries()) {
-				if (!entry.hadRecentInput) {
-					clsValue += (entry as LayoutShift).value;
+			for (const entry of list.getEntries() as PerformanceEntry[]) {
+				if ('hadRecentInput' in entry && !(entry as any).hadRecentInput) {
+					clsValue += (entry as any).value;
 				}
 			}
 			updateMetric('CLS', clsValue);

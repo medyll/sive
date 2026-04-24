@@ -112,12 +112,19 @@ import Onboarding from '$lib/elements/Onboarding.svelte';
   let commentSidebarOpen = $state(false);
   let pendingCommentSelection = $state<{ anchorText: string; anchorOffset: number } | null>(null);
 
-  // Document state
-  let documents = $state(data.documents);
-  let activeDocumentId = $state(data.activeDocumentId);
-  let activeContent = $state(
-    data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? ''
-  );
+  // Document state - initialized from server data, synced via effects
+  let documents = $state<any[]>([]);
+  let activeDocumentId = $state<string | null>(null);
+  let activeContent = $state('');
+  
+  // Initialize from data on mount
+  $effect(() => {
+    if (data.documents && data.documents.length > 0) {
+      documents = data.documents;
+      activeDocumentId = data.activeDocumentId;
+      activeContent = data.documents.find((d) => d.id === data.activeDocumentId)?.content ?? '';
+    }
+  });
 
   // Sync activeContent only when switching documents (not on content edits)
   $effect(() => {
