@@ -3,12 +3,12 @@
 
 project: sive
 phase: development
-progress: 75
-next_action: "S91-01 complete — Run E2E tests to verify build stability"
-next_command: "npm run test:e2e"
-next_role: tester
-active_role: dev
-last_updated: "2026-04-22"
+progress: 78
+next_action: "S92-01 — Update vulnerable deps (flatted >=3.4.2, kysely >=0.28.14)"
+next_command: "bmad-dev-story S92-01"
+next_role: dev
+active_role: reviewer
+last_updated: "2026-05-03"
 
 detected:
   languages: ["TypeScript", "SvelteKit", "Node.js"]
@@ -80,6 +80,7 @@ completed_steps:
   - "Sprint 91-01: fix-beta-feedback-issues ✓"
   - "Sprint 91-01a: fix-corrupted-package-json ✓"
   - "Sprint 91-05: css-migration-to-css-base ✓"
+  - "Sprint 91-03: security-audit ✓ (AUDIT.md — 8.2/10, 3 critiques identifiées)"
 
 sprints:
   - id: sprint-91
@@ -104,7 +105,10 @@ sprints:
         status: todo
       - id: S91-03
         title: security-audit
-        status: todo
+        status: done
+        tests_executed: false
+        artifact: bmad/artifacts/AUDIT.md
+        note: "External audit by Mistral Vibe — score 8.2/10, 20 action items extracted"
       - id: S91-04
         title: v1.3-planning
         status: todo
@@ -112,10 +116,51 @@ sprints:
         title: css-migration-to-css-base
         status: done
 
+  - id: sprint-92
+    name: Sprint 92 — Security & Stabilité (Phase 1 Audit)
+    status: todo
+    progress: 0
+    start: "2026-05-03"
+    end: "2026-05-10"
+    stories:
+      - id: S92-01
+        title: update-vulnerable-deps
+        status: todo
+        priority: critical
+      - id: S92-02
+        title: secure-websocket-auth
+        status: todo
+        priority: critical
+      - id: S92-03
+        title: fix-csp-headers
+        status: todo
+        priority: critical
+
+  - id: sprint-93
+    name: Sprint 93 — Qualité & Performance (Phase 2 Audit)
+    status: todo
+    progress: 0
+    start: "2026-05-10"
+    end: "2026-05-24"
+    stories:
+      - id: S93-01
+        title: ai-rate-limiting
+        status: todo
+      - id: S93-02
+        title: search-pagination
+        status: todo
+      - id: S93-03
+        title: health-endpoint
+        status: todo
+      - id: S93-04
+        title: soft-delete-documents
+        status: todo
+
 recommendation: |
-  SIVE V1.2 — BETA RELEASE READY ✅
-  
-  Project Status: v1.2.0-beta with 90+ completed sprints
-  Next: Complete Sprint 91 (performance, security, v1.3 planning)
-  
-  Immediate next step: Run E2E tests to verify build stability
+  SIVE V1.2 — AUDIT COMPLETE ✅ (Score: 8.2/10)
+
+  Security audit done — 3 CRITICAL issues identified and queued
+  Sprint 92 ready: fix vulns, WebSocket auth, CSP headers
+  Sprint 93 ready: pagination, soft-delete, health endpoint, AI rate limiting
+
+  Immediate next step: bmad-dev-story S92-01 (update vulnerable deps — 15 min fix)

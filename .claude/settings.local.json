@@ -23,7 +23,11 @@
       "mcp__plugin_playwright_playwright__browser_network_requests",
       "mcp__plugin_playwright_playwright__browser_evaluate",
       "mcp__plugin_playwright_playwright__browser_close",
-      "mcp__plugin_context-mode_context-mode__ctx_execute_file"
+      "mcp__plugin_context-mode_context-mode__ctx_execute_file",
+      "Bash(pnpm up *)",
+      "Bash(pnpm audit *)",
+      "Bash(pnpm list *)",
+      "Bash(grep -v \"^$\")"
     ]
   }
 }
