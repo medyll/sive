@@ -84,20 +84,20 @@ export class AIModelRouter {
 		try {
 			switch (config.provider) {
 				case 'ollama':
-					return await this.callOllama(prompt, config);
+					return await this.callOllama(prompt, config, systemPrompt);
 				case 'anthropic':
 					return await this.callAnthropic(prompt, config, systemPrompt);
 				case 'openai':
 					return await this.callOpenAI(prompt, config, systemPrompt);
 				case 'gemini':
-					return await this.callGemini(prompt, config);
+					return await this.callGemini(prompt, config, systemPrompt);
 				default:
-					return await this.callOllama(prompt, this.routing.fallback);
+					return await this.callOllama(prompt, this.routing.fallback, systemPrompt);
 			}
 		} catch (err) {
 			console.error(`[AI Router] ${config.provider} failed, using fallback:`, err);
 			// Fallback to Ollama
-			return await this.callOllama(prompt, this.routing.fallback);
+			return await this.callOllama(prompt, this.routing.fallback, systemPrompt);
 		}
 	}
 
@@ -123,7 +123,7 @@ export class AIModelRouter {
 					yield* this.streamOpenAI(prompt, config, systemPrompt);
 					break;
 				case 'gemini':
-					yield* this.streamGemini(prompt, config);
+					yield* this.streamGemini(prompt, config, systemPrompt);
 					break;
 				default:
 					yield* this.streamOllama(prompt, this.routing.fallback);
@@ -135,12 +135,16 @@ export class AIModelRouter {
 		}
 	}
 
+	// ========================================================================
+	// Provider Implementations
+	// ========================================================================
+
 	/**
 	 * Call Ollama
 	 */
-	private async callOllama(prompt: string, config: ModelConfig): Promise<string> {
-		const fullPrompt = systemPrompt 
-			? `${systemPrompt}\n\n${prompt}` 
+	private async callOllama(prompt: string, config: ModelConfig, systemPrompt?: string): Promise<string> {
+		const fullPrompt = systemPrompt
+			? `${systemPrompt}\n\n${prompt}`
 			: prompt;
 		
 		return await this.ollamaClient.generate(fullPrompt, {
@@ -165,7 +169,7 @@ export class AIModelRouter {
 	}
 
 	/**
-	 * Call Anthropic (stub - implement with @anthropic-ai/sdk)
+	 * Call Anthropic (implemented with @anthropic-ai/sdk)
 	 */
 	private async callAnthropic(
 		prompt: string,
@@ -198,7 +202,7 @@ export class AIModelRouter {
 	}
 
 	/**
-	 * Stream from Anthropic (stub)
+	 * Stream from Anthropic
 	 */
 	private async *streamAnthropic(
 		prompt: string,
@@ -206,13 +210,13 @@ export class AIModelRouter {
 		systemPrompt?: string
 	): AsyncGenerator<string, void, unknown> {
 		// For now, use non-streaming call
-		// In production, use Anthropic's streaming API
+		// TODO: Implement Anthropic's streaming API
 		const result = await this.callAnthropic(prompt, config, systemPrompt);
 		yield result;
 	}
 
 	/**
-	 * Call OpenAI (stub - implement with openai package)
+	 * Call OpenAI (implemented with openai package)
 	 */
 	private async callOpenAI(
 		prompt: string,
@@ -223,42 +227,130 @@ export class AIModelRouter {
 			throw new Error('OpenAI API key not configured');
 		}
 
-		// Stub implementation
-		throw new Error('OpenAI integration not yet implemented');
+		const apiKey = config.apiKey || process.env.OPENAI_API_KEY;
+		
+		// Dynamic import to avoid bundling if not used
+		const { default: OpenAI } = await import('openai');
+		const client = new OpenAI({ apiKey });
+
+		const response = await client.chat.completions.create({
+			model: config.model,
+			max_tokens: config.maxTokens || 1024,
+			temperature: config.temperature || 0.7,
+			messages: [
+				{
+					role: 'system',
+					content: systemPrompt || 'You are a helpful AI writing assistant.'
+				},
+				{
+					role: 'user',
+					content: prompt
+				}
+			]
+		});
+
+		return response.choices[0]?.message?.content || '';
 	}
 
 	/**
-	 * Stream from OpenAI (stub)
+	 * Stream from OpenAI (implemented with openai package)
 	 */
 	private async *streamOpenAI(
 		prompt: string,
 		config: ModelConfig,
 		systemPrompt?: string
 	): AsyncGenerator<string, void, unknown> {
-		throw new Error('OpenAI streaming not yet implemented');
+		if (!config.apiKey && !process.env.OPENAI_API_KEY) {
+			throw new Error('OpenAI API key not configured');
+		}
+
+		const apiKey = config.apiKey || process.env.OPENAI_API_KEY;
+		
+		const { default: OpenAI } = await import('openai');
+		const client = new OpenAI({ apiKey });
+
+		const stream = await client.chat.completions.create({
+			model: config.model,
+			max_tokens: config.maxTokens || 1024,
+			temperature: config.temperature || 0.7,
+			stream: true,
+			messages: [
+				{
+					role: 'system',
+					content: systemPrompt || 'You are a helpful AI writing assistant.'
+				},
+				{
+					role: 'user',
+					content: prompt
+				}
+			]
+		});
+
+		for await (const chunk of stream) {
+			yield chunk.choices[0]?.delta?.content || '';
+		}
 	}
 
 	/**
-	 * Call Gemini (stub - implement with @google/generative-ai)
+	 * Call Gemini (implemented with @google/generative-ai)
 	 */
-	private async callGemini(prompt: string, config: ModelConfig): Promise<string> {
+	private async callGemini(
+		prompt: string,
+		config: ModelConfig,
+		systemPrompt?: string
+	): Promise<string> {
 		if (!config.apiKey && !process.env.GEMINI_API_KEY) {
 			throw new Error('Gemini API key not configured');
 		}
 
-		// Stub implementation
-		throw new Error('Gemini integration not yet implemented');
+		const apiKey = config.apiKey || process.env.GEMINI_API_KEY;
+		
+		// Dynamic import to avoid bundling if not used
+		const { GoogleGenerativeAI } = await import('@google/generative-ai');
+		const genAI = new GoogleGenerativeAI(apiKey);
+		const model = genAI.getGenerativeModel({ model: config.model });
+
+		const chat = model.startChat({
+			system: systemPrompt || 'You are a helpful AI writing assistant.',
+			history: []
+		});
+
+		const result = await chat.sendMessage(prompt);
+		return result.response.text();
 	}
 
 	/**
-	 * Stream from Gemini (stub)
+	 * Stream from Gemini (implemented with @google/generative-ai)
 	 */
 	private async *streamGemini(
 		prompt: string,
-		config: ModelConfig
+		config: ModelConfig,
+		systemPrompt?: string
 	): AsyncGenerator<string, void, unknown> {
-		throw new Error('Gemini streaming not yet implemented');
+		if (!config.apiKey && !process.env.GEMINI_API_KEY) {
+			throw new Error('Gemini API key not configured');
+		}
+
+		const apiKey = config.apiKey || process.env.GEMINI_API_KEY;
+		
+		const { GoogleGenerativeAI } = await import('@google/generative-ai');
+		const genAI = new GoogleGenerativeAI(apiKey);
+		const model = genAI.getGenerativeModel({ model: config.model });
+
+		const chat = model.startChat({
+			system: systemPrompt || 'You are a helpful AI writing assistant.',
+			history: []
+		});
+
+		const result = await chat.sendMessageStream(prompt);
+		for await (const chunk of result.stream) {
+			yield chunk.text || '';
+		}
 	}
+
+	// ========================================================================
+	// Availability & Configuration
+	// ========================================================================
 
 	/**
 	 * Check provider availability
