@@ -1,6 +1,9 @@
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { getSkillEngine } from '$lib/server/ai';
+import { SkillEngine } from '$lib/server/skills/engine';
+import { CommandBus } from '$lib/server/commands/bus';
+import { AIService } from '$lib/server/ai/service';
+import { registerAllHandlers } from '$lib/server/commands/handlers';
 import { STUB_SUGGESTIONS } from '$lib/suggestionsStore.svelte.js';
 import { STUB_ALERTS } from '$lib/coherenceStore.svelte.js';
 import type { SkillInput } from '$lib/server/skills/types';
@@ -11,6 +14,20 @@ const STUB_SIGNALS = [
 	{ location: 'Para. 3', signal: 'Sentence length', suggestion: 'Three consecutive short sentences disrupt the prose rhythm. Try merging the last two.' },
 	{ location: 'Para. 5', signal: 'Lexical density', suggestion: 'High nominal density slows reading pace. Break into two sentences with a transitional verb.' }
 ];
+
+// Singleton instances to avoid re-initialization on each request
+let _skillEngine: SkillEngine | null = null;
+
+function getSkillEngineInstance(): SkillEngine {
+	if (!_skillEngine) {
+		const commandBus = new CommandBus();
+		const aiService = new AIService();
+		// Register all command handlers
+		registerAllHandlers(commandBus);
+		_skillEngine = new SkillEngine(commandBus, aiService);
+	}
+	return _skillEngine;
+}
 
 /**
  * Mapping from legacy action names to skill IDs
@@ -43,7 +60,7 @@ async function executeSkill(
 	content: string,
 	messages?: Array<{ role: string; text: string }>
 ): Promise<Record<string, unknown>> {
-	const skillEngine = getSkillEngine();
+	const skillEngine = getSkillEngineInstance();
 	const skillId = ACTION_TO_SKILL[action];
 
 	// If no skill mapping or skill not found, return stubs

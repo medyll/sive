@@ -14,10 +14,10 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import yaml from 'js-yaml';
-import { AIService, type AIRequest } from '../ai/service';
-import { CommandBus, type CommandEvent } from '../commands/bus';
-import { executeMCPTool, MCP_TOOLS } from '../mcp/tools';
+import { AIService, type AIRequest } from '../../ai/service';
+import { CommandBus, type CommandEvent } from '../../commands/bus';
+import { executeMCPTool, MCP_TOOLS } from '../../mcp/tools';
+import type { AIProvider } from '../../ai/router';
 import type {
   SkillDefinition,
   SkillStep,
@@ -29,12 +29,11 @@ import type {
   PromptStep,
   CommandStep
 } from './types';
-import type { AIProvider } from '../ai/router';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const DEFAULT_CONFIG: SkillEngineConfig = {
-  skillDir: join(__dirname, '..', '..', '..', 'lib', 'skills'),
+  skillDir: join(__dirname, '..', '..', 'lib', 'skills'),
   maxContextSize: 16000,
   defaultProvider: 'ollama',
   enableFallback: true,
@@ -43,7 +42,7 @@ const DEFAULT_CONFIG: SkillEngineConfig = {
 };
 
 /**
- * Skill Engine - Executes skill YAML files, manages context,
+ * Skill Engine - Executes skill JSON files, manages context,
  * calls MCP tools and AI, and emits commands to the Command Bus
  */
 export class SkillEngine {
@@ -70,6 +69,7 @@ export class SkillEngine {
 
   /**
    * Load all skill definitions from the skill directory
+   * Uses JSON.parse since skills are now in JSON format
    */
   private loadSkills(): void {
     try {
@@ -84,11 +84,11 @@ export class SkillEngine {
 
       const files = readdirSync(this.config.skillDir);
       for (const file of files) {
-        if (file.endsWith('.yaml') || file.endsWith('.yml')) {
+        if (file.endsWith('.json')) {
           const path = join(this.config.skillDir, file);
           try {
             const content = readFileSync(path, 'utf-8');
-            const skill = yaml.load(content) as SkillDefinition;
+            const skill = JSON.parse(content) as SkillDefinition;
             // Normalize steps to have type field
             skill.steps = skill.steps.map((step: SkillStep) => {
               if (!('type' in step)) {
@@ -395,7 +395,8 @@ export class SkillEngine {
 
     try {
       // Execute the MCP tool with resolved parameters
-      const result = executeMCPTool(toolName, ...Object.values(resolvedParams));
+      // Note: MCP tools take projectId as first parameter
+      const result = executeMCPTool(toolName, 'default-project', ...Object.values(resolvedParams));
       const resultKey = `result_${toolName.replace('.', '_')}`;
       context.results[resultKey] = result;
 
@@ -560,10 +561,7 @@ export class SkillEngine {
       return context.results[ref];
     }
 
-    // 3. Check app state (would be injected in future)
-    // For now, return undefined
-
-    // 4. Return undefined
+    // 3. Return undefined
     return undefined;
   }
 
@@ -575,12 +573,6 @@ export class SkillEngine {
       case 'json':
         try {
           return JSON.parse(content);
-        } catch {
-          return content;
-        }
-      case 'yaml':
-        try {
-          return yaml.load(content);
         } catch {
           return content;
         }
