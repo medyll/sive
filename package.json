@@ -72,8 +72,10 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.91.1",
+    "@google/generative-ai": "^0.24.1",
     "@medyll/css-base": "^0.1.4",
     "better-sqlite3": "^12.8.0",
-    "nanoid": "^5.1.7"
+    "nanoid": "^5.1.7",
+    "openai": "^6.36.0"
   }
 }
