@@ -1,4 +1,4 @@
- # 📘 Project Reference Document — Sive : AI-Assisted Writing Software
+  # 📘 Project Reference Document — Sive : AI-Assisted Writing Software
  **Version 1.0 — Reference Document**  
  Stack: Svelte + LiveKit · Philosophy: awareness, multimodal efficiency, multi-user isolation, refactoring.
 
@@ -70,5 +70,11 @@
 - **Keywords:** prioritized roadmap, UX foundation first, timeline/versioning, review mode, style profiling, coherence engine, censorship, multi-user isolation
 - **Role:** Provides the recommended development prioritization and rationale to sequence implementation and validation
 - **Link:** [10-appendix-prioritization-recommendation.md](./project/10-appendix-prioritization-recommendation.md)
+
+## 11. Technical Implementation Guide
+
+- **Keywords:** Skill Engine, Command Bus, MCP Tools, AI Service, implementation checklist, file structure, component specifications, testing strategy, BMAD-Method
+- **Role:** Provides the complete technical implementation details for wiring the AI architecture described in Section 5. Includes code templates, API specifications, migration notes, and BMAD-Method compliance documentation.
+- **Link:** [11-technical-implementation.md](./project/11-technical-implementation.md)
 
 

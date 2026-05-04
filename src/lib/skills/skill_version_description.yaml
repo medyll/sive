@@ -1,0 +1,87 @@
+# Version Description Skill
+# Auto-generates a Harden commit message based on changes
+#
+# Follows the architecture described in BMAD:
+# bmad/references/project/5-ai-architecture-mcp-skills.md
+
+id: skill_version_description
+description: Auto-generates a concise Harden commit message based on the diff between versions. Helps users create meaningful version history.
+trigger:
+  - harden_button
+  - before_create_version
+task_type: custom
+
+steps:
+  # Set up UI state
+  - type: command
+    command: ui.set_spinner
+    params:
+      visible: true
+
+  # Load version information
+  - type: tool
+    tool: read_version_index
+    description: Load the version index
+
+  - type: tool
+    tool: compare_versions
+    params:
+      id_a: "{{last_version}}"
+      id_b: "current"
+    description: Calculate the diff between last version and current state
+
+  # Generate version message
+  - type: prompt
+    prompt: |
+      Based on the version diff provided in the context, generate a concise, descriptive commit message.
+      
+      The message should be:
+      - 1-2 sentences maximum
+      - Written in past tense
+      - Focused on what changed (characters, plot, chapters)
+      - Professional and clear
+      
+      Examples of good messages:
+      - "Rewrote chapter 3, added Martin's death scene, updated Jean<->Marie relationship"
+      - "Fixed timeline inconsistencies in Act 2, adjusted tension curve"
+      - "Added new character: Marie Chen, police forensic specialist"
+      - "Resolved Jean's alcoholism arc, completed investigation thread"
+      
+      Return only the message text, no quotes, no JSON, no formatting.
+    temperature: 0.3
+    max_tokens: 512
+
+  # Show modal with generated message for confirmation
+  - type: command
+    command: ui.show_modal
+    params:
+      title: "New Harden Version"
+      content: "{{prompt_result}}"
+      actions:
+        - "confirm"
+        - "edit"
+        - "cancel"
+
+  # Wait for user confirmation
+  - type: command
+    command: harden.trigger
+    params:
+      label: "Auto-generated"
+      message: "{{modal_result}}"
+    on_error: notify
+
+  # Refresh version timeline
+  - type: command
+    command: timeline.refresh
+
+  # Clean up UI state
+  - type: command
+    command: ui.set_spinner
+    params:
+      visible: false
+
+metadata:
+  version: "1.0"
+  author: "Sive Team"
+  created_at: "2024-01-01"
+  updated_at: "2024-01-01"

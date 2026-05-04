@@ -1,0 +1,99 @@
+# Suggestions Skill
+# Generates improvement suggestions for the current chapter or selection
+#
+# Follows the architecture described in BMAD:
+# bmad/references/project/5-ai-architecture-mcp-skills.md
+
+id: skill_suggestions
+description: Analyzes the current chapter or text selection and generates improvement suggestions. Provides alternative phrasing, additions, and deletions.
+task_type: suggestions
+trigger:
+  - generate_suggestions
+  - explicit_request
+
+steps:
+  # Set up UI state
+  - type: command
+    command: ui.set_spinner
+    params:
+      visible: true
+
+  # Load context
+  - type: tool
+    tool: read_chapter
+    params:
+      id: "{{current_chapter}}"
+    description: Load the current chapter
+
+  - type: tool
+    tool: read_structure
+    description: Load structure.yaml for thread context
+
+  - type: tool
+    tool: read_bible
+    description: Load bible.yaml for character context
+
+  # Get text to analyze
+  - type: command
+    command: editor.get_selection
+    description: Get selected text, or use full chapter
+    on_error: ignore
+
+  # Generate suggestions
+  - type: prompt
+    prompt: |
+      You are a creative writing partner. Analyze the provided text (chapter content or selection) and generate helpful suggestions for improvement.
+      
+      Consider:
+      - Character development opportunities
+      - Plot advancement suggestions
+      - Pacing and tension improvements
+      - Description and atmosphere enhancements
+      - Dialogue polish
+      - Show-don't-tell opportunities
+      
+      Return a JSON array of suggestions in this exact format:
+      [
+        {
+          "id": "Unique identifier",
+          "type": "addition" | "modification" | "deletion",
+          "before": "Original text (for modifications/deletions)",
+          "after": "Proposed text (for additions/modifications)",
+          "context": "Where this applies in the text",
+          "reason": "Brief explanation of why this improves the text"
+        }
+      ]
+      
+      Only return the JSON array, no other text.
+      Generate 3-5 suggestions, prioritizing the most impactful changes.
+    response_format: json
+    temperature: 0.7
+    max_tokens: 2048
+
+  # Clear previous suggestions and display new ones
+  - type: command
+    command: suggestions.clear
+
+  - type: command
+    command: suggestions.push_diff
+    params:
+      suggestions: "{{prompt_result}}"
+    on_error: ignore
+
+  # Switch to suggestions tab
+  - type: command
+    command: ui.open_tab
+    params:
+      tab: "Suggestions"
+
+  # Clean up UI state
+  - type: command
+    command: ui.set_spinner
+    params:
+      visible: false
+
+metadata:
+  version: "1.0"
+  author: "Sive Team"
+  created_at: "2024-01-01"
+  updated_at: "2024-01-01"

@@ -109,7 +109,7 @@ steps:
   - prompt: |
       Based on the diff, generate a concise version message (1-2 sentences).
       Mention modified chapters, affected characters, key events.
-      Example: "Rewrote chapter 3, added Martin's death, updated Jean↔Marie relationship."
+      Example: "Rewrote chapter 3, added Martin's death, updated Jean<->Marie relationship."
 ```
 
 **`skill_review.yaml`** — audit report
@@ -184,7 +184,7 @@ The Command Bus is the communication channel between skills and the application 
 │    - prompt: "Analyse..."      (AI → result)        │
 │    - command: coherence.push_alert  (Bus → app)     │
 │    - command: ui.open_tab           (Bus → app)     │
-└────────────────────┬────────────────────────────────┘
+└─────────────────────────────────────────────────────┘
                      │ emits CommandEvent
                      ▼
 ┌─────────────────────────────────────────────────────┐
@@ -275,7 +275,7 @@ The Command Bus is the communication channel between skills and the application 
 | Command | Params | Description |
 |---|---|---|
 | `app.export_file` | `content, format, name` | Exports a file (.md, .pdf, .yaml) |
-| `app.navigate_to` | `screen` | Changes screen (editor, review, onboarding…) |
+| `app.navigate_to` | `screen` | Changes screen (editor, review, onboarding...) |
 | `app.reload_project` | — | Reloads project files into memory |
 | `app.run_skill` | `skill_id, params` | Triggers another skill (composition) |
 
@@ -456,7 +456,7 @@ Any `{{variable}}` value in a skill is resolved in the following priority order:
 ```
 1. context.input.*            — skill input parameters
 2. context.results.*          — previous step results
-3. app.state.*                — global app state (open chapter, active user…)
+3. app.state.*                — global app state (open chapter, active user...)
 4. literal default value       — if defined in the skill
 5. error → on_error           — if no value found
 ```
@@ -530,3 +530,4 @@ model_used: ollama/mistral
 ```
 
 ---
+
