@@ -1,104 +1,91 @@
-# Coherence Skill
-# Detects inconsistencies between a chapter and the bible, structure and narrator
-# 
-# Follows the architecture described in BMAD:
-# bmad/references/project/5-ai-architecture-mcp-skills.md
-
-id: skill_coherence
-description: Detects inconsistencies between a chapter and the bible, timeline, structure and narrator. Flags discrepancies with confidence levels.
-trigger:
-  - chapter_modified
-  - explicit_request
-task_type: coherence
-
-steps:
-  # Set up UI state
-  - type: command
-    command: ui.set_spinner
-    params:
-      visible: true
-
-  # Load all necessary project files
-  - type: tool
-    tool: read_bible
-    description: Load the complete bible.yaml
-
-  - type: tool
-    tool: read_timeline
-    description: Load timeline.yaml
-
-  - type: tool
-    tool: read_structure
-    description: Load structure.yaml
-
-  - type: tool
-    tool: read_narrator
-    description: Load narrator.yaml
-
-  - type: tool
-    tool: read_chapter
-    params:
-      id: "{{current_chapter}}"
-    description: Load the current chapter's .md + .yaml
-
-  - type: tool
-    tool: extract_chapter_states
-    params:
-      id: "{{current_chapter}}"
-    description: Extract character/object states from the chapter
-
-  # Analyze for inconsistencies
-  - type: prompt
-    prompt: |
-      You are a narrative consistency expert. Analyze the provided context and identify any inconsistencies.
-      
-      Compare chapter states against the bible, timeline, structure and narrator.
-      Check:
-      - Character/object/location status consistency
-      - Timeline compliance (flash-backs correctly anchored, coherent ellipses)
-      - POV compliance as declared in narrator.yaml
-      - Active narrative threads correctly referenced in structure.yaml
-      - Tension level consistent with the target curve
-      
-      Return a JSON array of alerts in this exact format:
-      [
-        {
-          "entity": "Character or object name",
-          "discrepancy_type": "Type of inconsistency",
-          "confidence": "Low" | "Medium" | "High",
-          "note": "Detailed explanation of the issue"
-        }
-      ]
-      
-      Only return the JSON array, no other text.
-    response_format: json
-    temperature: 0.3
-    max_tokens: 2048
-
-  # Clear previous alerts and display new ones
-  - type: command
-    command: coherence.clear
-
-  - type: command
-    command: coherence.push_alert
-    params:
-      alerts: "{{prompt_result}}"
-    on_error: ignore
-
-  # Switch to coherence tab
-  - type: command
-    command: ui.open_tab
-    params:
-      tab: "Coherence"
-
-  # Clean up UI state
-  - type: command
-    command: ui.set_spinner
-    params:
-      visible: false
-
-metadata:
-  version: "1.0"
-  author: "Sive Team"
-  created_at: "2024-01-01"
-  updated_at: "2024-01-01"
+{
+  "id": "skill_coherence",
+  "description": "Detects inconsistencies between a chapter and the bible, timeline, structure and narrator. Flags discrepancies with confidence levels.",
+  "trigger": ["chapter_modified", "explicit_request"],
+  "task_type": "coherence",
+  "steps": [
+    {
+      "type": "command",
+      "command": "ui.set_spinner",
+      "params": {
+        "visible": true
+      },
+      "description": "Set up UI state"
+    },
+    {
+      "type": "tool",
+      "tool": "read_bible",
+      "description": "Load the complete bible.yaml"
+    },
+    {
+      "type": "tool",
+      "tool": "read_timeline",
+      "description": "Load timeline.yaml"
+    },
+    {
+      "type": "tool",
+      "tool": "read_structure",
+      "description": "Load structure.yaml"
+    },
+    {
+      "type": "tool",
+      "tool": "read_narrator",
+      "description": "Load narrator.yaml"
+    },
+    {
+      "type": "tool",
+      "tool": "read_chapter",
+      "params": {
+        "id": "{{current_chapter}}"
+      },
+      "description": "Load the current chapter's .md + .yaml"
+    },
+    {
+      "type": "tool",
+      "tool": "extract_chapter_states",
+      "params": {
+        "id": "{{current_chapter}}"
+      },
+      "description": "Extract character/object states from the chapter"
+    },
+    {
+      "type": "prompt",
+      "prompt": "You are a narrative consistency expert. Analyze the provided context and identify any inconsistencies.\n\nCompare chapter states against the bible, timeline, structure and narrator.\nCheck:\n- Character/object/location status consistency\n- Timeline compliance (flash-backs correctly anchored, coherent ellipses)\n- POV compliance as declared in narrator.yaml\n- Active narrative threads correctly referenced in structure.yaml\n- Tension level consistent with the target curve\n\nReturn a JSON array of alerts in this exact format:\n[\n  {\n    \"entity\": \"Character or object name\",\n    \"discrepancy_type\": \"Type of inconsistency\",\n    \"confidence\": \"Low\" | \"Medium\" | \"High\",\n    \"note\": \"Detailed explanation of the issue\"\n  }\n]\n\nOnly return the JSON array, no other text.",
+      "response_format": "json",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    {
+      "type": "command",
+      "command": "coherence.clear"
+    },
+    {
+      "type": "command",
+      "command": "coherence.push_alert",
+      "params": {
+        "alerts": "{{prompt_result}}"
+      },
+      "on_error": "ignore"
+    },
+    {
+      "type": "command",
+      "command": "ui.open_tab",
+      "params": {
+        "tab": "Coherence"
+      }
+    },
+    {
+      "type": "command",
+      "command": "ui.set_spinner",
+      "params": {
+        "visible": false
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "author": "Sive Team",
+    "created_at": "2024-01-01",
+    "updated_at": "2024-01-01"
+  }
+}

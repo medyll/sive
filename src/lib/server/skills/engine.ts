@@ -14,10 +14,10 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { AIService, type AIRequest } from '../../ai/service';
-import { CommandBus, type CommandEvent } from '../../commands/bus';
-import { executeMCPTool, MCP_TOOLS } from '../../mcp/tools';
-import type { AIProvider } from '../../ai/router';
+import { AIService, type AIRequest } from '$lib/server/ai/service';
+import { CommandBus, type CommandEvent } from '$lib/server/commands/bus';
+import { executeMCPTool, MCP_TOOLS } from '$lib/server/mcp/tools';
+import type { AIProvider } from '$lib/server/ai/router';
 import type {
   SkillDefinition,
   SkillStep,

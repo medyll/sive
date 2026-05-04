@@ -13,14 +13,20 @@ import { commandBus, CommandBus } from '../bus';
 import type { ModuleHandler } from '../types';
 
 // Import all handler modules
-export * as uiHandlers from './uiHandlers';
-export * as editorHandlers from './uiHandlers';
-export * as coherenceHandlers from './uiHandlers';
-export * as styleHandlers from './uiHandlers';
-export * as suggestionsHandlers from './uiHandlers';
-export * as reviewHandlers from './uiHandlers';
-export * as versioningHandlers from './uiHandlers';
-export * as appHandlers from './uiHandlers';
+import * as uiHandlersModule from './uiHandlers';
+
+// Extract the individual handler groups from the module
+export const uiHandlers = uiHandlersModule.uiHandlers;
+export const editorHandlers = uiHandlersModule.editorHandlers;
+export const coherenceHandlers = uiHandlersModule.coherenceHandlers;
+export const styleHandlers = uiHandlersModule.styleHandlers;
+export const suggestionsHandlers = uiHandlersModule.suggestionsHandlers;
+export const reviewHandlers = uiHandlersModule.reviewHandlers;
+export const versioningHandlers = uiHandlersModule.versioningHandlers;
+export const appHandlers = uiHandlersModule.appHandlers;
+
+// Re-export everything from the module for convenience
+export * from './uiHandlers';
 
 /**
  * All handler modules as a single object

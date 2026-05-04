@@ -11,9 +11,16 @@
  */
 
 import type { CommandEvent } from '../types';
-import type { CoherenceAlertData } from '$lib/coherenceStore.svelte';
-import type { StyleSignalData } from '$lib/styleStore.svelte';
-import type { SuggestionData } from '$lib/suggestionsStore.svelte';
+import type { CoherenceAlertData } from '$lib/coherenceStore';
+import type { SuggestionData } from '$lib/suggestionsStore';
+
+// StyleSignalData is defined in AIPanel.svelte but not exported.
+// Re-defining here to avoid circular dependencies
+export interface StyleSignalData {
+  location: string;
+  signal: string;
+  suggestion: string;
+}
 
 /**
  * Get typed parameters for a UI command
@@ -538,3 +545,7 @@ export const editorHandlers = {
     return '';
   }
 };
+
+
+
+

@@ -1,91 +1,73 @@
-# Style Skill
-# Stylistic analysis of a selected passage or chapter
-#
-# Follows the architecture described in BMAD:
-# bmad/references/project/5-ai-architecture-mcp-skills.md
-
-id: skill_style
-description: Analyzes the stylistic quality of a selected passage or chapter. Flags language issues, repetitions, rhythm breaks, and narrative density problems.
-trigger:
-  - analyse_passage_button
-  - text_selection
-task_type: style
-
-steps:
-  # Set up UI state
-  - type: command
-    command: ui.set_spinner
-    params:
-      visible: true
-
-  # Load narrator/character voice profile
-  - type: tool
-    tool: read_narrator
-    description: Load narrator.yaml for voice profile
-
-  - type: tool
-    tool: read_character_sheet
-    params:
-      id: "{{active_narrator}}"
-    description: Load the active narrator's character sheet
-    on_error: ignore
-
-  # Get the text to analyze
-  - type: command
-    command: editor.get_selection
-    description: Get currently selected text from editor
-
-  # Analyze the passage style
-  - type: prompt
-    prompt: |
-      You are a literary stylist and writing coach. Analyze the selected passage according to the provided narrator profile.
-      
-      Flag issues with:
-      - Language tics and repetitions
-      - Rhythm breaks (sentence length, flow)
-      - Narrative density (too dense or too sparse)
-      - Voice consistency with the declared character profile
-      - Syntax and grammatical issues
-      
-      Return a JSON array of signals in this exact format:
-      [
-        {
-          "location": "Paragraph 1" | "Line 5-7",
-          "signal": "Type of issue (e.g., Repetition, Sentence length, Voice mismatch)",
-          "suggestion": "Specific improvement suggestion"
-        }
-      ]
-      
-      Only return the JSON array, no other text.
-      Be specific and actionable in your suggestions.
-    response_format: json
-    temperature: 0.4
-    max_tokens: 2048
-
-  # Clear previous signals and display new ones
-  - type: command
-    command: style.clear
-
-  - type: command
-    command: style.push_signal
-    params:
-      signals: "{{prompt_result}}"
-    on_error: ignore
-
-  # Switch to style tab
-  - type: command
-    command: ui.open_tab
-    params:
-      tab: "Style"
-
-  # Clean up UI state
-  - type: command
-    command: ui.set_spinner
-    params:
-      visible: false
-
-metadata:
-  version: "1.0"
-  author: "Sive Team"
-  created_at: "2024-01-01"
-  updated_at: "2024-01-01"
+{
+  "id": "skill_style",
+  "description": "Analyzes the stylistic quality of a selected passage or chapter. Flags language issues, repetitions, rhythm breaks, and narrative density problems.",
+  "trigger": ["analyse_passage_button", "text_selection"],
+  "task_type": "style",
+  "steps": [
+    {
+      "type": "command",
+      "command": "ui.set_spinner",
+      "params": {
+        "visible": true
+      }
+    },
+    {
+      "type": "tool",
+      "tool": "read_narrator",
+      "description": "Load narrator.yaml for voice profile"
+    },
+    {
+      "type": "tool",
+      "tool": "read_character_sheet",
+      "params": {
+        "id": "{{active_narrator}}"
+      },
+      "description": "Load the active narrator's character sheet",
+      "on_error": "ignore"
+    },
+    {
+      "type": "command",
+      "command": "editor.get_selection",
+      "description": "Get currently selected text from editor"
+    },
+    {
+      "type": "prompt",
+      "prompt": "You are a literary stylist and writing coach. Analyze the selected passage according to the provided narrator profile.\n\nFlag issues with:\n- Language tics and repetitions\n- Rhythm breaks (sentence length, flow)\n- Narrative density (too dense or too sparse)\n- Voice consistency with the declared character profile\n- Syntax and grammatical issues\n\nReturn a JSON array of signals in this exact format:\n[\n  {\n    \"location\": \"Paragraph 1\" | \"Line 5-7\",\n    \"signal\": \"Type of issue (e.g., Repetition, Sentence length, Voice mismatch)\",\n    \"suggestion\": \"Specific improvement suggestion\"\n  }\n]\n\nOnly return the JSON array, no other text.\nBe specific and actionable in your suggestions.",
+      "response_format": "json",
+      "temperature": 0.4,
+      "max_tokens": 2048
+    },
+    {
+      "type": "command",
+      "command": "style.clear"
+    },
+    {
+      "type": "command",
+      "command": "style.push_signal",
+      "params": {
+        "signals": "{{prompt_result}}"
+      },
+      "on_error": "ignore"
+    },
+    {
+      "type": "command",
+      "command": "ui.open_tab",
+      "params": {
+        "tab": "Style"
+      }
+    },
+    {
+      "type": "command",
+      "command": "ui.set_spinner",
+      "params": {
+        "visible": false
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "author": "Sive Team",
+    "created_at": "2024-01-01",
+    "updated_at": "2024-01-01"
+  }
+}
