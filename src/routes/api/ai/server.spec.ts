@@ -66,8 +66,13 @@ describe('/api/ai endpoint', () => {
 		});
 
 		it('unknown action returns 400', async () => {
-			const res = await POST({ request: makeRequest({ action: 'unknown' }) } as never);
-			expect(res.status).toBe(400);
+			try {
+				await POST({ request: makeRequest({ action: 'unknown' }) } as never);
+				expect.fail('Expected error to be thrown');
+			} catch (err) {
+				expect(err).toHaveProperty('status', 400);
+				expect(err).toHaveProperty('body.message', 'Invalid or missing action');
+			}
 		});
 	});
 

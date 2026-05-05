@@ -5,8 +5,7 @@
   import GoalsDashboard from '$lib/elements/GoalsDashboard.svelte';
   import GoalTemplateModal from '$lib/elements/GoalTemplateModal.svelte';
   import PartnersList from '$lib/elements/PartnersList.svelte';
-  import AISettings from '$lib/elements/AISettings.svelte';
-  import { privacyStore } from '$lib/privacyStore.svelte';
+    import { privacyStore } from '$lib/privacyStore.svelte';
   import { pluginStore } from '$lib/pluginStore.svelte';
   import { goalsStore } from '$lib/writingGoalsStore.svelte';
   import { themeStore } from '$lib/themeStore.svelte';
@@ -163,11 +162,6 @@
       />
     </div>
   {/if}
-</section>
-
-<section class="settings-section">
-  <h2>AI Configuration</h2>
-  <AISettings />
 </section>
 
 {#if showTemplateModal}

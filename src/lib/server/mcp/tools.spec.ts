@@ -14,7 +14,7 @@ import {
 	MCP_TOOLS,
 	executeMCPTool
 } from '$lib/server/mcp/tools';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, readFileSync, readdirSync } from 'fs';
 
 // Mock fs module
 vi.mock('fs', () => ({

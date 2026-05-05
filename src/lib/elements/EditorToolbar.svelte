@@ -15,9 +15,11 @@
 		documentTitle?: string;
 		/** Whether current user is the document owner */
 		isOwner?: boolean;
+		/** Max visible users in presence list */
+		maxVisible?: number;
 	}
 
-	let { users = $bindable([]), currentUserId = null, documentId = '', documentTitle = 'Untitled Document', isOwner = false }: Props = $props();
+	let { users = $bindable([]), currentUserId = null, documentId = '', documentTitle = 'Untitled Document', isOwner = false, maxVisible = 5 }: Props = $props();
 
 	let showShareModal = $state(false);
 	let isFocusMode = $state(false);
@@ -83,7 +85,7 @@
 	<div class="toolbar-right">
 		<!-- Presence List -->
 		<div class="presence-section">
-			<PresenceList {users} {currentUserId} maxVisible={5} />
+			<PresenceList {users} {currentUserId} {maxVisible} />
 		</div>
 
 		<!-- Focus Mode Toggle -->

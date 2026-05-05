@@ -14,7 +14,17 @@ vi.mock('$lib/server/mcp/tools', () => ({
 		read_timeline: vi.fn(),
 		read_structure: vi.fn(),
 		parse_yaml: vi.fn()
-	}
+	},
+	parseYaml: vi.fn((yaml: string) => {
+		const result: Record<string, string> = {};
+		yaml.split('\n').forEach((line) => {
+			const [key, ...valueParts] = line.split(':');
+			if (key && valueParts.length) {
+				result[key.trim()] = valueParts.join(':').trim();
+			}
+		});
+		return result;
+	})
 }));
 
 describe('MCP Tools API', () => {
