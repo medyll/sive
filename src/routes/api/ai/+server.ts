@@ -4,16 +4,7 @@ import { SkillEngine } from '$lib/server/skills/engine';
 import { CommandBus } from '$lib/server/commands/bus';
 import { AIService } from '$lib/server/ai/service';
 import { registerAllHandlers } from '$lib/server/commands/handlers';
-import { STUB_SUGGESTIONS } from '$lib/suggestionsStore.svelte.js';
-import { STUB_ALERTS } from '$lib/coherenceStore.svelte.js';
 import type { SkillInput } from '$lib/server/skills/types';
-
-// Stub style signals (mirrors AIPanel.svelte STUB_SIGNALS)
-const STUB_SIGNALS = [
-	{ location: 'Para. 1', signal: 'Repetition', suggestion: 'The word "shadow" appears 4 times. Consider varying with "silhouette" or "shade".' },
-	{ location: 'Para. 3', signal: 'Sentence length', suggestion: 'Three consecutive short sentences disrupt the prose rhythm. Try merging the last two.' },
-	{ location: 'Para. 5', signal: 'Lexical density', suggestion: 'High nominal density slows reading pace. Break into two sentences with a transitional verb.' }
-];
 
 // Singleton instances to avoid re-initialization on each request
 let _skillEngine: SkillEngine | null = null;
@@ -41,19 +32,12 @@ const ACTION_TO_SKILL: Record<string, string> = {
 };
 
 /**
- * Get stub response for an action
- */
-function getStubResponse(action: string): Record<string, unknown> {
-	if (action === 'suggestions') return { suggestions: STUB_SUGGESTIONS };
-	if (action === 'coherence') return { alerts: STUB_ALERTS };
-	if (action === 'style') return { signals: STUB_SIGNALS };
-	if (action === 'chat') return { reply: '[stub] AI response' };
-	return { error: 'Unknown action' };
-}
-
-/**
- * Execute a skill via the Skill Engine
- * Falls back to STUBS if skill execution fails
+ * Execute a skill via the Skill Engine.
+ *
+ * Failures throw rather than returning placeholder content: this endpoint feeds
+ * writing suggestions, coherence alerts and style signals straight into the
+ * editor, and an author acting on fabricated advice is worse than an author
+ * seeing that the analysis failed.
  */
 async function executeSkill(
 	action: string,
@@ -63,10 +47,8 @@ async function executeSkill(
 	const skillEngine = getSkillEngineInstance();
 	const skillId = ACTION_TO_SKILL[action];
 
-	// If no skill mapping or skill not found, return stubs
 	if (!skillId || !skillEngine.getSkill(skillId)) {
-		console.log(`[/api/ai] No skill for action: ${action}, using fallback`);
-		return getStubResponse(action);
+		throw new Error(`No skill registered for action "${action}"`);
 	}
 
 	try {
@@ -93,20 +75,16 @@ async function executeSkill(
 			return { reply: result.result.reply };
 		}
 
-		// If result doesn't have expected format, use stubs
-		console.log(`[/api/ai] Unexpected result format for ${action}:`, result.result);
-		return getStubResponse(action);
+		throw new Error(`Skill "${skillId}" returned an unexpected result shape`);
 	} catch (err) {
 		console.error(`[/api/ai] Skill ${skillId} execution failed:`, err);
-		// Fallback to stubs on error
-		return getStubResponse(action);
+		throw err;
 	}
 }
 
 /**
- * Legacy endpoint for backward compatibility
- * This endpoint now delegates to the Skill Engine when possible,
- * falling back to STUBS when skills are not available.
+ * Legacy endpoint for backward compatibility.
+ * Delegates to the Skill Engine; failures surface as 503.
  * 
  * Follows the architecture described in BMAD:
  * bmad/references/project/5-ai-architecture-mcp-skills.md
@@ -135,7 +113,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json(response);
 	} catch (err) {
 		console.error('[/api/ai] Error:', err);
-		// Fallback to stubs on any error
-		return json(getStubResponse(action));
+		const message = err instanceof Error ? err.message : 'AI request failed';
+		return json({ error: message }, { status: 503 });
 	}
 };

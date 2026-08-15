@@ -33,7 +33,11 @@ import type {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const DEFAULT_CONFIG: SkillEngineConfig = {
-  skillDir: join(__dirname, '..', '..', 'lib', 'skills'),
+  // engine.ts lives in src/lib/server/skills, so the definitions in
+  // src/lib/skills are two levels up. The previous value appended an extra
+  // 'lib' segment and resolved to src/lib/lib/skills, which does not exist:
+  // no skill ever loaded, and the stub fallback hid it.
+  skillDir: join(__dirname, '..', '..', 'skills'),
   maxContextSize: 16000,
   defaultProvider: 'ollama',
   enableFallback: true,

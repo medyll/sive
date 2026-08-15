@@ -2,6 +2,7 @@ import { json, error, type RequestHandler } from '@sveltejs/kit';
 import { aiService } from '$lib/server/ai/service';
 import { aiRouter } from '$lib/server/ai/router';
 import type { AIProvider, RoutingConfig, ModelConfig } from '$lib/server/ai/router';
+import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 
 const PROVIDERS: AIProvider[] = ['ollama', 'anthropic', 'openai', 'gemini'];
 
@@ -94,8 +95,12 @@ export const GET: RequestHandler = async ({ locals }) => {
 };
 
 // POST - Update configuration
-export const POST: RequestHandler = async ({ request, locals }) => {
+export const POST: RequestHandler = async (event) => {
+	const { request, locals } = event;
 	const userId = requireUserId(locals);
+
+	const limit = checkWriteRateLimit(event);
+	if (!limit.allowed) return limit.response!;
 
 	try {
 		const body = await request.json();

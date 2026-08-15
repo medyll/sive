@@ -205,12 +205,13 @@
         body: JSON.stringify({ action: 'style', content: editorContent }),
         signal: ctrl.signal
       });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      signals = data.signals ?? STUB_SIGNALS;
+      signals = data.signals ?? [];
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') return;
-      signals = STUB_SIGNALS;
-      toastStore.warning('Style analysis failed — showing cached results');
+      signals = [];
+      toastStore.error('Style analysis failed. No results to show.');
     } finally {
       analysing = false;
       analyseController = null;
@@ -230,12 +231,13 @@
         body: JSON.stringify({ action: 'coherence', content: editorContent }),
         signal: ctrl.signal
       });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      coherenceAlerts = data.alerts ?? STUB_ALERTS;
+      coherenceAlerts = data.alerts ?? [];
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') return;
-      coherenceAlerts = STUB_ALERTS;
-      toastStore.warning('Coherence check failed — showing cached results');
+      coherenceAlerts = [];
+      toastStore.error('Coherence check failed. No results to show.');
     } finally {
       checking = false;
       coherenceController = null;
@@ -255,12 +257,13 @@
         body: JSON.stringify({ action: 'suggestions', content: editorContent }),
         signal: ctrl.signal
       });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      suggestionsStore.setItems(data.suggestions ?? STUB_SUGGESTIONS);
+      suggestionsStore.setItems(data.suggestions ?? []);
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') return;
-      suggestionsStore.setItems(STUB_SUGGESTIONS);
-      toastStore.warning('Suggestion generation failed — showing cached results');
+      suggestionsStore.setItems([]);
+      toastStore.error('Suggestion generation failed. No results to show.');
     } finally {
       suggesting = false;
       suggestController = null;

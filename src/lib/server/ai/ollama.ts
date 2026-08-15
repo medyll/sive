@@ -40,6 +40,34 @@ interface OllamaStreamResponse {
 /**
  * Ollama client class
  */
+/**
+ * Default ceiling for a single Ollama request.
+ *
+ * Without one, an unreachable or wedged provider leaves the HTTP request hanging
+ * indefinitely: fetch has no built-in timeout.
+ */
+const REQUEST_TIMEOUT_MS = 30_000;
+
+/** fetch with an abort-based timeout. */
+async function fetchWithTimeout(
+	url: string,
+	init: RequestInit = {},
+	timeoutMs = REQUEST_TIMEOUT_MS
+): Promise<Response> {
+	const controller = new AbortController();
+	const timer = setTimeout(() => controller.abort(), timeoutMs);
+	try {
+		return await fetchWithTimeout(url, { ...init, signal: controller.signal });
+	} catch (err) {
+		if (err instanceof DOMException && err.name === 'AbortError') {
+			throw new Error(`Ollama request timed out after ${timeoutMs}ms: ${url}`);
+		}
+		throw err;
+	} finally {
+		clearTimeout(timer);
+	}
+}
+
 export class OllamaClient {
 	private baseUrl: string;
 	private defaultModel: string;
@@ -68,7 +96,7 @@ export class OllamaClient {
 			}
 		};
 
-		const response = await fetch(url, {
+		const response = await fetchWithTimeout(url, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(payload)
@@ -101,7 +129,7 @@ export class OllamaClient {
 			}
 		};
 
-		const response = await fetch(url, {
+		const response = await fetchWithTimeout(url, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(payload)
@@ -161,7 +189,7 @@ export class OllamaClient {
 			}
 		};
 
-		const response = await fetch(url, {
+		const response = await fetchWithTimeout(url, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(payload)
@@ -194,7 +222,7 @@ export class OllamaClient {
 			}
 		};
 
-		const response = await fetch(url, {
+		const response = await fetchWithTimeout(url, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(payload)
@@ -240,7 +268,7 @@ export class OllamaClient {
 	 */
 	async listModels(): Promise<string[]> {
 		const url = `${this.baseUrl}/api/tags`;
-		const response = await fetch(url);
+		const response = await fetchWithTimeout(url);
 
 		if (!response.ok) {
 			throw new Error(`Ollama API error: ${response.status} ${response.statusText}`);
@@ -256,7 +284,7 @@ export class OllamaClient {
 	async isAvailable(): Promise<boolean> {
 		try {
 			const url = `${this.baseUrl}/api/tags`;
-			const response = await fetch(url, { method: 'GET' });
+			const response = await fetchWithTimeout(url, { method: 'GET' });
 			return response.ok;
 		} catch {
 			return false;

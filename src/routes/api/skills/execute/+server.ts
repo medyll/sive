@@ -4,6 +4,7 @@ import { CommandBus } from '$lib/server/commands/bus';
 import { AIService } from '$lib/server/ai/service';
 import { registerAllHandlers } from '$lib/server/commands/handlers';
 import type { SkillInput, SkillResult } from '$lib/server/skills/types';
+import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 
 // Singleton instances
 let _skillEngine: SkillEngine | null = null;
@@ -19,7 +20,12 @@ function getSkillEngineInstance(): SkillEngine {
 }
 
 // Non-streaming handler
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async (event) => {
+	// Skill execution triggers a billed AI call — cap it like the other AI routes
+	const limit = checkWriteRateLimit(event);
+	if (!limit.allowed) return limit.response!;
+
+	const { request } = event;
 	try {
 		const { skill_id, input = {}, stream = false } = await request.json();
 
