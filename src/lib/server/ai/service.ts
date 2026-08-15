@@ -6,7 +6,8 @@
  */
 
 import { aiRouter } from './router';
-import type { AIProvider, ModelConfig } from './router';
+import type { AIProvider, ModelConfig, RoutingConfig } from './router';
+
 import { ollamaClient } from './ollama';
 
 /**
@@ -28,6 +29,18 @@ export interface AIRequest {
 	taskType?: 'coherence' | 'style' | 'review' | 'suggestions' | 'chat' | 'custom';
 	provider?: AIProvider;
 	config?: Partial<ModelConfig>;
+}
+
+/**
+ * Maps a request's task type onto a routing entry.
+ *
+ * AIRequest allows 'custom', which has no dedicated entry in RoutingConfig —
+ * it is routed through the fallback config. An absent task type keeps the
+ * historical default of 'chat'.
+ */
+function routingKeyFor(taskType?: AIRequest['taskType']): keyof RoutingConfig {
+	if (!taskType) return 'chat';
+	return taskType === 'custom' ? 'fallback' : taskType;
 }
 
 /**
@@ -72,7 +85,7 @@ export class AIService {
 		for (let attempt = 0; attempt <= this.config.maxRetries; attempt++) {
 			try {
 				const content = await aiRouter.route(
-					request.taskType || 'chat',
+					routingKeyFor(request.taskType),
 					request.prompt,
 					request.systemPrompt
 				);
@@ -80,7 +93,7 @@ export class AIService {
 				return {
 					content,
 					provider,
-					model: aiRouter.getConfigForTask(request.taskType || 'chat').model,
+					model: aiRouter.getConfigForTask(routingKeyFor(request.taskType)).model,
 					duration_ms: Date.now() - startTime
 				};
 			} catch (err) {
@@ -122,7 +135,7 @@ export class AIService {
 
 		try {
 			yield* aiRouter.routeStream(
-				request.taskType || 'chat',
+				routingKeyFor(request.taskType),
 				request.prompt,
 				request.systemPrompt
 			);
@@ -143,7 +156,7 @@ export class AIService {
 	 */
 	async chat(
 		messages: Array<{ role: string; content: string }>,
-		options?: { provider?: AIProvider; taskType?: string }
+		options?: { provider?: AIProvider; taskType?: AIRequest['taskType'] }
 	): Promise<AIResponse> {
 		const startTime = Date.now();
 		const provider = options?.provider || this.config.defaultProvider;
@@ -154,7 +167,7 @@ export class AIService {
 		const prompt = userMessages.map((m) => `${m.role}: ${m.content}`).join('\n\n');
 
 		const content = await aiRouter.route(
-			(options?.taskType as keyof typeof aiRouter.routing) || 'chat',
+			routingKeyFor(options?.taskType),
 			prompt,
 			systemMessage?.content
 		);
@@ -162,7 +175,7 @@ export class AIService {
 		return {
 			content,
 			provider,
-			model: aiRouter.getConfigForTask(options?.taskType || 'chat').model,
+			model: aiRouter.getConfigForTask(routingKeyFor(options?.taskType)).model,
 			duration_ms: Date.now() - startTime
 		};
 	}
@@ -172,14 +185,14 @@ export class AIService {
 	 */
 	async *chatStream(
 		messages: Array<{ role: string; content: string }>,
-		options?: { provider?: AIProvider; taskType?: string }
+		options?: { provider?: AIProvider; taskType?: AIRequest['taskType'] }
 	): AsyncGenerator<string, void, unknown> {
 		const systemMessage = messages.find((m) => m.role === 'system');
 		const userMessages = messages.filter((m) => m.role !== 'system');
 		const prompt = userMessages.map((m) => `${m.role}: ${m.content}`).join('\n\n');
 
 		yield* aiRouter.routeStream(
-			(options?.taskType as keyof typeof aiRouter.routing) || 'chat',
+			routingKeyFor(options?.taskType),
 			prompt,
 			systemMessage?.content
 		);

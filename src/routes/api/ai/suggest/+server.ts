@@ -30,6 +30,10 @@ function buildUserMessage(mode: SuggestionMode, ctx: string, selection: string):
 			return `Rewrite this passage:\n\n${selection || excerpt}`;
 		case 'tone':
 			return `Make this more vivid and evocative:\n\n${selection || excerpt}`;
+		case 'expand':
+			return `Expand this passage:\n\n${selection || excerpt}`;
+		case 'condense':
+			return `Condense this passage:\n\n${selection || excerpt}`;
 	}
 }
 

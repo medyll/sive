@@ -19,8 +19,8 @@ export interface SwipeState {
 	direction: 'left' | 'right' | 'up' | 'down' | null;
 }
 
-const DEFAULT_OPTIONS: SwipeOptions = {
-	threshold: 50,  // 50px minimum swipe
+const DEFAULT_OPTIONS: Required<Pick<SwipeOptions, 'threshold'>> = {
+	threshold: 50 // 50px minimum swipe
 };
 
 /**

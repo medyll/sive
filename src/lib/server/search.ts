@@ -247,12 +247,13 @@ export function searchWithFilters(
   // For empty query, return all documents (for filtering/sorting)
   const results = query.trim()
     ? search(query, indexed)
-    : indexed.map(doc => ({
+    : indexed.map((doc): SearchResult => ({
         docId: doc.id,
         title: doc.originalTitle,
         snippet: doc.originalContent.slice(0, SNIPPET_LENGTH),
         score: 0,
-        highlights: []
+        highlights: [],
+        tags: doc.tags
       }));
 
   // Apply tag filter (AND logic)

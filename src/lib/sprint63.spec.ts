@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import type { OutlineNode } from './outlineStore.svelte';
+
+/** Local shape for the parser under test; outlineStore does not export one. */
+interface OutlineNode {
+	level: number;
+	text: string;
+	children: OutlineNode[];
+}
 
 /**
  * Sprint 63 — AI Outline Generator

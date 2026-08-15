@@ -21,7 +21,7 @@
 
 	let isCollapsed = $state(false);
 
-	function handleAction(action: () => void | undefined, label: string) {
+	function handleAction(action: (() => void) | undefined, label: string) {
 		action?.();
 		toastStore.success(`${label} applied`);
 	}

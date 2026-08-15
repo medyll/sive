@@ -11,7 +11,8 @@ interface OllamaMessage {
 }
 
 interface OllamaOptions {
-	model: string;
+	/** Falls back to the client's default model when omitted. */
+	model?: string;
 	temperature?: number;
 	top_p?: number;
 	num_predict?: number;
