@@ -1,6 +1,6 @@
-# WebSocket Server Deployment Guide
+# Deployment Guide
 
-This guide covers deploying the Sive WebSocket server for real-time collaboration features.
+This guide covers deploying Sive to a production server.
 
 ## Prerequisites
 
@@ -35,7 +35,7 @@ This guide covers deploying the Sive WebSocket server for real-time collaboratio
    npm run dev
    ```
 
-The WebSocket server will be available at `http://localhost:3000`
+The app will be available at `http://localhost:3000`
 
 ### Development Mode
 
@@ -45,7 +45,6 @@ For development with auto-reload:
 # Terminal 1: SvelteKit dev server
 npm run dev
 
-# Terminal 2: WebSocket server (if separate)
 pm2 start ecosystem.config.js --watch
 ```
 
@@ -74,9 +73,8 @@ nano .env.production
 
 # Required production settings:
 NODE_ENV=production
-WS_HOST=0.0.0.0              # Listen on all interfaces
-WS_PORT=3000
-WS_MAX_CONNECTIONS=1000      # Higher for production
+HOST=0.0.0.0              # Listen on all interfaces
+PORT=3000
 LOG_LEVEL=warn
 ```
 
@@ -99,7 +97,7 @@ pm2 startup
 
 # Verify it's running
 pm2 status
-pm2 logs sive-ws
+pm2 logs sive
 ```
 
 ## Configuration
@@ -109,9 +107,8 @@ pm2 logs sive-ws
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `NODE_ENV` | development | Environment mode |
-| `WS_HOST` | localhost | Bind address |
-| `WS_PORT` | 3000 | Server port |
-| `WS_MAX_CONNECTIONS` | 100 | Max concurrent connections |
+| `HOST` | localhost | Bind address |
+| `PORT` | 3000 | Server port |
 | `WS_HEARTBEAT_INTERVAL` | 30000 | Heartbeat interval (ms) |
 | `WS_HEARTBEAT_TIMEOUT` | 60000 | Client timeout (ms) |
 | `LOG_LEVEL` | info | Logging level |
@@ -128,7 +125,6 @@ ulimit -n 65536
 sysctl -w net.core.somaxconn=65535
 
 # Adjust nodejs
-WS_MAX_CONNECTIONS=10000    # More connections
 NODE_OPTIONS="--max-old-space-size=4096"  # More memory
 ```
 
@@ -157,10 +153,10 @@ pm2 web
 
 ```bash
 # Real-time logs
-pm2 logs sive-ws
+pm2 logs sive
 
 # Last 100 lines
-pm2 logs sive-ws --lines 100
+pm2 logs sive --lines 100
 
 # Specific log file
 tail -f logs/ws-error.log
@@ -181,23 +177,23 @@ pm2 monit
 
 ### Multi-Worker Setup
 
-For horizontal scaling across multiple cores:
-
-```javascript
-// In ecosystem.config.js
-instances: 'max',  // Use all available CPU cores
-exec_mode: 'cluster'
-```
+Not currently supported. `ecosystem.config.js` pins the app to a single fork-mode
+instance on purpose — see the note under Load Balancing.
 
 ### Load Balancing
 
-Use nginx as reverse proxy:
+> **Before scaling out, read this.** Several server modules keep their state in
+> process memory rather than in the database — notifications, the skill engine,
+> the AI router and its API keys. Running more than one instance means a request
+> can land on a process that knows nothing about what the previous one did, and
+> a restart drops the state entirely. Run a single instance until that state is
+> persisted.
+
+Use nginx as a reverse proxy:
 
 ```nginx
-upstream websocket {
+upstream sive {
     server localhost:3000;
-    server localhost:3001;
-    server localhost:3002;
 }
 
 server {
@@ -205,33 +201,24 @@ server {
     server_name your-domain.com;
 
     location / {
-        proxy_pass http://websocket;
+        proxy_pass http://sive;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
         proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
 ```
 
 ## SSL/TLS Setup
 
-For secure WebSocket (WSS):
-
 ```bash
-# Generate self-signed certificate (dev only)
-openssl req -x509 -newkey rsa:4096 -keyout server.key -out server.crt -days 365 -nodes
-
-# Or use Let's Encrypt with certbot
-certbot certonly --standalone -d your-domain.com
+# Let's Encrypt with certbot
+certbot --nginx -d your-domain.com
 ```
 
-Update `.env`:
-```
-WS_HTTPS=true
-WS_CERT_PATH=/path/to/server.crt
-WS_KEY_PATH=/path/to/server.key
-```
+Serving over HTTPS is not optional: `hooks.server.ts` sends
+`Strict-Transport-Security`, and session cookies are only safe over TLS.
 
 ## Troubleshooting
 
@@ -245,7 +232,7 @@ lsof -i :3000
 kill -9 <PID>
 
 # Or change port in .env
-WS_PORT=3001
+PORT=3001
 ```
 
 ### High Memory Usage
@@ -255,7 +242,7 @@ WS_PORT=3001
 pm2 monit
 
 # Restart to clear memory leaks
-pm2 restart sive-ws
+pm2 restart sive
 
 # Increase Node memory limit
 NODE_OPTIONS="--max-old-space-size=2048" pm2 start ecosystem.config.js
@@ -274,13 +261,13 @@ WS_CONNECTION_TIMEOUT=30000   # Initial connection timeout
 
 ```bash
 # Check logs
-pm2 logs sive-ws --err
+pm2 logs sive --err
 
 # Increase verbosity
 LOG_LEVEL=debug
 
 # Restart
-pm2 restart sive-ws
+pm2 restart sive
 ```
 
 ## Deployment Checklist
@@ -309,15 +296,15 @@ npm install --omit=dev
 npm run build
 
 # Reload with zero downtime
-pm2 reload sive-ws
+pm2 reload sive
 ```
 
 ## Support
 
 For issues or questions:
-1. Check logs: `pm2 logs sive-ws`
+1. Check logs: `pm2 logs sive`
 2. Review configuration: `cat .env.production`
 3. Check health: `curl localhost:3000/health`
-4. Restart if needed: `pm2 restart sive-ws`
+4. Restart if needed: `pm2 restart sive`
 
 See [Architecture Documentation](../bmad/artifacts/architecture.md) for system design details.

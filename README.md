@@ -1,7 +1,7 @@
 # Sive v1.0 — AI-Assisted Writing Software
 
 **Release:** v1.0.0 (2026-03-29)  
-**Status:** ✅ Production Ready
+**Status:** 🚧 In development — see [ANALYSE.md](./ANALYSE.md) for the verified state of the build, tests, types and lint
 
 Sive is an AI-powered writing assistant designed for authors, screenwriters, and creative professionals. It helps you write, edit, and refine narrative text with real-time AI suggestions, coherence checks, and stylistic analysis. Built with **SvelteKit (Svelte 5)** and **Tailwind CSS v4**, it offers a modern, responsive interface with full mobile support.
 
@@ -24,18 +24,14 @@ Sive is an AI-powered writing assistant designed for authors, screenwriters, and
 - **Auto-Summaries** — Generated on save
 - **Tone Changes** — Formal, Casual, Professional, Creative, Academic
 
-### 🎯 Goals & Gamification
-- **Daily Writing Goals** — Set and track daily targets
+### 🔥 Habit
 - **Streak Tracking** — Maintain your writing streak
-- **Achievement Badges** — Earn badges for milestones (7, 30, 100, 365 days)
-- **Leaderboards** — Weekly and all-time rankings
-- **Community Challenges** — Join writing challenges with friends
 
 ### 🤝 Social Features
 - **Writer Discovery** — Find accountability partners
-- **Activity Feed** — See partners' achievements in real-time
+- **Activity Feed** — See partners' activity
 - **Follow System** — Track your favorite writers
-- **Profile Pages** — Showcase your stats, badges, and bio
+- **Profile Pages** — Showcase your bio
 - **Accountability Partners** — Private feed of partner activities
 
 ### 📱 Mobile Support
@@ -164,13 +160,13 @@ npm run test:e2e
 
 ```bash
 # By file
-npm run test:unit -- --run src/lib/challengeStore.spec.ts
+npm run test:unit -- --run src/lib/server/apiGuard.spec.ts
 
 # By name pattern
 npm run test:unit -- --run --testNamePattern "streak"
 
 # E2E by file
-npm run test:e2e -- e2e/challenge-features.spec.ts
+npm run test:e2e -- e2e/smoke.spec.ts
 ```
 
 ### Test Coverage
@@ -197,8 +193,8 @@ npm run test:e2e -- e2e/challenge-features.spec.ts
 
 - **[Release Notes](./RELEASE_NOTES.md)** — What's new in v1.0
 - **[Project Completion](./PROJECT_COMPLETION.md)** — Full project summary
-- **[User Guide](./docs/USER_GUIDE.md)** — How to use Sive
-- **[API Reference](./docs/API.md)** — REST API documentation
+- **[Technical Analysis](./ANALYSE.md)** — Current state of the codebase, verified by running the gates
+- **[Deployment Guide](./docs/DEPLOYMENT.md)** — Running Sive in production
 - **[Development Guide](./DEV.md)** — Contributing to Sive
 - **[BMAD Artifacts](./bmad/artifacts/)** — Project documentation
 
@@ -238,13 +234,11 @@ We welcome contributions! Please follow these guidelines:
 ## 🗺️ Roadmap
 
 ### v1.1 (Q2 2026)
-- [ ] Real-time collaborative editing
 - [ ] Enhanced accessibility features
 - [ ] Performance improvements (Lighthouse 90+)
 - [ ] More AI writing tools
 
 ### v2.0 (Q4 2026)
-- [ ] Multiplayer writing rooms
 - [ ] Advanced AI features
 - [ ] Plugin system
 - [ ] Mobile apps (iOS/Android)
@@ -253,7 +247,7 @@ We welcome contributions! Please follow these guidelines:
 
 ## 📄 License
 
-MIT License — See [LICENSE](./LICENSE) file for details.
+MIT License. No `LICENSE` file has been added to the repository yet.
 
 ---
 

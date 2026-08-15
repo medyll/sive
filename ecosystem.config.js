@@ -1,5 +1,5 @@
 /**
- * PM2 Ecosystem Configuration for Sive WebSocket Server
+ * PM2 Ecosystem Configuration for Sive
  * See documentation: https://pm2.keymetrics.io/docs/usage/ecosystem-file/
  */
 
@@ -7,35 +7,36 @@ module.exports = {
 	apps: [
 		{
 			// Application name
-			name: 'sive-ws',
+			name: 'sive',
 
 			// Entry point for the application
 			script: './build/index.js',
 
-			// Run in cluster mode (multiple instances)
+			// Single instance, fork mode. Several server modules hold state in
+			// process memory (notifications, skill engine, AI router and its API
+			// keys), so a second instance would answer requests with a different
+			// view of the world. Revisit once that state is persisted.
 			instances: 1,
-			exec_mode: 'cluster',
+			exec_mode: 'fork',
 
 			// Logging
-			error_file: './logs/ws-error.log',
-			out_file: './logs/ws-out.log',
+			error_file: './logs/error.log',
+			out_file: './logs/out.log',
 			log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
 
 			// Environment variables
 			env: {
 				NODE_ENV: 'development',
-				WS_HOST: 'localhost',
-				WS_PORT: 3000,
-				WS_MAX_CONNECTIONS: 100,
+				HOST: 'localhost',
+				PORT: 3000,
 				LOG_LEVEL: 'info'
 			},
 
 			// Production environment variables
 			env_production: {
 				NODE_ENV: 'production',
-				WS_HOST: '0.0.0.0',
-				WS_PORT: 3000,
-				WS_MAX_CONNECTIONS: 1000,
+				HOST: '0.0.0.0',
+				PORT: 3000,
 				LOG_LEVEL: 'warn'
 			},
 
