@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { scale } from 'svelte/transition';
 	import { celebrationStore } from '$lib/celebrationStore.svelte';
 	import { createConfetti, playSound } from '$lib/confetti';
 

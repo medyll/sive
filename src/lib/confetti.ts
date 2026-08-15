@@ -53,11 +53,14 @@ export function createConfetti(options: {
 
 	document.body.appendChild(canvas);
 
-	const ctx = canvas.getContext('2d');
-	if (!ctx) {
+	const maybeCtx = canvas.getContext('2d');
+	if (!maybeCtx) {
 		canvas.remove();
 		return;
 	}
+	// Bind the narrowed context to its own const: `animate` below is a hoisted
+	// function declaration, and TypeScript will not carry a narrowing into one.
+	const ctx = maybeCtx;
 
 	const particles: ConfettiParticle[] = [];
 

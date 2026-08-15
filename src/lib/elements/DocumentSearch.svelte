@@ -98,7 +98,7 @@
 				class="search-input"
 				placeholder="Search documents... (try: title or &quot;exact phrase&quot;)"
 				value={searchInputValue}
-				onInput={handleInput}
+				oninput={handleInput}
 				onFocus={() => (isOpen = true)}
 				aria-label="Search documents"
 				aria-expanded={isOpen}
@@ -107,7 +107,7 @@
 			{#if searchInputValue}
 				<button
 					class="clear-button"
-					onClick={handleClear}
+					onclick={handleClear}
 					title="Clear search"
 					aria-label="Clear search"
 				>
@@ -199,7 +199,7 @@
 	<!-- Click outside to close -->
 	{#if isOpen}
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<div class="backdrop" onClick={() => (isOpen = false)} />
+		<div class="backdrop" onclick={() => (isOpen = false)} />
 	{/if}
 </div>
 

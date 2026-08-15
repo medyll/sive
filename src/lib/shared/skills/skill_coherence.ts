@@ -5,7 +5,7 @@
  * Pushes alerts to the Coherence tab via Command Bus.
  */
 
-import type { SkillDefinition } from './skillEngine.svelte';
+import type { SkillDefinition } from '../skillEngine.svelte';
 
 export const skillCoherence: SkillDefinition = {
 	id: 'skill_coherence',

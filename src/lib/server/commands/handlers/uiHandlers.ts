@@ -11,8 +11,8 @@
  */
 
 import type { CommandEvent } from '../types';
-import type { CoherenceAlertData } from '$lib/coherenceStore';
-import type { SuggestionData } from '$lib/suggestionsStore';
+import type { CoherenceAlertData } from '$lib/coherenceStore.svelte';
+import type { SuggestionData } from '$lib/suggestionsStore.svelte';
 
 // StyleSignalData is defined in AIPanel.svelte but not exported.
 // Re-defining here to avoid circular dependencies

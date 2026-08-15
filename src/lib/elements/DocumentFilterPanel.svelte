@@ -105,7 +105,7 @@
 		{#if isFilterActive()}
 			<button
 				class="clear-all-button"
-				onClick={handleClearAllFilters}
+				onclick={handleClearAllFilters}
 				title="Clear all filters"
 				aria-label="Clear all filters"
 			>
@@ -124,7 +124,7 @@
 						<input
 							type="checkbox"
 							checked={selectedTags.includes(tag)}
-							onChange={() => toggleTag(tag)}
+							onchange={() => toggleTag(tag)}
 							disabled={selectedTags.length >= 5 && !selectedTags.includes(tag)}
 						/>
 						<span class="tag-label">{tag}</span>
@@ -158,7 +158,7 @@
 					type="date"
 					class="date-input"
 					value={dateRangeStart}
-					onChange={handleDateStartChange}
+					onchange={handleDateStartChange}
 				/>
 			</div>
 
@@ -169,7 +169,7 @@
 					type="date"
 					class="date-input"
 					value={dateRangeEnd}
-					onChange={handleDateEndChange}
+					onchange={handleDateEndChange}
 				/>
 			</div>
 		</div>
@@ -182,7 +182,7 @@
 			<select
 				class="sort-select"
 				value={sortBy}
-				onChange={handleSortByChange}
+				onchange={handleSortByChange}
 				aria-label="Sort by"
 			>
 				<option value="score">Relevance</option>
@@ -194,7 +194,7 @@
 			<select
 				class="sort-select"
 				value={sortOrder}
-				onChange={handleSortOrderChange}
+				onchange={handleSortOrderChange}
 				aria-label="Sort order"
 			>
 				<option value="desc">Newest First</option>
@@ -213,7 +213,7 @@
 						{tag}
 						<button
 							class="chip-remove"
-							onClick={() => toggleTag(tag)}
+							onclick={() => toggleTag(tag)}
 							aria-label={`Remove ${tag} filter`}
 						>
 							×
@@ -226,7 +226,7 @@
 						From {dateRangeStart}
 						<button
 							class="chip-remove"
-							onClick={() => {
+							onclick={() => {
 								dateRangeStart = '';
 								applyFilters();
 							}}
@@ -242,7 +242,7 @@
 						To {dateRangeEnd}
 						<button
 							class="chip-remove"
-							onClick={() => {
+							onclick={() => {
 								dateRangeEnd = '';
 								applyFilters();
 							}}
