@@ -29,6 +29,13 @@
       "when": 1774646527185,
       "tag": "0003_hard_spectrum",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1786816122287,
+      "tag": "0004_drop_gamification_and_sharing",
+      "breakpoints": true
     }
   ]
 }

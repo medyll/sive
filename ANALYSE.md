@@ -702,3 +702,49 @@ Effet : **135 → 111 erreurs** de typage, **28 → 8 warnings**.
 - Résorber les 111 erreurs de typage restantes.
 - Ajouter `check` et `lint` à `pnpm verify` une fois les deux au vert — c'est la condition pour en faire un gate bloquant.
 - Phase 3 (journal de migrations) toujours ouverte : elle bloque `db:migrate`, les tests e2e et la migration `0004`.
+
+---
+
+## 15. Journal — Phase 3 appliquée (15 août 2026)
+
+### Ce que le désordre cachait
+
+En croisant les fichiers, le journal et les snapshots, la chronologie se reconstitue :
+
+| Snapshot | Contenu | Fichier réel | Entrée journal |
+|---|---|---|---|
+| `0000` | documents, task, accounts, sessions, users | `0000_normal_maggott.sql` | ✅ idx 0 |
+| `0001` | + user_preferences | `0001_aberrant_reptil.sql` | ✅ idx 1 |
+| `0002` | + document_shares + colonne `tags` | `0003_add_document_shares.sql` | ❌ journal attend `0002_last_black_cat` |
+| `0003` | + challenges, challenge_participants, activity_events, writer_discovery | `0003_hard_spectrum.sql` | ✅ idx 3 |
+
+Le fichier généré `0002_last_black_cat.sql` avait été **renommé à la main** en `0003_add_document_shares.sql` — d'où l'entrée fantôme et les deux fichiers en `0003`. Par-dessus, `0002_add_document_tags.sql` était un **doublon écrit à la main** de l'`ALTER TABLE documents ADD tags` déjà contenu dans la migration idx 2 : l'appliquer aurait échoué sur colonne dupliquée.
+
+### Réparation
+
+- `0003_add_document_shares.sql` → **`0002_last_black_cat.sql`**, son nom généré, aligné avec le journal et le snapshot 0002.
+- `0002_add_document_tags.sql` supprimé (doublon superflu et nuisible).
+- `0004` régénéré par `drizzle-kit generate` plutôt qu'écrit à la main, pour que le snapshot correspondant soit produit correctement.
+
+Journal et fichiers correspondent désormais **1:1 sur cinq entrées**.
+
+### Vérification
+
+La chaîne complète a été rejouée depuis une base vide jetable (hors `local.db`) :
+
+```
+[✓] migrations applied successfully!
+```
+
+Tables obtenues : `accounts`, `activity_events`, `documents`, `sessions`, `task`, `user_preferences`, `users`, `writer_discovery` — exactement le schéma attendu après retrait de la gamification et du partage. **`pnpm db:migrate` fonctionne sur un environnement neuf.**
+
+### ⚠️ Décision restante : `local.db` est désynchronisé
+
+`__drizzle_migrations` de la base locale ne contient que **deux** migrations appliquées (idx 0 et 1), alors que le schéma réel va jusqu'à idx 3 — tout ce qui suit a été appliqué via `db:push`, hors du mécanisme de migrations.
+
+Conséquence : lancer `db:migrate` sur `local.db` rejouerait idx 2 et échouerait (`document_shares` existe déjà). Deux options, à trancher par le propriétaire du projet car elles touchent des données :
+
+1. **Recréer la base de développement** — la chaîne s'applique proprement depuis zéro, comme vérifié. Simple, mais détruit les données locales.
+2. **Réconcilier** — insérer à la main les entrées idx 2 et 3 dans `__drizzle_migrations`, puis appliquer uniquement `0004`.
+
+Aucune des deux n'a été exécutée. `local.db` est intact.
