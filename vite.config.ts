@@ -16,6 +16,16 @@ export default defineConfig({
 				extends: './vite.config.ts',
 				test: {
 					name: 'client',
+					// Registers the afterEach cleanup hook that unmounts rendered
+					// components; without it the DOM accumulates across tests in a file.
+					setupFiles: ['vitest-browser-svelte'],
+					// Interaction tests (locator.click()) wait for actionability. Running
+					// the whole suite in parallel starves the browser enough that the
+					// default 5s budget expires, which showed up as tests failing at
+					// random and passing on re-run. One browser file at a time, with more
+					// headroom, trades a little wall time for a deterministic result.
+					fileParallelism: false,
+					testTimeout: 20000,
 					browser: {
 						enabled: true,
 						provider: playwright(),

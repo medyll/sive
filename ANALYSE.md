@@ -748,3 +748,44 @@ Conséquence : lancer `db:migrate` sur `local.db` rejouerait idx 2 et échouerai
 2. **Réconcilier** — insérer à la main les entrées idx 2 et 3 dans `__drizzle_migrations`, puis appliquer uniquement `0004`.
 
 Aucune des deux n'a été exécutée. `local.db` est intact.
+
+---
+
+## 16. Journal — Tests instables diagnostiqués (15 août 2026)
+
+Le §12 signalait des specs navigateur qui échouaient au hasard puis repassaient sans modification. Le problème s'est reproduit assez souvent (environ une exécution complète sur trois) pour être traité : c'est le seul gate vert du projet, et un test qui échoue aléatoirement finit ignoré, donc finit par masquer une vraie régression.
+
+### Fausse piste
+
+Première hypothèse : accumulation du DOM entre tests. Les specs concernées font `render(...)` puis interrogent le **locator global** :
+
+```ts
+render(SuggestionItem, { suggestion: modSuggestion, onAccept, onReject: vi.fn() });
+await page.getByRole('button', { name: 'Accept suggestion' }).click();
+```
+
+`page` interroge tout le document, pas le conteneur rendu. Sans nettoyage entre tests, le sélecteur pourrait matcher les restes des tests précédents. Et de fait, le projet `client` n'avait **aucun `setupFiles`** — or la documentation amont indique que c'est précisément `setupFiles: ['vitest-browser-svelte']` qui enregistre le hook de nettoyage.
+
+L'ajouter était correct, mais **n'a pas résolu l'instabilité**.
+
+### Cause réelle
+
+En lisant le message d'erreur au lieu de le supposer :
+
+```
+Error: Test timed out in 5000ms.
+```
+
+Des **timeouts**, pas des sélecteurs ambigus. Exécutée seule, la spec passe 4 fois sur 4 ; elle n'échoue que dans la suite complète. `locator.click()` attend l'*actionnabilité* de l'élément ; la suite entière lancée en parallèle prive suffisamment le navigateur de ressources pour que le budget de 5 s expire.
+
+### Correctif
+
+Dans le projet `client` : `fileParallelism: false` et `testTimeout: 20000`. Un fichier navigateur à la fois, avec de la marge — un peu de temps d'exécution échangé contre un résultat déterministe.
+
+`setupFiles` est conservé : c'est la façon documentée d'obtenir le nettoyage entre tests, indépendamment de ce problème.
+
+### Vérification
+
+Quatre exécutions complètes consécutives : **882 passés, 0 échec** à chaque fois, contre environ un échec toutes les trois exécutions auparavant.
+
+Ce n'est pas une preuve d'absence — l'instabilité ne se prouve jamais absente. Mais le mécanisme est identifié, le correctif l'adresse directement, et le comportement observé a nettement changé.
