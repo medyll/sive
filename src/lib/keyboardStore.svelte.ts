@@ -21,7 +21,7 @@ const DEFAULT: KeyboardState = {
 };
 
 function createKeyboardStore() {
-	let state = $state<KeyboardState>({ ...DEFAULT });
+	const state = $state<KeyboardState>({ ...DEFAULT });
 
 	/**
 	 * Initialize keyboard listener (mobile only)

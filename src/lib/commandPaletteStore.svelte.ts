@@ -29,7 +29,7 @@ function saveRecents(ids: string[]): void {
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
 }
 
-let state = $state<PaletteState>({
+const state = $state<PaletteState>({
 	open: false,
 	query: '',
 	results: [],

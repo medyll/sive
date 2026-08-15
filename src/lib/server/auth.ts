@@ -12,11 +12,11 @@ let isMock = false;
 
 try {
 	// dynamic imports to avoid throwing when native bindings fail earlier
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	 
 	const { betterAuth } = require('better-auth/minimal');
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	 
 	const { drizzleAdapter } = require('better-auth/adapters/drizzle');
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	 
 	const { sveltekitCookies } = require('better-auth/svelte-kit');
 	// Use dynamic ESM import so the bundler can resolve the correct chunk at build time
 	// and avoid requiring file-system paths that don't exist in the built output.
@@ -39,7 +39,7 @@ try {
 	});
 } catch (err) {
 	// fallback stub
-	// eslint-disable-next-line no-console
+	 
 	console.warn('better-auth init failed; using auth stub for dev:', (err as Error)?.message || err);
 	isMock = true;
 

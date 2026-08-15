@@ -72,7 +72,7 @@ export const POST: RequestHandler = async (event) => {
           created_at: doc.created_at
         }));
       } catch (err) {
-        // eslint-disable-next-line no-console
+         
         console.error('[/api/search] DB error:', err);
         return json(
           { error: 'Failed to search documents' },
@@ -93,7 +93,7 @@ export const POST: RequestHandler = async (event) => {
       }
     });
   } catch (err) {
-    // eslint-disable-next-line no-console
+     
     console.error('[/api/search] Error:', err);
     return json(
       { error: 'Search request failed' },

@@ -13,7 +13,6 @@ const require = createRequire(import.meta.url);
 let svelteKitHandler: any;
 try {
 	// import only when available
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	svelteKitHandler = require('better-auth/svelte-kit').svelteKitHandler;
 } catch (e) {
 	svelteKitHandler = null;

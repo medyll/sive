@@ -37,12 +37,12 @@ test.describe('Sprint 30 - Full-Text Search & Filtering', () => {
       // Search lowercase
       await searchInput.fill('gatsby');
       let results = page.locator('[role="option"]');
-      let count1 = await results.count();
+      const count1 = await results.count();
 
       // Search uppercase
       await searchInput.fill('GATSBY');
       results = page.locator('[role="option"]');
-      let count2 = await results.count();
+      const count2 = await results.count();
 
       expect(count1).toBeGreaterThan(0);
       expect(count1).toBe(count2); // Should be same

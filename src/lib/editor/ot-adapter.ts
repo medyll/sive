@@ -122,8 +122,8 @@ export class OTAdapter {
 		op2: EditOperation
 	): { op1: EditOperation; op2: EditOperation } {
 		// Simple transformation: adjust positions based on operation types
-		let transformedOp1 = { ...op1 };
-		let transformedOp2 = { ...op2 };
+		const transformedOp1 = { ...op1 };
+		const transformedOp2 = { ...op2 };
 
 		// If op1 is before op2
 		if (op1.position < op2.position) {

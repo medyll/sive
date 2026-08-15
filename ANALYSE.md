@@ -655,3 +655,50 @@ Rien dans l'application n'évalue de code à l'exécution. `unsafe-inline` reste
 - **Rate limiting sur `skills/config` et `skills/execute`** — ils sont désormais authentifiés, mais toujours sans plafond.
 - **Persistance chiffrée des clés API.** Le stockage reste en mémoire et par processus : perdu au redémarrage, incohérent en multi-instance.
 - **Nettoyer les gardes `!locals.user` mortes** dans les neuf endpoints concernés. Elles sont inoffensives — le garde global couvre — mais elles donnent une fausse impression de protection à la lecture.
+
+---
+
+## 14. Journal — Phase 4 partielle (15 août 2026)
+
+### ESLint réparé
+
+Le crash venait bien d'une incompatibilité de versions, pas de la configuration. `typescript-eslint` 8.57.1 → **8.67.0** et `eslint-plugin-svelte` 3.15.2 → **3.23.0**. La documentation amont confirme qu'ESLint 10 est supporté par la branche 8.x à condition d'être assez récent ; le projet était en retard de dix versions mineures.
+
+ESLint s'exécute désormais et remonte **297 problèmes réels** (12 corrigés automatiquement). Le gate passe de « inutilisable » à « bruyant mais exploitable ».
+
+| Règle | Occurrences |
+|---|---|
+| `@typescript-eslint/no-unused-vars` | 136 |
+| `@typescript-eslint/no-explicit-any` | 53 |
+| `svelte/require-each-key` | 27 |
+| `svelte/no-navigation-without-resolve` | 26 |
+| `svelte/prefer-svelte-reactivity` | 16 |
+| autres (13 règles) | 39 |
+
+`svelte/require-each-key` mérite une attention particulière : 27 boucles `{#each}` sans clé, source classique de réconciliation DOM incorrecte sur listes réordonnées.
+
+### Mockups sortis du périmètre Svelte
+
+Les 12 fichiers de `src/lib/elements/mockups/` sont des descripteurs pseudo-HTML, pas des composants. Renommés `.svelte` → `.html`, **en place** : ils décrivent l'interface, donc ils restent à côté des composants qu'ils documentent.
+
+Effet : **135 → 111 erreurs** de typage, **28 → 8 warnings**.
+
+### Débris supprimés à la racine
+
+`tmp_sse_parse.js` (script d'expérimentation SSE), `auth_page.html` (vide) et `auth_page_resp.html` — tous versionnés par accident, référencés nulle part. Récupérables via l'historique git si besoin.
+
+### État des gates
+
+| Gate | À l'analyse | Maintenant |
+|---|---|---|
+| Build | ❌ `MISSING_EXPORT` | ✅ vert |
+| Typecheck | ❌ 182 erreurs / 55 fichiers | 🟠 **111 erreurs / 36 fichiers** |
+| Lint | ❌ crash | 🟠 **297 problèmes** (s'exécute) |
+| Tests unitaires | ✅ 1 164 | ✅ **882, 0 échec** |
+
+### Reste à faire
+
+- Résorber les 297 problèmes de lint, en commençant par `require-each-key` (correction) puis `no-unused-vars` (nettoyage).
+- Résorber les 111 erreurs de typage restantes.
+- Ajouter `check` et `lint` à `pnpm verify` une fois les deux au vert — c'est la condition pour en faire un gate bloquant.
+- Phase 3 (journal de migrations) toujours ouverte : elle bloque `db:migrate`, les tests e2e et la migration `0004`.

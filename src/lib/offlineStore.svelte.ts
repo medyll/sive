@@ -29,7 +29,7 @@ const DEFAULT: OfflineState = {
 };
 
 function createOfflineStore() {
-	let state = $state<OfflineState>({ ...DEFAULT });
+	const state = $state<OfflineState>({ ...DEFAULT });
 
 	/**
 	 * Initialize online/offline listeners

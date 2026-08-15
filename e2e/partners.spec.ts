@@ -64,7 +64,7 @@ test.describe('Accountability Partners (S66-03)', () => {
 		await page.goto('/settings');
 
 		// Check that partner is visible
-		let aliceLink = await page.getByText('@alice');
+		const aliceLink = await page.getByText('@alice');
 		expect(aliceLink).toBeTruthy();
 
 		// Click unfollow button

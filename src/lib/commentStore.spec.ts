@@ -77,7 +77,7 @@ describe('commentStore logic', () => {
 
 	it('persists and restores via localStorage', () => {
 		const store: Record<string, string> = {};
-		let comments: Comment[] = [makeComment()];
+		const comments: Comment[] = [makeComment()];
 		saveComments(store, 'doc-1', comments);
 		const restored = loadComments(store, 'doc-1');
 		expect(restored).toHaveLength(1);
@@ -85,7 +85,7 @@ describe('commentStore logic', () => {
 	});
 
 	it('unresolved sorted by anchorOffset', () => {
-		let comments: Comment[] = [
+		const comments: Comment[] = [
 			makeComment({ id: 'c1', anchorOffset: 10, body: 'second' }),
 			makeComment({ id: 'c2', anchorOffset: 2, body: 'first' })
 		];

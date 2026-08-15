@@ -12,7 +12,7 @@ interface SuggestionState {
 	error: string | null;
 }
 
-let state = $state<SuggestionState>({
+const state = $state<SuggestionState>({
 	pending: false,
 	suggestion: '',
 	mode: 'complete',
