@@ -791,3 +791,84 @@ Dans le projet `client` : `fileParallelism: false` et `testTimeout: 20000`. Un f
 Quatre exécutions complètes consécutives : **882 passés, 0 échec** à chaque fois, contre environ un échec toutes les trois exécutions auparavant.
 
 Ce n'est pas une preuve d'absence — l'instabilité ne se prouve jamais absente. Mais le mécanisme est identifié, le correctif l'adresse directement, et le comportement observé a nettement changé.
+
+---
+
+## 17. Journal — Reste du chantier (15 août 2026)
+
+### Base de développement recréée
+
+Décision tranchée : l'application n'a jamais été en production, les données locales étaient jetables. `local.db` supprimée et reconstruite via `pnpm db:migrate`. Résultat : **5 migrations enregistrées**, schéma conforme. Le désalignement décrit au §15 est résolu.
+
+### Tests e2e nettoyés — et un constat
+
+Suppression de `sprint28` (présence collaborative) et `sprint37-cursors`, entièrement consacrés à des fonctionnalités disparues. Excision ciblée ailleurs : challenges dans `server-sync`, badge de partage dans `sprint-17`, objectifs dans `sprint39-41`, `sprint47-wiring`, `sprint51` et `sprint52`, partage de documents dans `sprint42-46`, icônes `doc_shared`/`conflict` dans `sprint32`, liens de navigation morts dans `mobile-flow`.
+
+**Mais la suite e2e ne passe pas, et ne passait pas avant ces travaux.** Première exécution réelle du projet : `smoke.spec` attend un `<h1>` sur la page d'accueil que l'éditeur n'a jamais eu — vérifié au commit `02395fb`. Une exécution complète produit des dizaines d'échecs. Rendre l'e2e vert est un chantier à part entière ; ce nettoyage garantit seulement qu'elle ne décrit plus des fonctionnalités inexistantes.
+
+### 🔴 Gestionnaires d'événements morts — bug utilisateur réel
+
+Le plus important de cette passe, et il se cachait dans le bruit de `svelte-check`.
+
+`DocumentFilterPanel.svelte` et `DocumentSearch.svelte` écrivaient les attributs d'événement DOM en casse React — `onClick`, `onChange`, `onInput` — sur des `<button>`, `<input>`, `<select>` et `<div>` natifs. Svelte 5 ne lie que les attributs en minuscules. **Les douze gestionnaires étaient inertes** :
+
+- effacer tous les filtres
+- cocher/décocher un tag
+- les deux champs de date
+- les deux sélecteurs de tri
+- trois boutons de tag dans le panneau
+- le champ de recherche et son bouton d'effacement
+- le fond cliquable de la modale
+
+Autrement dit, le panneau de filtres ne filtrait rien. Corrigé.
+
+Les `onChange` de `AIPanel` sont laissés tels quels : ils sont passés à des **composants**, où le nom de prop en camelCase est correct.
+
+### Autres défauts réels corrigés
+
+- `MilestoneNotification` utilisait `in:scale` / `out:scale` sans importer `scale` depuis `svelte/transition` — exception à l'exécution.
+- `uiHandlers` importait `$lib/coherenceStore` et `$lib/suggestionsStore`; les fichiers sont en `.svelte.ts`. `skill_coherence` importait `./skillEngine.svelte` depuis un sous-dossier alors qu'il est un niveau au-dessus.
+- `confetti.ts` gardait bien `ctx` contre `null`, mais l'utilisait dans une **déclaration de fonction hoistée**, dans laquelle TypeScript ne propage pas le narrowing. Le type narrowé est désormais figé dans une const — plutôt que onze assertions non-nulles.
+- **Recherche : les tags ne s'affichaient jamais.** `DocumentSearch` affiche une rangée de tags par résultat, sous garde `{#if result.tags && …}`. Or `SearchResult` n'a jamais eu de champ `tags` : la garde était toujours fausse. `indexDocument` intégrait pourtant les tags au texte cherchable — il les jetait ensuite. Ils sont maintenant conservés et transmis, avec 4 tests.
+
+### Lint
+
+296 → 207 problèmes. Le groupe qui comptait : **27 `{#each}` sans clé**. Sans clé, Svelte réconcilie par position ; réordonner ou filtrer une liste laisse l'état accroché au mauvais élément — les chips de tags de `DocumentList` et les lignes de providers des réglages IA sont exactement cette forme. Clés par valeur pour les listes de chaînes, par identité naturelle quand elle existe, par index uniquement pour les sections de `ReviewReport` dont les éléments n'ont aucune identité — là, la clé fait taire la règle sans acheter de correction, ce qui est le plafond honnête tant que la charge utile n'a pas d'ids.
+
+Également : convention `_` pour les liaisons volontairement inutilisées, liaison `catch` optionnelle, et 29 imports morts retirés — dont `Onboarding` importé sans jamais être monté dans `+page.svelte`, et `partnerFeedStore` inutilisé dans `feed/+page.svelte`. Deux fonctionnalités câblées nulle part.
+
+### Documentation
+
+`docs/API-WS.md` supprimé (documentait l'endpoint WebSocket retiré). `docs/DEPLOYMENT.md` était un vrai guide de déploiement sous un titre WebSocket : contenu conservé, titre corrigé, section nginx/WSS remplacée par un reverse proxy simple et certbot.
+
+`ecosystem.config.js` renommé de `sive-ws`, et surtout **passé de `cluster` à une instance unique en `fork`**. Le mode cluster était activement faux ici : notifications, moteur de skills et routeur IA gardent leur état en mémoire de processus, donc un second worker répond avec une autre vision du monde. La configuration et la section « Scaling » le disent désormais, au lieu de recommander `instances: 'max'`.
+
+README : section gamification retirée, exemples de commandes de test corrigés (ils nommaient des specs supprimées), collaboration temps réel et salles multijoueurs retirées de la feuille de route. Les liens `docs/USER_GUIDE.md` et `docs/API.md` **ne pointaient vers rien** — `AUDIT.md` listait pourtant les deux comme « ✅ Bon ». Tous les liens relatifs résolvent maintenant.
+
+Le statut « ✅ Production Ready » est remplacé par un renvoi vers ce document : ce n'est pas une affirmation que ce dépôt peut tenir tant que lint et types ne sont pas propres.
+
+À signaler, non corrigé : le README annonce une licence MIT alors qu'il n'existe ni fichier `LICENSE` ni champ `license` dans `package.json`. Le lien mort a été retiré plutôt que d'inventer une licence.
+
+### État final des gates
+
+| Gate | À l'analyse | Maintenant |
+|---|---|---|
+| Build | ❌ `MISSING_EXPORT` | ✅ vert |
+| Tests unitaires | ✅ 1 164 (instables) | ✅ **886, 0 échec, stables** |
+| Typecheck | ❌ 182 erreurs / 55 fichiers | 🟠 **80 / 31** |
+| Lint | ❌ crash | 🟠 **207 problèmes** |
+| `db:migrate` | ❌ fichier fantôme | ✅ base recréée, 5 migrations |
+| Endpoints `/api` ouverts | 24 / 26 | ✅ **0**, hors liste blanche de 3 |
+| Tests e2e | jamais exécutés | ❌ échecs massifs, **pré-existants** |
+
+### Ce qui reste ouvert
+
+1. **Suite e2e** — chantier à part entière. Commencer par le `<h1>` manquant sur la page éditeur, qui est aussi un défaut d'accessibilité.
+2. **80 erreurs de typage**, dont ~40 « type non assignable » réparties sur `+page.svelte`, `MobileEditorToolbar`, `ai/router` et `ai/service`.
+3. **207 problèmes de lint**, dominés par `no-unused-vars` (74) et `no-explicit-any` (53).
+4. **`unsafe-inline` dans la CSP** — demande des nonces par requête.
+5. **Rate limiting** absent sur `skills/config` et `skills/execute`.
+6. **État serveur en mémoire** — bloque tout déploiement multi-instance (cf. la note dans `ecosystem.config.js`).
+7. **`/api/ai` renvoie des données factices** en repli silencieux (§11).
+8. **Fichier `LICENSE`** à ajouter.
+9. **`AUDIT.md`** à archiver : plusieurs de ses affirmations sont fausses et vérifiablement fausses.
