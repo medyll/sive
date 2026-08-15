@@ -17,19 +17,19 @@ Trois réserves demeurent, par ordre d'importance :
 
 1. **La suite e2e ne passe pas** et n'a probablement jamais été exécutée en vert.
 2. **L'état serveur vit en mémoire** — pas de persistance, pas de multi-instance.
-3. **Typage et lint ne sont pas propres** (66 et 162), ce qui empêche d'en faire des gates bloquants.
+3. **Typage et lint ne sont pas propres** (38 et 160), ce qui empêche d'en faire des gates bloquants.
 
 ### Gates
 
 | Gate | Commande | Résultat |
 |---|---|---|
 | Build | `pnpm build` | ✅ vert |
-| Tests unitaires | `pnpm test:unit -- --run` | ✅ **761 passés, 0 échec** |
+| Tests unitaires | `pnpm test:unit -- --run` | ✅ **759 passés, 0 échec** |
 | Vérification combinée | `pnpm verify` | ✅ build + tests |
-| Typecheck | `pnpm check` | 🟠 66 erreurs / 26 fichiers |
-| Lint | `pnpm lint` | 🟠 162 problèmes |
+| Typecheck | `pnpm check` | 🟠 38 erreurs / 16 fichiers |
+| Lint | `pnpm lint` | 🟠 160 problèmes |
 | Migrations | `pnpm db:migrate` | ✅ chaîne complète validée |
-| Tests e2e | `pnpm test:e2e` | ❌ échecs massifs |
+| Tests e2e | `pnpm test:e2e` | ❌ échecs massifs (`smoke.spec` passe) |
 
 `pnpm verify` n'inclut volontairement que ce qui est vert. `check` et `lint` l'y rejoindront quand ils le seront.
 
@@ -186,6 +186,22 @@ la rend indétectable.
 
 Les échecs remontent désormais en 503, côté serveur comme côté client.
 
+### Contenu fabriqué — deux endpoints, résolus
+
+Le même défaut existait à deux endroits, et le second était pire.
+
+`/api/ai` servait des fixtures à chaque échec (§ ci-dessus). `/api/ai/suggest`
+faisait la même chose en l'absence de clé API, mais en diffusant la prose inventée
+**mot à mot avec 40 ms de délai**, pour imiter une vraie complétion streamée
+directement dans l'éditeur. Rien ne la distinguait d'une suggestion réelle.
+
+Les deux répondent désormais en 503. Le principe : un repli silencieux ne masque
+pas une panne, il la rend indétectable — et pour un outil d'écriture, faire agir
+un auteur sur des conseils inventés est pire que lui dire que l'analyse a échoué.
+
+Les appels Ollama sont par ailleurs bornés à 30 s : `fetch` n'a pas de timeout par
+défaut, donc un provider injoignable suspendait la requête indéfiniment.
+
 ### `/api/ai/complete` contourne le routeur
 
 Câblé en dur sur Anthropic (`claude-sonnet-4-20250514`), il ignore le routeur multi-provider utilisé partout ailleurs.
@@ -196,7 +212,7 @@ Câblé en dur sur Anthropic (`claude-sonnet-4-20250514`), il ignore le routeur 
 
 ### Unitaires — le point fort
 
-**761 tests, 75 fichiers, 0 échec, stables.** Specs colocalisées avec les sources, y compris côté serveur.
+**759 tests, 75 fichiers, 0 échec, stables.** Specs colocalisées avec les sources, y compris côté serveur.
 
 La suite était instable : des specs navigateur à base de clics échouaient environ une exécution sur trois, puis repassaient sans modification. Diagnostic en §9.6. Le projet `client` tourne désormais en `fileParallelism: false` avec `testTimeout: 20000`, et enregistre le hook de nettoyage via `setupFiles`.
 
@@ -217,8 +233,8 @@ Le reste est un chantier à part entière, à reprendre spec par spec.
 Par ordre de valeur décroissante :
 
 1. **Suite e2e** — toujours en échec massif, et c'est le plus gros reste. `smoke.spec` passe désormais, ce qui donne un point d'entrée : reprendre spec par spec.
-2. **66 erreurs de typage** — dont ~40 « type non assignable », réparties sur `+page.svelte`, `MobileEditorToolbar`, `ai/router`, `ai/service`.
-3. **162 problèmes de lint** — dominés par `no-unused-vars` et `no-explicit-any`.
+2. **38 erreurs de typage** — concentrées sur `+page.svelte` (10, surtout `string | null`), `ai/router` (6, contrats des SDK Anthropic et Gemini), `mcp/tools` et son spec (7).
+3. **160 problèmes de lint** — dominés par `no-unused-vars` et `no-explicit-any`.
 4. **État serveur en mémoire** — notifications, moteur de skills, routeur IA. Bloque le multi-instance et la survie au redémarrage.
 5. **CSP `unsafe-inline`** — demande des nonces par requête.
 6. **Persistance chiffrée des clés API** — aujourd'hui en mémoire, par utilisateur, perdues au redémarrage.
