@@ -7,8 +7,7 @@
  */
 
 import { onMount } from 'svelte';
-import { aiService, type AIProvider } from '$lib/server/ai/service';
-import type { ModelConfig, RoutingConfig } from '$lib/server/ai/router';
+import type { AIProvider, ModelConfig, RoutingConfig } from '$lib/server/ai/router';
 
 // Available providers
 const PROVIDERS: AIProvider[] = ['ollama', 'anthropic', 'openai', 'gemini'];
@@ -124,19 +123,22 @@ async function checkProviders() {
 	}
 	providerStatus = providerStatus;
 
-	const available = await aiService.getAvailableProviders();
-
-	providers = providers.map((p) => ({
-		...p,
-		available: available.includes(p.provider),
-		loading: false
-	})) as typeof providers;
+	let available: AIProvider[] = [];
+	try {
+		const response = await fetch('/api/skills/config');
+		if (response.ok) {
+			const data = await response.json();
+			available = PROVIDERS.filter((p) => data.providers?.[p]?.available);
+		}
+	} catch (err) {
+		console.error('Failed to check providers:', err);
+	}
 
 	// Update providerStatus
 	for (const p of PROVIDERS) {
-		providerStatus[p] = { 
+		providerStatus[p] = {
 			available: available.includes(p),
-			loading: false 
+			loading: false
 		};
 	}
 	providerStatus = providerStatus;
@@ -156,13 +158,18 @@ async function runTest() {
 	testResponse = '';
 
 	try {
-		const response = await aiService.generate({
-			prompt: testPrompt,
-			provider: selectedProvider,
-			taskType: 'chat',
-			config: { temperature, maxTokens }
+		const response = await fetch('/api/ai/test', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				prompt: testPrompt,
+				provider: selectedProvider,
+				temperature,
+				maxTokens
+			})
 		});
-		testResponse = response.content;
+		const data = await response.json();
+		testResponse = response.ok ? data.content : `Error: ${data.error ?? response.statusText}`;
 	} catch (err) {
 		testResponse = `Error: ${err instanceof Error ? err.message : 'Unknown error'}`;
 	} finally {

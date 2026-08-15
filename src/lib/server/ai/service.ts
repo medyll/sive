@@ -5,7 +5,8 @@
  * Handles provider selection, fallback, and streaming.
  */
 
-import { aiRouter, AIProvider, ModelConfig } from './router';
+import { aiRouter } from './router';
+import type { AIProvider, ModelConfig } from './router';
 import { ollamaClient } from './ollama';
 
 /**

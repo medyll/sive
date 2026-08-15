@@ -1,6 +1,7 @@
 import { json, error, type RequestHandler } from '@sveltejs/kit';
-import { aiRouter, aiService, type AIProvider } from '$lib/server/ai/service';
-import type { RoutingConfig, ModelConfig } from '$lib/server/ai/router';
+import { aiService } from '$lib/server/ai/service';
+import { aiRouter } from '$lib/server/ai/router';
+import type { AIProvider, RoutingConfig, ModelConfig } from '$lib/server/ai/router';
 
 // In-memory storage for API keys (in production, use database or secure storage)
 // Note: This is a simple in-memory store - API keys are NOT persisted to disk
