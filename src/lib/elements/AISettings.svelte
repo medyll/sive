@@ -91,14 +91,21 @@ function loadSavedConfig() {
 }
 
 /**
- * Save configuration to localStorage and server
+ * Save configuration to localStorage and server.
+ *
+ * API keys are sent to the server but deliberately kept out of localStorage:
+ * anything stored there is readable by any script running on the origin, so a
+ * single XSS would hand over every provider key.
  */
 async function saveConfig() {
 	const config = { providers, routing };
-	
-	// Save to localStorage
-	localStorage.setItem('ai-settings', JSON.stringify(config));
-	
+
+	// Persist locally without the keys
+	const providersWithoutKeys = Object.fromEntries(
+		Object.entries(providers).map(([name, cfg]) => [name, { ...cfg, apiKey: '' }])
+	);
+	localStorage.setItem('ai-settings', JSON.stringify({ providers: providersWithoutKeys, routing }));
+
 	// Save to server
 	try {
 		const response = await fetch('/api/skills/config', {

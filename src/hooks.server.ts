@@ -1,8 +1,11 @@
 import type { Handle } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
 import { building } from '$app/environment';
 import { auth, isMock } from '$lib/server/auth';
 import { db as drizzleDb } from '$lib/server/db';
 import { user_preferences } from '$lib/server/db/schema';
+import { shouldDenyApiRequest } from '$lib/server/apiGuard';
 import { eq } from 'drizzle-orm';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
@@ -18,7 +21,11 @@ try {
 
 const SECURITY_HEADERS = {
 	'Content-Security-Policy':
-		"default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none';",
+		// 'unsafe-eval' removed: nothing in the app needs runtime code evaluation.
+		// 'unsafe-inline' is still required by SvelteKit's inlined hydration data
+		// and by the components that carry inline styles; removing it needs
+		// per-request nonces and is tracked separately.
+		"default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none';",
 	'X-Content-Type-Options': 'nosniff',
 	'X-Frame-Options': 'DENY',
 	'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
@@ -80,4 +87,27 @@ const handleBetterAuth: Handle = async ({ event, resolve }) => {
 	return response;
 };
 
-export const handle: Handle = handleBetterAuth;
+/**
+ * Denies unauthenticated access to /api by default.
+ *
+ * Individual endpoints previously guarded themselves with `if (!locals.user)`,
+ * which never fired: handleBetterAuth assigns a stub guest user whenever there
+ * is no session, so `locals.user` is always truthy. Authorization therefore has
+ * to key off `locals.session` / `locals.isGuest`, and it belongs in one place.
+ *
+ * The policy itself lives in $lib/server/apiGuard so it can be unit tested.
+ */
+const handleApiGuard: Handle = async ({ event, resolve }) => {
+	const denied = shouldDenyApiRequest({
+		pathname: event.url.pathname,
+		authAvailable: !isMock && !!svelteKitHandler,
+		hasSession: !!event.locals.session,
+		isGuest: !!event.locals.isGuest
+	});
+
+	if (denied) return json({ error: 'Unauthorized' }, { status: 401 });
+
+	return resolve(event);
+};
+
+export const handle: Handle = sequence(handleBetterAuth, handleApiGuard);
