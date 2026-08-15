@@ -12,8 +12,6 @@ const MAX_EVENTS = 100;
 export type ActivityType =
 	| 'badge_earned'
 	| 'streak_milestone'
-	| 'leaderboard_entry'
-	| 'goal_completed'
 	| 'challenge_progress';
 
 export interface ActivityEvent {

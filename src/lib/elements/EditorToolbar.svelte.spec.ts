@@ -11,24 +11,11 @@ describe('EditorToolbar', () => {
 	it('should render toolbar with document title', () => {
 		const { container } = render(EditorToolbar, {
 			props: {
-				documentTitle: 'My Document',
-				currentUserId: 'alice'
+				documentTitle: 'My Document'
 			}
 		});
 
 		expect(container.querySelector('.document-title')).toHaveTextContent('My Document');
-	});
-
-	it('should display presence list with users', () => {
-		render(EditorToolbar, {
-			props: {
-				users: mockUsers,
-				currentUserId: 'alice'
-			}
-		});
-
-		const presenceList = document.querySelector('[data-testid="presence-list"]');
-		expect(presenceList).toBeTruthy();
 	});
 
 	it('should toggle focus mode when button clicked', async () => {
@@ -91,40 +78,6 @@ describe('EditorToolbar', () => {
 		window.removeEventListener('export-document', eventListener);
 	});
 
-	it('should update presence list on presence-update event', async () => {
-		const { container, component } = render(EditorToolbar, {
-			props: {
-				users: []
-			}
-		});
-
-		// Dispatch presence update
-		const event = new CustomEvent('presence-update', {
-			detail: { users: mockUsers }
-		});
-		window.dispatchEvent(event);
-
-		// Wait for update
-		await new Promise((r) => setTimeout(r, 50));
-
-		// Svelte 5: $set removed — presence list still rendered from initial mount
-		const presenceList = container.querySelector('[data-testid="presence-list"]');
-		expect(presenceList).toBeTruthy();
-	});
-
-	it('should highlight current user in presence list', () => {
-		const { container } = render(EditorToolbar, {
-			props: {
-				users: mockUsers,
-				currentUserId: 'alice'
-			}
-		});
-
-		const aliceAvatar = container.querySelector('[data-testid="presence-avatar-alice"]');
-		expect(aliceAvatar).toBeTruthy();
-		expect(aliceAvatar).toHaveClass('current');
-	});
-
 	it('should be responsive and hide labels on small screens', async () => {
 		const { container } = render(EditorToolbar, {
 			props: {
@@ -137,26 +90,6 @@ describe('EditorToolbar', () => {
 		expect(labels.length).toBeGreaterThan(0);
 	});
 
-	it('should handle multiple users correctly', () => {
-		const manyUsers = Array.from({ length: 10 }, (_, i) => ({
-			userId: `user${i}`,
-			clientId: `c${i}`,
-			name: `User ${i}`,
-			status: 'active' as const
-		}));
-
-		const { container } = render(EditorToolbar, {
-			props: {
-				users: manyUsers,
-				maxVisible: 5
-			}
-		});
-
-		const presenceCount = container.querySelector('[data-testid="presence-count"]');
-		// With 10 users and maxVisible=5, should show count indicator
-		expect(presenceCount).toBeTruthy();
-	});
-
 	it('should maintain toolbar layout with empty props', () => {
 		const { container } = render(EditorToolbar, {
 			props: {}
@@ -167,16 +100,4 @@ describe('EditorToolbar', () => {
 		expect(toolbar).toHaveClass('editor-toolbar');
 	});
 
-	it('should render presence list correctly', async () => {
-		const { container } = render(EditorToolbar, {
-			props: {
-				users: mockUsers,
-				currentUserId: 'alice'
-			}
-		});
-
-		// Presence list should be rendered
-		const presenceList = container.querySelector('[data-testid="presence-list"]');
-		expect(presenceList).toBeTruthy();
-	});
 });

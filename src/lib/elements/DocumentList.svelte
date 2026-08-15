@@ -3,7 +3,6 @@
 -->
 <script lang="ts">
   import { tagStore } from '$lib/tagStore.svelte.js';
-  import { presenceStore } from '$lib/presenceStore.svelte';
   import Icon from './Icon.svelte';
 
   export interface DocumentItem {
@@ -172,9 +171,7 @@
             <input class="doc-title-input" type="text" bind:value={editingTitle} onblur={() => commitEdit(doc.id)} onkeydown={(e) => onTitleKeydown(e, doc.id)} onclick={(e) => e.stopPropagation()} aria-label="Document title" {@attach focusOnMount}/>
           {:else}
             <div class="doc-title-row">
-              {#if doc.role && doc.role !== 'owner'}<span class="doc-shared-badge" data-testid="shared-badge-{doc.id}" title="Shared with you ({doc.role})">Shared</span>{/if}
               <span class="doc-title" role="button" tabindex="-1" aria-label="Rename {doc.title}" ondblclick={(e) => startEdit(doc, e)}>{doc.title}</span>
-              {#if presenceStore.getActiveCount(doc.id) > 0}<span class={['doc-activity-badge', presenceStore.getActivityBadge(doc.id).color === 'green' && 'badge-green', presenceStore.getActivityBadge(doc.id).color === 'blue' && 'badge-blue', presenceStore.getActivityBadge(doc.id).color === 'red' && 'badge-red'].filter(Boolean).join(' ')} title="{presenceStore.getActiveCount(doc.id)} people viewing">{presenceStore.getActiveCount(doc.id)}</span>{/if}
             </div>
           {/if}
           <span class="doc-meta">
@@ -337,33 +334,7 @@
 
   .doc-title-row { display: flex; align-items: center; gap: var(--gap-sm); min-width: 0; flex: 1; }
 
-  .doc-shared-badge {
-    font-size: var(--text-xs);
-    padding: var(--pad-xs) var(--pad-sm);
-    border-radius: var(--radius-sm);
-    background: color-mix(in oklch, var(--color-info) 20%, transparent);
-    color: var(--color-info);
-    font-weight: var(--font-semibold);
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
   .doc-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: var(--font-medium); color: var(--color-text); flex: 1; }
-
-  .doc-activity-badge {
-    font-weight: var(--font-semibold);
-    padding: var(--pad-xs) var(--pad-sm);
-    border-radius: var(--radius-full);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.4rem;
-    font-size: var(--text-xs);
-  }
-
-  .badge-green { background: var(--color-success); color: var(--color-surface); }
-  .badge-blue { background: var(--color-info); color: var(--color-surface); }
-  .badge-red { background: var(--color-critical); color: var(--color-surface); }
 
   .doc-meta { display: flex; align-items: center; justify-content: space-between; font-size: var(--text-xs); }
   .doc-date { color: var(--color-text-muted); }

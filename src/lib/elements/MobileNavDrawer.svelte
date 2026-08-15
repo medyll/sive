@@ -11,8 +11,6 @@
 	const navItems: NavItem[] = [
 		{ label: 'Documents', href: '/', icon: '📄' },
 		{ label: 'Discover', href: '/discover', icon: '🔍' },
-		{ label: 'Challenges', href: '/challenges', icon: '🏆' },
-		{ label: 'Leaderboard', href: '/leaderboard', icon: '📊' },
 		{ label: 'Settings', href: '/settings', icon: '⚙️' }
 	];
 

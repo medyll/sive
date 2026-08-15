@@ -1,9 +1,5 @@
 <script lang="ts">
 	import { userProfileStore } from '$lib/userProfileStore.svelte';
-	import { goalsStore } from '$lib/writingGoalsStore.svelte';
-	import { streakStore } from '$lib/streakStore.svelte';
-	import { weeklyGoalsStore } from '$lib/weeklyGoalsStore.svelte';
-	import { badgesStore } from '$lib/badgesStore.svelte';
 
 	interface Props {
 		editable?: boolean;
@@ -12,22 +8,7 @@
 
 	let { editable = false, onEditClick }: Props = $props();
 
-	// Derived data
 	const profile = $derived(userProfileStore.profile);
-	const currentStreak = $derived(goalsStore.goals.streak);
-	const longestStreak = $derived(goalsStore.goals.longestStreak);
-	const totalWords = $derived(goalsStore.goals.todayWords); // TODO: should be cumulative from all sessions
-	const earnedBadges = $derived(badgesStore.getEarnedBadges());
-	const weeklyHistory = $derived(weeklyGoalsStore.history);
-
-	// Calculate total words across all weeks
-	const cumulativeWords = $derived(
-		weeklyHistory.reduce((sum, week) => sum + week.totalWords, 0) + totalWords
-	);
-
-	function formatNumber(n: number): string {
-		return n.toLocaleString();
-	}
 </script>
 
 <div class="profile-card">
@@ -63,76 +44,6 @@
 		{userProfileStore.isPublic ? '🌍 Public' : '🔒 Private'}
 	</div>
 
-	<!-- Stats grid -->
-	<div class="stats-grid">
-		<div class="stat-card">
-			<div class="stat-icon">🔥</div>
-			<div class="stat-label">Current Streak</div>
-			<div class="stat-value">{currentStreak}</div>
-			<div class="stat-sublabel">days</div>
-		</div>
-
-		<div class="stat-card">
-			<div class="stat-icon">⭐</div>
-			<div class="stat-label">Longest Streak</div>
-			<div class="stat-value">{longestStreak}</div>
-			<div class="stat-sublabel">all time</div>
-		</div>
-
-		<div class="stat-card">
-			<div class="stat-icon">📝</div>
-			<div class="stat-label">Total Words</div>
-			<div class="stat-value">{formatNumber(cumulativeWords)}</div>
-			<div class="stat-sublabel">written</div>
-		</div>
-
-		<div class="stat-card">
-			<div class="stat-icon">🏆</div>
-			<div class="stat-label">Badges Earned</div>
-			<div class="stat-value">{earnedBadges.length}</div>
-			<div class="stat-sublabel">achievements</div>
-		</div>
-	</div>
-
-	<!-- Earned badges display -->
-	{#if earnedBadges.length > 0}
-		<div class="badges-section">
-			<h3 class="section-title">Achievements</h3>
-			<div class="badges-grid">
-				{#each earnedBadges as badge}
-					<div
-						class="badge-item"
-						title={badge.name}
-						aria-label={badge.name}
-					>
-						<span class="badge-icon">{badge.icon}</span>
-						<span class="badge-name">{badge.name}</span>
-					</div>
-				{/each}
-			</div>
-		</div>
-	{/if}
-
-	<!-- Activity summary -->
-	{#if weeklyHistory.length > 0}
-		<div class="activity-section">
-			<h3 class="section-title">Activity</h3>
-			<div class="activity-stats">
-				<div class="activity-stat">
-					<span class="activity-label">Weeks Active</span>
-					<span class="activity-value">{weeklyHistory.length}</span>
-				</div>
-				<div class="activity-stat">
-					<span class="activity-label">Perfect Weeks</span>
-					<span class="activity-value">{weeklyGoalsStore.perfectWeeks}</span>
-				</div>
-				<div class="activity-stat">
-					<span class="activity-label">Avg Words/Day</span>
-					<span class="activity-value">{formatNumber(weeklyGoalsStore.getAverageWordsPerDay())}</span>
-				</div>
-			</div>
-		</div>
-	{/if}
 </div>
 
 <style>
@@ -235,124 +146,6 @@
 		color: #166534;
 	}
 
-	/* Stats grid */
-	.stats-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-		gap: 1rem;
-	}
-
-	.stat-card {
-		padding: 1.25rem;
-		background: var(--color-surface, #f9fafb);
-		border: 1px solid var(--color-border, #e5e7eb);
-		border-radius: 0.5rem;
-		text-align: center;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	.stat-icon {
-		font-size: 2rem;
-	}
-
-	.stat-label {
-		font-size: 0.75rem;
-		color: var(--color-text-muted, #6b7280);
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		font-weight: 500;
-	}
-
-	.stat-value {
-		font-size: 1.5rem;
-		font-weight: 700;
-		color: var(--color-text, #1f2937);
-	}
-
-	.stat-sublabel {
-		font-size: 0.7rem;
-		color: var(--color-text-muted, #6b7280);
-	}
-
-	/* Badges section */
-	.badges-section,
-	.activity-section {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.section-title {
-		margin: 0;
-		font-size: 0.95rem;
-		font-weight: 600;
-		color: var(--color-text, #1f2937);
-	}
-
-	.badges-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-		gap: 0.75rem;
-	}
-
-	.badge-item {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.375rem;
-		padding: 0.75rem;
-		background: var(--color-surface, #f9fafb);
-		border: 1px solid var(--color-border, #e5e7eb);
-		border-radius: 0.375rem;
-		text-align: center;
-		cursor: default;
-	}
-
-	.badge-icon {
-		font-size: 1.5rem;
-	}
-
-	.badge-name {
-		font-size: 0.65rem;
-		font-weight: 500;
-		color: var(--color-text, #1f2937);
-		line-height: 1.2;
-	}
-
-	/* Activity stats */
-	.activity-stats {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1rem;
-	}
-
-	.activity-stat {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 1rem;
-		background: var(--color-surface, #f9fafb);
-		border-radius: 0.375rem;
-	}
-
-	.activity-label {
-		font-size: 0.75rem;
-		color: var(--color-text-muted, #6b7280);
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		font-weight: 500;
-	}
-
-	.activity-value {
-		font-size: 1.25rem;
-		font-weight: 700;
-		color: var(--color-text, #1f2937);
-	}
-
 	@media (max-width: 600px) {
 		.profile-card {
 			padding: 1.5rem;
@@ -376,16 +169,5 @@
 			font-size: 1.5rem;
 		}
 
-		.stats-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		.badges-grid {
-			grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-		}
-
-		.activity-stats {
-			grid-template-columns: 1fr;
-		}
 	}
 </style>

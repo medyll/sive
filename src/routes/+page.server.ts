@@ -1,8 +1,7 @@
 import { db, isMock } from '$lib/server/db';
-import { documents, document_shares } from '$lib/server/db/schema';
+import { documents } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import { redirect, json } from '@sveltejs/kit';
-import { createOwnerShare } from '$lib/server/shares';
 import { requireDocumentRole } from '$lib/server/rbac';
 import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 import {
@@ -50,15 +49,12 @@ export const load: PageServerLoad = async ({ locals, cookies }) => {
 	const typedDb = db as any;
 
 	try {
-		// Fetch all share records for this user to find accessible documents
-		const userShares: { document_id: string; role: string }[] = typedDb
-			.select({ document_id: document_shares.document_id, role: document_shares.role })
-			.from(document_shares)
-			.where(eq(document_shares.user_id, userId))
-			.all() ?? [];
+		// Documents are single-owner: everything this user owns, most recent first
+		const ownedDocs: { id: string; updated_at: number }[] =
+			typedDb.select().from(documents).where(eq(documents.user_id, userId)).all() ?? [];
 
-		if (userShares.length === 0) {
-			// First visit — create a default document and owner share
+		if (ownedDocs.length === 0) {
+			// First visit — create a default document
 			const newDoc = {
 				id: crypto.randomUUID(),
 				user_id: userId,
@@ -68,22 +64,11 @@ export const load: PageServerLoad = async ({ locals, cookies }) => {
 				updated_at: Date.now()
 			};
 			typedDb.insert(documents).values(newDoc).run();
-			createOwnerShare(db, newDoc.id, userId);
 			return { documents: [{ ...newDoc, role: 'owner' }], activeDocumentId: newDoc.id };
 		}
 
-		// Fetch all accessible documents in one pass, annotate with role
-		const shareMap = new Map(userShares.map((s) => [s.document_id, s.role]));
-		const accessibleDocIds = userShares.map((s) => s.document_id);
-
-		// Fetch each document (SQLite doesn't support IN with drizzle easily — fetch individually)
-		const docs = accessibleDocIds
-			.map((docId) => {
-				const rows = typedDb.select().from(documents).where(eq(documents.id, docId)).all();
-				if (!rows || rows.length === 0) return null;
-				return { ...rows[0], role: shareMap.get(docId) ?? 'viewer' };
-			})
-			.filter(Boolean)
+		const docs = ownedDocs
+			.map((doc) => ({ ...doc, role: 'owner' }))
 			.sort((a: { updated_at: number }, b: { updated_at: number }) => b.updated_at - a.updated_at);
 
 		return { documents: docs, activeDocumentId: docs[0]?.id ?? null, user: locals.user ?? null, preferences: locals.preferences ?? null };
@@ -119,7 +104,6 @@ export const actions: Actions = {
 			updated_at: Date.now()
 		};
 		typedDb.insert(documents).values(newDoc).run();
-		createOwnerShare(db, newDoc.id, userId);
 		return { success: true, id: newDoc.id };
 	},
 
@@ -144,8 +128,8 @@ export const actions: Actions = {
 			return { success: true };
 		}
 
-		// Require at least editor role
-		await requireDocumentRole(db, locals.user?.id, id, 'editor');
+		// Only the owner may edit
+		await requireDocumentRole(db, locals.user?.id, id);
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const typedDb = db as any;
@@ -178,8 +162,8 @@ export const actions: Actions = {
 			return { success: true };
 		}
 
-		// Require owner role to delete
-		await requireDocumentRole(db, locals.user?.id, idValidation.sanitized as string, 'owner');
+		// Only the owner may delete
+		await requireDocumentRole(db, locals.user?.id, idValidation.sanitized as string);
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const typedDb = db as any;
@@ -210,8 +194,8 @@ export const actions: Actions = {
 		const userId = locals.user?.id ?? GUEST_USER_ID;
 		const validatedId = idValidation.sanitized as string;
 
-		// Require at least viewer access to the source document
-		await requireDocumentRole(db, userId, validatedId, 'viewer');
+		// Only the owner may duplicate
+		await requireDocumentRole(db, userId, validatedId);
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const typedDb = db as any;
@@ -228,7 +212,6 @@ export const actions: Actions = {
 			updated_at: Date.now()
 		};
 		typedDb.insert(documents).values(newDoc).run();
-		createOwnerShare(db, newDoc.id, userId);
 
 		return { success: true, id: newDoc.id };
 	}

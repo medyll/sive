@@ -1,10 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
 
-// Mock drizzle-orm so eq/and produce tagged objects
+// Mock drizzle-orm so eq produces a tagged object we can evaluate
 vi.mock('drizzle-orm', () => ({
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	eq: (col: any, val: unknown) => ({ type: 'eq', column: col, value: val }),
-	and: (...conds: unknown[]) => ({ type: 'and', conditions: conds })
+	eq: (col: any, val: unknown) => ({ type: 'eq', column: col, value: val })
 }));
 
 // Mock @sveltejs/kit error() so it throws a plain Error we can inspect
@@ -16,169 +15,75 @@ vi.mock('@sveltejs/kit', () => ({
 	}
 }));
 
-import { requireDocumentRole } from './rbac';
-import { createOwnerShare, upsertShare } from './shares';
-import type { DocumentRole } from './shares';
+import { requireDocumentRole, getDocumentRole } from './rbac';
 
-// --- Shared mock DB (same pattern as shares.spec.ts) ---
-type ShareRow = {
-	id: string;
-	document_id: string;
-	user_id: string;
-	role: DocumentRole;
-	created_at: number;
-};
+type DocumentRow = { id: string; user_id: string };
 
-function createMockDb() {
-	const rows: ShareRow[] = [];
-
-	function evalCond(cond: unknown, row: ShareRow): boolean {
+function createMockDb(rows: DocumentRow[]) {
+	function evalCond(cond: unknown, row: DocumentRow): boolean {
 		if (!cond || typeof cond !== 'object') return true;
 		const c = cond as Record<string, unknown>;
-		if (c.type === 'and' && Array.isArray(c.conditions)) {
-			return (c.conditions as unknown[]).every((sub) => evalCond(sub, row));
-		}
 		if (c.type === 'eq') {
 			const col = c.column as Record<string, unknown>;
-			return row[col.name as keyof ShareRow] === c.value;
+			return row[col.name as keyof DocumentRow] === c.value;
 		}
 		return true;
 	}
 
 	return {
-		_rows: rows,
 		select: () => ({
 			from: (_table: unknown) => ({
 				where: (cond: unknown) => ({
-					all: () => rows.filter((r) => evalCond(cond, r))
+					get: () => rows.find((r) => evalCond(cond, r))
 				})
-			})
-		}),
-		insert: (_table: unknown) => ({
-			values: (v: Partial<ShareRow>) => {
-				const record: ShareRow = {
-					id: v.id ?? crypto.randomUUID(),
-					document_id: v.document_id!,
-					user_id: v.user_id!,
-					role: v.role ?? 'viewer',
-					created_at: v.created_at ?? Date.now()
-				};
-				return {
-					run: () => {
-						const existing = rows.findIndex(
-							(r) => r.document_id === record.document_id && r.user_id === record.user_id
-						);
-						if (existing < 0) rows.push(record);
-					},
-					onConflictDoUpdate: () => ({
-						run: () => {
-							const existing = rows.findIndex(
-								(r) => r.document_id === record.document_id && r.user_id === record.user_id
-							);
-							if (existing >= 0) rows[existing].role = record.role;
-							else rows.push(record);
-						}
-					})
-				};
-			}
-		}),
-		delete: (_table: unknown) => ({
-			where: (cond: unknown) => ({
-				run: () => {
-					const idx = rows.findIndex((r) => evalCond(cond, r));
-					if (idx >= 0) rows.splice(idx, 1);
-				}
 			})
 		})
 	};
 }
 
+const DOCS: DocumentRow[] = [
+	{ id: 'doc1', user_id: 'user1' },
+	{ id: 'doc2', user_id: 'user2' }
+];
+
+describe('getDocumentRole', () => {
+	it('returns owner for the document owner', async () => {
+		await expect(getDocumentRole(createMockDb(DOCS), 'user1', 'doc1')).resolves.toBe('owner');
+	});
+
+	it('returns null for a user who does not own the document', async () => {
+		await expect(getDocumentRole(createMockDb(DOCS), 'user2', 'doc1')).resolves.toBeNull();
+	});
+
+	it('returns null for an unknown document', async () => {
+		await expect(getDocumentRole(createMockDb(DOCS), 'user1', 'nope')).resolves.toBeNull();
+	});
+
+	it('returns null when no database is available', async () => {
+		await expect(getDocumentRole(null, 'user1', 'doc1')).resolves.toBeNull();
+	});
+});
+
 describe('requireDocumentRole', () => {
-	it('throws 401 when userId is undefined', async () => {
-		const mockDb = createMockDb();
-		await expect(requireDocumentRole(mockDb, undefined, 'doc1', 'viewer')).rejects.toMatchObject({
+	it('rejects with 401 when no user is authenticated', async () => {
+		await expect(requireDocumentRole(createMockDb(DOCS), undefined, 'doc1')).rejects.toMatchObject({
 			status: 401
 		});
 	});
 
-	it('throws 403 when user has no share record', async () => {
-		const mockDb = createMockDb();
-		await expect(requireDocumentRole(mockDb, 'nobody', 'doc1', 'viewer')).rejects.toMatchObject({
+	it('rejects with 403 when the user does not own the document', async () => {
+		await expect(requireDocumentRole(createMockDb(DOCS), 'user2', 'doc1')).rejects.toMatchObject({
 			status: 403
 		});
 	});
 
-	it('returns role when user meets minimum (owner requires owner)', async () => {
-		const mockDb = createMockDb();
-		createOwnerShare(mockDb, 'doc1', 'user1');
-		const role = await requireDocumentRole(mockDb, 'user1', 'doc1', 'owner');
-		expect(role).toBe('owner');
-	});
-
-	it('owner passes editor minimum', async () => {
-		const mockDb = createMockDb();
-		createOwnerShare(mockDb, 'doc1', 'user1');
-		const role = await requireDocumentRole(mockDb, 'user1', 'doc1', 'editor');
-		expect(role).toBe('owner');
-	});
-
-	it('owner passes viewer minimum', async () => {
-		const mockDb = createMockDb();
-		createOwnerShare(mockDb, 'doc1', 'user1');
-		const role = await requireDocumentRole(mockDb, 'user1', 'doc1', 'viewer');
-		expect(role).toBe('owner');
-	});
-
-	it('editor passes editor minimum', async () => {
-		const mockDb = createMockDb();
-		upsertShare(mockDb, 'doc1', 'user2', 'editor');
-		const role = await requireDocumentRole(mockDb, 'user2', 'doc1', 'editor');
-		expect(role).toBe('editor');
-	});
-
-	it('editor passes viewer minimum', async () => {
-		const mockDb = createMockDb();
-		upsertShare(mockDb, 'doc1', 'user2', 'editor');
-		const role = await requireDocumentRole(mockDb, 'user2', 'doc1', 'viewer');
-		expect(role).toBe('editor');
-	});
-
-	it('editor fails owner minimum', async () => {
-		const mockDb = createMockDb();
-		upsertShare(mockDb, 'doc1', 'user2', 'editor');
-		await expect(requireDocumentRole(mockDb, 'user2', 'doc1', 'owner')).rejects.toMatchObject({
+	it('rejects with 403 for an unknown document', async () => {
+		await expect(requireDocumentRole(createMockDb(DOCS), 'user1', 'nope')).rejects.toMatchObject({
 			status: 403
 		});
 	});
 
-	it('viewer passes viewer minimum', async () => {
-		const mockDb = createMockDb();
-		upsertShare(mockDb, 'doc1', 'user3', 'viewer');
-		const role = await requireDocumentRole(mockDb, 'user3', 'doc1', 'viewer');
-		expect(role).toBe('viewer');
-	});
-
-	it('viewer fails editor minimum', async () => {
-		const mockDb = createMockDb();
-		upsertShare(mockDb, 'doc1', 'user3', 'viewer');
-		await expect(requireDocumentRole(mockDb, 'user3', 'doc1', 'editor')).rejects.toMatchObject({
-			status: 403
-		});
-	});
-
-	it('viewer fails owner minimum', async () => {
-		const mockDb = createMockDb();
-		upsertShare(mockDb, 'doc1', 'user3', 'viewer');
-		await expect(requireDocumentRole(mockDb, 'user3', 'doc1', 'owner')).rejects.toMatchObject({
-			status: 403
-		});
-	});
-
-	it('user with access to doc1 cannot access doc2', async () => {
-		const mockDb = createMockDb();
-		createOwnerShare(mockDb, 'doc1', 'user1');
-		await expect(requireDocumentRole(mockDb, 'user1', 'doc2', 'viewer')).rejects.toMatchObject({
-			status: 403
-		});
+	it('resolves to owner for the document owner', async () => {
+		await expect(requireDocumentRole(createMockDb(DOCS), 'user1', 'doc1')).resolves.toBe('owner');
 	});
 });

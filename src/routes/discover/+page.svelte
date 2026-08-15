@@ -3,8 +3,6 @@
 	import WriterCard from '$lib/elements/WriterCard.svelte';
 	import type { DiscoveryProfile } from '$lib/server/discoveryQueries';
 	import { privacyStore } from '$lib/privacyStore.svelte';
-	import { goalsStore } from '$lib/writingGoalsStore.svelte';
-	import { badgesStore } from '$lib/badgesStore.svelte';
 
 	let profiles = $state<DiscoveryProfile[]>([]);
 	let loading = $state(true);
@@ -20,18 +18,11 @@
 	onMount(async () => {
 		// Submit own profile if opted in
 		if (privacyStore.state.showInDiscovery && privacyStore.state.displayName) {
-			const earned = badgesStore.earnedBadges;
-			const topBadge = earned[earned.length - 1];
 			fetch('/api/discover', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					displayName: privacyStore.state.displayName,
-					currentStreak: goalsStore.goals.streak,
-					longestStreak: goalsStore.goals.longestStreak,
-					totalWords: 0,
-					topBadgeIcon: topBadge?.icon ?? '✍️',
-					topBadgeName: topBadge?.name ?? 'Writer'
+					displayName: privacyStore.state.displayName
 				})
 			}).catch(() => {});
 		}

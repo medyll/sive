@@ -16,21 +16,6 @@ describe('privacyStore', () => {
 		privacyStore.reset();
 	});
 
-	it('should default to hidden (showOnLeaderboard=false)', () => {
-		expect(privacyStore.state.showOnLeaderboard).toBe(false);
-	});
-
-	it('should enable leaderboard visibility', () => {
-		privacyStore.setLeaderboardVisibility(true);
-		expect(privacyStore.state.showOnLeaderboard).toBe(true);
-	});
-
-	it('should disable leaderboard visibility', () => {
-		privacyStore.setLeaderboardVisibility(true);
-		privacyStore.setLeaderboardVisibility(false);
-		expect(privacyStore.state.showOnLeaderboard).toBe(false);
-	});
-
 	it('should set display name', () => {
 		privacyStore.setDisplayName('Alice');
 		expect(privacyStore.state.displayName).toBe('Alice');
@@ -47,7 +32,6 @@ describe('privacyStore', () => {
 	});
 
 	it('should persist to localStorage', () => {
-		privacyStore.setLeaderboardVisibility(true);
 		expect(localStorage.setItem).toHaveBeenCalled();
 	});
 
@@ -67,11 +51,9 @@ describe('privacyStore', () => {
 	});
 
 	it('should reset to defaults', () => {
-		privacyStore.setLeaderboardVisibility(true);
 		privacyStore.setShowInDiscovery(true);
 		privacyStore.setDisplayName('Alice');
 		privacyStore.reset();
-		expect(privacyStore.state.showOnLeaderboard).toBe(false);
 		expect(privacyStore.state.showInDiscovery).toBe(false);
 		expect(privacyStore.state.displayName).toBe('');
 	});

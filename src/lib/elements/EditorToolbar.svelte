@@ -1,27 +1,15 @@
 <script lang="ts">
-	import PresenceList from './PresenceList.svelte';
-	import ShareModal from './ShareModal.svelte';
-	import type { OnlineUser } from './PresenceList.svelte';
 	import { onMount } from 'svelte';
 
 	interface Props {
-		/** Online users for presence display */
-		users?: OnlineUser[];
-		/** Current user's id */
-		currentUserId?: string | null;
 		/** Document id */
 		documentId?: string;
 		/** Document title */
 		documentTitle?: string;
-		/** Whether current user is the document owner */
-		isOwner?: boolean;
-		/** Max visible users in presence list */
-		maxVisible?: number;
 	}
 
-	let { users = $bindable([]), currentUserId = null, documentId = '', documentTitle = 'Untitled Document', isOwner = false, maxVisible = 5 }: Props = $props();
+	let { documentId = '', documentTitle = 'Untitled Document' }: Props = $props();
 
-	let showShareModal = $state(false);
 	let isFocusMode = $state(false);
 	let swReady = $state(false);
 	let isOnline = $state(true);
@@ -52,21 +40,6 @@
 		window.dispatchEvent(event);
 	}
 
-	onMount(() => {
-		// Subscribe to presence updates
-		const handlePresenceUpdate = (e: Event) => {
-			const customEvent = e as CustomEvent;
-			if (customEvent.detail?.users) {
-				users = customEvent.detail.users;
-			}
-		};
-
-		window.addEventListener('presence-update', handlePresenceUpdate);
-
-		return () => {
-			window.removeEventListener('presence-update', handlePresenceUpdate);
-		};
-	});
 </script>
 
 <div class="editor-toolbar" data-testid="editor-toolbar">
@@ -83,11 +56,6 @@
 	</div>
 
 	<div class="toolbar-right">
-		<!-- Presence List -->
-		<div class="presence-section">
-			<PresenceList {users} {currentUserId} {maxVisible} />
-		</div>
-
 		<!-- Focus Mode Toggle -->
 		<button
 			class={['toolbar-button', isFocusMode && 'active'].filter(Boolean).join(' ')}
@@ -97,18 +65,6 @@
 		>
 			<span class="icon">📌</span>
 			<span class="label">Focus</span>
-		</button>
-
-		<!-- Share Button -->
-		<button
-			class="toolbar-button"
-			onclick={() => (showShareModal = true)}
-			title="Share document"
-			data-testid="share-btn"
-			disabled={!documentId}
-		>
-			<span class="icon">🔗</span>
-			<span class="label">Share</span>
 		</button>
 
 		<!-- Export Button -->
@@ -123,10 +79,6 @@
 		</button>
 	</div>
 </div>
-
-{#if showShareModal}
-	<ShareModal {documentId} {isOwner} onClose={() => (showShareModal = false)} />
-{/if}
 
 <style>
 	.editor-toolbar {
@@ -174,13 +126,6 @@
 		gap: 0.75rem;
 	}
 
-	.presence-section {
-		display: flex;
-		align-items: center;
-		padding: 0 0.5rem;
-		border-right: 1px solid var(--color-border, #e0e0e0);
-		padding-right: 1rem;
-	}
 
 	.toolbar-button {
 		display: flex;
@@ -248,9 +193,5 @@
 			display: none;
 		}
 
-		.presence-section {
-			border-right: none;
-			padding-right: 0;
-		}
 	}
 </style>

@@ -2,17 +2,12 @@
   import { onMount } from 'svelte';
   import { toastStore } from '$lib/toastStore.svelte';
   import PluginManager from '$lib/elements/PluginManager.svelte';
-  import GoalsDashboard from '$lib/elements/GoalsDashboard.svelte';
-  import GoalTemplateModal from '$lib/elements/GoalTemplateModal.svelte';
   import PartnersList from '$lib/elements/PartnersList.svelte';
     import { privacyStore } from '$lib/privacyStore.svelte';
   import { pluginStore } from '$lib/pluginStore.svelte';
-  import { goalsStore } from '$lib/writingGoalsStore.svelte';
   import { themeStore } from '$lib/themeStore.svelte';
   onMount(() => pluginStore.init());
 
-  let dailyTarget = $state(goalsStore.goals.dailyTarget);
-  let showTemplateModal = $state(false);
 
   let theme: string = $state(themeStore.theme);
   let fontSize = $state('medium');
@@ -43,7 +38,6 @@
     const prefs = { theme, fontSize, autosave, autoSummary };
     try {
       localStorage.setItem('settings', JSON.stringify(prefs));
-      goalsStore.setDailyTarget(dailyTarget);
       themeStore.setTheme(theme as 'light' | 'dark');
       toastStore.success('Preferences saved');
     } catch (e) {
@@ -95,19 +89,6 @@
     </label>
   </div>
 
-  <div class="mb-4">
-    <label class="block font-medium mb-2" for="daily-goal">Daily Writing Goal (words)</label>
-    <div class="goal-input-row">
-      <input id="daily-goal" type="number" bind:value={dailyTarget} min="1" max="100000" />
-      <button type="button" onclick={() => (showTemplateModal = true)} class="btn-template">
-        📋 Use Template
-      </button>
-    </div>
-    {#if goalsStore.goals.streak > 0}
-      <p class="goal-streak">🔥 Current streak: {goalsStore.goals.streak} day{goalsStore.goals.streak !== 1 ? 's' : ''}</p>
-    {/if}
-  </div>
-
   <button onclick={save} class="btn btn-primary">Save</button>
 </section>
 
@@ -117,27 +98,11 @@
 </section>
 
 <section class="settings-section">
-  <h2>Goals Dashboard</h2>
-  <GoalsDashboard />
-</section>
-
-<section class="settings-section">
   <PartnersList />
 </section>
 
 <section class="settings-section">
   <h2>Privacy</h2>
-  <div class="privacy-row">
-    <label for="leaderboard-toggle">
-      <input
-        id="leaderboard-toggle"
-        type="checkbox"
-        checked={privacyStore.state.showOnLeaderboard}
-        onchange={(e) => privacyStore.setLeaderboardVisibility((e.target as HTMLInputElement).checked)}
-      />
-      Show me on the leaderboard
-    </label>
-  </div>
   <div class="privacy-row">
     <label for="discovery-toggle">
       <input
@@ -149,7 +114,7 @@
       Allow others to discover me
     </label>
   </div>
-  {#if privacyStore.state.showOnLeaderboard || privacyStore.state.showInDiscovery}
+  {#if privacyStore.state.showInDiscovery}
     <div class="privacy-name">
       <label for="display-name">Display name</label>
       <input
@@ -163,10 +128,6 @@
     </div>
   {/if}
 </section>
-
-{#if showTemplateModal}
-  <GoalTemplateModal onClose={() => (showTemplateModal = false)} />
-{/if}
 
 <style>
   /* ───────────────────────────────────────────────────────────────────────
@@ -269,35 +230,9 @@
     color: var(--color-text);
   }
 
-  .goal-streak {
-    font-size: var(--text-sm);
-    margin-top: var(--pad-xs);
-    color: var(--color-text);
-  }
 
-  .goal-input-row {
-    display: flex;
-    gap: var(--gap-md);
-    align-items: center;
-  }
 
-  .goal-input-row input {
-    flex: 1;
-    min-width: 0;
-  }
 
-  .btn-template {
-    padding: var(--pad-sm) var(--pad-md);
-    background: var(--color-primary);
-    color: var(--color-surface);
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-weight: var(--font-medium);
-    white-space: nowrap;
-    transition: var(--transition-fast);
-    font-size: var(--text-base);
-  }
 
   .btn-template:hover {
     background: var(--color-primary-hover);
