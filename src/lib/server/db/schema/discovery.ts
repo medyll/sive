@@ -24,7 +24,7 @@ export const activityEvents = sqliteTable('activity_events', {
 	id: text('id')
 		.primaryKey()
 		.$defaultFn(() => `act_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`),
-	type: text('type').notNull(), // badge_earned, streak_milestone, challenge_progress, goal_completed
+	type: text('type').notNull(), // badge_earned, streak_milestone
 	userId: text('user_id').notNull(),
 	displayName: text('display_name').notNull(),
 	timestamp: integer('timestamp').notNull().$defaultFn(() => Date.now()),

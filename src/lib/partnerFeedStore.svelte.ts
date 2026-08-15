@@ -45,10 +45,6 @@ export function typeLabel(event: ActivityEvent): string {
 			return `🏆 ${event.displayName} earned the "${event.payload.badgeName}" badge`;
 		case 'streak_milestone':
 			return `🔥 ${event.displayName} hit a ${event.payload.days}-day streak!`;
-		case 'leaderboard_entry':
-			return `📊 ${event.displayName} reached #${event.payload.rank} on the leaderboard`;
-		case 'goal_completed':
-			return `✅ ${event.displayName} completed their daily goal (${(event.payload.words as number).toLocaleString()} words)`;
 		default:
 			return `${event.displayName} had some activity`;
 	}

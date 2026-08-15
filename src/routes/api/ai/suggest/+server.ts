@@ -2,17 +2,9 @@ import type { RequestHandler } from './$types';
 import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 import { validateAIPrompt } from '$lib/server/inputValidation';
 
-type SuggestionMode = 'complete' | 'rewrite' | 'tone';
+type SuggestionMode = 'complete' | 'rewrite' | 'tone' | 'expand' | 'condense';
 
 const MAX_CTX_CHARS = 3000;
-
-const STUB_SUGGESTIONS: Record<SuggestionMode, string> = {
-	complete:
-		'the story unfolded with unexpected grace, each sentence a stepping stone toward the inevitable revelation that had been lurking beneath the surface all along.',
-	rewrite:
-		'The narrative revealed itself with quiet elegance, each carefully chosen word building toward a truth that had always been present, waiting to be uncovered.',
-	tone: 'The situation developed with remarkable sophistication, demonstrating the profound complexity inherent in human experience and interpersonal dynamics.'
-};
 
 function buildSystemPrompt(mode: SuggestionMode): string {
 	switch (mode) {
@@ -22,6 +14,10 @@ function buildSystemPrompt(mode: SuggestionMode): string {
 			return `You are an AI writing assistant. Rewrite the provided text to improve clarity, flow, and impact while preserving the original meaning and intent. Match the surrounding tone. Return only the rewritten text with no commentary.`;
 		case 'tone':
 			return `You are an AI writing assistant. Adjust the tone of the provided text to be more vivid and evocative — use stronger verbs, more specific nouns, and sensory details. Preserve the meaning. Return only the adjusted text.`;
+		case 'expand':
+			return `You are an AI writing assistant. Expand the provided text with more detail, imagery and development, while preserving its meaning, voice and tense. Return only the expanded text with no commentary.`;
+		case 'condense':
+			return `You are an AI writing assistant. Condense the provided text: keep every essential idea, cut redundancy and filler, preserve the author's voice. Return only the condensed text with no commentary.`;
 	}
 }
 
@@ -50,7 +46,7 @@ export const GET: RequestHandler = async (event) => {
 	const modeParam = (url.searchParams.get('mode') ?? 'complete') as SuggestionMode;
 	const selectionParam = url.searchParams.get('sel') ?? '';
 
-	if (!['complete', 'rewrite', 'tone'].includes(modeParam)) {
+	if (!['complete', 'rewrite', 'tone', 'expand', 'condense'].includes(modeParam)) {
 		return new Response(JSON.stringify({ error: 'Invalid mode' }), { status: 400 });
 	}
 
@@ -82,27 +78,14 @@ export const GET: RequestHandler = async (event) => {
 
 	const apiKey = process.env.ANTHROPIC_API_KEY ?? '';
 
-	// Stub mode — stream word by word
+	// No provider configured. This endpoint streams prose straight into the
+	// author's editor, so it must say so rather than stream invented text that
+	// reads exactly like a real suggestion.
 	if (!apiKey) {
-		const stubText = STUB_SUGGESTIONS[modeParam];
-		const words = stubText.split(' ');
-		const stream = new ReadableStream({
-			async start(controller) {
-				for (const word of words) {
-					controller.enqueue(encodeSSE(word + ' '));
-					await new Promise((r) => setTimeout(r, 40));
-				}
-				controller.enqueue(encodeSSE('[DONE]'));
-				controller.close();
-			}
-		});
-		return new Response(stream, {
-			headers: {
-				'Content-Type': 'text/event-stream',
-				'Cache-Control': 'no-cache',
-				Connection: 'keep-alive'
-			}
-		});
+		return new Response(
+			JSON.stringify({ error: 'No AI provider configured. Set an API key in Settings.' }),
+			{ status: 503, headers: { 'Content-Type': 'application/json' } }
+		);
 	}
 
 	// Real Anthropic streaming

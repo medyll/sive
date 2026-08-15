@@ -9,10 +9,7 @@ import { browser } from '$app/environment';
 const STORAGE_KEY = 'sive:activity';
 const MAX_EVENTS = 100;
 
-export type ActivityType =
-	| 'badge_earned'
-	| 'streak_milestone'
-	| 'challenge_progress';
+export type ActivityType = 'badge_earned' | 'streak_milestone';
 
 export interface ActivityEvent {
 	id: string;

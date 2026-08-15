@@ -60,7 +60,7 @@ describe('activityStore', () => {
 
 	it('should cap at MAX_EVENTS (100) and drop oldest', async () => {
 		for (let i = 0; i < 110; i++) {
-			await activityStore.emit('goal_completed', `u${i}`, `@u${i}`, { words: i * 100 });
+			await activityStore.emit('streak_milestone', `u${i}`, `@u${i}`, { days: i });
 		}
 		expect(activityStore.count).toBe(100);
 		expect(activityStore.state.events[0].userId).toBe('u109');
@@ -99,7 +99,7 @@ describe('activityStore', () => {
 	});
 
 	it('should persist to localStorage on emit', async () => {
-		await activityStore.emit('goal_completed', 'u1', '@alice', { words: 500 });
+		await activityStore.emit('streak_milestone', 'u1', '@alice', { days: 5 });
 		// Note: localStorage persistence happens in browser context
 		// This test verifies the emit works; persistence is tested in E2E
 		expect(activityStore.count).toBe(1);
@@ -113,7 +113,7 @@ describe('activityStore', () => {
 
 	it('should include timestamp on each event', async () => {
 		const before = Date.now();
-		await activityStore.emit('leaderboard_entry', 'u1', '@alice', { rank: 3 });
+		await activityStore.emit('badge_earned', 'u1', '@alice', { badgeName: 'First Draft' });
 		const after = Date.now();
 
 		const ev = activityStore.state.events[0];

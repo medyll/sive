@@ -46,7 +46,7 @@ describe('partnerFeedStore', () => {
 	it('should respect limit in grouped feed', () => {
 		partnersStore.follow('alice');
 		for (let i = 0; i < 20; i++) {
-			activityStore.emit('goal_completed', 'alice', '@alice', { words: i * 100 });
+			activityStore.emit('streak_milestone', 'alice', '@alice', { days: i });
 		}
 
 		const groups = partnerFeedStore.getGroupedFeed(5);
@@ -90,17 +90,4 @@ describe('typeLabel', () => {
 		expect(label).toContain('🔥');
 	});
 
-	it('should format leaderboard_entry', () => {
-		const label = typeLabel({ type: 'leaderboard_entry', displayName: '@charlie', payload: { rank: 3 } } as any);
-		expect(label).toContain('@charlie');
-		expect(label).toContain('#3');
-		expect(label).toContain('📊');
-	});
-
-	it('should format goal_completed', () => {
-		const label = typeLabel({ type: 'goal_completed', displayName: '@diana', payload: { words: 1500 } } as any);
-		expect(label).toContain('@diana');
-		expect(label).toMatch(/1[^\d]?500/); // locale-agnostic: handles "1,500", "1 500", "1500"
-		expect(label).toContain('✅');
-	});
 });

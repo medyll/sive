@@ -3,7 +3,7 @@
  * Manages ghost-text completion and selection-based rewrite/tone suggestions
  */
 
-type SuggestionMode = 'complete' | 'rewrite' | 'tone';
+type SuggestionMode = 'complete' | 'rewrite' | 'tone' | 'expand' | 'condense';
 
 interface SuggestionState {
 	pending: boolean;

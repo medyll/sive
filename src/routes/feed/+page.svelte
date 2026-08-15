@@ -1,15 +1,13 @@
 <script lang="ts">
 	import PartnerActivityFeed from '$lib/elements/PartnerActivityFeed.svelte';
 
-	type Filter = 'all' | 'badge_earned' | 'streak_milestone' | 'leaderboard_entry' | 'goal_completed';
+	type Filter = 'all' | 'badge_earned' | 'streak_milestone';
 	let filter = $state<Filter>('all');
 
 	const filters: { id: Filter; label: string }[] = [
 		{ id: 'all',               label: 'All' },
 		{ id: 'badge_earned',      label: '🏆 Badges' },
 		{ id: 'streak_milestone',  label: '🔥 Streaks' },
-		{ id: 'leaderboard_entry', label: '📊 Leaderboard' },
-		{ id: 'goal_completed',    label: '✅ Goals' }
 	];
 </script>
 
