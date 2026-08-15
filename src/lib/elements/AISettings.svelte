@@ -613,15 +613,6 @@ function getProviderIcon(provider: AIProvider): string {
 		background: var(--bg-secondary);
 	}
 
-	.tab-content {
-		animation: fadeIn 0.2s ease;
-	}
-
-	@keyframes fadeIn {
-		from { opacity: 0; }
-		to { opacity: 1; }
-	}
-
 	.provider-card {
 		background: var(--bg-secondary);
 		border-radius: 0.75rem;
@@ -855,10 +846,6 @@ function getProviderIcon(provider: AIProvider): string {
 	}
 
 	@media (max-width: 768px) {
-		.providers-grid {
-			grid-template-columns: 1fr;
-		}
-		
 		.routing-table {
 			display: block;
 			overflow-x: auto;

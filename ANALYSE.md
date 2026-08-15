@@ -16,18 +16,18 @@ L'architecture est saine — séparation `server/` nette, un module par domaine,
 Trois réserves demeurent, par ordre d'importance :
 
 1. **La suite e2e ne passe pas** et n'a probablement jamais été exécutée en vert.
-2. **18 % des composants ne sont montés nulle part** — du code testé, maintenu, jamais rendu.
-3. **Typage et lint ne sont pas propres** (80 et 206), ce qui empêche d'en faire des gates bloquants.
+2. **L'état serveur vit en mémoire** — pas de persistance, pas de multi-instance.
+3. **Typage et lint ne sont pas propres** (66 et 162), ce qui empêche d'en faire des gates bloquants.
 
 ### Gates
 
 | Gate | Commande | Résultat |
 |---|---|---|
 | Build | `pnpm build` | ✅ vert |
-| Tests unitaires | `pnpm test:unit -- --run` | ✅ **840 passés, 0 échec** |
+| Tests unitaires | `pnpm test:unit -- --run` | ✅ **761 passés, 0 échec** |
 | Vérification combinée | `pnpm verify` | ✅ build + tests |
-| Typecheck | `pnpm check` | 🟠 80 erreurs / 31 fichiers |
-| Lint | `pnpm lint` | 🟠 206 problèmes |
+| Typecheck | `pnpm check` | 🟠 66 erreurs / 26 fichiers |
+| Lint | `pnpm lint` | 🟠 162 problèmes |
 | Migrations | `pnpm db:migrate` | ✅ chaîne complète validée |
 | Tests e2e | `pnpm test:e2e` | ❌ échecs massifs |
 
@@ -47,7 +47,7 @@ Trois réserves demeurent, par ordre d'importance :
 | IA | SDK Anthropic, OpenAI, Google Generative AI, Ollama | — |
 | Tests | Vitest 4 + Playwright 1.58 | — |
 
-**Volumétrie :** 73 composants Svelte, 210 modules TypeScript, 26 endpoints API, 14 pages, 81 specs unitaires, 47 specs e2e.
+**Volumétrie :** 64 composants Svelte, 106 modules TypeScript, 26 endpoints API, 14 pages, 75 specs unitaires, 45 specs e2e.
 
 ---
 
@@ -149,21 +149,42 @@ Deux conséquences, l'une et l'autre bloquantes pour un déploiement sérieux :
 
 `ecosystem.config.js` est donc épinglé à une instance unique en mode `fork`, avec un commentaire expliquant pourquoi. Ne pas repasser en `cluster` avant d'avoir persisté cet état.
 
-### Composants jamais montés
+### Code mort — résolu, mais le mécanisme reste
 
-**10 composants sur 57 ne sont rendus nulle part** — aucun `<Nom>` ailleurs dans le code :
+Un balayage automatique (composant jamais rendu, module jamais importé) a retiré
+environ 6 000 lignes : 9 composants doublons, l'intégralité de `src/lib/shared/`
+— une implémentation parallèle du bus de commandes et du moteur de skills qui
+n'était importée que par elle-même — et le reliquat du système de skills YAML.
 
-`AISettings`, `DocumentFilterPanel`, `DocumentSearch`, `EditorToolbar`, `PerformanceDashboard`, `SlashMenu`, `StatsPanel`, `SuggestionToolbar`, `VirtualDocumentList`, `WordCountBadge`
+Le dépôt est propre aujourd'hui : **0 composant non monté, 0 module orphelin.**
 
-Deux d'entre eux ont des tests unitaires qui passent. C'est le piège : une suite verte donne l'impression que la fonctionnalité existe, alors que le composant n'est jamais atteint par un utilisateur.
+Ce genre de code s'accumule silencieusement, et deux pièges l'ont rendu invisible
+longtemps :
 
-`AISettings` est le cas le plus visible : le panneau de configuration IA — providers, clés, routage par type de tâche — n'est accessible depuis aucune page, alors que la page Réglages est censée l'accueillir.
+- **Une boucle fermée de dépendances** ne se voit pas dans un balayage naïf : les
+  modules de `src/lib/shared/` s'importaient mutuellement, donc chacun paraissait
+  utilisé.
+- **Un composant jamais monté n'est jamais compilé.** `AISettings` mélangeait la
+  syntaxe d'événements Svelte 4 et Svelte 5 et ne compilait pas du tout — personne
+  ne pouvait le savoir tant qu'il n'était rendu nulle part.
 
-Décision à prendre pour chacun : le câbler ou le supprimer. Les laisser en l'état, c'est maintenir et tester du code que personne n'exécute.
+Refaire ce balayage périodiquement coûte peu.
 
-### `/api/ai` renvoie des données factices
+### Le moteur de skills n'avait jamais fonctionné — résolu
 
-`src/routes/api/ai/+server.ts` définit `STUB_SUGGESTIONS`, `STUB_ALERTS` et `STUB_SIGNALS`, servis en repli silencieux quand l'exécution d'un skill échoue. L'interface affiche alors des suggestions inventées sans rien signaler. À rendre explicite ou à supprimer.
+À conserver en mémoire, parce que le mécanisme est instructif.
+
+`/api/ai` répondait à tout échec par des fixtures codées en dur. En les retirant,
+il est apparu que le chemin skill n'avait **jamais** abouti : `skillDir` valait
+`join(__dirname, '..', '..', 'lib', 'skills')`, ce qui depuis
+`src/lib/server/skills/` résout vers `src/lib/lib/skills` — inexistant. Aucune
+définition n'était chargée, en production comprise.
+
+Le repli ne masquait donc pas des échecs occasionnels : il masquait le fait que
+la fonctionnalité était inerte. Un repli silencieux ne cache pas une panne, il
+la rend indétectable.
+
+Les échecs remontent désormais en 503, côté serveur comme côté client.
 
 ### `/api/ai/complete` contourne le routeur
 
@@ -175,7 +196,7 @@ Câblé en dur sur Anthropic (`claude-sonnet-4-20250514`), il ignore le routeur 
 
 ### Unitaires — le point fort
 
-**840 tests, 81 fichiers, 0 échec, stables.** Specs colocalisées avec les sources, y compris côté serveur.
+**761 tests, 75 fichiers, 0 échec, stables.** Specs colocalisées avec les sources, y compris côté serveur.
 
 La suite était instable : des specs navigateur à base de clics échouaient environ une exécution sur trois, puis repassaient sans modification. Diagnostic en §9.6. Le projet `client` tourne désormais en `fileParallelism: false` avec `testTimeout: 20000`, et enregistre le hook de nettoyage via `setupFiles`.
 
@@ -183,9 +204,11 @@ La suite était instable : des specs navigateur à base de clics échouaient env
 
 ### E2E — ne passe pas
 
-47 specs Playwright. La suite produit des dizaines d'échecs, et **cet état est antérieur à tous les travaux consignés ici** : `smoke.spec` attend un `<h1>` que la page éditeur n'a jamais eu, y compris au commit `02395fb`.
+45 specs Playwright. La suite produit des dizaines d'échecs, et **cet état est antérieur à tous les travaux consignés ici**.
 
-Les specs ont été nettoyées des fonctionnalités supprimées, mais rendre l'e2e vert est un chantier à part entière. Bon point de départ : le `<h1>` manquant, qui est aussi un défaut d'accessibilité.
+Le premier symptôme a été traité : `smoke.spec` attendait un `<h1>` que la page éditeur n'a jamais eu, y compris au commit `02395fb`. C'était aussi un défaut d'accessibilité réel — une application d'écriture sans titre de niveau 1. Un `<h1>` accessible aux lecteurs d'écran a été ajouté, placé hors du bloc masqué en mode focus. `smoke.spec` passe intégralement.
+
+Le reste est un chantier à part entière, à reprendre spec par spec.
 
 ---
 
@@ -193,17 +216,16 @@ Les specs ont été nettoyées des fonctionnalités supprimées, mais rendre l'e
 
 Par ordre de valeur décroissante :
 
-1. **Suite e2e** — chantier à part entière. Commencer par le `<h1>` manquant sur la page éditeur.
-2. **10 composants non montés** — câbler ou supprimer, en commençant par `AISettings`.
-3. **80 erreurs de typage** — dont ~40 « type non assignable », réparties sur `+page.svelte`, `MobileEditorToolbar`, `ai/router`, `ai/service`.
-4. **206 problèmes de lint** — dominés par `no-unused-vars` (74) et `no-explicit-any` (53).
-5. **État serveur en mémoire** — bloque le multi-instance et la survie au redémarrage.
-6. **`/api/ai` en repli factice** — rendre l'échec visible.
-7. **Rate limiting** sur `skills/config` et `skills/execute`.
-8. **CSP `unsafe-inline`** — demande des nonces par requête.
-9. **Fichier `LICENSE`** — le README annonce MIT, le dépôt n'a ni fichier ni champ `license`.
-10. **`AUDIT.md`** — à archiver ou dater : plusieurs de ses affirmations sont fausses et vérifiablement fausses (cf. §9.1).
-11. **`pnpm verify`** — y ajouter `check` et `lint` une fois au vert.
+1. **Suite e2e** — toujours en échec massif, et c'est le plus gros reste. `smoke.spec` passe désormais, ce qui donne un point d'entrée : reprendre spec par spec.
+2. **66 erreurs de typage** — dont ~40 « type non assignable », réparties sur `+page.svelte`, `MobileEditorToolbar`, `ai/router`, `ai/service`.
+3. **162 problèmes de lint** — dominés par `no-unused-vars` et `no-explicit-any`.
+4. **État serveur en mémoire** — notifications, moteur de skills, routeur IA. Bloque le multi-instance et la survie au redémarrage.
+5. **CSP `unsafe-inline`** — demande des nonces par requête.
+6. **Persistance chiffrée des clés API** — aujourd'hui en mémoire, par utilisateur, perdues au redémarrage.
+7. **`/api/ai/complete`** — câblé en dur sur Anthropic, contourne le routeur multi-provider.
+8. **Fichier `LICENSE`** — le README annonce MIT, le dépôt n'a ni fichier ni champ `license`. Décision du propriétaire.
+9. **`pnpm verify`** — y ajouter `check` et `lint` une fois au vert.
+10. **`SummaryPanel.svelte.spec.ts`** — exclu en dur du script `test:unit`, dette masquée.
 
 ---
 
@@ -211,9 +233,9 @@ Par ordre de valeur décroissante :
 
 Point de départ : commit `02395fb`, branche `main`.
 
-### 9.1 État initial, et l'écart avec `AUDIT.md`
+### 9.1 État initial, et l'écart avec l'audit précédent
 
-`AUDIT.md` (3 mai 2026, généré par un autre outil) annonçait « Production Ready », « Qualité Code 9/10 », « TypeScript strict partout », score global 8,2/10.
+L'audit du 3 mai 2026, généré par un autre outil — désormais archivé sous [`docs/AUDIT-2026-05-03.archive.md`](docs/AUDIT-2026-05-03.archive.md) — annonçait « Production Ready », « Qualité Code 9/10 », « TypeScript strict partout », score global 8,2/10.
 
 Mesures réelles au même commit :
 
@@ -225,7 +247,7 @@ Mesures réelles au même commit :
 | Tests unitaires | 1 072 + 42 e2e | ✅ 1 164 (mais instables) |
 | Endpoints `/api` ouverts | — | 24 sur 26 |
 
-`AUDIT.md` listait par ailleurs `docs/USER_GUIDE.md` et `docs/API.md` comme « ✅ Bon » : **ni l'un ni l'autre n'existe**.
+Il listait par ailleurs `docs/USER_GUIDE.md` et `docs/API.md` comme « ✅ Bon » : **ni l'un ni l'autre n'existe**.
 
 ### 9.2 Build débloqué — `21b8d84`
 
