@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser, dev } from '$app/environment';
+  import { browser } from '$app/environment';
   import { untrack } from 'svelte';
   import { enhance } from '$app/forms';
   import EditorPanel from '$lib/elements/EditorPanel.svelte';
@@ -10,7 +10,6 @@
   import DocumentList from '$lib/elements/DocumentList.svelte';
   import ExportButton from '$lib/elements/ExportButton.svelte';
   import Toast from '$lib/elements/Toast.svelte';
-import Onboarding from '$lib/elements/Onboarding.svelte';
   import KeyboardShortcutsHelp from '$lib/elements/KeyboardShortcutsHelp.svelte';
   import SummaryPanel from '$lib/elements/SummaryPanel.svelte';
   import { hardenStore, nextHardenId } from '$lib/hardenStore.svelte.js';

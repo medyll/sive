@@ -2,7 +2,7 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 import { db, isMock } from '$lib/server/db';
 import { documents } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
-import { computeUserStats, computeDocStats } from '$lib/server/stats';
+import { computeUserStats } from '$lib/server/stats';
 
 const GUEST_EMPTY = {
 	totalWords: 0, totalDocs: 0, totalChars: 0, avgWordsPerDoc: 0,

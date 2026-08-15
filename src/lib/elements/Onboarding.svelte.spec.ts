@@ -5,7 +5,7 @@ import { toastStore } from '$lib/toastStore.svelte';
 
 describe('Onboarding.svelte', () => {
   beforeEach(() => {
-    try { localStorage.removeItem('sive:onboarding_seen'); } catch (e) {}
+    try { localStorage.removeItem('sive:onboarding_seen'); } catch {}
     for (const t of [...toastStore.items]) toastStore.dismiss(t.id);
   });
 

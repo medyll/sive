@@ -2,7 +2,7 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 import { db, isMock } from '$lib/server/db';
 import { documents } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
-import { search, indexDocument, searchWithFilters, type SearchFilter, type SearchDocument } from '$lib/server/search';
+import { searchWithFilters, type SearchFilter, type SearchDocument } from '$lib/server/search';
 import { validateAIPrompt } from '$lib/server/inputValidation';
 import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 

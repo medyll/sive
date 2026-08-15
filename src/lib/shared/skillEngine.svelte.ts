@@ -7,7 +7,6 @@
 
 import { executeMCPTool, MCP_TOOLS } from '$lib/server/mcp/tools';
 import { commandBus } from '$lib/shared/commandBus';
-import type { YamlEntity } from '$lib/types/yaml-types';
 
 /**
  * Skill step types

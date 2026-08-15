@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterAll } from 'vitest';
+import { describe, it, expect, vi, afterAll } from 'vitest';
 
 const store: Record<string, string> = {};
 vi.stubGlobal('localStorage', {

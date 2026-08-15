@@ -24,7 +24,7 @@
         autosave = p.autosave ?? autosave;
         autoSummary = p.autoSummary ?? autoSummary;
       }
-    } catch (e) {
+    } catch {
       // ignore
     }
   });
@@ -40,7 +40,7 @@
       localStorage.setItem('settings', JSON.stringify(prefs));
       themeStore.setTheme(theme as 'light' | 'dark');
       toastStore.success('Preferences saved');
-    } catch (e) {
+    } catch {
       toastStore.error('Failed to save preferences');
     }
   }

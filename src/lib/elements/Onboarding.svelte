@@ -20,7 +20,7 @@
       const tourSeen = localStorage.getItem('sive:tour:completed');
       // Only show if neither onboarding nor tour has been completed
       if (!seen && !tourSeen) open = true;
-    } catch (e) {
+    } catch {
       // ignore localStorage errors
     }
   });
@@ -35,7 +35,7 @@
   function finish() {
     open = false;
     if (browser) {
-      try { localStorage.setItem('sive:onboarding_seen', '1'); } catch (e) {}
+      try { localStorage.setItem('sive:onboarding_seen', '1'); } catch {}
     }
     toastStore.success('Onboarding completed');
   }
@@ -48,7 +48,7 @@
       <p class="onboard-body">{steps[step].body}</p>
 
       <div class="onboard-steps">
-        {#each steps as s, i}
+        {#each steps as s, i (s.title)}
           <button
             class={['onboard-step', i === step && 'active'].filter(Boolean).join(' ')}
             aria-current={i === step}

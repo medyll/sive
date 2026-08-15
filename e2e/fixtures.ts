@@ -11,7 +11,7 @@ export const test = baseTest.extend({
       await context.addInitScript(() => {
         try {
           localStorage.setItem('sive:onboarding_seen', '1');
-        } catch (e) {
+        } catch {
           // ignore localStorage errors
         }
       });

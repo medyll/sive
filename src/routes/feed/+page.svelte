@@ -1,6 +1,5 @@
 <script lang="ts">
 	import PartnerActivityFeed from '$lib/elements/PartnerActivityFeed.svelte';
-	import { partnerFeedStore } from '$lib/partnerFeedStore.svelte';
 
 	type Filter = 'all' | 'badge_earned' | 'streak_milestone' | 'leaderboard_entry' | 'goal_completed';
 	let filter = $state<Filter>('all');

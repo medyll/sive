@@ -1,5 +1,5 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { getAll, markAllRead, clear, getUnread, push } from '$lib/server/notifications';
+import { getAll, markAllRead, clear, push } from '$lib/server/notifications';
 
 function getUserId(event: Parameters<RequestHandler>[0]): string | null {
 	return event.locals.user?.id ?? null;

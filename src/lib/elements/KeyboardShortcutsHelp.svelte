@@ -64,7 +64,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each shortcuts as { keys, description }}
+        {#each shortcuts as { keys, description } (keys)}
           <tr>
             <td><kbd class="kbd">{keys}</kbd></td>
             <td class="shortcut-desc">{description}</td>

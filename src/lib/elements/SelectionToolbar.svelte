@@ -96,7 +96,7 @@
 
 		{#if showToneMenu}
 			<div class="tone-menu" role="menu">
-				{#each tones as tone}
+				{#each tones as tone (tone)}
 					<button
 						class="tone-option"
 						role="menuitem"

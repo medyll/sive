@@ -2,7 +2,7 @@
  * Sprint 20 — Document Search, Arrow Navigation & Keyboard Shortcuts
  * Unit tests (vitest + @testing-library/svelte)
  */
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 // ─── S20-01: Search/filter logic ────────────────────────────────────────────
 

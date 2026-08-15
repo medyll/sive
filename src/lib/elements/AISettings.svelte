@@ -273,7 +273,7 @@ function getProviderIcon(provider: AIProvider): string {
 			</p>
 			
 			<div class="grid grid-cols-2 gap-3">
-				{#each PROVIDERS as provider}
+				{#each PROVIDERS as provider (provider)}
 					{@const p = providers[provider]}
 					{@const status = providerStatus[provider]}
 					<div class="provider-card {p.enabled ? 'enabled' : 'disabled'} {status.available ? 'available' : 'unavailable'}">
@@ -421,7 +421,7 @@ function getProviderIcon(provider: AIProvider): string {
 					</tr>
 				</thead>
 				<tbody>
-					{#each TASK_TYPES as taskType}
+					{#each TASK_TYPES as taskType (taskType)}
 						{@const config = routing[taskType]}
 						<tr>
 							<td class="task-name">{taskType}</td>
@@ -433,7 +433,7 @@ function getProviderIcon(provider: AIProvider): string {
 									}}
 									class="select-field"
 								>
-									{#each PROVIDERS as p}
+									{#each PROVIDERS as p (p)}
 										<option value={p}>{p}</option>
 									{/each}
 								</select>
@@ -446,7 +446,7 @@ function getProviderIcon(provider: AIProvider): string {
 									}}
 									class="select-field"
 								>
-									{#each getModelsForProvider(config.provider) as model}
+									{#each getModelsForProvider(config.provider) as model (model)}
 										<option value={model}>{model}</option>
 									{/each}
 								</select>
@@ -492,7 +492,7 @@ function getProviderIcon(provider: AIProvider): string {
 								}}
 								class="select-field"
 							>
-								{#each PROVIDERS as p}
+								{#each PROVIDERS as p (p)}
 									<option value={p}>{p}</option>
 								{/each}
 							</select>
@@ -505,7 +505,7 @@ function getProviderIcon(provider: AIProvider): string {
 								}}
 								class="select-field"
 							>
-								{#each getModelsForProvider(routing.fallback.provider) as model}
+								{#each getModelsForProvider(routing.fallback.provider) as model (model)}
 									<option value={model}>{model}</option>
 								{/each}
 							</select>

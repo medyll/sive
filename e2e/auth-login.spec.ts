@@ -74,7 +74,7 @@ test.describe('Auth – login flow', () => {
 		// emulate navigation in the test so the behavior matches the real app.
 		try {
 			await page.waitForURL('/', { timeout: 15000 });
-		} catch (e) {
+		} catch {
 			await page.evaluate(() => (window.location.href = '/'));
 			await page.waitForURL('/', { timeout: 15000 });
 		}

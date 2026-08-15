@@ -10,7 +10,7 @@
   import { hardenStore } from '$lib/hardenStore.svelte.js';
   import { styleStore } from '$lib/styleStore.svelte.js';
   import { STUB_ALERTS, type CoherenceAlertData } from '$lib/coherenceStore.svelte.js';
-  import { STUB_SUGGESTIONS, suggestionsStore, type SuggestionData } from '$lib/suggestionsStore.svelte.js';
+  import { STUB_SUGGESTIONS, suggestionsStore } from '$lib/suggestionsStore.svelte.js';
   import { toastStore } from '$lib/toastStore.svelte';
   import { promptHistoryStore } from '$lib/promptHistoryStore.svelte.js';
   import OutlinePanel from './OutlinePanel.svelte';
@@ -299,7 +299,7 @@
           {#if chatMessages.length === 0}
             <p class="tab-empty">Ask your writing assistant anything.</p>
             <div class="suggested-prompts">
-              {#each SUGGESTED_PROMPTS as prompt}
+              {#each SUGGESTED_PROMPTS as prompt (prompt)}
                 <button
                   type="button"
                   class="prompt-chip"

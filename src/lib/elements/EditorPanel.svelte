@@ -124,7 +124,7 @@
         ghostTextX = 100; // Would calculate from textarea
         ghostTextY = 200;
       }
-    } catch (err) {
+    } catch {
       // Silently fail - ghost text is optional
     }
   }

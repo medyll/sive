@@ -38,7 +38,7 @@
 	<section class="ambient">
 		<h4>Ambient Sound</h4>
 		<div class="sound-grid">
-			{#each SOUNDS as s}
+			{#each SOUNDS as s (s)}
 				<button
 					class={['sound-btn', focusStore.state.ambient === s && 'active'].filter(Boolean).join(' ')}
 					onclick={() => focusStore.setAmbient(s)}

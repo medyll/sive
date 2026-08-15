@@ -216,7 +216,7 @@ export function playSound(type: 'success' | 'celebration' = 'celebration') {
 			oscillator.start(now + 0.3);
 			oscillator.stop(now + 0.4);
 		}
-	} catch (e) {
+	} catch {
 		// Audio context not available
 	}
 }

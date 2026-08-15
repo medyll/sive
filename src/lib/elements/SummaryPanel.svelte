@@ -124,7 +124,7 @@
     <header class="summary-header">
       <span class="summary-title">📄 Summary</span>
       <div class="length-tabs" role="group" aria-label="Summary length">
-        {#each (['short', 'medium', 'long'] as SummaryLength[]) as len}
+        {#each (['short', 'medium', 'long'] as SummaryLength[]) as len (len)}
           <button
             type="button"
             class={['tab', selectedLength === len && 'active'].filter(Boolean).join(' ')}

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 // ── S52-04: doc:search command registered ───────────────────────────────────
 describe('S52-04 — doc:search command', () => {

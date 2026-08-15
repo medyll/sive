@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
+import { page } from 'vitest/browser';
 import ReviewToolbar from './ReviewToolbar.svelte';
 
 describe('ReviewToolbar', () => {

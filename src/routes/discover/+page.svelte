@@ -65,7 +65,7 @@
 			<div class="discover-error" role="alert">⚠️ {error}</div>
 		{:else if loading}
 			<div class="discover-skeleton">
-				{#each Array(6) as _}
+				{#each Array(6) as _, i (i)}
 					<div class="skeleton-card"></div>
 				{/each}
 			</div>

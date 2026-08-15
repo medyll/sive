@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { getVersions, getVersion, restoreVersion, labelVersion } from '$lib/server/versions';
+import { getVersions, restoreVersion, labelVersion } from '$lib/server/versions';
 import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 
 export const GET: RequestHandler = async ({ url, locals }) => {

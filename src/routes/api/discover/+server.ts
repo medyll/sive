@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { db } from '$lib/server/db';
-import { writerDiscovery, activityEvents } from '$lib/server/db/schema/discovery';
+import { writerDiscovery } from '$lib/server/db/schema/discovery';
 import { eq } from 'drizzle-orm';
 
 /**

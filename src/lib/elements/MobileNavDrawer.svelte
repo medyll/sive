@@ -58,7 +58,7 @@
 	</div>
 
 	<nav class="nav-list">
-		{#each navItems as item}
+		{#each navItems as item (item.href)}
 			<a
 				href={item.href}
 				class="nav-item"

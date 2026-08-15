@@ -147,7 +147,7 @@
 
   {#if allDocTags.length > 0}
     <div class="tag-filter-bar" aria-label="Filter by tag">
-      {#each allDocTags as tag}
+      {#each allDocTags as tag (tag)}
         <button type="button" class={['tag-filter-chip', activeTagFilter === tag && 'tag-filter-chip--active'].filter(Boolean).join(' ')} onclick={() => { activeTagFilter = activeTagFilter === tag ? null : tag; }} aria-pressed={activeTagFilter === tag}>{tag}</button>
       {/each}
       {#if activeTagFilter}<button type="button" class="btn-tag-filter-clear" aria-label="Clear tag filter" onclick={() => { activeTagFilter = null; }}><Icon type="close" size={14} /></button>{/if}
@@ -156,7 +156,7 @@
 
   <ul class="doc-list-items" role="listbox" aria-label="Documents" onkeydown={onListKeydown}>
     {#if loading}
-      {#each [1, 2, 3] as _}<li class="doc-skeleton" aria-hidden="true"><div class="skeleton-title"></div><div class="skeleton-date"></div></li>{/each}
+      {#each [1, 2, 3] as skeleton (skeleton)}<li class="doc-skeleton" aria-hidden="true"><div class="skeleton-title"></div><div class="skeleton-date"></div></li>{/each}
     {:else if filteredDocuments.length === 0}
       <li class="doc-empty">
         {#if searchQuery}<span>No results for "{searchQuery}"</span><button type="button" class="btn-empty-new" onclick={() => { searchQuery = ''; }}>Clear filter</button>
@@ -188,7 +188,7 @@
             </div>
           </span>
           <div class="doc-tags" role="button" tabindex="0" onclick={(e) => e.stopPropagation()} onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); }}>
-            {#each tagStore.get(doc.id) as tag}<span class="doc-tag-chip">{tag}<button type="button" class="btn-tag-remove" aria-label="Remove tag {tag}" onclick={onTagRemoveClick(doc.id, tag)}><Icon type="remove" size={10} /></button></span>{/each}
+            {#each tagStore.get(doc.id) as tag (tag)}<span class="doc-tag-chip">{tag}<button type="button" class="btn-tag-remove" aria-label="Remove tag {tag}" onclick={onTagRemoveClick(doc.id, tag)}><Icon type="remove" size={10} /></button></span>{/each}
             {#if tagStore.get(doc.id).length < 5}
               {#if tagEditingDocId === doc.id}<input class="tag-input" type="text" placeholder="tag…" bind:value={tagInputValue} onblur={() => commitTag(doc.id)} onkeydown={(e) => onTagInputKeydown(e, doc.id)} onclick={(e) => e.stopPropagation()} aria-label="Add tag" {@attach focusTagInput}/>{:else}<button type="button" class="btn-tag-add" aria-label="Add tag to {doc.title}" onclick={(e) => startTagEdit(doc.id, e)}><Icon type="add" size={14} /></button>{/if}
             {/if}

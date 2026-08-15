@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { db } from '$lib/server/db';
 import { activityEvents } from '$lib/server/db/schema/discovery';
-import { eq, desc, limit } from 'drizzle-orm';
+import { eq, desc } from 'drizzle-orm';
 
 /**
  * GET /api/activity — Get activity feed

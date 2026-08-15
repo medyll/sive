@@ -5,7 +5,7 @@ Props: onExitReview
 <script lang="ts">
   import ReviewToolbar, { type ReviewScope } from './ReviewToolbar.svelte';
   import ReviewText, { type Highlight } from './ReviewText.svelte';
-  import ReviewReport, { type ReviewReportProps } from './ReviewReport.svelte';
+  import ReviewReport from './ReviewReport.svelte';
 
   export interface ReviewScreenProps {
     onExitReview?: () => void;

@@ -14,7 +14,7 @@ let svelteKitHandler: any;
 try {
 	// import only when available
 	svelteKitHandler = require('better-auth/svelte-kit').svelteKitHandler;
-} catch (e) {
+} catch {
 	svelteKitHandler = null;
 }
 
@@ -71,7 +71,7 @@ const handleBetterAuth: Handle = async ({ event, resolve }) => {
 					event.locals.preferences = null;
 				}
 			}
-		} catch (e) {
+		} catch {
 			// ignore preference loading errors
 		}
 	}

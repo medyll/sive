@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { checkWriteRateLimit, getClientIP } from './rateLimitMiddleware';
 import { clearBuckets } from './rateLimit';
 import type { RequestEvent } from '@sveltejs/kit';

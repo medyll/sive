@@ -173,7 +173,7 @@
 	<h3 class="text-lg font-semibold">Performance Metrics</h3>
 	
 	<div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-		{#each metrics as metric}
+		{#each metrics as metric (metric.name)}
 			<div class="p-4 border rounded-lg {getRatingBg(metric.rating)}">
 				<div class="text-sm text-muted mb-1">{metric.name}</div>
 				<div class="text-2xl font-bold {getRatingColor(metric.rating)}">

@@ -25,7 +25,7 @@ test.describe('Document persistence — /app', () => {
 		// Allow either editor to contain stub content or the toolbar to show a known title
 		try {
 			await expect(editor).not.toBeEmpty();
-		} catch (err) {
+		} catch {
 			const toolbar = page.locator('.project-label');
 			await expect(toolbar).toContainText(/Chapter 1|Untitled/);
 		}

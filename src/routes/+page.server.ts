@@ -1,7 +1,7 @@
 import { db, isMock } from '$lib/server/db';
 import { documents } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
-import { redirect, json } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import { requireDocumentRole } from '$lib/server/rbac';
 import { checkWriteRateLimit } from '$lib/server/rateLimitMiddleware';
 import {
@@ -11,7 +11,6 @@ import {
   validateDocumentFormData
 } from '$lib/server/inputValidation';
 import type { PageServerLoad, Actions } from './$types';
-import { existsSync } from 'node:fs';
 
 // Guest user id used when auth is unavailable (mock/dev mode)
 const GUEST_USER_ID = 'guest';

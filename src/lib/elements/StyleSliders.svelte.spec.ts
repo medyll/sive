@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import { page, userEvent } from 'vitest/browser';
+import { page } from 'vitest/browser';
 import StyleSliders from './StyleSliders.svelte';
 
 const defaultValues = { cynicism: 50, complexity: 50, rhythm: 50, density: 50 };

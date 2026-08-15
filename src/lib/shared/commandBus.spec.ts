@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { CommandBus, commandBus, registerCommand, executeCommand } from './commandBus';
+import { CommandBus, registerCommand, executeCommand } from './commandBus';
 
 // Reset singleton for each test
 vi.mock('./commandBus', async () => {

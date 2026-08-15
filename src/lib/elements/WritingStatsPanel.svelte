@@ -74,7 +74,7 @@
 	{#if topWords.length > 0}
 		<div class="top-words">
 			<span class="section-label">Top words</span>
-			{#each topWords as { word, count }}
+			{#each topWords as { word, count } (word)}
 				<div class="word-row">
 					<span class="word">{word}</span>
 					<div class="bar-track">

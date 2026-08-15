@@ -60,7 +60,7 @@ at him. Martin noticed her hands were shaking.\n\n\
   aria-label="Manuscript text — read only"
 >
   <div class="text-content">
-    {#each segments as seg}
+    {#each segments as seg, i (i)}
       {#if seg.highlight}
         <button
           type="button"

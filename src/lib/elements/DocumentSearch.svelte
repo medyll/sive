@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { setQuery, clearSearch, selectResult, searchState, isSearchActive, resultCount } from '$lib/searchStore.svelte';
-	import { formatDistanceToNow } from 'date-fns';
+	import { setQuery, clearSearch, selectResult, searchState, resultCount } from '$lib/searchStore.svelte';
 	import type { SearchResult } from '$lib/server/search';
 
 	let searchInputValue = $state('');
@@ -179,7 +178,7 @@
 
 								{#if result.tags && result.tags.length > 0}
 									<div class="result-tags">
-										{#each result.tags.slice(0, 3) as tag, i}
+										{#each result.tags.slice(0, 3) as tag, i (tag)}
 											<span class={['tag', getTagColor(i)].filter(Boolean).join(' ')}>
 												{tag}
 											</span>
