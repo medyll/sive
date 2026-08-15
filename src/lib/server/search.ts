@@ -10,6 +10,7 @@ export interface SearchResult {
   snippet: string; // matching excerpt with context
   score: number; // relevance score (0-100)
   highlights: Array<{ start: number; end: number }>; // positions of matches in snippet
+  tags: string[]; // the document's tags, so results can display them
 }
 
 export interface SearchDocument {
@@ -32,6 +33,7 @@ export function indexDocument(doc: SearchableDocument): {
   contentLower: string;
   originalTitle: string;
   originalContent: string;
+  tags: string[];
 } {
   const contentTruncated = truncateContent(doc.content, MAX_CONTENT_WORDS);
 
@@ -44,7 +46,8 @@ export function indexDocument(doc: SearchableDocument): {
     titleLower: doc.title.toLowerCase(),
     contentLower: searchableContent.toLowerCase(),
     originalTitle: doc.title,
-    originalContent: doc.content
+    originalContent: doc.content,
+    tags: Array.isArray(doc.tags) ? doc.tags : []
   };
 }
 
@@ -89,7 +92,8 @@ export function search(
         title: doc.originalTitle,
         snippet: snippet.text,
         score: Math.min(100, Math.round(totalScore)),
-        highlights: snippet.highlights
+        highlights: snippet.highlights,
+        tags: doc.tags
       };
     })
     .filter((r): r is SearchResult => r !== null)

@@ -38,6 +38,47 @@ describe('search engine', () => {
       expect(indexed.originalTitle).toBe(doc.title);
       expect(indexed.originalContent).toBe(doc.content);
     });
+
+    it('should keep the tags, not just fold them into the searchable text', () => {
+      const indexed = indexDocument({
+        id: 'doc-tagged',
+        title: 'Tagged',
+        content: 'body',
+        tags: ['draft', 'chapter-1']
+      });
+
+      expect(indexed.tags).toEqual(['draft', 'chapter-1']);
+    });
+
+    it('should default tags to an empty array when the document has none', () => {
+      const indexed = indexDocument({ id: 'doc-bare', title: 'Bare', content: 'body' });
+
+      expect(indexed.tags).toEqual([]);
+    });
+  });
+
+  describe('tags on results', () => {
+    it('should carry the document tags through to the search result', () => {
+      const indexed = indexDocument({
+        id: 'doc-tagged',
+        title: 'Dragons',
+        content: 'A story about dragons',
+        tags: ['fantasy', 'draft']
+      });
+
+      const results = search('dragons', [indexed]);
+
+      expect(results.length).toBe(1);
+      expect(results[0].tags).toEqual(['fantasy', 'draft']);
+    });
+
+    it('should return an empty tag list rather than undefined', () => {
+      const indexed = indexDocument({ id: 'doc-bare', title: 'Dragons', content: 'dragons' });
+
+      const results = search('dragons', [indexed]);
+
+      expect(results[0].tags).toEqual([]);
+    });
   });
 
   describe('basic search', () => {
