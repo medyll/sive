@@ -12,14 +12,16 @@ Sive est une application d'écriture assistée par IA, réellement substantielle
 
 Mais **l'application ne compile pas** et **trois des quatre gates de qualité sont rouges**. Plusieurs sous-systèmes présentés comme livrés sont des stubs. Enfin, douze endpoints — dont toute la surface IA — n'ont aucun contrôle d'authentification, et l'un d'eux expose des clés API en clair.
 
-| Gate | Commande | À l'analyse | Après phases 1 + 1bis |
+| Gate | Commande | À l'analyse | Aujourd'hui |
 |---|---|---|---|
 | Build | `npx vite build` | ❌ `MISSING_EXPORT` | ✅ **vert** |
-| Typecheck | `npx svelte-check` | ❌ 182 erreurs / 55 fichiers | 🟠 135 erreurs / 47 fichiers |
-| Lint | `npx eslint .` | ❌ crash (`TypeError`) | ❌ crash — inchangé |
-| Tests unitaires | `npx vitest --run` | ✅ 1 164 passés | ✅ **867 passés, 0 échec** |
+| Typecheck | `npx svelte-check` | ❌ 182 erreurs / 55 fichiers | 🟠 111 erreurs / 36 fichiers |
+| Lint | `npx eslint .` | ❌ crash (`TypeError`) | 🟠 296 problèmes (s'exécute) |
+| Tests unitaires | `npx vitest --run` | ✅ 1 164 passés | ✅ **882 passés, 0 échec, stables** |
+| `db:migrate` | `pnpm db:migrate` | ❌ fichier fantôme | ✅ **chaîne complète validée** |
+| Endpoints `/api` ouverts | — | 24 / 26 | ✅ **0**, hors liste blanche de 3 |
 
-> Les colonnes « à l'analyse » décrivent l'état au commit `02395fb`. Les phases 1 et 1bis ont été exécutées le même jour — voir §11 et §12.
+> Les colonnes « à l'analyse » décrivent l'état au commit `02395fb`. Les phases 1, 1bis, 2, 3 et une partie de la 4 ont été exécutées le même jour — voir §11 à §16.
 
 ### Écart avec `AUDIT.md`
 
