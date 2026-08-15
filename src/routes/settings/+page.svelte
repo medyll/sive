@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { toastStore } from '$lib/toastStore.svelte';
   import PluginManager from '$lib/elements/PluginManager.svelte';
+  import AISettings from '$lib/elements/AISettings.svelte';
   import PartnersList from '$lib/elements/PartnersList.svelte';
     import { privacyStore } from '$lib/privacyStore.svelte';
   import { pluginStore } from '$lib/pluginStore.svelte';
@@ -90,6 +91,10 @@
   </div>
 
   <button onclick={save} class="btn btn-primary">Save</button>
+</section>
+
+<section class="settings-section">
+  <AISettings />
 </section>
 
 <section class="settings-section">

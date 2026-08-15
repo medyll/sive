@@ -252,13 +252,13 @@ function getProviderIcon(provider: AIProvider): string {
 	<div class="tabs mb-4">
 		<button
 			class="tab-btn {activeTab === 'providers' ? 'active' : ''}"
-			on:click={() => activeTab = 'providers'}
+			onclick={() => activeTab = 'providers'}
 		>
 			🔑 API Providers
 		</button>
 		<button
 			class="tab-btn {activeTab === 'routing' ? 'active' : ''}"
-			on:click={() => activeTab = 'routing'}
+			onclick={() => activeTab = 'routing'}
 		>
 			🗺️ Task Routing
 		</button>
@@ -297,7 +297,7 @@ function getProviderIcon(provider: AIProvider): string {
 									<input 
 										type="checkbox" 
 										checked={p.enabled}
-										on:change={() => toggleProvider(provider)}
+										onchange={() => toggleProvider(provider)}
 										class="toggle-switch"
 									/>
 									<span class="label-text">Enabled</span>
@@ -310,7 +310,7 @@ function getProviderIcon(provider: AIProvider): string {
 									id="key-{provider}"
 									type="password"
 									value={p.apiKey || ''}
-									on:input={(e) => setApiKey(provider, e.currentTarget.value)}
+									oninput={(e) => setApiKey(provider, e.currentTarget.value)}
 									placeholder={provider === 'ollama' ? 'Not required (local)' : 'Enter your API key'}
 									class="input-field"
 								/>
@@ -322,7 +322,7 @@ function getProviderIcon(provider: AIProvider): string {
 									id="endpoint-{provider}"
 									type="text"
 									value={p.endpoint || ''}
-									on:input={(e) => setEndpoint(provider, e.currentTarget.value)}
+									oninput={(e) => setEndpoint(provider, e.currentTarget.value)}
 									placeholder="API endpoint URL"
 									class="input-field"
 								/>
@@ -428,7 +428,7 @@ function getProviderIcon(provider: AIProvider): string {
 							<td>
 								<select 
 									value={config.provider}
-									on:change={(e) => {
+									onchange={(e) => {
 										setTaskRouting(taskType, { provider: e.currentTarget.value as AIProvider });
 									}}
 									class="select-field"
@@ -441,7 +441,7 @@ function getProviderIcon(provider: AIProvider): string {
 							<td>
 								<select 
 									value={config.model}
-									on:change={(e) => {
+									onchange={(e) => {
 										setTaskRouting(taskType, { model: e.currentTarget.value });
 									}}
 									class="select-field"
@@ -458,7 +458,7 @@ function getProviderIcon(provider: AIProvider): string {
 									min="0"
 									max="2"
 									value={config.temperature ?? 0.7}
-									on:input={(e) => {
+									oninput={(e) => {
 										setTaskRouting(taskType, { 
 											temperature: parseFloat(e.currentTarget.value) || 0.7 
 										});
@@ -470,7 +470,7 @@ function getProviderIcon(provider: AIProvider): string {
 								<input 
 									type="number"
 									value={config.maxTokens ?? 1024}
-									on:input={(e) => {
+									oninput={(e) => {
 										setTaskRouting(taskType, { 
 											maxTokens: parseInt(e.currentTarget.value) || 1024 
 										});
@@ -487,7 +487,7 @@ function getProviderIcon(provider: AIProvider): string {
 						<td>
 							<select 
 								value={routing.fallback.provider}
-								on:change={(e) => {
+								onchange={(e) => {
 									setTaskRouting('fallback', { provider: e.currentTarget.value as AIProvider });
 								}}
 								class="select-field"
@@ -500,7 +500,7 @@ function getProviderIcon(provider: AIProvider): string {
 						<td>
 							<select 
 								value={routing.fallback.model}
-								on:change={(e) => {
+								onchange={(e) => {
 									setTaskRouting('fallback', { model: e.currentTarget.value });
 								}}
 								class="select-field"
@@ -517,7 +517,7 @@ function getProviderIcon(provider: AIProvider): string {
 								min="0"
 								max="2"
 								value={routing.fallback.temperature ?? 0.7}
-								on:input={(e) => {
+								oninput={(e) => {
 									setTaskRouting('fallback', { 
 										temperature: parseFloat(e.currentTarget.value) || 0.7 
 									});
@@ -529,7 +529,7 @@ function getProviderIcon(provider: AIProvider): string {
 							<input 
 								type="number"
 								value={routing.fallback.maxTokens ?? 1024}
-								on:input={(e) => {
+								oninput={(e) => {
 									setTaskRouting('fallback', { 
 										maxTokens: parseInt(e.currentTarget.value) || 1024 
 									});
