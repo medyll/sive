@@ -128,7 +128,7 @@ test.describe('Sprint 32 - Notification System', () => {
 				? parseInt((await badge.textContent()) ?? '0')
 				: 0;
 
-			// Push a notification server-side (simulate collaboration event)
+			// Push a notification server-side
 			await page.evaluate(async () => {
 				await fetch('/api/notifications/test-seed', {
 					method: 'POST',
@@ -136,7 +136,7 @@ test.describe('Sprint 32 - Notification System', () => {
 					body: JSON.stringify({
 						type: 'doc_edited',
 						title: 'Doc updated',
-						body: 'A collaborator saved changes'
+						body: 'Your document was updated'
 					})
 				});
 			});
@@ -145,28 +145,6 @@ test.describe('Sprint 32 - Notification System', () => {
 			await expect(page.locator('.badge')).toBeVisible({ timeout: 3000 });
 			const newCount = parseInt((await page.locator('.badge').textContent()) ?? '0');
 			expect(newCount).toBeGreaterThan(initialCount);
-		});
-	});
-
-	test.describe('Notification types', () => {
-		test('should display correct icon for doc_shared', async ({ page, goto }) => {
-			await goto('/app');
-			const bell = page.getByLabel(/notifications/i);
-			await bell.click();
-
-			// doc_shared icon is 📄
-			const docSharedItems = page.locator('.notif-icon').filter({ hasText: '📄' });
-			// Just assert the component renders without crashing
-			expect(page.locator('.notification-list')).toBeAttached();
-		});
-
-		test('should display correct icon for conflict', async ({ page, goto }) => {
-			await goto('/app');
-			const bell = page.getByLabel(/notifications/i);
-			await bell.click();
-
-			// conflict icon is ⚠️
-			expect(page.locator('.notification-list')).toBeAttached();
 		});
 	});
 

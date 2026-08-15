@@ -39,26 +39,3 @@ test.describe('Sprint 40 — Onboarding Tour', () => {
 	});
 });
 
-test.describe('Sprint 41 — Writing Goals', () => {
-	test('goal bar renders in the app', async ({ page, goto }) => {
-		await goto('/app');
-		// Goal bar is at the bottom of the document list
-		const bar = page.locator('.goal-bar');
-		if (await bar.isVisible({ timeout: 1000 }).catch(() => false)) {
-			await expect(bar).toBeVisible();
-		}
-	});
-
-	test('goal target can be edited', async ({ page, goto }) => {
-		await goto('/app');
-		const targetBtn = page.getByRole('button', { name: /goal:/i });
-		if (await targetBtn.isVisible({ timeout: 1000 }).catch(() => false)) {
-			await targetBtn.click();
-			const input = page.locator('.target-edit input');
-			await expect(input).toBeVisible();
-			await input.fill('1000');
-			await page.keyboard.press('Enter');
-			await expect(page.getByRole('button', { name: /goal: 1000/i })).toBeVisible();
-		}
-	});
-});

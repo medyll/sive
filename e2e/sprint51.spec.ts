@@ -2,10 +2,10 @@ import { test, expect } from './fixtures';
 
 /**
  * S51-06 — E2E smoke for Sprint 51 integrations
- * Covers: Ctrl+K wiring, NotificationBell presence, WritingGoalBar visibility
+ * Covers: Ctrl+K wiring, NotificationBell presence
  */
 
-test.describe('Sprint 51 — Command Palette, Notifications & WritingGoalBar', () => {
+test.describe('Sprint 51 — Command Palette & Notifications', () => {
 
 	test('Ctrl+K opens the command palette', async ({ page, goto }) => {
 		await goto('/app');
@@ -24,14 +24,4 @@ test.describe('Sprint 51 — Command Palette, Notifications & WritingGoalBar', (
 		await expect(page.getByRole('dialog', { name: /notifications/i })).toBeVisible();
 	});
 
-	test('WritingGoalBar progress track is visible in the sidebar', async ({ page, goto }) => {
-		await goto('/app');
-		await expect(page.locator('.goal-bar')).toBeVisible();
-		await expect(page.locator('.goal-track')).toBeVisible();
-	});
-
-	test('WritingGoalBar shows word target button', async ({ page, goto }) => {
-		await goto('/app');
-		await expect(page.locator('.target-btn')).toBeVisible();
-	});
 });

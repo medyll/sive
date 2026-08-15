@@ -30,28 +30,6 @@ test.describe('GitHub OAuth UI', () => {
 	});
 });
 
-test.describe('Document list — shared badge', () => {
-	test.beforeEach(async ({ page }) => {
-		await page.addInitScript(() => {
-			localStorage.setItem('sive:onboarding_seen', '1');
-		});
-	});
-
-	test('app page loads with document list', async ({ page }) => {
-		await page.goto('/app');
-		// Document list renders — in mock mode with stub docs
-		await expect(page.locator('.doc-list')).toBeVisible({ timeout: 10000 });
-	});
-
-	test('stub document has no Shared badge in mock mode', async ({ page }) => {
-		await page.goto('/app');
-		// In mock mode, stub doc is owned — no shared badge expected
-		const badge = page.locator('[data-testid^="shared-badge-"]');
-		const count = await badge.count();
-		// 0 shared badges in mock mode (all docs are stubs with no role annotation)
-		expect(count).toBe(0);
-	});
-});
 
 test.describe('Profile page — display name', () => {
 	test.beforeEach(async ({ page }) => {

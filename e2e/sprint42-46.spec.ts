@@ -27,22 +27,6 @@ test.describe('Sprint 42 — Plugin System', () => {
 	});
 });
 
-test.describe('Sprint 43 — Document Sharing', () => {
-	test('share API returns 401 for unauthenticated GET', async ({ request }) => {
-		const res = await request.get('/api/share?docId=test');
-		expect([401, 302]).toContain(res.status());
-	});
-
-	test('share API returns 401 for unauthenticated POST', async ({ request }) => {
-		const res = await request.post('/api/share', { data: { docId: 'test' } });
-		expect([401, 302]).toContain(res.status());
-	});
-
-	test('shared doc route returns 404 for invalid token', async ({ page, goto }) => {
-		const res = await page.goto('/s/invalidtoken123');
-		expect(res?.status()).toBe(404);
-	});
-});
 
 test.describe('Sprint 44 — Focus Mode', () => {
 	test('focus panel renders without errors', async ({ page, goto }) => {

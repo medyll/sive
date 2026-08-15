@@ -1,7 +1,7 @@
 /**
  * notificationStore — in-app notifications
  *
- * Types: streak_reminder | partner_activity | challenge_deadline | goal_reminder
+ * Types: streak_reminder | partner_activity
  * Auto-dismiss after 6s. Ring buffer: max 50. Persists to localStorage.
  */
 
@@ -11,9 +11,7 @@ const AUTO_DISMISS_MS = 6000;
 
 export type NotificationType =
 	| 'streak_reminder'
-	| 'partner_activity'
-	| 'challenge_deadline'
-	| 'goal_reminder';
+	| 'partner_activity';
 
 export interface Notification {
 	id: string;

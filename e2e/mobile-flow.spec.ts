@@ -55,8 +55,6 @@ test.describe('Mobile Navigation', () => {
 		
 		await expect(page.getByText('Documents')).toBeVisible();
 		await expect(page.getByText('Discover')).toBeVisible();
-		await expect(page.getByText('Challenges')).toBeVisible();
-		await expect(page.getByText('Leaderboard')).toBeVisible();
 		await expect(page.getByText('Settings')).toBeVisible();
 	});
 });

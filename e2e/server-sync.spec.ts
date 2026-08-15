@@ -6,54 +6,6 @@ test.describe('Server-Side Sync', () => {
 		await page.setViewportSize({ width: 1366, height: 900 });
 	});
 
-	test('challenge persists across page refresh', async ({ page }) => {
-		// Create a challenge
-		await page.goto('/challenges');
-		const createBtn = page.getByText('+ Create');
-		await createBtn.click();
-		await page.getByLabel('Title').fill('Persistence Test');
-		await page.getByLabel('Target Words').fill('5000');
-		await page.getByLabel('Duration (days)').fill('7');
-		await page.getByText('Create Challenge').click();
-
-		// Verify challenge created
-		await expect(page.getByText('Persistence Test')).toBeVisible();
-
-		// Refresh page
-		await page.reload();
-
-		// Challenge should still exist
-		await expect(page.getByText('Persistence Test')).toBeVisible();
-	});
-
-	test('challenge progress syncs to database', async ({ page }) => {
-		// Create and join a challenge
-		await page.goto('/challenges');
-		const createBtn = page.getByText('+ Create');
-		await createBtn.click();
-		await page.getByLabel('Title').fill('Sync Test');
-		await page.getByLabel('Target Words').fill('1000');
-		await page.getByLabel('Duration (days)').fill('7');
-		await page.getByText('Create Challenge').click();
-		await page.getByText('+ Join Challenge').first().click();
-
-		// Write some words
-		await page.goto('/');
-		const editor = page.locator('.editor-textarea');
-		await editor.fill('Test content with about fifty words in this paragraph. Adding more text to increase word count significantly. This should contribute to the challenge progress when saved properly.');
-
-		// Wait for save
-		await page.waitForTimeout(3000);
-
-		// Check challenge progress
-		await page.goto('/challenges');
-		await page.getByText('Joined (1)').click();
-
-		// Progress should show updated word count
-		const progressLabel = page.locator('.progress-label').first();
-		await expect(progressLabel).toBeVisible();
-	});
-
 	test('discovery profile opt-in persists', async ({ page }) => {
 		// Go to settings and opt into discovery
 		await page.goto('/settings');
@@ -94,41 +46,6 @@ test.describe('Server-Side Sync', () => {
 		// Note: Adjust selector based on actual activity feed UI
 		const activityFeed = page.locator('[class*="activity"], [class*="feed"]');
 		await expect(activityFeed).toBeVisible({ timeout: 5000 });
-	});
-
-	test('multi-tab sync for challenge progress', async ({ page, context }) => {
-		// Create and join a challenge in first tab
-		await page.goto('/challenges');
-		const createBtn = page.getByText('+ Create');
-		await createBtn.click();
-		await page.getByLabel('Title').fill('Multi-Tab Test');
-		await page.getByLabel('Target Words').fill('2000');
-		await page.getByLabel('Duration (days)').fill('7');
-		await page.getByText('Create Challenge').click();
-		await page.getByText('+ Join Challenge').first().click();
-
-		// Open second tab
-		const page2 = await context.newPage();
-		await page2.goto('/challenges');
-
-		// Second tab should show joined challenge
-		await expect(page2.getByText('Multi-Tab Test')).toBeVisible();
-
-		// Write in first tab
-		await page.goto('/');
-		const editor = page.locator('.editor-textarea');
-		await editor.fill('Writing in first tab to sync progress...');
-		await page.waitForTimeout(3000);
-
-		// Refresh second tab
-		await page2.reload();
-
-		// Progress should be synced
-		await page2.getByText('Joined (1)').click();
-		const progressLabel = page2.locator('.progress-label').first();
-		await expect(progressLabel).toBeVisible();
-
-		await page2.close();
 	});
 
 	test('offline save queues and syncs when online', async ({ page }) => {
@@ -176,27 +93,5 @@ test.describe('Server-Side Sync', () => {
 		// Refresh and verify profile still listed
 		await page.reload();
 		await expect(page.locator('[class*="writer"], [class*="profile"]')).toBeVisible({ timeout: 5000 });
-	});
-
-	test('challenge join state persists', async ({ page }) => {
-		// Create and join challenge
-		await page.goto('/challenges');
-		const createBtn = page.getByText('+ Create');
-		await createBtn.click();
-		await page.getByLabel('Title').fill('Join Persist Test');
-		await page.getByLabel('Target Words').fill('3000');
-		await page.getByLabel('Duration (days)').fill('10');
-		await page.getByText('Create Challenge').click();
-		await page.getByText('+ Join Challenge').first().click();
-
-		// Verify joined
-		await expect(page.getByText('✓ Joined')).toBeVisible();
-
-		// Refresh page
-		await page.reload();
-		await page.getByText('Joined (1)').click();
-
-		// Should still be joined
-		await expect(page.getByText('✓ Joined')).toBeVisible();
 	});
 });

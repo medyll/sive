@@ -19,7 +19,7 @@ beforeEach(() => {
 
 describe('push', () => {
 	it('should add a notification for a user', () => {
-		push({ userId: USER, type: 'doc_shared', title: 'Shared', body: 'Doc shared with you' });
+		push({ userId: USER, type: 'doc_edited', title: 'Updated', body: 'Doc was updated' });
 		expect(getAll(USER).length).toBe(1);
 	});
 

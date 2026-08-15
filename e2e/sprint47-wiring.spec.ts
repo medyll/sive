@@ -1,11 +1,6 @@
 import { test, expect } from './fixtures';
 
 test.describe('Sprint 47 — UI Wiring', () => {
-	test('WritingGoalBar is visible in the sidebar', async ({ page, goto }) => {
-		await goto('/app');
-		await expect(page.locator('.goal-bar')).toBeVisible({ timeout: 3000 });
-	});
-
 	test('Version history button opens version panel', async ({ page, goto }) => {
 		await goto('/app');
 		const btn = page.locator('button[title="Version history"]');

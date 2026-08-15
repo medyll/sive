@@ -20,9 +20,7 @@
 
 	const typeIcon: Record<string, string> = {
 		streak_reminder: '🔥',
-		partner_activity: '👥',
-		challenge_deadline: '⏰',
-		goal_reminder: '🎯'
+		partner_activity: '👥'
 	};
 </script>
 

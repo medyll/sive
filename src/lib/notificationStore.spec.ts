@@ -30,7 +30,7 @@ describe('notify', () => {
 
 	it('prepends new notifications (newest first)', () => {
 		notificationStore.notify('streak_reminder', 'First');
-		notificationStore.notify('goal_reminder', 'Second');
+		notificationStore.notify('partner_activity', 'Second');
 		expect(notificationStore.state.items[0].message).toBe('Second');
 	});
 
@@ -49,7 +49,7 @@ describe('notify', () => {
 	it('caps at 50 items (ring buffer)', () => {
 		for (let i = 0; i < 55; i++) {
 			vi.clearAllTimers();
-			notificationStore.notify('goal_reminder', `msg ${i}`);
+			notificationStore.notify('partner_activity', `msg ${i}`);
 		}
 		expect(notificationStore.state.items).toHaveLength(50);
 	});

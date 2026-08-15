@@ -3,7 +3,7 @@
  * Max 50 notifications per user, newest first
  */
 
-export type NotificationType = 'doc_shared' | 'doc_edited' | 'conflict' | 'mention' | 'system';
+export type NotificationType = 'doc_edited' | 'mention' | 'system';
 
 export interface Notification {
 	id: string;

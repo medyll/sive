@@ -2,25 +2,10 @@ import { test, expect } from './fixtures';
 
 /**
  * S52-06 — E2E smoke for Sprint 52
- * Covers: notification:navigate, settings writing goal, palette doc:search
+ * Covers: notification:navigate, palette doc:search
  */
 
 test.describe('Sprint 52 — Notification Triggers, Settings & Palette', () => {
-
-	test('Settings page has a daily writing goal input', async ({ page, goto }) => {
-		await goto('/settings');
-		await expect(page.locator('#daily-goal')).toBeVisible();
-	});
-
-	test('Settings writing goal saves and persists', async ({ page, goto }) => {
-		await goto('/settings');
-		const input = page.locator('#daily-goal');
-		await input.fill('800');
-		await page.getByRole('button', { name: /save/i }).click();
-		// Reload and verify value persisted via goalsStore (localStorage)
-		await goto('/settings');
-		await expect(page.locator('#daily-goal')).toHaveValue('800');
-	});
 
 	test('Palette has a "Search Documents" command', async ({ page, goto }) => {
 		await goto('/app');
