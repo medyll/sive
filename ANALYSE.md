@@ -1,36 +1,41 @@
 # Analyse technique — Sive
 
-**Date :** 15 août 2026
-**Commit analysé :** `02395fb` (branche `main`, synchro avec `origin`)
-**Méthode :** exécution réelle des gates de qualité + lecture ciblée du code. Aucune conclusion reprise de `AUDIT.md`.
+**Dernière mise à jour :** 15 août 2026
+**Méthode :** exécution réelle des gates (`build`, `svelte-check`, `eslint`, `vitest`, `db:migrate`, `playwright`) et lecture ciblée du code. Aucune conclusion reprise d'un document existant.
+
+> Ce document décrit **l'état courant** du dépôt. L'historique de ce qui a été trouvé puis corrigé est regroupé en §9, pas dispersé dans le reste.
 
 ---
 
-## 1. Résumé exécutif
+## 1. Résumé
 
-Sive est une application d'écriture assistée par IA, réellement substantielle : 105 composants Svelte, 272 modules TypeScript, 40 endpoints API, 1 164 tests unitaires qui passent. L'architecture est cohérente et le socle de tests est authentique.
+Sive est une application d'écriture assistée par IA : éditeur riche, panneau IA multi-provider, versioning de documents, moteur de skills, export, notifications, découverte d'auteurs.
 
-Mais **l'application ne compile pas** et **trois des quatre gates de qualité sont rouges**. Plusieurs sous-systèmes présentés comme livrés sont des stubs. Enfin, douze endpoints — dont toute la surface IA — n'ont aucun contrôle d'authentification, et l'un d'eux expose des clés API en clair.
+L'architecture est saine — séparation `server/` nette, un module par domaine, tests colocalisés, Svelte 5 runes utilisées de façon cohérente. Le socle de tests unitaires est authentique et solide.
 
-| Gate | Commande | À l'analyse | Aujourd'hui |
-|---|---|---|---|
-| Build | `npx vite build` | ❌ `MISSING_EXPORT` | ✅ **vert** |
-| Typecheck | `npx svelte-check` | ❌ 182 erreurs / 55 fichiers | 🟠 **80 / 31** |
-| Lint | `npx eslint .` | ❌ crash (`TypeError`) | 🟠 **207 problèmes** (s'exécute) |
-| Tests unitaires | `npx vitest --run` | ✅ 1 164 (instables) | ✅ **886, 0 échec, stables** |
-| `db:migrate` | `pnpm db:migrate` | ❌ fichier fantôme | ✅ base recréée, 5 migrations |
-| Endpoints `/api` ouverts | — | **24 / 26** | ✅ **0**, hors liste blanche de 3 |
-| Tests e2e | `pnpm test:e2e` | jamais exécutés | ❌ échecs massifs, **pré-existants** |
+Trois réserves demeurent, par ordre d'importance :
 
-> Les colonnes « à l'analyse » décrivent l'état au commit `02395fb`. Tout le reste a été exécuté le même jour — voir les journaux §11 à §17, et §17 pour ce qui reste ouvert.
+1. **La suite e2e ne passe pas** et n'a probablement jamais été exécutée en vert.
+2. **18 % des composants ne sont montés nulle part** — du code testé, maintenu, jamais rendu.
+3. **Typage et lint ne sont pas propres** (80 et 206), ce qui empêche d'en faire des gates bloquants.
 
-### Écart avec `AUDIT.md`
+### Gates
 
-`AUDIT.md` (daté du 3 mai 2026, généré par un autre outil) annonce « Production Ready », « Qualité Code 9/10 », « TypeScript strict partout », score global 8,2/10. Ces affirmations ne sont pas vérifiables aujourd'hui : le build échoue et le typecheck remonte 182 erreurs. Le document est obsolète et ne doit plus servir de référence d'état. Il reste utile comme inventaire de la stack et liste d'intentions.
+| Gate | Commande | Résultat |
+|---|---|---|
+| Build | `pnpm build` | ✅ vert |
+| Tests unitaires | `pnpm test:unit -- --run` | ✅ **840 passés, 0 échec** |
+| Vérification combinée | `pnpm verify` | ✅ build + tests |
+| Typecheck | `pnpm check` | 🟠 80 erreurs / 31 fichiers |
+| Lint | `pnpm lint` | 🟠 206 problèmes |
+| Migrations | `pnpm db:migrate` | ✅ chaîne complète validée |
+| Tests e2e | `pnpm test:e2e` | ❌ échecs massifs |
+
+`pnpm verify` n'inclut volontairement que ce qui est vert. `check` et `lint` l'y rejoindront quand ils le seront.
 
 ---
 
-## 2. Stack et architecture
+## 2. Stack
 
 | Couche | Techno | Version |
 |---|---|---|
@@ -42,834 +47,260 @@ Mais **l'application ne compile pas** et **trois des quatre gates de qualité so
 | IA | SDK Anthropic, OpenAI, Google Generative AI, Ollama | — |
 | Tests | Vitest 4 + Playwright 1.58 | — |
 
-### Découpage
+**Volumétrie :** 73 composants Svelte, 210 modules TypeScript, 26 endpoints API, 14 pages, 81 specs unitaires, 47 specs e2e.
+
+---
+
+## 3. Architecture
 
 ```
 src/
 ├── routes/
-│   ├── (18 pages)          dashboard, feed, discover, challenges,
-│   │                       leaderboard, goals, profile, settings, s/[token]
-│   └── api/ (40 endpoints) ai/*, skills/*, challenges/*, shares, versions,
-│                           notifications, presence, export/*, mcp/tools, ws
+│   ├── pages (14)      éditeur (/), dashboard, feed, discover,
+│   │                   profile, profile/[username], settings,
+│   │                   auth, auth/signup, offline, demo/*
+│   └── api/ (26)       ai/*, skills/*, export/*, versions, templates,
+│                       search, stats, activity, discover,
+│                       notifications, users/search, guest/*, mcp/tools
 ├── lib/
-│   ├── elements/    (~105 composants)
-│   ├── editor/      éditeur riche (ghost text, suggestions)
-│   ├── skills/      moteur de skills (définitions JSON/YAML)
-│   ├── gestures/, tools/, shared/, types/
-│   └── server/      auth, rbac, rateLimit, search, shares, versions,
-│                    stats, notifications, ai/, mcp/, skills/, db/
+│   ├── elements/       composants UI
+│   ├── editor/         éditeur riche (ghost text, suggestions)
+│   ├── skills/         moteur de skills (définitions JSON/YAML)
+│   ├── shared/         code transverse : command bus, data-loader,
+│   │                   skill engine, stores partagés
+│   ├── gestures/, tools/, types/, styles/
+│   └── server/         apiGuard, auth, rbac, rateLimit, search,
+│                       versions, templates, stats, notifications,
+│                       exportFormats, inputValidation,
+│                       discoveryQueries, ai/, mcp/, skills/, db/
 └── data/
 ```
 
-L'organisation est saine : séparation `server/` nette, un module par domaine, tests colocalisés (`*.spec.ts` à côté de la source). Svelte 5 runes utilisées de façon cohérente.
+> `src/lib/shared/` est du **code partagé**, sans rapport avec une quelconque fonctionnalité de partage. Un `grep share` naïf y fait des dégâts.
+
+### Modèle de propriété
+
+Un document appartient à un utilisateur unique, via `documents.user_id`. `getDocumentRole()` lit cette colonne ; `DocumentRole` vaut `'owner'` ou rien. Il n'existe ni rôle intermédiaire, ni partage, ni collaboration.
 
 ---
 
-## 3. Anomalies bloquantes
+## 4. Sécurité
 
-### 3.1 🔴 Le build échoue — import de type en position de valeur
+### Garde `/api` fermé par défaut
 
-```
-[MISSING_EXPORT] "AIProvider" is not exported by "src/lib/server/ai/router.ts"
-[MISSING_EXPORT] "ModelConfig" is not exported by "src/lib/server/ai/router.ts"
-  → src/lib/server/ai/service.ts:7
-```
-
-`router.ts` exporte ces symboles en tant que types purs :
+Toute route sous `/api` est refusée sans session authentifiée, **sauf liste blanche explicite** :
 
 ```ts
-export type AIProvider = 'ollama' | 'anthropic' | 'openai' | 'gemini';  // ligne 16
-export interface ModelConfig { … }                                       // ligne 21
+// src/lib/server/apiGuard.ts
+export const PUBLIC_API_PREFIXES = [
+	'/api/auth',          // handler better-auth
+	'/api/guest/status',  // renvoie l'état invité
+	'/api/guest/convert'  // convertit un invité en compte réel
+];
 ```
 
-`service.ts:8` les importe en position de valeur :
+Trois propriétés à préserver si l'on touche à ce code :
 
-```ts
-import { aiRouter, AIProvider, ModelConfig } from './router';   // ❌
-```
+- **Échec fermé.** Un endpoint ajouté demain est protégé sans intervention. Un test le vérifie explicitement.
+- **L'autorisation se base sur `locals.session`, jamais sur `locals.user`.** `hooks.server.ts` attribue un utilisateur invité factice en l'absence de session : `locals.user` est **toujours** vrai et ne constitue pas un signal d'autorisation. C'est précisément la confusion qui avait laissé 24 endpoints sur 26 ouverts (§9.3).
+- **Neutre en mode mock/dev/e2e.** Sans backend d'authentification il n'y a pas de session à vérifier. Sans cette clause, le développement local et l'e2e seraient cassés.
 
-**Correctif :**
+La politique est un module pur (`apiGuard.ts`), couverte par 15 tests.
 
-```ts
-import { aiRouter } from './router';
-import type { AIProvider, ModelConfig } from './router';
-```
+### État
 
-Les autres consommateurs (`AISettings.svelte`, `skills/engine.ts`, `skills/types.ts`, `api/skills/config`) utilisent déjà `import type` correctement. Le défaut est isolé à ce seul fichier.
-
-**Pourquoi les tests ne l'ont pas vu :** esbuild (utilisé par Vitest) efface les types silencieusement ; rolldown, lui, valide les exports au bundling. Aucun test ni hook ne lance `build`. Régression probablement introduite par `1471c93` (« Enhance AISettings and AIModelRouter »).
-
-### 3.2 🔴 Endpoint `/api/skills/config` : clés API exposées sans authentification
-
-Fichier : `src/routes/api/skills/config/+server.ts`
-
-Trois problèmes cumulés, à traiter avant toute exposition réseau :
-
-1. **Aucun contrôle d'accès.** Ni le `GET` ni le `POST` ne consultent `locals.session`. `hooks.server.ts` renseigne bien `locals` mais ne protège aucune route : la garde est à la charge de chaque endpoint, et celui-ci n'en a pas.
-2. **Le `GET` retourne les clés API en clair** (lignes 39, 45, 51 : `apiKey: apiKeyStore.get('anthropic')`) à n'importe quel appelant anonyme. Le champ `api_key_configured` existe déjà juste à côté et suffirait pour l'UI.
-3. **Le `POST` accepte l'injection de clés et la réécriture du routage IA** par un appelant anonyme (lignes 99-115).
-
-S'ajoute un défaut de conception : `apiKeyStore` est une `Map` unique au niveau du module (ligne 8), donc **partagée entre tous les utilisateurs** du processus — la clé saisie par un utilisateur sert aux requêtes de tous les autres.
-
-**Correctif :** garde `locals.session` sur les deux verbes ; ne jamais renvoyer `apiKey` dans la réponse ; scoper le stockage par utilisateur (et le persister chiffré si la fonctionnalité doit survivre à un redémarrage).
-
-Bug annexe dans le même fichier : clé `enabled` dupliquée dans l'objet `ollama` (lignes 29 et 34) — la seconde écrase la première.
-
-### 3.3 🔴 12 endpoints sur 40 sans référence d'authentification
-
-Aucune occurrence de `locals.session` / `locals.user` / `rbac` / `requireAuth` :
-
-| Endpoint | Verbes | Risque |
-|---|---|---|
-| `ai` | POST | Consommation des clés API du propriétaire par des tiers |
-| `ai/stream` | GET | idem |
-| `ai/suggest` | GET | idem |
-| `ai/summary` | GET | idem |
-| `skills/config` | GET, POST | **Fuite de clés** (cf. 3.2) |
-| `skills/execute` | POST, GET | Exécution de skills arbitraires |
-| `skills/list` | GET | Divulgation d'inventaire |
-| `mcp/tools` | POST, GET | Surface d'outils MCP ouverte |
-| `export/epub` | POST, GET | Coût CPU non maîtrisé |
-| `export/pdf` | GET | idem |
-| ~~`share/content`~~ | GET | Supprimé en phase 1bis |
-| ~~`ws/presence`~~ | GET | Supprimé en phase 1bis |
-
-> Après la phase 1bis, **10 endpoints non protégés subsistent sur 33**. Les deux derniers du tableau ont disparu avec la fonctionnalité de partage.
-
-Le point saillant est la surface IA : `ai`, `ai/stream`, `ai/suggest`, `ai/summary` sont ouverts alors qu'ils déclenchent des appels facturés sur les clés du propriétaire. Le rate limiting y est appliqué, ce qui plafonne l'abus sans l'empêcher.
-
-Les 28 autres endpoints référencent bien une vérification. Quelques-uns méritent une revue ciblée (`share/content` est peut-être intentionnellement public via token).
-
----
-
-## 4. Fonctionnalités déclarées mais non implémentées
-
-### 4.1 Collaboration temps réel — absente
-
-`src/routes/api/ws/+server.ts` valide la session et le `documentId`, puis retourne :
-
-```
-501 { error: 'WebSocket endpoint requires adapter support' }
-```
-
-Le corps réel est un bloc de commentaires décrivant comment on l'implémenterait avec `ws`. La collaboration temps réel, présentée comme livrée, n'existe pas. `PresenceList`, `RemoteCursor` et `presence/cursor/stream` (SSE) fonctionnent, eux — la présence est donc réelle, la co-édition non.
-
-### 4.2 État serveur en mémoire — perdu au redémarrage
-
-Modules stockant leur état dans des `Map`/`Set` de module, sans persistance :
-
-`sharing.ts`, `goalSharing.ts`, `notifications.ts`, `ws.ts`, `skills/engine.ts`, `commands/bus.ts`, `ai/router.ts`
-
-Conséquences : tout est perdu au redémarrage, et rien ne fonctionne au-delà d'une instance unique (aucun déploiement multi-process ou scalé horizontalement).
+| Point | État |
+|---|---|
+| Endpoints `/api` non authentifiés | ✅ 0 sur 26, hors liste blanche de 3 |
+| Clés API en réponse HTTP | ✅ jamais renvoyées (`api_key_configured` seul) |
+| Stockage des clés API | 🟠 en mémoire, **par utilisateur**, perdu au redémarrage |
+| Clés API en `localStorage` | ✅ retirées |
+| En-têtes de sécurité | ✅ CSP, HSTS, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy` |
+| CSP `unsafe-eval` | ✅ retiré |
+| CSP `unsafe-inline` | 🟠 encore nécessaire (hydratation SvelteKit + styles inline) — demande des nonces |
+| Rate limiting | 🟠 présent sur IA, export, search, versions, templates — absent sur `skills/config` et `skills/execute` |
+| RBAC, validation d'entrée | ✅ modules dédiés, testés |
+| Secrets en dur | ✅ aucun ; les clés transitent par `process.env` côté serveur |
 
 ---
 
 ## 5. Base de données
 
-### 5.1 🔴 Le journal de migrations pointe vers un fichier inexistant
+**9 tables :** `users`, `sessions`, `accounts`, `documents`, `user_preferences`, `task`, `writer_discovery`, `activity_events`, plus `__drizzle_migrations`.
 
-`drizzle/meta/_journal.json` référence quatre entrées :
+Le journal de migrations et les fichiers correspondent 1:1 sur cinq entrées ; la chaîne complète s'applique proprement depuis une base vide. `local.db` a été recréée à partir des migrations.
 
-```
-0000_normal_maggott  ✅ présent
-0001_aberrant_reptil ✅ présent
-0002_last_black_cat  ❌ FICHIER ABSENT
-0003_hard_spectrum   ✅ présent
-```
+`drizzle.config.ts` ne pointe que sur `schema.ts`, ce qui est suffisant : ce fichier ré-exporte `auth.schema` et `schema/discovery`, donc Drizzle voit bien toutes les tables.
 
-Or `drizzle/` contient `0002_add_document_tags.sql` et `0003_add_document_shares.sql`, **absents du journal**. Deux fichiers portent par ailleurs le préfixe `0003`.
-
-Donc : `pnpm db:migrate` échoue sur `0002_last_black_cat` introuvable, et les deux migrations écrites à la main ne sont jouées par aucun mécanisme. L'état du schéma dépend actuellement de `db:push` ou d'applications manuelles — non reproductible sur un environnement neuf.
-
-### 5.2 ✅ Pas de dérive de schéma — *correction d'un constat erroné*
-
-Une version antérieure de ce document affirmait que `drizzle.config.ts`, en ne pointant que sur `schema.ts`, ignorait les tables déclarées dans `auth.schema.ts`, `schema/challenges.ts` et `schema/discovery.ts` — et qu'un `db:generate` les supprimerait.
-
-**C'est faux.** `schema.ts` se termine par des ré-exports :
-
-```ts
-export * from './auth.schema';
-export * from './schema/discovery';
-```
-
-Drizzle suit ces ré-exports : toutes les tables sont bien visibles depuis le point d'entrée unique. Aucune action requise.
-
-### 5.3 Tables existantes
-
-11 tables au total : `users`, `sessions`, `accounts`, `documents`, `document_shares`, `user_preferences`, `task`, `challenges`, `challenge_participants`, `writer_discovery`, `activity_events`.
-
-À noter : `versions`, `templates`, `notifications`, `shares` (liens de partage), badges et objectifs n'ont **pas** de table. Ces fonctionnalités s'appuient sur l'état en mémoire décrit en 4.2, ou sur des colonnes de `documents`.
-
-### 5.4 Environnement local cassé
-
-Le binding natif de `better-sqlite3` n'est pas compilé :
-
-```
-Error: Could not locate the bindings file
-  → node_modules/.pnpm/better-sqlite3@12.8.0/.../better_sqlite3.node
-```
-
-L'application ne peut pas démarrer localement en l'état. Correctif : `pnpm rebuild better-sqlite3` (nécessite les outils de build natifs).
+**Pas de table pour** : versions, templates, notifications. Ces fonctionnalités s'appuient sur l'état en mémoire décrit au §6.
 
 ---
 
-## 6. Qualité du code
+## 6. Limites structurelles
 
-### 6.1 🔴 ESLint ne s'exécute pas
+### État serveur en mémoire
 
-```
-TypeError: Cannot read properties of undefined (reading 'type')
-Occurred while linting src/routes/goals/[linkId]/+page.svelte:1
-Rule: "@typescript-eslint/no-unused-vars"
-```
+Plusieurs modules conservent leur état dans la mémoire du processus, sans persistance : `notifications`, `skills/engine`, `ai/router` (clés API comprises), `commands/bus`.
 
-Incompatibilité entre ESLint 10, `typescript-eslint` 8.57 et `eslint-plugin-svelte` sur les fichiers `.svelte`. Le lint ne couvre plus rien depuis. À traiter par montée de version du plugin ou désactivation ciblée de la règle sur les `.svelte`.
+Deux conséquences, l'une et l'autre bloquantes pour un déploiement sérieux :
 
-### 6.2 🟠 182 erreurs de typage
+- tout est perdu au redémarrage ;
+- **rien ne fonctionne au-delà d'une instance unique** — une requête peut atteindre un processus qui ignore ce que le précédent a fait.
 
-Répartition : 150 dans `src/lib`, 32 dans `src/routes`, sur 55 fichiers.
+`ecosystem.config.js` est donc épinglé à une instance unique en mode `fork`, avec un commentaire expliquant pourquoi. Ne pas repasser en `cluster` avant d'avoir persisté cet état.
 
-| Nb | Fichier |
-|---|---|
-| 11 | `src/lib/confetti.ts` |
-| 10 | `src/routes/+page.svelte` |
-| 10 | `src/lib/elements/DocumentFilterPanel.svelte` |
-| 9 | `src/lib/elements/RemoteCursor.svelte.spec.ts` |
-| 9 | `src/lib/elements/DocumentSearch.svelte` |
-| 8 | `src/lib/server/ai/service.ts` |
-| 8 | `src/lib/shared/yamlStore.svelte.ts` |
-| 8 | `src/routes/api/skills/config/+server.ts` |
+### Composants jamais montés
 
-Motifs dominants : `'X' is possibly 'undefined'` (strictness réelle, pas cosmétique), `Argument of type 'string | undefined' is not assignable to 'string'`, et un usage de rune `$state` traité comme store dans `leaderboard/+page.svelte`.
+**10 composants sur 57 ne sont rendus nulle part** — aucun `<Nom>` ailleurs dans le code :
 
-### 6.3 🟠 `src/lib/elements/mockups/` pollue le typecheck
+`AISettings`, `DocumentFilterPanel`, `DocumentSearch`, `EditorToolbar`, `PerformanceDashboard`, `SlashMenu`, `StatsPanel`, `SuggestionToolbar`, `VirtualDocumentList`, `WordCountBadge`
 
-12 fichiers `.svelte` qui ne sont pas des composants Svelte, mais des **descripteurs pseudo-HTML** :
+Deux d'entre eux ont des tests unitaires qui passent. C'est le piège : une suite verte donne l'impression que la fonctionnalité existe, alors que le composant n'est jamais atteint par un utilisateur.
 
-```svelte
-<panel id="editor-panel" default-width="55%" resizable role="Editor panel" />
-  <text-zone id="main-editor" … />
-</panel>
-```
+`AISettings` est le cas le plus visible : le panneau de configuration IA — providers, clés, routage par type de tâche — n'est accessible depuis aucune page, alors que la page Réglages est censée l'accueillir.
 
-Balise auto-fermante suivie d'une balise fermante → `` `</panel>` attempted to close an element that was not open ``. Ces fichiers ne sont importés nulle part et génèrent à eux seuls ~18 des 182 erreurs. Les renommer en `.html` ou les déplacer hors de `src/` (par exemple sous `docs/`) nettoie le typecheck sans rien casser.
+Décision à prendre pour chacun : le câbler ou le supprimer. Les laisser en l'état, c'est maintenir et tester du code que personne n'exécute.
+
+### `/api/ai` renvoie des données factices
+
+`src/routes/api/ai/+server.ts` définit `STUB_SUGGESTIONS`, `STUB_ALERTS` et `STUB_SIGNALS`, servis en repli silencieux quand l'exécution d'un skill échoue. L'interface affiche alors des suggestions inventées sans rien signaler. À rendre explicite ou à supprimer.
+
+### `/api/ai/complete` contourne le routeur
+
+Câblé en dur sur Anthropic (`claude-sonnet-4-20250514`), il ignore le routeur multi-provider utilisé partout ailleurs.
 
 ---
 
 ## 7. Tests
 
-Le seul gate vert, et il est solide.
+### Unitaires — le point fort
 
-- **Unitaires :** 110 fichiers, 1 164 tests passés, 1 skipped, 1 todo — 10,7 s.
-- **E2E :** ~40 specs Playwright (auth, partage, IA, mobile, collaboration, sécurité, onboarding, sprints 17 à 30). Non exécutées ici : elles nécessitent un serveur, lui-même bloqué par 3.1 et 5.4.
-- **Colocalisation :** `*.spec.ts` à côté des sources, y compris côté serveur.
-- **Exclusion permanente :** `SummaryPanel.svelte.spec.ts` est exclu en dur dans le script `test:unit` du `package.json` — dette masquée à documenter ou à corriger.
+**840 tests, 81 fichiers, 0 échec, stables.** Specs colocalisées avec les sources, y compris côté serveur.
 
-**Angle mort principal :** aucun gate n'exécute `build`. C'est exactement ce qui a laissé passer 3.1. Un `pnpm build` en CI aurait suffi.
+La suite était instable : des specs navigateur à base de clics échouaient environ une exécution sur trois, puis repassaient sans modification. Diagnostic en §9.6. Le projet `client` tourne désormais en `fileParallelism: false` avec `testTimeout: 20000`, et enregistre le hook de nettoyage via `setupFiles`.
 
----
+`SummaryPanel.svelte.spec.ts` reste exclu en dur du script `test:unit` — dette masquée, à documenter ou corriger.
 
-## 8. Sécurité — synthèse
+### E2E — ne passe pas
 
-| Point | État |
-|---|---|
-| Clés API exposées sans auth (`skills/config`) | 🔴 Critique — cf. 3.2 |
-| Surface IA non authentifiée | 🔴 Critique — cf. 3.3 |
-| En-têtes de sécurité (`hooks.server.ts`) | ✅ CSP, HSTS, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy` |
-| CSP `unsafe-inline` + `unsafe-eval` | 🟠 Affaiblit fortement la protection XSS ; déjà signalé dans `AUDIT.md`, jamais corrigé |
-| Rate limiting | 🟡 Présent sur IA, export, share, search, versions, templates — absent sur `skills/config` et `skills/execute` |
-| RBAC | ✅ Module dédié (`rbac.ts`) avec tests |
-| Validation d'entrée | ✅ Module dédié (`inputValidation.ts`) avec tests |
-| Secrets côté client | ✅ Aucun secret en dur ; les clés transitent par `process.env` côté serveur |
-| Overrides pnpm | ✅ 9 overrides de sécurité actifs (`flatted`, `kysely`, `cookie`, `esbuild`…) — les vulnérabilités listées dans `AUDIT.md` §Sécurité semblent traitées |
+47 specs Playwright. La suite produit des dizaines d'échecs, et **cet état est antérieur à tous les travaux consignés ici** : `smoke.spec` attend un `<h1>` que la page éditeur n'a jamais eu, y compris au commit `02395fb`.
+
+Les specs ont été nettoyées des fonctionnalités supprimées, mais rendre l'e2e vert est un chantier à part entière. Bon point de départ : le `<h1>` manquant, qui est aussi un défaut d'accessibilité.
 
 ---
 
-## 9. Plan de remise en état
+## 8. Ce qui reste ouvert
 
-### Phase 1 — Débloquer ✅ **FAIT le 15 août 2026**
+Par ordre de valeur décroissante :
 
-Voir §11 pour le détail de ce qui a été appliqué et vérifié.
-
-1. ✅ **`service.ts` → `import type`.** Build débloqué.
-2. ✅ **Sortir le service IA serveur du composant client** (`AISettings.svelte`) — défaut découvert en réparant le point 1, bloquant lui aussi.
-3. ✅ **`pnpm rebuild better-sqlite3`** (a nécessité `onlyBuiltDependencies`). Base de données à nouveau accessible.
-4. ✅ **Script `pnpm verify`** = `build` + tests unitaires. Gate ajouté.
-
-### Phase 1bis — Réduction du périmètre fonctionnel ✅ **FAITE le 15 août 2026**
-
-Voir §12 pour le détail de ce qui a été supprimé, recâblé et vérifié.
-
-Le plan ci-dessous est conservé comme trace de la décision et du périmètre retenu.
-
-**Décision :** l'application doit rester simple. Sont retirés du produit :
-
-- la **gamification** — challenges, objectifs (goals), classement (leaderboard), badges ;
-- le **travail partagé** — partage de documents, collaboration, présence, curseurs distants, résolution de conflits.
-
-Cette phase précède les phases 2 à 4 : elle supprime une partie de la surface à sécuriser et à typer, donc elle réduit d'autant le travail restant. Concrètement, `/api/goals/*` et `/api/challenges/*` disparaissent de la revue d'authentification, et une partie des 182 erreurs de typage part avec le code supprimé.
-
-#### Périmètre à supprimer
-
-**Gamification — challenges (10 fichiers)**
-
-```
-src/lib/challengeStore.svelte.ts + .spec.ts
-src/lib/elements/ChallengeCard.svelte
-src/lib/server/db/schema/challenges.ts
-src/routes/api/challenges/**            (4 endpoints)
-src/routes/challenges/+page.svelte
-e2e/challenge-features.spec.ts
-```
-
-**Gamification — objectifs (20 fichiers)**
-
-```
-src/lib/elements/GoalsDashboard.svelte + .spec.ts
-src/lib/elements/GoalTemplateModal.svelte
-src/lib/elements/WritingGoalBar.svelte
-src/lib/goalTemplates.ts + .spec.ts
-src/lib/weeklyGoalsStore.svelte.ts + .spec.ts
-src/lib/writingGoalsStore.svelte.ts + .spec.ts
-src/lib/server/goalSharing.ts + .spec.ts
-src/routes/api/goals/**                 (2 endpoints)
-src/routes/goals/[linkId]/**
-```
-
-**Gamification — classement et badges (16 fichiers)**
-
-```
-src/lib/leaderboardStore.svelte.ts
-src/lib/server/leaderboardCache.ts + .spec.ts
-src/lib/server/leaderboardQueries.ts + .spec.ts
-src/routes/api/leaderboard/**           (2 endpoints)
-src/routes/leaderboard/+page.svelte
-src/lib/badgesStore.svelte.ts + .spec.ts
-src/lib/elements/BadgeDisplay.svelte + .spec.ts
-```
-
-**Travail partagé — partage (11 fichiers)**
-
-```
-src/lib/elements/ShareButton.svelte + .spec.ts
-src/lib/elements/ShareModal.svelte
-src/lib/elements/ShareGoalsModal.svelte + .spec.ts
-src/lib/server/shares.ts + .spec.ts
-src/lib/shareLinksStore.svelte.ts + .spec.ts
-src/routes/api/share, api/shares, api/share/content
-src/routes/s/[token]/**
-```
-
-**Travail partagé — collaboration et présence (18 fichiers)**
-
-```
-src/lib/elements/CollaborativeCursors.svelte
-src/lib/elements/CollaborativeVersioning.svelte
-src/lib/elements/ConflictIndicator.svelte + .spec.ts
-src/lib/elements/ConflictResolutionUI.svelte
-src/lib/elements/PresenceList.svelte + .spec.ts
-src/lib/elements/RemoteCursor.svelte + .spec.ts
-src/lib/elements/RemoteCursors.svelte
-src/lib/presenceStore.svelte.ts + .spec.ts
-src/lib/editor/presence-store.spec.ts
-src/lib/shared/collaborativeVersioningStore.svelte.ts
-src/lib/shared/conflictStore.svelte.ts
-src/lib/shared/websocketPresence.ts
-src/lib/server/ws.ts + .spec.ts, src/routes/api/ws/**
-src/lib/server/collaboration.spec.ts
-src/routes/api/presence/**
-e2e/collaboration.spec.ts
-```
-
-> ⚠️ **Piège de nommage.** `src/lib/shared/` est le dossier de **code partagé** (command bus, data-loader, skill engine, stores transverses) — 18 fichiers qui n'ont **rien** à voir avec la fonctionnalité de partage. Ne pas le supprimer. Seuls trois de ses fichiers sont concernés, listés ci-dessus.
-
-#### Points à trancher avant exécution
-
-| Question | Enjeu |
-|---|---|
-| `discover` / `feed` / `profile/[username]` restent-ils ? | Ce sont des pages **sociales** (découverte d'autres auteurs, flux d'activité). Elles ne sont ni gamification ni partage, mais elles supposent une dimension multi-utilisateurs. Si Sive devient mono-utilisateur, elles tombent aussi — avec `writer_discovery` et `activity_events`. |
-| `WordCountBadge.svelte` | Contient « Badge » dans le nom mais c'est un compteur de mots, pas un badge de gamification. **À conserver.** |
-| Versioning des documents | `versions` est indépendant de la collaboration. **À conserver.** |
-| Tables DB | `challenges`, `challenge_participants`, `document_shares` deviennent orphelines. Prévoir une migration de suppression — à coordonner avec la réparation du journal (§5.1). |
-| Notifications | Leur contenu est aujourd'hui surtout événements sociaux. À réévaluer une fois le reste retiré. |
-
-#### Ordre d'exécution recommandé
-
-1. Retirer les **entrées de navigation** et les liens vers les pages concernées.
-2. Supprimer **pages puis endpoints**, en vérifiant `pnpm verify` à chaque étape.
-3. Supprimer **stores et modules serveur** devenus orphelins.
-4. Supprimer les **specs** associées (les tests doivent baisser en nombre, pas échouer).
-5. Émettre une **migration de suppression** des tables orphelines.
-6. Mettre à jour `README.md`, `docs/`, et retirer les specs e2e correspondantes.
-
-Volume indicatif : ~75 fichiers, soit environ 20 % de la base de code.
-
-### Phase 2 — Sécurité ✅ **FAITE le 15 août 2026**
-
-Voir §13. Le plan initial est conservé ci-dessous.
-
-#### Plan initial (≈ 4 h)
-
-4. **`skills/config` :** garde d'authentification, suppression de `apiKey` de la réponse, store scopé par utilisateur.
-5. **Surface IA :** garde d'authentification sur `ai`, `ai/stream`, `ai/suggest`, `ai/summary`, `skills/execute`, `mcp/tools`.
-6. **Décider d'une politique globale :** soit un garde `/api/*` dans `hooks.server.ts` avec liste blanche explicite des routes publiques, soit une revue endpoint par endpoint. La première option est plus sûre — elle échoue en refusant l'accès, pas en l'accordant.
-7. **Retirer `unsafe-eval` de la CSP** ; `unsafe-inline` demande plus de travail (nonces).
-
-### Phase 3 — Base de données (≈ 3 h)
-
-8. **Réparer le journal de migrations** : régénérer une baseline propre depuis l'état réel du schéma, ou réaligner journal et fichiers.
-9. **Élargir `drizzle.config.ts`** à tous les fichiers de schéma, avant qu'un `db:generate` ne détruise sept tables.
-
-### Phase 4 — Qualité (≈ 1-2 j)
-
-10. **Sortir `mockups/` de `src/`** (−18 erreurs, gratuit).
-11. **Réparer ESLint** (versions du plugin Svelte).
-12. **Résorber les ~150 erreurs de typage restantes**, en commençant par `confetti.ts`, `+page.svelte`, `DocumentFilterPanel.svelte`.
-
-### Phase 5 — Vérité du produit
-
-13. **Aligner la documentation sur le code.** Marquer explicitement comme non implémentés : collaboration temps réel (stub 501) et persistance des partages / notifications / versions (en mémoire).
-14. **Archiver ou dater `AUDIT.md`** pour qu'il ne soit plus lu comme un état courant.
-15. **Persister l'état serveur en mémoire** si un déploiement multi-instance est envisagé.
+1. **Suite e2e** — chantier à part entière. Commencer par le `<h1>` manquant sur la page éditeur.
+2. **10 composants non montés** — câbler ou supprimer, en commençant par `AISettings`.
+3. **80 erreurs de typage** — dont ~40 « type non assignable », réparties sur `+page.svelte`, `MobileEditorToolbar`, `ai/router`, `ai/service`.
+4. **206 problèmes de lint** — dominés par `no-unused-vars` (74) et `no-explicit-any` (53).
+5. **État serveur en mémoire** — bloque le multi-instance et la survie au redémarrage.
+6. **`/api/ai` en repli factice** — rendre l'échec visible.
+7. **Rate limiting** sur `skills/config` et `skills/execute`.
+8. **CSP `unsafe-inline`** — demande des nonces par requête.
+9. **Fichier `LICENSE`** — le README annonce MIT, le dépôt n'a ni fichier ni champ `license`.
+10. **`AUDIT.md`** — à archiver ou dater : plusieurs de ses affirmations sont fausses et vérifiablement fausses (cf. §9.1).
+11. **`pnpm verify`** — y ajouter `check` et `lint` une fois au vert.
 
 ---
 
-## 10. Annexe — commandes de vérification
+## 9. Historique — 15 août 2026
 
-```bash
-npx vite build
-```
+Point de départ : commit `02395fb`, branche `main`.
 
-```bash
-npx svelte-check --tsconfig ./tsconfig.json
-```
+### 9.1 État initial, et l'écart avec `AUDIT.md`
 
-```bash
-npx vitest --run --exclude 'src/lib/elements/SummaryPanel.svelte.spec.ts'
-```
+`AUDIT.md` (3 mai 2026, généré par un autre outil) annonçait « Production Ready », « Qualité Code 9/10 », « TypeScript strict partout », score global 8,2/10.
 
-```bash
-npx eslint . --ignore-pattern '**/*.test.*'
-```
+Mesures réelles au même commit :
 
----
-
-## 11. Journal — Phase 1 appliquée (15 août 2026)
-
-### Correctifs
-
-**1. Build débloqué — `src/lib/server/ai/service.ts`**
-
-```ts
-- import { aiRouter, AIProvider, ModelConfig } from './router';
-+ import { aiRouter } from './router';
-+ import type { AIProvider, ModelConfig } from './router';
-```
-
-**2. `src/routes/api/skills/config/+server.ts`** — le fichier importait `aiRouter` depuis `service.ts`, qui ne le réexporte pas. Import redirigé vers `router.ts`, et les trois types regroupés en `import type`.
-
-**3. 🔴 Code serveur exécuté côté client — `src/lib/elements/AISettings.svelte`**
-
-Défaut découvert en réparant le point 1, et bloquant pour le build. Le composant importait `aiService` — une **valeur** — depuis `$lib/server/ai/service`, puis appelait `aiService.getAvailableProviders()` et `aiService.generate()` directement dans le navigateur. Cela embarquait les SDK Anthropic/OpenAI et les accès `process.env` dans le bundle client.
-
-Correctifs appliqués :
-- import réduit aux **types seuls** depuis `router.ts` (effacés à la compilation, donc sans fuite) ;
-- `checkProviders()` passe désormais par `GET /api/skills/config` ;
-- `runTest()` passe par un nouvel endpoint `POST /api/ai/test` ;
-- au passage, correction d'un `providers.map(...)` appliqué à un `Record` (jamais un tableau) — bug latent qui aurait levé un `TypeError` à l'exécution.
-
-**4. Nouvel endpoint — `src/routes/api/ai/test/+server.ts`**
-
-Expose l'exécution IA multi-provider au panneau de réglages. Authentifié dès l'écriture (`locals.session`, refus des invités), avec validation du provider contre une liste blanche. C'est le seul ajout de surface de cette phase ; il ne fait pas partie des 12 endpoints non protégés du §3.3.
-
-**5. Bindings natifs — `package.json`**
-
-`pnpm rebuild better-sqlite3` ne faisait rien : pnpm bloque les scripts de build des dépendances par défaut. Ajout de :
-
-```json
-"pnpm": { "onlyBuiltDependencies": ["better-sqlite3"] }
-```
-
-Le binding se compile désormais et la base s'ouvre.
-
-**6. Gate de vérification — `package.json`**
-
-```json
-"verify": "npm run build && npm run test:unit -- --run"
-```
-
-Volontairement limité à ce qui est vert aujourd'hui. `check` et `lint` rejoindront ce script à l'issue de la phase 4 — les y mettre maintenant rendrait le gate inutilisable, donc ignoré.
-
-### Vérification
-
-| Contrôle | Avant | Après |
+| Gate | Annoncé | Mesuré |
 |---|---|---|
-| `npx vite build` | ❌ `MISSING_EXPORT` | ✅ built in 7,09 s |
-| `npx vitest --run` | ✅ 1 164 | ✅ 1 164 — aucune régression |
-| Ouverture de `local.db` | ❌ bindings absents | ✅ 12 tables listées |
+| Build | — | ❌ échec `MISSING_EXPORT` |
+| Typecheck | « strict partout » | ❌ 182 erreurs / 55 fichiers |
+| Lint | ✅ | ❌ crash (`TypeError` dans le plugin) |
+| Tests unitaires | 1 072 + 42 e2e | ✅ 1 164 (mais instables) |
+| Endpoints `/api` ouverts | — | 24 sur 26 |
 
-Tables réellement présentes dans `local.db` : `__drizzle_migrations`, `users`, `sessions`, `accounts`, `documents`, `document_shares`, `user_preferences`, `task`, `challenges`, `challenge_participants`, `writer_discovery`, `activity_events`.
+`AUDIT.md` listait par ailleurs `docs/USER_GUIDE.md` et `docs/API.md` comme « ✅ Bon » : **ni l'un ni l'autre n'existe**.
 
-### Constats annexes relevés pendant la phase 1
+### 9.2 Build débloqué — `21b8d84`
 
-- **`/api/ai` retourne des données factices en cas d'échec.** `src/routes/api/ai/+server.ts` définit `STUB_SUGGESTIONS`, `STUB_ALERTS`, `STUB_SIGNALS` et un `getStubResponse()` utilisé en repli silencieux quand l'exécution du skill échoue. L'interface affiche alors des suggestions inventées sans rien signaler à l'utilisateur. À rendre explicite ou à supprimer.
-- **Clés API en clair dans `localStorage`.** `AISettings.svelte` sérialise `providers` — clés comprises — sous `localStorage['ai-settings']`. À traiter avec le §3.2.
-- **`/api/ai/complete` est câblé en dur sur Anthropic** (`claude-sonnet-4-20250514`), en contournant le routeur multi-provider. Incohérent avec le reste de l'architecture IA.
-- **Imports `$lib/server` depuis des composants client** : cinq autres fichiers le font, mais uniquement en `import type` — sans effet à l'exécution. Seul `WordCountBadge.svelte` importe des **valeurs** (`countWords`, `countParagraphs`, `readingTimeMinutes` depuis `$lib/server/stats`). Ce sont des fonctions pures, donc sans danger, mais elles sont mal placées : à déplacer hors de `server/`.
+`service.ts` importait `AIProvider` et `ModelConfig` en position de valeur alors que `router.ts` les exporte en types purs. Vitest utilise esbuild, qui efface les types en silence : la suite restait verte pendant que le build était cassé. Rien dans le pipeline ne lançait `build`.
 
----
+En réparant cela, un défaut plus grave est apparu : `AISettings.svelte`, composant **client**, importait `aiService` en valeur depuis `$lib/server` et appelait `aiService.generate()` dans le navigateur — embarquant les SDK Anthropic/OpenAI et les accès `process.env` dans le bundle client. Réacheminé via l'API, avec un nouvel endpoint `POST /api/ai/test` authentifié.
 
-## 12. Journal — Phase 1bis appliquée (15 août 2026)
+Également : `pnpm rebuild better-sqlite3` ne faisait rien (pnpm bloque les scripts de build par défaut) ; script `verify` ajouté.
 
-**84 fichiers supprimés, 25 modifiés ou créés.**
+### 9.3 Réduction du périmètre — `bb61718`
 
-Périmètre exécuté : celui explicitement décidé — challenges, objectifs, classement, badges, partage de documents, collaboration et présence. `discover`, `feed` et `profile/[username]` ont été **conservés** : ils n'entraient pas dans la décision, et supprimer au-delà du périmètre annoncé est le sens risqué. Ils ont seulement été débarrassés de leurs dépendances à la gamification.
+Décision produit : l'application reste simple. Retrait de la gamification (challenges, objectifs, classement, badges) et du travail partagé (partage de documents, collaboration, présence, curseurs distants). **84 fichiers supprimés.**
 
-### Recâblages notables
+Le point structurant était la propriété des documents. `document_shares` ne portait pas que le partage : il servait de modèle de propriété, `+page.server.ts` listant les documents via cette table. Or `documents.user_id` portait déjà la même information — la table la dupliquait, la suppression n'a donc demandé aucune migration de données.
 
-**Modèle de propriété des documents — `rbac.ts`**
+`discover`, `feed` et `profile/[username]` ont été **conservés** : hors périmètre décidé. Ils ont seulement perdu leurs dépendances à la gamification.
 
-Le point structurant. `document_shares` ne portait pas seulement la fonctionnalité de partage : il servait de **modèle de propriété**. `+page.server.ts` listait les documents d'un utilisateur en interrogeant cette table, et `createOwnerShare()` était appelé à chaque création.
+### 9.4 Sécurité — `5dceb08`
 
-Or `documents.user_id` existait déjà et portait la même information. `document_shares` la dupliquait. La suppression est donc propre :
-
-- `getDocumentRole()` lit désormais `documents.user_id` ;
-- `DocumentRole` se réduit à `'owner'` — un utilisateur possède un document ou n'y a aucun accès ;
-- les trois appels à `requireDocumentRole(..., 'editor' | 'owner' | 'viewer')` deviennent des vérifications de propriété ;
-- `+page.server.ts` liste les documents par `documents.user_id`.
-
-`rbac.spec.ts` testait une matrice de rôles qui n'existe plus ; il a été réécrit pour le modèle propriétaire (8 tests).
-
-**Composants dépouillés plutôt que supprimés**
-
-`UserProfileCard.svelte` (statistiques de série, badges, semaines parfaites), `EditorToolbar.svelte` (présence, bouton de partage), `DocumentList.svelte` (badge « Shared », compteur de présence), `settings/+page.svelte` (objectif quotidien, tableau de bord, visibilité classement), `discover/+page.svelte` (séries et badges envoyés à l'API), `privacyStore` (`showOnLeaderboard`, `setLeaderboardVisibility`), `activityStore` (types d'événements `leaderboard_entry` et `goal_completed`), `MobileNavDrawer` (liens morts vers `/challenges` et `/leaderboard`).
-
-**Migration** — `drizzle/0004_drop_gamification_and_sharing.sql` supprime `challenges`, `challenge_participants` et `document_shares`. ⚠️ Elle **ne peut pas encore être jouée** : le journal de migrations est cassé (§5.1). À appliquer une fois la phase 3 faite.
-
-### Vérification
-
-| Contrôle | Avant 1bis | Après 1bis |
-|---|---|---|
-| `npx vite build` | ✅ | ✅ 4,1 s |
-| Tests unitaires | 1 164 passés (110 fichiers) | **867 passés, 0 échec** (83 fichiers) |
-| `svelte-check` | 182 erreurs / 55 fichiers | **135 erreurs / 47 fichiers** (−47) |
-| Warnings CSS inutilisé | 0 | 0 (CSS mort purgé au fur et à mesure) |
-
-La baisse du nombre de tests (−297) correspond aux specs des fonctionnalités supprimées. Aucun test restant n'échoue.
-
-### Constat : tests navigateur instables
-
-Lors d'une exécution intermédiaire, quatre specs non liées à la suppression ont échoué — `HardenModal`, `ReviewToolbar`, `SuggestionItem`, `DocumentList` (« calls onSelect ») — puis sont repassées au vert **sans aucune modification**. Ce sont des tests `vitest-browser-svelte` pilotés par des clics : ils sont instables (*flaky*).
-
-C'est un problème de fond pour le seul gate vert du projet : un test qui échoue au hasard finit par être ignoré, et masque les vraies régressions. À investiguer (attentes explicites plutôt que délais implicites) avant de faire de `verify` un gate bloquant en CI.
-
-### Reste à faire sur ce périmètre
-
-- Specs e2e référençant encore les fonctionnalités retirées : `server-sync`, `sprint-17`, `sprint28`, `sprint32-notifications`, `sprint37-cursors`, `sprint39-41`, `sprint42-46`, `sprint47-wiring`, `sprint51`, `sprint52`. Non traitées ici (les e2e ne sont pas exécutables tant que la phase 3 n'est pas faite).
-- `README.md`, `docs/USER_GUIDE.md`, `docs/API.md` décrivent toujours partage, collaboration et gamification.
-- Notifications : le contenu restant est surtout social. À réévaluer.
-- `discover` / `feed` / `profile/[username]` : décision produit toujours ouverte (cf. tableau en phase 1bis).
-
----
-
-## 13. Journal — Phase 2 appliquée (15 août 2026)
-
-### 🔴 Le vrai périmètre était bien plus large que le §3.3
-
-Le §3.3 classait 12 endpoints « sans référence d'authentification » et 28 « avec ». Cette seconde catégorie était **trompeuse**, et l'erreur vient de `hooks.server.ts` :
-
-```ts
-} else {
-	// No authenticated session: create a lightweight guest identity
-	event.locals.session = null;
-	event.locals.user = { id: 'guest', name: 'Guest', role: 'guest' } as any;
-	event.locals.isGuest = true;
-}
-```
-
-En l'absence de session, `locals.user` est **toujours** renseigné avec un utilisateur factice. Or la garde majoritaire dans le code était :
+Le décompte initial de 12 endpoints non protégés était **très en dessous de la réalité**. Neuf endpoints se gardaient ainsi :
 
 ```ts
 if (!locals.user) return json({ error: 'Unauthorized' }, { status: 401 });
 ```
 
-Cette condition **ne peut jamais être vraie**. Ces endpoints se croyaient protégés et ne l'étaient pas.
+Condition qui ne peut jamais être vraie, `hooks.server.ts` attribuant un utilisateur invité factice. Réel : **24 endpoints sur 26 atteignables sans authentification**, dont toute la surface IA facturée et `skills/config`, qui renvoyait en plus les clés API en clair depuis une `Map` partagée entre tous les utilisateurs.
 
-Décompte réel après la phase 1bis, sur 26 endpoints :
+Réparer neuf gardes une par une aurait laissé le piège intact pour le prochain endpoint. La politique a été centralisée et inversée (§4).
 
-| Garde effective | Nombre |
-|---|---|
-| `locals.session` (réelle) | 1 — `ai/test`, écrit en phase 1 |
-| `locals.isGuest` (réelle) | 2 — les deux endpoints `guest/*` |
-| `!locals.user` (**inopérante**) | 9 |
-| Aucune | 14 |
+### 9.5 Outillage — `df73355`, `d88d130`
 
-Soit **24 endpoints sur 26 atteignables sans authentification**, dont toute la surface IA facturée et `skills/config`.
+**ESLint** : le crash venait d'un décalage de versions, pas de la configuration. `typescript-eslint` 8.57.1 → 8.67.0, `eslint-plugin-svelte` 3.15.2 → 3.23.0.
 
-### Correctifs
+**Mockups** : les 12 fichiers de `src/lib/elements/mockups/` sont des descripteurs pseudo-HTML, pas des composants — `<panel/>` auto-fermant suivi de `</panel>`. Renommés `.svelte` → `.html`, en place.
 
-**1. Garde global `/api`, fermé par défaut — `src/lib/server/apiGuard.ts` + `hooks.server.ts`**
+**Journal de migrations** : il référençait `0002_last_black_cat`, absent du disque, tandis que deux fichiers portaient le préfixe `0003`. Le croisement avec les snapshots a reconstitué l'histoire : le fichier généré avait été renommé à la main, et `0002_add_document_tags.sql` était un doublon de l'`ALTER` déjà contenu dans la migration idx 2.
 
-Plutôt que de réparer neuf gardes une par une — et d'en oublier au prochain endpoint ajouté — la politique est centralisée et inversée : **tout `/api` est refusé sauf liste blanche explicite**.
+### 9.6 Tests instables — `95e62dd`
 
-```ts
-export const PUBLIC_API_PREFIXES = [
-	'/api/auth',          // handler better-auth (connexion, inscription, callbacks)
-	'/api/guest/status',  // renvoie l'état invité ; exiger une session n'aurait pas de sens
-	'/api/guest/convert'  // convertit un invité en compte réel
-];
-```
+Première hypothèse : accumulation du DOM entre tests, les specs interrogeant le locator global `page` après un `render()` local. Le projet `client` n'avait effectivement aucun `setupFiles` — or c'est lui qui enregistre le hook de nettoyage. L'ajouter était correct, mais **n'a pas résolu l'instabilité**.
 
-Propriétés retenues :
+En lisant le message d'erreur au lieu de le supposer : `Test timed out in 5000ms`. Des timeouts, pas des sélecteurs ambigus. Exécutée seule, la spec passe 4 fois sur 4. `locator.click()` attend l'actionnabilité, et la suite entière en parallèle prive le navigateur de ressources.
 
-- **Échec fermé.** Un endpoint ajouté demain est protégé sans intervention. Un test le vérifie explicitement.
-- **Autorisation basée sur `session`, pas sur `user`** — précisément la confusion à l'origine du problème.
-- **Neutre en mode mock/dev/e2e** : sans backend d'authentification il n'y a pas de session à vérifier, et l'application sert déjà des données factices. Sans cette clause, le développement local et les tests e2e seraient cassés.
-- **Politique extraite dans un module pur**, testable sans monter better-auth ni SvelteKit. `hooks.server.ts` ne fait plus qu'appeler `shouldDenyApiRequest()` et composer via `sequence()`.
+### 9.7 Qualité et documentation — `526a4f2`, `84469b0`, `f553561`, `c38cb12`
 
-**15 tests** couvrent la politique (`apiGuard.spec.ts`), dont les correspondances de préfixe aux frontières de chemin (`/api/authorize-everything` ne doit pas passer pour `/api/auth`) et le cas « endpoint flambant neuf ».
+**27 `{#each}` sans clé** corrigés. Sans clé, Svelte réconcilie par position : réordonner une liste laisse l'état accroché au mauvais élément.
 
-**2. Fuite de clés API — `/api/skills/config`**
+**Gestionnaires d'événements en casse React** — `onClick`, `onChange`, `onInput` sur des éléments DOM natifs dans `DocumentFilterPanel` et `DocumentSearch`. Svelte 5 ne lie que les attributs en minuscules : les douze gestionnaires étaient inertes.
 
-- Authentification exigée sur `GET` et `POST` (en plus du garde global — défense en profondeur : l'endpoint reste correct si la liste blanche change).
-- **La réponse ne contient plus jamais `apiKey`.** Seul `api_key_configured` (booléen) subsiste, ce qui suffit à l'interface.
-- Le stockage passe d'une `Map` unique de processus à **une `Map` par utilisateur**. Auparavant la clé saisie par un utilisateur servait aux requêtes de tous les autres.
-- Validation du nom de provider contre une liste blanche à l'écriture.
+> ⚠️ **Correction d'une surestimation.** Le message du commit `f553561` présentait cela comme un bug utilisateur visible (« le panneau de filtres ne filtrait rien »). C'est exact sur le fond, mais trompeur sur la portée : `DocumentFilterPanel` et `DocumentSearch` **ne sont montés nulle part** (§6). Aucun utilisateur n'a jamais pu cliquer sur ces contrôles. Le correctif reste juste ; son impact réel est nul tant que ces composants ne sont pas câblés.
 
-**3. Clés API hors de `localStorage` — `AISettings.svelte`**
+**Recherche** : `DocumentSearch` affiche une rangée de tags sous garde `{#if result.tags && …}`, mais `SearchResult` n'a jamais eu ce champ — garde toujours fausse. `indexDocument` intégrait les tags au texte cherchable puis les jetait. Corrigé, 4 tests. Même réserve de portée que ci-dessus.
 
-Le composant sérialisait `providers`, clés comprises, sous `localStorage['ai-settings']`. Tout ce qui est stocké là est lisible par n'importe quel script de l'origine : une seule XSS livrait l'ensemble des clés. Les clés sont désormais envoyées au serveur mais retirées de la copie locale.
+Autres défauts réels : `MilestoneNotification` utilisait `in:scale` sans importer `scale` ; trois spécificateurs de modules pointaient à côté ; `confetti.ts` gardait `ctx` contre `null` mais l'utilisait dans une fonction hoistée, où TypeScript ne propage pas le narrowing.
 
-**4. CSP — `unsafe-eval` retiré**
+**Code mort résiduel** : un balayage des modules jamais importés a révélé quatre rescapés de la collaboration, manqués lors de la réduction de périmètre — `server/sharing.ts`, `cursorColors.ts`, `editor/cursor-sync.ts`, `editor/ot-adapter.ts`, avec leurs specs. Cause de l'oubli : l'inventaire cherchait `share` dans les noms de fichiers, et « sharing » ne contient pas « share ». Supprimés.
 
-Rien dans l'application n'évalue de code à l'exécution. `unsafe-inline` reste nécessaire (données d'hydratation SvelteKit et styles inline) ; le retirer demande des nonces par requête et reste à faire.
-
-### Vérification
-
-| Contrôle | Avant phase 2 | Après |
-|---|---|---|
-| `npx vite build` | ✅ | ✅ 3,3 s |
-| Tests unitaires | 867 passés | ✅ **882 passés, 0 échec** (+15) |
-| Endpoints `/api` non authentifiés | 24 / 26 | **0 / 26** hors liste blanche de 3 |
-
-### Reste à faire
-
-- **`unsafe-inline` dans la CSP** — nécessite des nonces par requête.
-- **Rate limiting sur `skills/config` et `skills/execute`** — ils sont désormais authentifiés, mais toujours sans plafond.
-- **Persistance chiffrée des clés API.** Le stockage reste en mémoire et par processus : perdu au redémarrage, incohérent en multi-instance.
-- **Nettoyer les gardes `!locals.user` mortes** dans les neuf endpoints concernés. Elles sont inoffensives — le garde global couvre — mais elles donnent une fausse impression de protection à la lecture.
+**Documentation** : `docs/API-WS.md` supprimé (documentait l'endpoint WebSocket retiré, qui n'était qu'un stub 501). `docs/DEPLOYMENT.md` était un vrai guide sous un titre WebSocket — conservé, retitré, section nginx/WSS remplacée. `ecosystem.config.js` renommé et passé de `cluster` à `fork` : le mode cluster était activement faux compte tenu de l'état en mémoire. README aligné sur l'application qui existe.
 
 ---
 
-## 14. Journal — Phase 4 partielle (15 août 2026)
+## 10. Annexe — commandes
 
-### ESLint réparé
-
-Le crash venait bien d'une incompatibilité de versions, pas de la configuration. `typescript-eslint` 8.57.1 → **8.67.0** et `eslint-plugin-svelte` 3.15.2 → **3.23.0**. La documentation amont confirme qu'ESLint 10 est supporté par la branche 8.x à condition d'être assez récent ; le projet était en retard de dix versions mineures.
-
-ESLint s'exécute désormais et remonte **297 problèmes réels** (12 corrigés automatiquement). Le gate passe de « inutilisable » à « bruyant mais exploitable ».
-
-| Règle | Occurrences |
-|---|---|
-| `@typescript-eslint/no-unused-vars` | 136 |
-| `@typescript-eslint/no-explicit-any` | 53 |
-| `svelte/require-each-key` | 27 |
-| `svelte/no-navigation-without-resolve` | 26 |
-| `svelte/prefer-svelte-reactivity` | 16 |
-| autres (13 règles) | 39 |
-
-`svelte/require-each-key` mérite une attention particulière : 27 boucles `{#each}` sans clé, source classique de réconciliation DOM incorrecte sur listes réordonnées.
-
-### Mockups sortis du périmètre Svelte
-
-Les 12 fichiers de `src/lib/elements/mockups/` sont des descripteurs pseudo-HTML, pas des composants. Renommés `.svelte` → `.html`, **en place** : ils décrivent l'interface, donc ils restent à côté des composants qu'ils documentent.
-
-Effet : **135 → 111 erreurs** de typage, **28 → 8 warnings**.
-
-### Débris supprimés à la racine
-
-`tmp_sse_parse.js` (script d'expérimentation SSE), `auth_page.html` (vide) et `auth_page_resp.html` — tous versionnés par accident, référencés nulle part. Récupérables via l'historique git si besoin.
-
-### État des gates
-
-| Gate | À l'analyse | Maintenant |
-|---|---|---|
-| Build | ❌ `MISSING_EXPORT` | ✅ vert |
-| Typecheck | ❌ 182 erreurs / 55 fichiers | 🟠 **111 erreurs / 36 fichiers** |
-| Lint | ❌ crash | 🟠 **297 problèmes** (s'exécute) |
-| Tests unitaires | ✅ 1 164 | ✅ **882, 0 échec** |
-
-### Reste à faire
-
-- Résorber les 297 problèmes de lint, en commençant par `require-each-key` (correction) puis `no-unused-vars` (nettoyage).
-- Résorber les 111 erreurs de typage restantes.
-- Ajouter `check` et `lint` à `pnpm verify` une fois les deux au vert — c'est la condition pour en faire un gate bloquant.
-- Phase 3 (journal de migrations) toujours ouverte : elle bloque `db:migrate`, les tests e2e et la migration `0004`.
-
----
-
-## 15. Journal — Phase 3 appliquée (15 août 2026)
-
-### Ce que le désordre cachait
-
-En croisant les fichiers, le journal et les snapshots, la chronologie se reconstitue :
-
-| Snapshot | Contenu | Fichier réel | Entrée journal |
-|---|---|---|---|
-| `0000` | documents, task, accounts, sessions, users | `0000_normal_maggott.sql` | ✅ idx 0 |
-| `0001` | + user_preferences | `0001_aberrant_reptil.sql` | ✅ idx 1 |
-| `0002` | + document_shares + colonne `tags` | `0003_add_document_shares.sql` | ❌ journal attend `0002_last_black_cat` |
-| `0003` | + challenges, challenge_participants, activity_events, writer_discovery | `0003_hard_spectrum.sql` | ✅ idx 3 |
-
-Le fichier généré `0002_last_black_cat.sql` avait été **renommé à la main** en `0003_add_document_shares.sql` — d'où l'entrée fantôme et les deux fichiers en `0003`. Par-dessus, `0002_add_document_tags.sql` était un **doublon écrit à la main** de l'`ALTER TABLE documents ADD tags` déjà contenu dans la migration idx 2 : l'appliquer aurait échoué sur colonne dupliquée.
-
-### Réparation
-
-- `0003_add_document_shares.sql` → **`0002_last_black_cat.sql`**, son nom généré, aligné avec le journal et le snapshot 0002.
-- `0002_add_document_tags.sql` supprimé (doublon superflu et nuisible).
-- `0004` régénéré par `drizzle-kit generate` plutôt qu'écrit à la main, pour que le snapshot correspondant soit produit correctement.
-
-Journal et fichiers correspondent désormais **1:1 sur cinq entrées**.
-
-### Vérification
-
-La chaîne complète a été rejouée depuis une base vide jetable (hors `local.db`) :
-
-```
-[✓] migrations applied successfully!
+```bash
+pnpm verify
 ```
 
-Tables obtenues : `accounts`, `activity_events`, `documents`, `sessions`, `task`, `user_preferences`, `users`, `writer_discovery` — exactement le schéma attendu après retrait de la gamification et du partage. **`pnpm db:migrate` fonctionne sur un environnement neuf.**
-
-### ⚠️ Décision restante : `local.db` est désynchronisé
-
-`__drizzle_migrations` de la base locale ne contient que **deux** migrations appliquées (idx 0 et 1), alors que le schéma réel va jusqu'à idx 3 — tout ce qui suit a été appliqué via `db:push`, hors du mécanisme de migrations.
-
-Conséquence : lancer `db:migrate` sur `local.db` rejouerait idx 2 et échouerait (`document_shares` existe déjà). Deux options, à trancher par le propriétaire du projet car elles touchent des données :
-
-1. **Recréer la base de développement** — la chaîne s'applique proprement depuis zéro, comme vérifié. Simple, mais détruit les données locales.
-2. **Réconcilier** — insérer à la main les entrées idx 2 et 3 dans `__drizzle_migrations`, puis appliquer uniquement `0004`.
-
-Aucune des deux n'a été exécutée. `local.db` est intact.
-
----
-
-## 16. Journal — Tests instables diagnostiqués (15 août 2026)
-
-Le §12 signalait des specs navigateur qui échouaient au hasard puis repassaient sans modification. Le problème s'est reproduit assez souvent (environ une exécution complète sur trois) pour être traité : c'est le seul gate vert du projet, et un test qui échoue aléatoirement finit ignoré, donc finit par masquer une vraie régression.
-
-### Fausse piste
-
-Première hypothèse : accumulation du DOM entre tests. Les specs concernées font `render(...)` puis interrogent le **locator global** :
-
-```ts
-render(SuggestionItem, { suggestion: modSuggestion, onAccept, onReject: vi.fn() });
-await page.getByRole('button', { name: 'Accept suggestion' }).click();
+```bash
+pnpm check
 ```
 
-`page` interroge tout le document, pas le conteneur rendu. Sans nettoyage entre tests, le sélecteur pourrait matcher les restes des tests précédents. Et de fait, le projet `client` n'avait **aucun `setupFiles`** — or la documentation amont indique que c'est précisément `setupFiles: ['vitest-browser-svelte']` qui enregistre le hook de nettoyage.
-
-L'ajouter était correct, mais **n'a pas résolu l'instabilité**.
-
-### Cause réelle
-
-En lisant le message d'erreur au lieu de le supposer :
-
-```
-Error: Test timed out in 5000ms.
+```bash
+pnpm lint
 ```
 
-Des **timeouts**, pas des sélecteurs ambigus. Exécutée seule, la spec passe 4 fois sur 4 ; elle n'échoue que dans la suite complète. `locator.click()` attend l'*actionnabilité* de l'élément ; la suite entière lancée en parallèle prive suffisamment le navigateur de ressources pour que le budget de 5 s expire.
-
-### Correctif
-
-Dans le projet `client` : `fileParallelism: false` et `testTimeout: 20000`. Un fichier navigateur à la fois, avec de la marge — un peu de temps d'exécution échangé contre un résultat déterministe.
-
-`setupFiles` est conservé : c'est la façon documentée d'obtenir le nettoyage entre tests, indépendamment de ce problème.
-
-### Vérification
-
-Quatre exécutions complètes consécutives : **882 passés, 0 échec** à chaque fois, contre environ un échec toutes les trois exécutions auparavant.
-
-Ce n'est pas une preuve d'absence — l'instabilité ne se prouve jamais absente. Mais le mécanisme est identifié, le correctif l'adresse directement, et le comportement observé a nettement changé.
-
----
-
-## 17. Journal — Reste du chantier (15 août 2026)
-
-### Base de développement recréée
-
-Décision tranchée : l'application n'a jamais été en production, les données locales étaient jetables. `local.db` supprimée et reconstruite via `pnpm db:migrate`. Résultat : **5 migrations enregistrées**, schéma conforme. Le désalignement décrit au §15 est résolu.
-
-### Tests e2e nettoyés — et un constat
-
-Suppression de `sprint28` (présence collaborative) et `sprint37-cursors`, entièrement consacrés à des fonctionnalités disparues. Excision ciblée ailleurs : challenges dans `server-sync`, badge de partage dans `sprint-17`, objectifs dans `sprint39-41`, `sprint47-wiring`, `sprint51` et `sprint52`, partage de documents dans `sprint42-46`, icônes `doc_shared`/`conflict` dans `sprint32`, liens de navigation morts dans `mobile-flow`.
-
-**Mais la suite e2e ne passe pas, et ne passait pas avant ces travaux.** Première exécution réelle du projet : `smoke.spec` attend un `<h1>` sur la page d'accueil que l'éditeur n'a jamais eu — vérifié au commit `02395fb`. Une exécution complète produit des dizaines d'échecs. Rendre l'e2e vert est un chantier à part entière ; ce nettoyage garantit seulement qu'elle ne décrit plus des fonctionnalités inexistantes.
-
-### 🔴 Gestionnaires d'événements morts — bug utilisateur réel
-
-Le plus important de cette passe, et il se cachait dans le bruit de `svelte-check`.
-
-`DocumentFilterPanel.svelte` et `DocumentSearch.svelte` écrivaient les attributs d'événement DOM en casse React — `onClick`, `onChange`, `onInput` — sur des `<button>`, `<input>`, `<select>` et `<div>` natifs. Svelte 5 ne lie que les attributs en minuscules. **Les douze gestionnaires étaient inertes** :
-
-- effacer tous les filtres
-- cocher/décocher un tag
-- les deux champs de date
-- les deux sélecteurs de tri
-- trois boutons de tag dans le panneau
-- le champ de recherche et son bouton d'effacement
-- le fond cliquable de la modale
-
-Autrement dit, le panneau de filtres ne filtrait rien. Corrigé.
-
-Les `onChange` de `AIPanel` sont laissés tels quels : ils sont passés à des **composants**, où le nom de prop en camelCase est correct.
-
-### Autres défauts réels corrigés
-
-- `MilestoneNotification` utilisait `in:scale` / `out:scale` sans importer `scale` depuis `svelte/transition` — exception à l'exécution.
-- `uiHandlers` importait `$lib/coherenceStore` et `$lib/suggestionsStore`; les fichiers sont en `.svelte.ts`. `skill_coherence` importait `./skillEngine.svelte` depuis un sous-dossier alors qu'il est un niveau au-dessus.
-- `confetti.ts` gardait bien `ctx` contre `null`, mais l'utilisait dans une **déclaration de fonction hoistée**, dans laquelle TypeScript ne propage pas le narrowing. Le type narrowé est désormais figé dans une const — plutôt que onze assertions non-nulles.
-- **Recherche : les tags ne s'affichaient jamais.** `DocumentSearch` affiche une rangée de tags par résultat, sous garde `{#if result.tags && …}`. Or `SearchResult` n'a jamais eu de champ `tags` : la garde était toujours fausse. `indexDocument` intégrait pourtant les tags au texte cherchable — il les jetait ensuite. Ils sont maintenant conservés et transmis, avec 4 tests.
-
-### Lint
-
-296 → 207 problèmes. Le groupe qui comptait : **27 `{#each}` sans clé**. Sans clé, Svelte réconcilie par position ; réordonner ou filtrer une liste laisse l'état accroché au mauvais élément — les chips de tags de `DocumentList` et les lignes de providers des réglages IA sont exactement cette forme. Clés par valeur pour les listes de chaînes, par identité naturelle quand elle existe, par index uniquement pour les sections de `ReviewReport` dont les éléments n'ont aucune identité — là, la clé fait taire la règle sans acheter de correction, ce qui est le plafond honnête tant que la charge utile n'a pas d'ids.
-
-Également : convention `_` pour les liaisons volontairement inutilisées, liaison `catch` optionnelle, et 29 imports morts retirés — dont `Onboarding` importé sans jamais être monté dans `+page.svelte`, et `partnerFeedStore` inutilisé dans `feed/+page.svelte`. Deux fonctionnalités câblées nulle part.
-
-### Documentation
-
-`docs/API-WS.md` supprimé (documentait l'endpoint WebSocket retiré). `docs/DEPLOYMENT.md` était un vrai guide de déploiement sous un titre WebSocket : contenu conservé, titre corrigé, section nginx/WSS remplacée par un reverse proxy simple et certbot.
-
-`ecosystem.config.js` renommé de `sive-ws`, et surtout **passé de `cluster` à une instance unique en `fork`**. Le mode cluster était activement faux ici : notifications, moteur de skills et routeur IA gardent leur état en mémoire de processus, donc un second worker répond avec une autre vision du monde. La configuration et la section « Scaling » le disent désormais, au lieu de recommander `instances: 'max'`.
-
-README : section gamification retirée, exemples de commandes de test corrigés (ils nommaient des specs supprimées), collaboration temps réel et salles multijoueurs retirées de la feuille de route. Les liens `docs/USER_GUIDE.md` et `docs/API.md` **ne pointaient vers rien** — `AUDIT.md` listait pourtant les deux comme « ✅ Bon ». Tous les liens relatifs résolvent maintenant.
-
-Le statut « ✅ Production Ready » est remplacé par un renvoi vers ce document : ce n'est pas une affirmation que ce dépôt peut tenir tant que lint et types ne sont pas propres.
-
-À signaler, non corrigé : le README annonce une licence MIT alors qu'il n'existe ni fichier `LICENSE` ni champ `license` dans `package.json`. Le lien mort a été retiré plutôt que d'inventer une licence.
-
-### État final des gates
-
-| Gate | À l'analyse | Maintenant |
-|---|---|---|
-| Build | ❌ `MISSING_EXPORT` | ✅ vert |
-| Tests unitaires | ✅ 1 164 (instables) | ✅ **886, 0 échec, stables** |
-| Typecheck | ❌ 182 erreurs / 55 fichiers | 🟠 **80 / 31** |
-| Lint | ❌ crash | 🟠 **207 problèmes** |
-| `db:migrate` | ❌ fichier fantôme | ✅ base recréée, 5 migrations |
-| Endpoints `/api` ouverts | 24 / 26 | ✅ **0**, hors liste blanche de 3 |
-| Tests e2e | jamais exécutés | ❌ échecs massifs, **pré-existants** |
-
-### Ce qui reste ouvert
-
-1. **Suite e2e** — chantier à part entière. Commencer par le `<h1>` manquant sur la page éditeur, qui est aussi un défaut d'accessibilité.
-2. **80 erreurs de typage**, dont ~40 « type non assignable » réparties sur `+page.svelte`, `MobileEditorToolbar`, `ai/router` et `ai/service`.
-3. **207 problèmes de lint**, dominés par `no-unused-vars` (74) et `no-explicit-any` (53).
-4. **`unsafe-inline` dans la CSP** — demande des nonces par requête.
-5. **Rate limiting** absent sur `skills/config` et `skills/execute`.
-6. **État serveur en mémoire** — bloque tout déploiement multi-instance (cf. la note dans `ecosystem.config.js`).
-7. **`/api/ai` renvoie des données factices** en repli silencieux (§11).
-8. **Fichier `LICENSE`** à ajouter.
-9. **`AUDIT.md`** à archiver : plusieurs de ses affirmations sont fausses et vérifiablement fausses.
+```bash
+pnpm test:e2e
+```
