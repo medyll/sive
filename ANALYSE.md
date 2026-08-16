@@ -239,7 +239,6 @@ Par ordre de valeur décroissante :
 5. **CSP `unsafe-inline`** — demande des nonces par requête.
 6. **Persistance chiffrée des clés API** — aujourd'hui en mémoire, par utilisateur, perdues au redémarrage.
 7. **`/api/ai/complete`** — câblé en dur sur Anthropic, contourne le routeur multi-provider.
-8. **Fichier `LICENSE`** — le README annonce MIT, le dépôt n'a ni fichier ni champ `license`. Décision du propriétaire.
 9. **`pnpm verify`** — y ajouter `check` et `lint` une fois au vert.
 10. **`SummaryPanel.svelte.spec.ts`** — exclu en dur du script `test:unit`, dette masquée.
 

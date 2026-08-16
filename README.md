@@ -247,7 +247,7 @@ We welcome contributions! Please follow these guidelines:
 
 ## 📄 License
 
-MIT License. No `LICENSE` file has been added to the repository yet.
+MIT License — see [LICENSE](./LICENSE).
 
 ---
 
