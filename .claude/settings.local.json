@@ -27,7 +27,8 @@
       "Bash(pnpm up *)",
       "Bash(pnpm audit *)",
       "Bash(pnpm list *)",
-      "Bash(grep -v \"^$\")"
+      "Bash(grep -v \"^$\")",
+      "Bash(sed 's/.*\\\\.//')"
     ]
   }
 }
